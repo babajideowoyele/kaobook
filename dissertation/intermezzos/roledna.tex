@@ -1,0 +1,159 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\intermezzo{ROLEDNA: A Python Platform for Discourse Network Analysis}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[CoverGold] (-2,0) rectangle (-1.7,0.08);
+    \fill[AccentPurple] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[AccentCyan] (-1,0) rectangle (-0.7,0.08);
+    \fill[PandaBamboo] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[PandaRose] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\vspace{1cm}
+
+\begin{center}
+\textit{\large The tools we use shape the questions we ask.\\[0.3em]
+What becomes possible when discourse network analysis meets modern Python?}
+\end{center}
+
+\vspace{1.5cm}
+
+\begin{chapteroverview}
+This chapter presents ROLEDNA (Role-based Discourse Network Analysis), an exploratory reimplementation of the Discourse Network Analyzer (DNA) in Python. We trace the motivation from desktop-bound Java applications to web-accessible Python platforms, describe the technical architecture combining FastAPI, SQLAlchemy, and Sigma.js, demonstrate core analytical capabilities for actor-concept network analysis, and reflect critically on current limitations. ROLEDNA represents a proof-of-concept for modernizing computational discourse analysis---not a finished product, but a foundation for future development integrating large language models for automated coding assistance.
+\end{chapteroverview}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{From DNA to ROLEDNA: Motivation}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Discourse Network Analysis has emerged as a powerful methodology for studying policy debates, mapping how actors position themselves relative to concepts, claims, and each other. The method, pioneered by Philip Leifeld, combines qualitative content analysis with quantitative network methods.
+
+\sidenote{\textbf{DNA Origins}---Leifeld's Discourse Network Analyzer, first released in 2009, enabled systematic coding of actor-concept relationships from policy documents, news articles, and parliamentary debates.}
+
+Three developments motivate ROLEDNA's Python reimplementation:
+
+\subsection*{The Desktop-to-Web Transition}
+
+DNA runs as a local Java application. Modern research increasingly demands web-based collaboration. ROLEDNA explores whether discourse network analysis can follow the trajectory from installed software to accessible web application.
+
+\subsection*{The Python Ecosystem Advantage}
+
+The data science ecosystem has consolidated around Python. A Python-native implementation collapses Java/R polyglot workflows into a single environment where the same language handles interface, database, analysis, and visualization.
+
+\subsection*{The LLM Horizon}
+
+Large language models are transforming text analysis. ROLEDNA's Python foundation positions it for LLM integration---the same codebase that serves the web interface can call OpenAI's API, run local Llama models, or integrate Hugging Face pipelines.
+
+\begin{criticalbox}[LLMs Are Not Magic]
+LLM-assisted coding is promising but perilous. Models hallucinate. They reflect training data biases. ROLEDNA envisions LLMs as \emph{assistants}---suggesting codes for human review---not autonomous coders. The human remains in the loop.
+\end{criticalbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Technical Architecture}
+%═══════════════════════════════════════════════════════════════════════════════
+
+ROLEDNA adopts a modern web application architecture: FastAPI backend serving both API endpoints and rendered HTML, SQLAlchemy for database abstraction, and Sigma.js for interactive network visualization.
+
+\sidenote{\textbf{Technology Stack}---Backend: FastAPI (Python 3.11+), Database: SQLAlchemy async + SQLite/PostgreSQL, Templates: Jinja2, Styling: IBM Carbon Design System, Visualization: Sigma.js + Graphology.}
+
+The API follows RESTful conventions with endpoints organized around core entities: documents, statements, actors, concepts, and networks.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Core Analytical Features}
+%═══════════════════════════════════════════════════════════════════════════════
+
+ROLEDNA implements the core network computations that make discourse network analysis distinctive: projecting two-mode actor-concept affiliations into one-mode networks revealing actor relationships.
+
+\subsection*{Network Types}
+
+Three network types form the analytical core:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Two-Mode Affiliation Network] Bipartite graph connecting actors to concepts. Edges carry qualifier weights (+1 for agreement, -1 for disagreement).
+
+\item[One-Mode Actor Congruence Network] Actors connected by shared concept references. Edge weights reflect the number and consistency of shared positions.
+
+\item[One-Mode Actor Conflict Network] Actors connected by opposing positions on concepts. This network reveals adversarial structure in debates.
+\end{description}
+
+\subsection*{Normalization Options}
+
+Raw edge weights reflect statement counts, which can bias toward prolific actors. ROLEDNA implements standard normalizations: Jaccard, Cosine, and Average Activity.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Current Limitations}
+%═══════════════════════════════════════════════════════════════════════════════
+
+ROLEDNA is a proof-of-concept, not a production system. It lacks some DNA features: regex-based entity detection, statement inheritance, multiple qualifier dimensions, and network backbone extraction.
+
+\begin{importantbox}
+\textbf{Use at your own risk.} ROLEDNA is research software in early development. It may contain bugs. It has not been security-audited for multi-user deployment.
+\end{importantbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Future Directions}
+%═══════════════════════════════════════════════════════════════════════════════
+
+ROLEDNA's Python foundation enables transformative futures:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[LLM-Assisted Coding] Using large language models to suggest potential statements for human review.
+
+\item[NLP Pipeline Integration] Named Entity Recognition, coreference resolution, stance detection, and topic modeling.
+
+\item[Collaborative Features] Multi-user coding, inter-coder reliability, version history, and project sharing.
+
+\item[Integration with RoleBox] Comparing discourse positions to network positions; validating claimed roles against enacted roles.
+\end{description}
+
+\begin{insightbox}[Toolkit Convergence]
+This dissertation develops two tools: RoleBox for multimodal network analysis, ROLEDNA for discourse network analysis. They share conceptual foundations and technical stack. Future work could unify them into a single platform for comprehensive role constellation analysis.
+\end{insightbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Chapter Summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{ROLEDNA} reimplements core Discourse Network Analyzer functionality in Python, transitioning from desktop Java to web-accessible platform.
+
+\item \textbf{Motivations} include: web-based collaboration, Python ecosystem integration, and positioning for LLM-assisted coding.
+
+\item \textbf{Technical architecture} combines FastAPI backend, SQLAlchemy async database layer, Carbon Design System interface, and Sigma.js network visualization.
+
+\item \textbf{Core features} include: two-mode affiliation networks, one-mode congruence/conflict projections, multiple normalization options, and interactive visualization.
+
+\item \textbf{Future directions} include: LLM-assisted coding, NLP pipeline integration, collaborative features, and potential RoleBox integration.
+
+\item ROLEDNA is \textbf{proof-of-concept} software demonstrating feasibility, not a production-ready replacement for DNA.
+\end{itemize}
+\end{summarybox}
+
+\vspace{1cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[CoverGold] (-2,0) rectangle (-1.7,0.08);
+    \fill[AccentPurple] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[AccentCyan] (-1,0) rectangle (-0.7,0.08);
+    \fill[PandaBamboo] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[PandaRose] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\closeintermezzo
+
+\end{document}

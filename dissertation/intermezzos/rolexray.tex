@@ -1,0 +1,255 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\intermezzo{ROLEXRAY - A Socio-Semantic Toolkit Mapping Interstitial Author Topic Constellations}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[CoverGold] (-2,0) rectangle (-1.7,0.08);
+    \fill[AccentPurple] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[AccentCyan] (-1,0) rectangle (-0.7,0.08);
+    \fill[PandaBamboo] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[PandaRose] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\vspace{1.5cm}
+
+\begin{adjustwidth}{1cm}{1cm}
+
+\noindent\textit{\large How can we map actors and topics that play interstitial roles—bridging worlds that would otherwise remain separate? Before we turn our multimodal cartography toward organizations, a detour through the landscape of ideas.}
+
+\vspace{1.5cm}
+
+\section*{The Problem of the In-Between}
+
+Some of the most important work happens in the spaces between.
+
+\sidenote{\textit{``Interstitial: relating to or situated in the interstices---the spaces that intervene between things.''}}
+
+Between disciplines. Between sectors. Between communities of practice. The actors who inhabit these in-between spaces—who speak multiple languages, who translate across boundaries, who see connections invisible to those embedded in single domains—are often the unsung catalysts of change.
+
+But how do you find them? How do you \textit{see} the interstitial?
+
+This dissertation develops tools for mapping role constellations in innovation ecosystems. Yet the same challenge appears in another domain entirely: the landscape of scientific literature. Before we mapped organizations, we mapped ideas—and the scholars who bridge them.
+
+\vspace{0.8cm}
+
+\section*{From Organizations to Authors}
+
+The \textbf{Socio-Semantic X-Ray} emerged from a parallel question: how can we simultaneously analyze \textit{what} scholars write about and \textit{who} they collaborate with? Traditional literature reviews focus on content—themes, arguments, findings. They miss the social architecture of knowledge production.
+
+\sidenote{\textit{The Socio-Semantic X-Ray integrates what is said (semantic) with who says it together (social).}}
+
+We developed this method while trying to understand our own intellectual terrain. Three journals defined the boundaries: \textit{Research in the Sociology of Organizations} (RSOG), \textit{Environmental Innovation and Societal Transitions} (EIST), and \textit{Sustainability Science} (SusSci). Three communities. Three vocabularies. Three ways of seeing the world.
+
+The question: who bridges them?
+
+\vspace{0.8cm}
+
+\section*{The Chromatic Triangle}
+
+Imagine a triangle. Each vertex represents a pure discourse—the language and concerns of one journal community. Position within the triangle indicates mixture.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Triangle
+    \coordinate (RSOG) at (0,3);
+    \coordinate (EIST) at (2.6,-1);
+    \coordinate (SUSCI) at (-2.6,-1);
+
+    % Fill with gradient suggestion
+    \fill[PandaCream, opacity=0.5] (RSOG) -- (EIST) -- (SUSCI) -- cycle;
+
+    % Draw edges
+    \draw[PandaCharcoal, line width=1.5pt] (RSOG) -- (EIST) -- (SUSCI) -- cycle;
+
+    % Vertex labels
+    \node[font=\sffamily\bfseries, text=AccentPurple] at (0,3.5) {RSOG};
+    \node[font=\tiny, text=PandaCharcoal, align=center] at (0,3.9) {Sociology of\\Organizations};
+
+    \node[font=\sffamily\bfseries, text=PandaBamboo] at (3.3,-1) {EIST};
+    \node[font=\tiny, text=PandaCharcoal, align=center] at (3.8,-0.5) {Environmental\\Innovation};
+
+    \node[font=\sffamily\bfseries, text=Azure] at (-3.3,-1) {SusSci};
+    \node[font=\tiny, text=PandaCharcoal, align=center] at (-3.8,-0.5) {Sustainability\\Science};
+
+    % Center point
+    \fill[CoverGold] (0,0.33) circle (0.15);
+    \node[font=\tiny\itshape, text=CoverGold!80!black] at (0,-0.2) {Interstitial Zone};
+
+    % Sample author points
+    \fill[AccentPurple, opacity=0.7] (0,2.2) circle (0.08);
+    \fill[AccentPurple, opacity=0.7] (-0.3,2.4) circle (0.06);
+    \fill[AccentPurple, opacity=0.7] (0.2,2.5) circle (0.05);
+
+    \fill[PandaBamboo, opacity=0.7] (1.8,-0.5) circle (0.08);
+    \fill[PandaBamboo, opacity=0.7] (2,-0.8) circle (0.06);
+    \fill[PandaBamboo, opacity=0.7] (1.5,-0.3) circle (0.07);
+
+    \fill[Azure, opacity=0.7] (-1.8,-0.5) circle (0.08);
+    \fill[Azure, opacity=0.7] (-2,-0.7) circle (0.05);
+    \fill[Azure, opacity=0.7] (-1.5,-0.6) circle (0.06);
+
+    % Interstitial authors (near center)
+    \fill[CoverGold] (0.1,0.8) circle (0.07);
+    \fill[CoverGold] (-0.2,0.5) circle (0.06);
+    \fill[CoverGold] (0.3,0.4) circle (0.08);
+    \fill[CoverGold] (-0.1,1.0) circle (0.05);
+
+\end{tikzpicture}
+\end{center}
+
+\sidenote{\textit{Like a chromatic color space where RGB vertices create all possible mixtures, the discourse triangle positions authors by their intellectual blend.}}
+
+An author publishing only in RSOG sits at the purple vertex—pure organizational sociology. One publishing only in SusSci sits at the blue vertex—pure sustainability science. But an author whose work draws equally from all three? They sit at the center. They are \textbf{interstitial}.
+
+The method borrows from color theory: just as the CIE chromaticity diagram maps every visible color as a mixture of primaries, our triangle maps every author's discursive position as a mixture of disciplinary vocabularies.
+
+\vspace{0.8cm}
+
+\section*{What the X-Ray Reveals}
+
+Applied to 2,360 articles across two decades, the Socio-Semantic X-Ray revealed patterns invisible to traditional review:
+
+\sidenote{\textbf{By the numbers:} 2,360 articles, 16.8 million words, 138 topics identified, 3 discourse communities, interstitial authors: 8\%.}
+
+\noindent\textbf{Topic landscapes.} Using BERTopic and LDA, we mapped the semantic terrain of each journal—hot topics rising, cold topics fading, evergreen themes persisting, wallflower topics lingering unnoticed.
+
+\noindent\textbf{Collaboration networks.} Co-authorship patterns revealed who works with whom, which communities are insular, which are porous.
+
+\noindent\textbf{Interstitial authors.} Most powerfully: we identified scholars whose vocabulary, co-authorships, and publication patterns position them as bridges. They don't just cite across boundaries—they \textit{inhabit} the in-between.
+
+\noindent\textbf{Interstitial holes.} The triangle also reveals gaps—zones where bridges \textit{could} exist but don't. These are opportunities: unexplored connections between, say, organizational sociology and sustainability science that no one has yet made.
+
+\vspace{0.8cm}
+
+\section*{Connection to This Dissertation}
+
+Why does a dissertation about mapping organizational role constellations pause to discuss mapping scholarly discourse?
+
+Because the methods rhyme.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+
+    % Left: Socio-Semantic X-Ray
+    \node[rectangle, rounded corners=6pt, draw=AccentPurple, fill=AccentPurple!10,
+          minimum width=4.5cm, minimum height=3cm, line width=1.5pt] at (-3.5,0) {};
+    \node[font=\sffamily\bfseries\small, text=AccentPurple] at (-3.5,1.8) {Socio-Semantic X-Ray};
+    \node[font=\tiny, text=PandaCharcoal, align=left] at (-3.5,0.5) {
+        \textbullet\ Authors as actors\\
+        \textbullet\ Topics as roles\\
+        \textbullet\ Co-authorship as ties\\
+        \textbullet\ Vocabulary as identity\\
+        \textbullet\ Journals as communities
+    };
+    \node[font=\tiny\itshape, text=AccentPurple] at (-3.5,-1.2) {Unit: Scholars};
+
+    % Right: RoleBox
+    \node[rectangle, rounded corners=6pt, draw=CoverGold, fill=CoverGold!10,
+          minimum width=4.5cm, minimum height=3cm, line width=1.5pt] at (3.5,0) {};
+    \node[font=\sffamily\bfseries\small, text=CoverGold!80!black] at (3.5,1.8) {\RoleBox};
+    \node[font=\tiny, text=PandaCharcoal, align=left] at (3.5,0.5) {
+        \textbullet\ Organizations as actors\\
+        \textbullet\ Functions as roles\\
+        \textbullet\ Partnerships as ties\\
+        \textbullet\ Website text as identity\\
+        \textbullet\ KICs as communities
+    };
+    \node[font=\tiny\itshape, text=CoverGold!80!black] at (3.5,-1.2) {Unit: Organizations};
+
+    % Arrow between
+    \draw[PandaCharcoal, line width=2pt, <->] (-0.8,0) -- (0.8,0);
+    \node[font=\tiny\bfseries, text=PandaCharcoal] at (0,0.4) {Same Logic};
+    \node[font=\tiny, text=PandaCharcoal] at (0,-0.3) {Different Units};
+
+\end{tikzpicture}
+\end{center}
+
+\sidenote{\textit{The Socio-Semantic X-Ray was a proving ground for ideas that became \RoleBox.}}
+
+Both approaches integrate \textbf{semantic} dimensions (what actors say, how they present themselves) with \textbf{social} dimensions (who they connect with, how they're positioned in networks). Both seek to identify \textbf{interstitial actors}—those who bridge otherwise separate communities. Both use \textbf{computational methods} to achieve scale while preserving interpretive depth.
+
+The Socio-Semantic X-Ray was, in retrospect, a methodological rehearsal. Working with scholarly literature—a domain where ground truth is knowable, where we could validate patterns against our own domain expertise—we developed intuitions that later guided \RoleBox design.
+
+\vspace{0.8cm}
+
+\section*{The Interstitial Insight}
+
+The deepest lesson from the X-Ray work: \textbf{interstitial positions are rare, valuable, and hard to see}.
+
+\sidenote{\textit{8\% of authors occupied genuinely interstitial positions. The rest clustered near vertices.}}
+
+Only 8\% of authors in our three-journal corpus occupied positions near the triangle's center. The vast majority clustered near vertices—embedded in single disciplinary communities, speaking single disciplinary languages. This is not surprising. Disciplines exist for reasons. Specialization enables depth.
+
+But transitions—whether in sustainability or in scholarship—require translation. They require actors who can speak to multiple communities, who can carry ideas across boundaries, who can see connections invisible to the embedded.
+
+\begin{pandaquote}
+The interstitial is where recombination happens. New ideas rarely emerge from the center of established fields. They emerge from the edges, the overlaps, the unexpected encounters between previously separate streams.
+\end{pandaquote}
+
+This insight carried forward into \RoleBox. When we found that 34\% of EIT ecosystem actors \textit{claim} connector roles but only 12\% show cross-modal evidence for them, we recognized a pattern. Interstitial aspiration exceeds interstitial reality. Many want to be bridges. Few actually are.
+
+\vspace{0.8cm}
+
+\section*{A Toolkit for Others}
+
+The Socio-Semantic X-Ray is now an open toolkit, available for others to apply to their own domains. The question it enables—\textit{who bridges what?}—is general.
+
+\sidenote{\faCode\ \texttt{github.com/arenabox/METAFRASIA}}
+
+Other scholars have used it to map:
+\begin{itemize}[leftmargin=2em]
+    \item Interdisciplinary emergence in new research fields
+    \item Knowledge flows between academic and practitioner communities
+    \item Evolution of discourse communities over time
+    \item Identification of potential collaborators across silos
+\end{itemize}
+
+The toolkit embodies the same open science commitments as \RoleBox: documented code, transparent methods, reproducible workflows. If our contribution is useful, others should be able to use it.
+
+\vspace{0.8cm}
+
+\section*{From Literature to Ecosystems-Author Topic Constellations to Actor Role Constellations}
+
+This intermezzo has been a detour—from organizations to authors, from ecosystems to journals, from role constellations to discourse positions. But the detour illuminates the path.
+
+\sidenote{\textit{The X-Ray taught us to see the interstitial. \RoleBox applies that seeing to transition ecosystems.}}
+
+The Socio-Semantic X-Ray taught us:
+\begin{enumerate}[leftmargin=2em]
+    \item Semantic and social dimensions must be analyzed together
+    \item Interstitial positions exist and can be mapped
+    \item Most actors cluster; few bridge
+    \item The bridges are disproportionately important
+    \item Open toolkits enable cumulative knowledge
+\end{enumerate}
+
+These lessons inform everything that follows. When we map EIT organizations across five modalities, we carry forward the X-Ray's core insight: to understand a system, you must see both what actors \textit{say} and how they \textit{relate}. Neither alone suffices.
+
+\vspace{1cm}
+
+\begin{center}
+\textit{Now, back to organizations. Back to ecosystems. Back to the main cartography.}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[CoverGold] (-2,0) rectangle (-1.7,0.08);
+    \fill[AccentPurple] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[AccentCyan] (-1,0) rectangle (-0.7,0.08);
+    \fill[PandaBamboo] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[PandaRose] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\end{adjustwidth}
+
+\closeintermezzo
+
+\end{document}

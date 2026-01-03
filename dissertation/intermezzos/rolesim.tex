@@ -1,0 +1,139 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\intermezzo{RoleSim: Agent-Based Modeling of Role Constellation Dynamics}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[Marigold] (-2,0) rectangle (-1.7,0.08);
+    \fill[Marigold!80] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[Marigold!60] (-1,0) rectangle (-0.7,0.08);
+    \fill[Marigold!40] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[Marigold!20] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{chapteroverview}
+This chapter introduces \RoleSim, an agent-based model that complements empirical cartography with counterfactual exploration. Where \RoleBox maps observed constellations, \RoleSim asks ``what if?''---exploring how constellations might evolve under different conditions, testing mechanism sufficiency, and projecting possible futures.
+\end{chapteroverview}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Why Simulation?}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Empirical observation reveals where actors \emph{are}. Simulation explores where they \emph{could be}:
+
+\sidenote{\textbf{Counterfactual Questions:} What if a key intermediary exited? What if policy conditions shifted? What if fitness landscapes tilted?}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Counterfactual Exploration] What trajectories were possible but not taken?
+\item[Mechanism Testing] Do CAS mechanisms generate observed patterns?
+\item[Sensitivity Analysis] Which parameters most strongly shape outcomes?
+\item[Future Projection] Given current configurations, what trajectories are likely?
+\end{description}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Model Architecture}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\RoleSim instantiates CAS mechanisms computationally:
+
+\subsection*{Agents}
+
+Each agent represents an intermediary organization with:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Role profile}: Multi-dimensional vector in role-space
+\item \textbf{Resources}: Capacity for activities and adaptation
+\item \textbf{Network position}: Ties to other agents
+\item \textbf{Adaptive behavior}: Rules for adjusting profile based on feedback
+\end{itemize}
+
+\subsection*{Fitness Landscape}
+
+The fitness function determines agent viability:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Environmental conditions (policy, technology)
+\item Niche overlap with other agents
+\item Network position value
+\item Resource requirements
+\end{itemize}
+
+\subsection*{Dynamics}
+
+Each timestep:
+\begin{enumerate}[leftmargin=*, itemsep=0.1em]
+\item Agents evaluate fitness at current position
+\item Agents observe neighbors' success
+\item Agents adapt profiles toward higher-fitness regions
+\item Network ties form/dissolve based on similarity and complementarity
+\item Environment may shift (exogenous shocks)
+\end{enumerate}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Parameterization from RoleBox}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\RoleSim is grounded in empirical data:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Initial agent configurations from observed EIT ecosystem
+\item Fitness function shapes derived from survival/growth patterns
+\item Network structures from measured relationships
+\item Environmental parameters from policy and technology trajectories
+\end{itemize}
+
+\sidenote{\textbf{Grounding:} Simulation explores variations on observed reality, not arbitrary parameter spaces.}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Analytical Uses}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Knockout Experiments] Remove successful agents; observe restructuring
+\item[Policy Scenarios] Shift environmental parameters; trace constellation response
+\item[Mechanism Isolation] Enable/disable specific CAS mechanisms; assess contribution
+\item[Parameter Sweeps] Systematic variation to identify sensitive parameters
+\end{description}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Chapter Summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{\RoleSim} complements empirical cartography with counterfactual exploration.
+
+\item \textbf{Agent-based modeling} instantiates CAS mechanisms computationally.
+
+\item \textbf{Parameterization} from \RoleBox data grounds simulation in observed reality.
+
+\item \textbf{Analytical uses} include knockout experiments, policy scenarios, and mechanism testing.
+
+\item \textbf{Together}, \RoleBox and \RoleSim enable understanding of both actual and possible constellation dynamics.
+\end{itemize}
+\end{summarybox}
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[Marigold] (-2,0) rectangle (-1.7,0.08);
+    \fill[Marigold!80] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[Marigold!60] (-1,0) rectangle (-0.7,0.08);
+    \fill[Marigold!40] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[Marigold!20] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\closeintermezzo
+
+\end{document}

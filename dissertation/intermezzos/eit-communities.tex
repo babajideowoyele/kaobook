@@ -1,0 +1,673 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+%========================================================================================
+% INTERMEZZO: THE EIT ECOSYSTEM
+%========================================================================================
+
+\intermezzo{The EIT Communities}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[CoverGold] (-2,0) rectangle (-1.7,0.08);
+    \fill[AccentPurple] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[AccentCyan] (-1,0) rectangle (-0.7,0.08);
+    \fill[PandaBamboo] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[PandaRose] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\vspace{1cm}
+
+\begin{center}
+\textit{\large Before we can map role constellations, we must know the terrain.\\[0.3em]
+What is this ecosystem? Who built it, and what were they trying to achieve?}
+\end{center}
+
+\vspace{1.5cm}
+
+\margintoc
+
+\begin{chapteroverview}
+This intermezzo introduces the empirical laboratory for this dissertation: the European Institute of Innovation and Technology (EIT) and its eight Knowledge and Innovation Communities (KICs). We trace the EIT's origins in the ``European paradox'' diagnosis, examine its institutional architecture and €6 billion investment, profile each KIC's distinctive intermediary character, and document the ecosystem's scale---2,420+ partners, 9,900+ startups, 880,000+ learners. We conclude by explaining why this ecosystem provides an ideal site for developing and demonstrating multimodal cartographic methods for mapping intermediary role constellations.
+\end{chapteroverview}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{The European Paradox and EIT's Origins}
+\labsec{eit:origins}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The EIT was born from frustration with a persistent pattern: Europe excelled at research but struggled to convert discoveries into innovations, companies, and jobs.
+
+\sidenote{\textbf{The European Paradox}---Europe produces world-class science but lags in commercialization.}
+
+The 2006 Aho Report crystallized the case for institutional innovation. Europe had world-class universities and research institutes. It invested substantially in R\&D. Yet somehow the innovations---and the companies built on them---kept emerging elsewhere. Silicon Valley dominated digital platforms. American and Asian firms led in semiconductors, batteries, and biotechnology. The continent that invented the World Wide Web watched others capture its value.
+
+The diagnosis pointed to fragmentation: universities, research institutes, and businesses operated in separate worlds with different funding streams, incentive structures, and cultures. A professor's success was measured in publications, not products. A startup's success was measured in exits, not discoveries. The ``knowledge triangle''---education, research, and business---had become three disconnected vertices.
+
+% Using captionof to avoid kaobook caption recursion issue with TikZ
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Triangle vertices
+    \coordinate (E) at (0,2.8);
+    \coordinate (R) at (-2.5,-1.2);
+    \coordinate (B) at (2.5,-1.2);
+
+    % Triangle edges
+    \draw[PandaCharcoal, line width=1.5pt] (E) -- (R) -- (B) -- cycle;
+
+    % Vertex labels
+    \node[font=\sffamily\bfseries, text=Azure] at (0,3.5) {Education};
+    \node[font=\sffamily\bfseries, text=PandaBamboo] at (-3.5,-1.2) {Research};
+    \node[font=\sffamily\bfseries, text=Marigold] at (3.5,-1.2) {Business};
+
+    % Edge labels
+    \node[font=\tiny, text=Slate, rotate=58] at (-1.6,1.1) {talent flow};
+    \node[font=\tiny, text=Slate, rotate=-58] at (1.6,1.1) {skills demand};
+    \node[font=\tiny, text=Slate] at (0,-1.5) {technology transfer};
+
+    % Center
+    \node[font=\small\itshape, text=AccentPurple] at (0,0.5) {Integration};
+\end{tikzpicture}
+\captionof{figure}{The knowledge triangle concept underlying EIT's mission. The edges---the flows between vertices---matter as much as the vertices themselves. EIT was designed to strengthen these connections.}
+\labfig{knowledge-triangle}
+\end{center}
+
+The prescription was integration: create organizations \textit{designed} to bridge these worlds. Not universities that dabble in business, or companies that sponsor research, but purpose-built integrators whose core mission is connection itself.
+
+\textbf{Regulation (EC) No 294/2008} established the European Institute of Innovation and Technology, headquartered in Budapest. But crucially, the EIT was not conceived as a campus-based institution---no ``European MIT.'' Instead, it would function as a \textbf{meta-orchestrator}, creating and coordinating autonomous Knowledge and Innovation Communities that would do the actual integration work across Europe.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Institutional Architecture}
+\labsec{eit:architecture}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The EIT operates as an EU body with its own legal personality, governed by a 15-member Governing Board drawn from academia, business, and innovation sectors. The Board sets strategic direction, selects and evaluates KICs, and can discontinue underperforming partnerships. An EIT Director (Martin Kern since 2014) manages operations from Budapest with a small headquarters staff.
+
+\sidenote{\textbf{Key Legislative Milestones}---2008: Founding regulation. 2013: Integration into Horizon 2020; RIS introduced. 2021: Recast regulation under Horizon Europe.}
+
+The Member State Representatives Group (MSRG), established in 2021, advises on alignment with national innovation policies---reflecting lessons learned about the importance of multi-level governance coordination.
+
+\subsection*{Budget Evolution}
+
+EIT funding has scaled dramatically across EU Framework Programmes:
+
+% Using captionof to avoid kaobook caption recursion issue
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Period} & \textbf{Budget} & \textbf{Framework Programme} & \textbf{\% of FP} \\
+\midrule
+2008--2013 & €309 million & FP7 (separate line) & $\sim$0.6\% \\
+2014--2020 & €2.7 billion & Horizon 2020 & $\sim$3.5\% \\
+2021--2027 & €2.965 billion & Horizon Europe & $\sim$3.1\% \\
+\midrule
+\textbf{Cumulative} & \textbf{$\sim$€6 billion} & & \\
+\bottomrule
+\end{tabular}
+\captionof{table}{EIT budget evolution across Framework Programmes}
+\labtab{eit-budget}
+\end{center}
+
+A crucial design principle distinguishes EIT from traditional EU research funding: \textbf{EIT grants must not exceed 25\% of a KIC's total budget} on average. KICs must attract the remaining 75\%+ from partner contributions, membership fees, national funding, and private investment. This ``seed funding model'' pushes KICs toward financial sustainability---and toward building genuine stakeholder commitment rather than grant dependency.
+
+\sidenote{\textbf{Leverage Ratio}---5.6:1; every €1 attracts €5.60 from other sources.}
+
+\subsection*{External Scrutiny}
+
+The \textbf{European Court of Auditors Special Report No. 4/2016} delivered significant critique, finding that ``complex operational framework and management problems have impeded overall effectiveness.'' It noted funding concentration (top 5 countries received 73\% of participation), questioned financial sustainability trajectories, and issued four recommendations. EIT implemented all recommendations by 2018--2019. A 2023 audit issued a qualified opinion regarding procurement procedures---a reminder that even maturing institutions face ongoing governance challenges.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{The Eight Knowledge and Innovation Communities}
+\labsec{eit:kics}
+%═══════════════════════════════════════════════════════════════════════════════
+
+KICs are the EIT's operational core: large-scale public-private partnerships, each addressing a specific societal challenge through integrated innovation, education, and business creation activities. Each KIC is a separate legal entity with substantial autonomy, bound to EIT through Partnership Agreements that set performance targets and funding commitments.
+
+% Using captionof to avoid kaobook caption recursion issue
+\tablestriped
+\scriptsize
+\begin{center}
+\begin{tabular}{@{}p{2.2cm}p{2.8cm}cp{2cm}p{2.5cm}@{}}
+\toprule
+\textbf{KIC} & \textbf{Thematic Focus} & \textbf{Founded} & \textbf{Headquarters} & \textbf{Legal Form} \\
+\midrule
+Climate-KIC & Climate mitigation \& adaptation & 2010 & Amsterdam & Dutch Stichting \\
+InnoEnergy & Sustainable energy \& cleantech & 2010 & Eindhoven & Societas Europaea \\
+Digital & Digital transformation \& deep tech & 2010 & Brussels & Belgian AISBL \\
+Health & Healthcare innovation \& healthy living & 2015 & Munich & German e.V. \\
+RawMaterials & Sustainable raw materials \& circularity & 2015 & Berlin & German GmbH \\
+Food & Agrifood system transformation & 2017 & Leuven & Belgian iVZW \\
+Manufacturing & Advanced \& green manufacturing & 2019 & Paris-Saclay & Belgian ASBL \\
+Urban Mobility & Sustainable urban transport & 2019 & Barcelona & Spanish Association \\
+\bottomrule
+\end{tabular}
+\captionof{table}{The eight EIT Knowledge and Innovation Communities}
+\labtab{eit-kics-overview}
+\end{center}
+\normalsize
+
+\sidenote{\textbf{Note on Scope}---EIT Culture \& Creativity (2022) excluded due to limited history.}
+
+The KICs divide into three ``waves'' reflecting their founding periods and maturity stages:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[First Wave (2010)] Climate-KIC, InnoEnergy, and Digital were the founding KICs, now 15 years into operation. All three achieved \textbf{financial sustainability} in 2024--2025, transitioning from grant dependency to self-sustaining operations.
+\item[Second Wave (2015)] Health and RawMaterials launched mid-decade, now in their maturation phase with established partner networks and program portfolios.
+\item[Third Wave (2019)] Manufacturing and Urban Mobility are the youngest KICs examined here, still in growth phases with evolving strategic identities.
+\end{description}
+
+Despite shared EIT affiliation, the eight KICs have developed \textbf{markedly different intermediary profiles}---different partnership models, strategic approaches, geographic configurations, and relationships with their innovation ecosystems. Understanding this variation is essential for the cartographic analysis that follows.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{KIC Profiles: The First Wave}
+\labsec{eit:firstwave}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection*{Climate-KIC: Systems Innovation Pioneer}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    \node[draw, circle, fill=PandaBamboo!30, minimum size=1.5cm, font=\tiny\bfseries] at (0,0) {C-KIC};
+    \node[font=\tiny, text=Slate] at (0,-1.3) {Amsterdam};
+    \node[font=\tiny, text=Slate] at (0,-1.8) {2010};
+\end{tikzpicture}
+\end{marginfigure}
+
+Climate-KIC has undergone the most dramatic strategic evolution among KICs, pivoting from conventional accelerator models toward what it calls ``\textbf{Systems Innovation as a Service}.'' Under CEO Kirsten Dunlop (since 2017), it developed the \textbf{Deep Demonstrations} methodology---portfolio-based, place-based transformation programs that work with cities and regions to catalyze systemic change rather than supporting individual innovations in isolation.
+
+\begin{insightbox}[Deep Demonstrations]
+Climate-KIC's signature approach applies systems innovation principles to specific places: Leuven (circular economy), Madrid (mobility), Vienna (buildings), Glasgow (industrial decarbonization). Rather than funding discrete projects, Deep Demonstrations orchestrate portfolios of interconnected interventions, accepting that transformation requires changing multiple system elements simultaneously.
+\end{insightbox}
+
+Climate-KIC now serves as lead orchestrator for the \textbf{EU Cities Mission} (100 Climate Neutral Cities by 2030) through the NetZeroCities platform, supporting 112 cities in developing Climate City Contracts.
+
+\sidenote{\textbf{Climate-KIC Metrics}---Partners: 400+. Startups: 2,300+. Investment: €1.1B. Products: 790. EIT funding: €720M.}
+
+\textbf{Notable alumni}: Climeworks (Switzerland), the direct air capture unicorn valued at over \$2 billion, completed Climate-KIC accelerator stages in 2012--2013. Nearly 30 Climate-KIC entrepreneurs have appeared on Forbes 30 Under 30 Europe.
+
+In January 2025, Climate-KIC achieved \textbf{financial sustainability}, transitioning to a Memorandum of Cooperation with EIT and rebranding simply as ``Climate KIC''---dropping the EIT prefix to signal its independent identity.
+
+\subsection*{EIT InnoEnergy: The Investment Engine}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    \node[draw, circle, fill=Marigold!30, minimum size=1.5cm, font=\tiny\bfseries] at (0,0) {IE};
+    \node[font=\tiny, text=Slate] at (0,-1.3) {Eindhoven};
+    \node[font=\tiny, text=Slate] at (0,-1.8) {2010};
+\end{tikzpicture}
+\end{marginfigure}
+
+InnoEnergy represents the \textbf{investment-focused model} among KICs. Under founding CEO Diego Pavia, it developed a distinctive approach: taking minority equity stakes in portfolio companies, providing patient capital, and actively building industrial ecosystems rather than merely supporting individual ventures.
+
+InnoEnergy holds mandates to lead three EU strategic industrial initiatives:
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item \textbf{European Battery Alliance}: 800+ partners, €100B+ investment pipeline
+\item \textbf{European Solar PV Industry Alliance}: Manufacturing capacity targets
+\item \textbf{European Green Hydrogen Acceleration Centre}: Electrolyzer scale-up
+\end{itemize}
+
+\sidenote{\textbf{InnoEnergy Metrics}---Partners: 1,400+. Portfolio: 540+ companies. Investment: €34B+. Jobs: 47,000+. Unicorns: 5. Graduates: 2,000+.}
+
+The results are striking. From 9,000+ evaluated ventures, InnoEnergy built a portfolio of 540+ companies that have collectively raised over \textbf{€34 billion} in investment. The portfolio includes \textbf{five unicorns}:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.2em]
+\item[Northvolt] Europe's largest lithium-ion battery manufacturer; peak valuation >€20B
+\item[H2 Green Steel] Green steel production; €2.5B mobilized
+\item[Verkor] Battery gigafactory; €2B+ Series C
+\item[Vulcan Energy] Zero-carbon lithium extraction
+\item[Freyr] Battery cell production
+\end{description}
+
+\begin{criticalbox}[The Northvolt Question]
+Northvolt's November 2024 bankruptcy filing complicates the InnoEnergy success narrative. The company received €9.3M in InnoEnergy investments and became the poster child for European cleantech. Its restructuring raises questions about unicorn metrics as success indicators---and about the challenges of scaling hardware companies in competitive global markets.
+\end{criticalbox}
+
+\subsection*{EIT Digital: Deep Tech and Talent}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    \node[draw, circle, fill=Azure!30, minimum size=1.5cm, font=\tiny\bfseries] at (0,0) {Dig};
+    \node[font=\tiny, text=Slate] at (0,-1.3) {Brussels};
+    \node[font=\tiny, text=Slate] at (0,-1.8) {2010};
+\end{tikzpicture}
+\end{marginfigure}
+
+EIT Digital (founded as EIT ICT Labs, rebranded 2015) focuses on digital deep tech: artificial intelligence, cybersecurity, quantum computing, and digital infrastructure. Its distinctive contribution is the \textbf{double-degree Master's School}---students study at two universities in different countries, combining technical depth with entrepreneurial training and international mobility.
+
+\sidenote{\textbf{EIT Digital Metrics}---Partners: 350+. Portfolio: 253 companies (€1.5B+ value). Students: 1,500+. Products: 250+. Offices: 23.}
+
+In October 2025, upon achieving financial sustainability, EIT Digital rebranded as \textbf{28DIGITAL}---the ``28'' referencing the number of EU member states and signaling ambition to serve as Europe's digital transformation engine.
+
+The Master's School operates across 24 partner universities including TU Berlin, Aalto, KTH, Politecnico di Milano, and Universidad Politécnica de Madrid. Programs span AI, cybersecurity, data science, fintech, and human-computer interaction.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{KIC Profiles: The Second Wave}
+\labsec{eit:secondwave}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection*{EIT Health: Healthcare Ecosystem Integration}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    \node[draw, circle, fill=PandaRose!30, minimum size=1.5cm, font=\tiny\bfseries] at (0,0) {Hlth};
+    \node[font=\tiny, text=Slate] at (0,-1.3) {Munich};
+    \node[font=\tiny, text=Slate] at (0,-1.8) {2015};
+\end{tikzpicture}
+\end{marginfigure}
+
+EIT Health emerged from the InnoLife consortium to become Europe's largest health innovation network, combining pharmaceutical companies, MedTech firms, hospitals, payers, and universities. Its partnership includes Siemens Healthineers, AstraZeneca, Roche, Janssen, and major academic medical centers.
+
+The KIC operates through seven Co-Location Centers (CLCs) plus the InnoStars cluster serving Hungary, Italy, Poland, and Portugal. International hubs in the US and Israel extend global reach.
+
+\sidenote{\textbf{EIT Health Metrics}---Partners: $\sim$150. Ventures: 3,370. Investment: €2.4B. Learners: 70,000+. Lives impacted: 780,000+.}
+
+EIT Health's \textbf{COVID-19 response} demonstrated rapid mobilization capacity: €6 million pledged, €5.5 million Start-up Rescue Instrument for struggling ventures, and 21 startups fast-tracked through the Headstart COVID-19 Call.
+
+\textbf{Notable exits}: PhagoMed (acquired by BioNTech), DoDOC (acquired by Envision Pharma Group), PatchAi (acquired by Alira Health). Luminate Medical (Ireland) raised €15M Series A for chemotherapy hair loss prevention technology.
+
+\subsection*{EIT RawMaterials: Critical Materials and Circularity}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    \node[draw, circle, fill=Slate!30, minimum size=1.5cm, font=\tiny\bfseries] at (0,0) {RM};
+    \node[font=\tiny, text=Slate] at (0,-1.3) {Berlin};
+    \node[font=\tiny, text=Slate] at (0,-1.8) {2015};
+\end{tikzpicture}
+\end{marginfigure}
+
+EIT RawMaterials addresses the entire raw materials value chain---from exploration and extraction through processing, recycling, and substitution. Its strategic importance has grown dramatically with the EU's focus on critical raw materials security and the \textbf{Critical Raw Materials Act}.
+
+The KIC manages the \textbf{European Raw Materials Alliance (ERMA)}: 750+ members, 40+ projects, €25B+ investment potential. This positions RawMaterials as a key implementation arm for EU strategic autonomy in materials.
+
+\sidenote{\textbf{RawMaterials Metrics}---Partners: 300+. Funding: €600M+ direct, €5B leveraged. Projects/startups: 800+. Master's: 6. Trainees: 76,000+.}
+
+\textbf{Notable startups}: Fibrecoat (TIME Best Inventions 2025), 9-Tech (PV recycling, Fortune Italia ``Change the World''), Minespider (blockchain tracking 10\% of global tin supply).
+
+The \textbf{European Raw Materials Academy}, launched May 2025, targets training 100,000 people in skills for the materials transition.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{KIC Profiles: The Third Wave}
+\labsec{eit:thirdwave}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection*{EIT Food: Farm to Fork Transformation}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    \node[draw, circle, fill=PandaBamboo!20, minimum size=1.5cm, font=\tiny\bfseries] at (0,0) {Food};
+    \node[font=\tiny, text=Slate] at (0,-1.3) {Leuven};
+    \node[font=\tiny, text=Slate] at (0,-1.8) {2017};
+\end{tikzpicture}
+\end{marginfigure}
+
+EIT Food emerged from the FoodConnects consortium to operate the world's largest food innovation community. Its partnership structure is distinctive: major food corporations (Nestlé, PepsiCo, Danone, Cargill) alongside startups, universities, and consumer organizations.
+
+The KIC's three-tier entrepreneurship pathway---Seedbed Incubator, Accelerator Network, and RisingFoodStars association---has supported over 500 startups that have collectively attracted €1.1B+ in investment.
+
+\sidenote{\textbf{EIT Food Metrics}---Partners: 200+. Startups: 1,438+. Investment: €1.1B+. Graduates: 1,132. Non-degree learners: 52,944.}
+
+\textbf{Notable portfolio}: Mosa Meat, Redefine Meat, Meatable, Solar Foods, Aleph Farms (cellular agriculture leaders); CropX (precision agriculture); TIPA (sustainable packaging).
+
+EIT Food is the only KIC with an explicit \textbf{consumer engagement mandate}, reflecting the food system's dependence on behavior change alongside technological innovation.
+
+\subsection*{EIT Manufacturing: Industry 4.0 and Green Production}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    \node[draw, circle, fill=Slate!20, minimum size=1.5cm, font=\tiny\bfseries] at (0,0) {Mfg};
+    \node[font=\tiny, text=Slate] at (0,-1.3) {Paris-Saclay};
+    \node[font=\tiny, text=Slate] at (0,-1.8) {2019};
+\end{tikzpicture}
+\end{marginfigure}
+
+EIT Manufacturing (from the Made by Europe consortium) emphasizes Industry 4.0, green manufacturing, and human-robot collaboration. Its partnership includes automotive giants (Volvo, Volkswagen), industrial technology leaders (Siemens, KUKA), and manufacturing research institutes.
+
+The \textbf{Skills.Move platform} offers 230+ courses in AI, robotics, additive manufacturing, and sustainable production---reflecting manufacturing's acute skills gaps.
+
+\sidenote{\textbf{Manufacturing Targets (2030)}---Trained: 50,000. Startups: 1,000. Products: 360. Investment: €325M. Sustainable adoption: 60\%+.}
+
+Six regional offices span Europe: Central (Darmstadt), East (Vienna), North (Gothenburg), South (Milan), South East (Athens), and West (San Sebastián).
+
+\subsection*{EIT Urban Mobility: Cities at the Center}
+
+\begin{marginfigure}
+\centering
+\begin{tikzpicture}[scale=0.5]
+    \node[draw, circle, fill=Azure!20, minimum size=1.5cm, font=\tiny\bfseries] at (0,0) {UM};
+    \node[font=\tiny, text=Slate] at (0,-1.3) {Barcelona};
+    \node[font=\tiny, text=Slate] at (0,-1.8) {2019};
+\end{tikzpicture}
+\end{marginfigure}
+
+EIT Urban Mobility (from the MOBiLus consortium) is distinctive in placing \textbf{cities as core partners} rather than merely deployment sites. Barcelona, Amsterdam, Stockholm, Munich, and Prague municipalities are consortium members with governance roles.
+
+The KIC has conducted \textbf{185+ pilots} in European cities since 2020 and ranks as the \textbf{\#1 investor in European mobility startups} for 2023--2024 according to Via ID/Dealroom analysis.
+
+\sidenote{\textbf{Urban Mobility Metrics}---Partners: 270+. Portfolio: 135 startups (€1B value). Women-led: 43\%. City pilots: 185+.}
+
+\textbf{Key initiatives}: Tomorrow.Mobility World Congress (annual flagship event); \#ChallengeMyCity ($\sim$€50,000 for city-startup pilots); RAPTOR (Rapid Applications for Transport).
+
+\textbf{Notable innovations}: CDClean (COVID-19 metro disinfection, Barcelona); CITY RESTARTS (Europe's first large-scale shared taxi supplementing public transport, Milan); HERO Project (hydrogen retrofit for urban minibuses).
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Ecosystem-Level Metrics}
+\labsec{eit:metrics}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Aggregating across KICs reveals the ecosystem's cumulative scale:
+
+% Using captionof to avoid kaobook caption recursion issue
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Partner organizations & 2,420+ \\
+Innovation hubs/co-location centers & 70+ \\
+Countries with EIT presence & 33+ \\
+Startups and scale-ups supported & 9,900+ \\
+External investment attracted by EIT ventures & €9.5B+ \\
+Unicorns in EIT portfolios & 8+ \\
+New products, services, or processes launched & 2,400+ \\
+Learners trained (all programs) & 880,000+ \\
+EIT Label graduates (Master's and PhDs) & 4,600+ \\
+Collective valuation of EIT-supported companies & €72B+ \\
+\bottomrule
+\end{tabular}
+\captionof{table}{EIT Community cumulative impact metrics (2010--2025)}
+\labtab{eit-cumulative}
+\end{center}
+
+% Using captionof to avoid kaobook caption recursion issue with TikZ
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+    % Timeline
+    \draw[thick, Slate!40] (0,0) -- (14,0);
+
+    % Year markers
+    \foreach \x/\year in {0/2010, 2.8/2013, 5.6/2016, 8.4/2019, 11.2/2022, 14/2025} {
+        \draw[Slate!40] (\x, -0.15) -- (\x, 0.15);
+        \node[font=\tiny, text=Slate] at (\x, -0.5) {\year};
+    }
+
+    % KIC launches
+    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.4cm, font=\tiny] at (0, 0.8) {};
+    \node[draw, circle, fill=Marigold!40, minimum size=0.4cm, font=\tiny] at (0, 1.4) {};
+    \node[draw, circle, fill=Azure!40, minimum size=0.4cm, font=\tiny] at (0, 2.0) {};
+    \node[font=\tiny, text=Slate, align=left] at (1.2, 1.4) {Climate, InnoEnergy,\\Digital launch};
+
+    \node[draw, circle, fill=PandaRose!40, minimum size=0.4cm, font=\tiny] at (5.6, 0.8) {};
+    \node[draw, circle, fill=Slate!40, minimum size=0.4cm, font=\tiny] at (5.6, 1.4) {};
+    \node[font=\tiny, text=Slate, align=left] at (6.8, 1.1) {Health, Raw-\\Materials};
+
+    \node[draw, circle, fill=PandaBamboo!20, minimum size=0.4cm, font=\tiny] at (7.5, 0.8) {};
+    \node[font=\tiny, text=Slate] at (7.5, 1.3) {Food};
+
+    \node[draw, circle, fill=Slate!20, minimum size=0.4cm, font=\tiny] at (9.8, 0.8) {};
+    \node[draw, circle, fill=Azure!20, minimum size=0.4cm, font=\tiny] at (9.8, 1.4) {};
+    \node[font=\tiny, text=Slate, align=left] at (11, 1.1) {Mfg, Urban\\Mobility};
+
+    % Financial sustainability
+    \draw[AccentPurple, thick, dashed] (13.5, -0.3) -- (13.5, 2.3);
+    \node[font=\tiny, text=AccentPurple, align=center] at (13.5, 2.6) {First wave\\achieves FS};
+
+    % Partner growth curve (stylized)
+    \draw[thick, CoverGold, domain=0:14, samples=50] plot (\x, {0.3 + 1.8*(1-exp(-\x/5))});
+    \node[font=\tiny, text=CoverGold] at (12, 2.5) {2,420+ partners};
+\end{tikzpicture}
+\captionof{figure}{EIT ecosystem growth timeline showing KIC launches and partner network expansion. First-wave KICs achieved financial sustainability in 2024--2025 after 15 years of operation.}
+\labfig{eit-timeline}
+\end{center}
+
+\subsection*{Startup and Investment Performance by KIC}
+
+Investment attraction varies dramatically across KICs, reflecting different strategic models:
+
+% Using captionof to avoid kaobook caption recursion issue
+\tablestriped
+\scriptsize
+\begin{center}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{KIC} & \textbf{Startups Supported} & \textbf{Investment Attracted} & \textbf{Unicorns} \\
+\midrule
+Climate-KIC & 2,300+ & €1.1 billion & 1 \\
+InnoEnergy & 540+ & €34+ billion & 5 \\
+Digital & 253 (portfolio) & €1.5B (portfolio value) & 0 \\
+Health & 3,370 & €2.4 billion & 0 \\
+RawMaterials & 800+ & €395 million & 0 \\
+Food & 1,438+ & €1.1+ billion & 0 \\
+Manufacturing & 1,357 (target) & €325M (target 2030) & 0 \\
+Urban Mobility & 135 (portfolio) & €1B (portfolio value) & 0 \\
+\midrule
+\textbf{Total} & \textbf{9,900+} & \textbf{€9.5+ billion} & \textbf{8+} \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Startup support and investment by KIC}
+\labtab{eit-startups}
+\end{center}
+\normalsize
+
+\sidenote{\textbf{InnoEnergy Dominance}---80\%+ of investment due to equity model and capital-intensive focus.}
+
+\subsection*{Regional Innovation Scheme}
+
+The \textbf{EIT Regional Innovation Scheme (RIS)}, introduced in 2014, dedicates 10--15\% of EIT funding to activities in ``modest and moderate innovator'' countries---primarily Central, Eastern, and Southern Europe. Ten-year results (2014--2024):
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{22+ eligible countries/territories} including Western Balkans, EU Outermost Regions
+\item \textbf{324,000} people skilled or upskilled
+\item \textbf{€3.23 billion} investment attracted to RIS regions
+\item \textbf{1,231 startups} supported (2024)
+\item Western Balkans participation \textbf{6× higher} than overall Horizon participation rate
+\end{itemize}
+
+In late 2024, EIT launched \textbf{16 new ``EIT Community Hubs''} in countries including Bulgaria, Croatia, Estonia, Latvia, Malta, Slovenia, plus Ukraine and Western Balkans states---single points of access for local entrepreneurs to engage with all KICs.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Partnership Architecture and Network Structure}
+\labsec{eit:partnerships}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Understanding KIC partnership models is essential for cartographic analysis of role constellations.
+
+\subsection*{Partnership Tiers}
+
+KICs employ tiered membership structures with varying rights and obligations:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Core/Strategic Partners] Full governance participation, voting rights, activity leadership. Annual fees: €11,250--€75,000+
+\item[Associate/Delivery Partners] Implementation focus, limited governance voice. Fees: €4,500--€30,000
+\item[Community Members/Affiliates] Network access, event participation, no strategic role. Fees: €500--€2,500
+\end{description}
+
+\sidenote{\textbf{Partner Types}---Universities dominate numerically; corporations provide most co-funding.}
+
+\textbf{Seven-Year Partnership Agreements} define KIC-EIT relationships, setting performance targets, funding trajectories, and evaluation milestones. \textbf{Specific Grant Agreements} cover annual or multi-annual implementation.
+
+\subsection*{Cross-KIC Collaboration}
+
+Despite operating as separate legal entities, KICs collaborate through several mechanisms:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{EIT Houses}: Joint co-location in Brussels, Budapest, Berlin, Espoo, Paris, Stockholm
+\item \textbf{Thematic initiatives}: Circular Economy Cross-KIC (6 KICs, $\sim$1,000 initiatives)
+\item \textbf{EIT Jumpstarter}: Cross-KIC pre-accelerator for idea-stage entrepreneurs since 2017
+\item \textbf{Girls Go Circular}: 80,000+ students, 30+ countries (RawMaterials coordinating with Manufacturing, Climate-KIC, Food)
+\item \textbf{Deep Tech Talent Initiative}: 768,000 pledged training places, 114 pledge members
+\end{itemize}
+
+\subsection*{Partner Overlap}
+
+Major organizations participate across multiple KICs, creating network interconnections:
+
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item \textbf{Universities}: TU Munich (4 KICs), KU Leuven, Imperial College, ETH Zürich, Politecnico di Milano
+\item \textbf{Corporations}: Siemens (4 KICs), Bayer, SAP, Philips, ABB
+\end{itemize}
+
+\begin{importantbox}
+\textbf{Data gap for cartography.} No consolidated public database maps partner membership across KICs or tracks partnership dynamics over time. Individual KIC directories must be cross-referenced manually---a gap this dissertation's multimodal approach helps address.
+\end{importantbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Policy Context and Current Debates}
+\labsec{eit:policy}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The EIT operates within \textbf{Pillar III ``Innovative Europe''} of Horizon Europe, alongside the European Innovation Council (EIC) and European Innovation Ecosystems program. KICs are formally recognized as ``Institutionalised European Partnerships''---long-term public-private partnerships delivering EU-wide impact.
+
+\sidenote{\textbf{Green Deal Alignment}---5 of 8 KICs support Green Deal objectives.}
+
+\subsection*{Strategic Alignments}
+
+EIT KICs serve as implementation arms for major EU policy initiatives:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.2em]
+\item[European Green Deal] Climate-KIC targets 500Mt CO$_2$ avoided by 2027; InnoEnergy leads three industrial alliances
+\item[Critical Raw Materials Act] RawMaterials manages ERMA implementation
+\item[Farm to Fork Strategy] Food's core programmatic alignment
+\item[Digital Decade] Digital leads Deep Tech Talent Initiative (1 million training target)
+\item[New European Innovation Agenda] EIT assigned key roles in Flagship 1 (Deep Tech Talent) and Flagship 4 (Regional Innovation Valleys)
+\end{description}
+
+\subsection*{The Existential Debate}
+
+As the EU prepares Framework Programme 10 (post-2027), EIT faces its most significant policy challenge. In January 2025, the \textbf{Danish government position paper} called for EIT discontinuation:
+
+\begin{criticalbox}[The Danish Critique]
+``The time has come to discontinue the EIT as a separate entity... Stakeholders find it increasingly difficult to identify added value... There is significant overlap with EIC and Erasmus+.'' Latvia supported this position.
+\end{criticalbox}
+
+\sidenote{\textbf{EIT Response}---Financial sustainability proves the model; EIC merger would be ill-advised.}
+
+The \textbf{ITRE Committee Draft Report (2024)} characterized EIT as ``non-core, redundant and underperforming,'' recommending radical reform including ``significant reductions (or elimination) of FP funding.''
+
+These debates make the current moment particularly valuable for research: the ecosystem is simultaneously demonstrating maturation (financial sustainability achievements) while facing existential questions about its future form.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{The EIT in Academic Literature}
+\labsec{eit:literature}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Despite €6 billion cumulative investment, \textbf{academic research on EIT is surprisingly sparse}. Most systematic analyses come from grey literature---evaluation reports, Court of Auditors assessments---rather than peer-reviewed journals.
+
+\sidenote{\textbf{Theoretical Lenses}---Triple Helix, intermediary theory, ecosystems.}
+
+Key contributions include Maassen \& Stensaker's (2011) critique of the ``instrumental vision'' underlying knowledge triangle policy in \emph{Higher Education}, and Leceta \& Ranga's (2020) application of ecosystem frameworks to EIT Digital in \emph{Innovation}. Climate-KIC has received the most attention, reflecting connections with sustainability transitions research.
+
+\subsection*{Methodological Gaps}
+
+The literature reveals significant opportunities:
+
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{No published social network analysis} of KIC partner networks, knowledge flows, or collaboration patterns
+\item \textbf{No bibliometric studies} tracking EIT-funded research outputs
+\item \textbf{No patent/co-patenting analyses} across the ecosystem
+\item \textbf{Limited longitudinal research} tracking evolution over 15 years
+\item \textbf{No rigorous counterfactual analysis} of additionality (what would have happened without EIT?)
+\item \textbf{No systematic comparison} of intermediary role configurations across KICs
+\end{enumerate}
+
+This dissertation addresses several of these gaps through multimodal cartographic methods.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Why EIT for This Study}
+\labsec{eit:rationale}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The EIT ecosystem provides an ideal empirical laboratory for developing and demonstrating multimodal cartography of intermediary role constellations. Several features make it particularly suitable:
+
+\sidenote{\textbf{Empirical Advantages}---Designed intermediaries, transition relevance, rich traces, 15-year history.}
+
+\textbf{Designed intermediaries.} KICs are explicitly created as intermediaries---their core purpose is connecting, translating, and facilitating between knowledge triangle actors. If we want to understand intermediary role constellations, studying organizations designed for intermediation provides an exceptionally clear case.
+
+\textbf{Transition relevance.} Five of eight KICs directly address sustainability transition domains: climate, energy, raw materials/circularity, food, and urban mobility. The ecosystem offers a laboratory for examining how intermediary configurations shape---and are shaped by---transition dynamics.
+
+\textbf{Structural variation.} Eight KICs with different thematic foci, partnership models, geographic configurations, and strategic approaches provide natural variation for comparative analysis. Why do some constellations take hub-and-spoke forms while others are more distributed? How do intermediary roles differ across sectors?
+
+\textbf{Temporal depth.} Fifteen years of operation---with documented milestones, evaluations, and strategic pivots---enables longitudinal analysis of how role constellations evolve. The current inflection point (first-wave financial sustainability, policy debates about EIT's future) makes this a particularly rich moment for study.
+
+\textbf{Digital traces.} EIT organizations leave extensive digital footprints: websites documenting missions and partnerships, news coverage of activities, CORDIS project databases, Dealroom startup portfolios, social media presence. These traces are amenable to systematic multimodal analysis.
+
+\textbf{Policy relevance.} Understanding EIT matters beyond academic interest. Billions of euros in public investment depend on whether this model works. Cartographic analysis can inform ongoing debates about EIT's structure, added value, and future.
+
+\begin{insightbox}[A Note of Caution]
+The EIT is not a typical innovation ecosystem. It was designed, funded, and governed by policy---not grown organically. Its intermediaries were purpose-built, not emergent. This makes findings valuable for understanding \emph{how intermediary roles can be designed} but requires caution in generalizing to ecosystems where intermediation emerges spontaneously. The maps we draw are maps of \emph{this} terrain. Whether other terrains look similar remains an empirical question.
+\end{insightbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Summary and Transition}
+\labsec{eit:summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item The \textbf{EIT} was established in 2008 to address the ``European paradox'' by integrating the knowledge triangle of education, research, and business.
+
+\item \textbf{Eight Knowledge and Innovation Communities} operate as autonomous public-private partnerships across climate, energy, digital, health, raw materials, food, manufacturing, and urban mobility domains.
+
+\item The ecosystem has grown to \textbf{2,420+ partner organizations} across \textbf{70+ innovation hubs}, supporting \textbf{9,900+ startups} that have attracted \textbf{€9.5B+ in investment}.
+
+\item First-wave KICs (Climate-KIC, InnoEnergy, Digital) achieved \textbf{financial sustainability} in 2024--2025 after 15 years of operation.
+
+\item KICs exhibit \textbf{markedly different intermediary profiles}: Climate-KIC's systems innovation approach, InnoEnergy's investment model, Digital's education focus, Urban Mobility's city-centric design.
+
+\item The \textbf{Regional Innovation Scheme} has supported 324,000 learners and attracted €3.23B to less-developed regions.
+
+\item Current \textbf{policy debates} about EIT's post-2027 future create a particularly valuable research moment.
+
+\item \textbf{Academic literature gaps}---no network analysis, no systematic role comparison, limited longitudinal research---create significant opportunities for dissertation contribution.
+
+\item The ecosystem's combination of \textbf{designed intermediation, transition relevance, structural variation, temporal depth, and digital traces} makes it an ideal laboratory for multimodal cartographic methods.
+\end{itemize}
+\end{summarybox}
+
+\vspace{1em}
+
+We now have the terrain to be mapped. The eight KICs, with their distinctive intermediary profiles, constitute a role constellation at European scale---designed to integrate knowledge triangles, orchestrate innovation ecosystems, and accelerate sustainability transitions. But \emph{how} do these roles actually configure? Where do KICs position themselves relative to each other and to their partner networks? How have their role profiles evolved over 15 years?
+
+\sidenote{\faArrowRight\ \textit{Next:} Chapter~\ref{ch:theory}---Theoretical Framework: developing the conceptual apparatus for multimodal role constellation cartography.}
+
+To answer these questions requires moving from description to cartography---from cataloguing what KICs \emph{are} to mapping the relational terrain they inhabit. The theoretical framework developed in the next chapter provides the conceptual apparatus for this cartographic work. The empirical chapters that follow demonstrate its application.
+
+\vspace{1cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[CoverGold] (-2,0) rectangle (-1.7,0.08);
+    \fill[AccentPurple] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[AccentCyan] (-1,0) rectangle (-0.7,0.08);
+    \fill[PandaBamboo] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[PandaRose] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+% End intermezzo and restore page numbering
+\closeintermezzo
+
+\end{document}

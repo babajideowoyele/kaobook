@@ -1,0 +1,98 @@
+%========================================================================================
+% MINIMAL TEST FILE
+%========================================================================================
+\documentclass[
+    fontsize=10pt,
+    a4paper,
+    twoside=true,
+    open=any,
+    secnumdepth=2,
+    numbers=noenddot,
+]{kaobook}
+
+\RequirePackage{iftex}
+\ifxetex\else\ifluatex\else
+  \ClassError{kaobook}{This template requires XeLaTeX or LuaLaTeX}{}
+\fi\fi
+
+\usepackage{subfiles}
+\usepackage[firasans]{kaofonts}
+\usepackage{kaoci-rolebox}
+
+\usepackage{graphicx}
+\graphicspath{{figures/}{chapters/}{./}}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{colortbl}
+
+\usepackage{kaobiblio}
+
+\usepackage[framed]{kaotheorems}
+\usepackage{kaorefs}
+
+\usepackage{amsmath,mathtools}
+\usepackage{listings}
+\usepackage{fontawesome5}
+
+\newcommand{\RoleBox}{\textsc{RoleBox}}
+\newcommand{\RoleSim}{\textsc{RoleSim}}
+\newcommand{\myauthor}{Test Author}
+\newcommand{\mytitle}{Test Title}
+\newcommand{\myuniversity}{Test University}
+\newcommand{\mydepartment}{Test Department}
+\newcommand{\mypromotor}{Test Promotor}
+\newcommand{\mycopromotorA}{Test Copromotor A}
+\newcommand{\mycopromotorB}{Test Copromotor B}
+\newcommand{\mydate}{2025}
+
+\title{\mytitle}
+\author{\myauthor}
+\date{\mydate}
+
+\setcounter{margintocdepth}{1}
+
+\begin{document}
+
+\frontmatter
+\tableofcontents
+
+\mainmatter
+\setchapterstyle{kao}
+
+\chapter{Test Chapter}
+
+\section{Test Section}
+
+This is a test.
+
+\begin{definition}[Test Definition]
+This is a test definition to check if the environment works.
+\end{definition}
+
+\begin{mainrq}
+This is a main research question.
+\end{mainrq}
+
+\begin{subrq}
+This is a sub-research question.
+\end{subrq}
+
+\begin{chapteroverview}
+This is a chapter overview.
+\end{chapteroverview}
+
+\begin{summarybox}
+This is a summary box.
+\end{summarybox}
+
+\backmatter
+
+\end{document}

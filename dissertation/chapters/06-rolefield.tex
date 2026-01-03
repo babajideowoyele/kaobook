@@ -1,0 +1,423 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{ROLEFIELD: Mapping the Innovation Intermediary Field}
+\labch{rolefield}
+\margintoc
+
+\begin{chapteroverview}
+This chapter complements the inside-out perspective of the previous chapter with an outside-in approach. Rather than asking how KICs describe their relationships, we ask: how do external observers classify KICs and related actors? Using social curation methods, we map the European innovation intermediary field, identify sub-regions, and triangulate external classifications with internal role configurations.
+\end{chapteroverview}
+
+\begin{quote}
+\textit{``Classifications are tools in strategies of inclusion and exclusion: whom to relate to and whom to isolate. They symbolize and consolidate patterns of inclusion and exclusion because they transform them into identities, which are taken for granted later on.''}\\
+--- Wouter De Nooy (2003)
+\end{quote}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Introduction: Opening the Field}
+%═══════════════════════════════════════════════════════════════════════════════
+\labsec{intro}
+
+The previous chapter developed a structural approach to understanding how EIT Knowledge and Innovation Communities constitute their relational environments through the role identity configurations embedded in their own communications. That analysis proceeded from organizational self-presentation outward---extracting how KICs position themselves toward constituencies through claimed practices and attributed counterroles.
+
+This chapter complements that inside-out perspective with an outside-in approach.\sidenote{\textbf{Triangulation}---the combination of inside-out (organizational self-presentation) and outside-in (external classification) perspectives offers methodological triangulation on field structure.} Rather than asking how KICs describe their relationships, we ask: how do external observers classify KICs and related actors? Who gets grouped together, and what does this reveal about the perceived structure of the European innovation intermediary field?
+
+We draw on recent methodological innovations in field identification that leverage social curation mechanisms. The proliferation of online platforms has generated vast quantities of classification data---acts by which users categorize, group, and curate content and actors. When aggregated, these individual classification acts can reveal ``local orders, products of the collective rationality of their constituents.'' Users who create lists of actors they perceive as related function as social curators, and their accumulated judgments mirror prevalent perceptions of field structure.
+
+This approach addresses limitations of conventional field studies:\sidenote{\textbf{Conventional limits}---these critiques echo our earlier concerns about categorical approaches that predetermine field membership.}
+
+\begin{enumerate}
+    \item \textbf{Organizational form restrictions}: Studies typically focus on firm-centric forms, neglecting the heterogeneity of actors that fields actually contain
+    \item \textbf{Industry/sector boundaries}: Using industry classifications as starting points presets who can be observed as field members
+    \item \textbf{Attribute-based definitions}: Defining actors by attributes rather than relations obscures the relational structure fields should foreground
+\end{enumerate}
+
+The EIT ecosystem presents an ideal setting for this methodology. As interstitial organizations operating across the knowledge triangle, KICs cannot be adequately captured by any single industry classification. Their constituencies span universities, research institutes, corporations, startups, government agencies, and civil society---actor types that conventional field studies would treat as belonging to separate domains. A curation-based approach can identify which actors external observers perceive as belonging to the same relational space, regardless of organizational form or sector membership.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Methodology: Social Curation as Field Identification}
+%═══════════════════════════════════════════════════════════════════════════════
+\labsec{methods}
+
+\subsection{The Logic of Co-Classification}
+
+Our methodology rests on the informational value of classification acts.\sidenote{\textbf{Social curation}---the accumulation of individual classification acts that collectively reveal structured perceptions of who belongs together.} When a Twitter user creates a list and adds multiple accounts to it, they implicitly assert that these accounts belong together in some meaningful sense. The reasons for grouping may vary---shared topic, similar roles, geographic proximity, ideological alignment---but repeated co-classification by independent curators suggests genuine relational proximity.
+
+Formally, we define a connection between two actors as follows:
+
+\begin{definition}[Co-classification connection]
+Two actors $a_i$ and $a_j$ are connected with weight $w_{ij}$ if they are jointly classified in at least $k$ lists by independent curators:
+\begin{equation}
+    w_{ij} = |\{L : a_i \in L \wedge a_j \in L\}| \geq k
+\end{equation}
+where $L$ ranges over all curated lists and $k$ is a threshold parameter (default: $k = 3$).
+\end{definition}
+
+This operationalization has several advantages over hyperlink-based field mapping:\sidenote{\textbf{Hyperlinks vs.\ curation}---hyperlink analysis captures intentional linking decisions by organizations; co-classification captures perceptions by external observers.}
+
+\begin{itemize}
+    \item \textbf{External perspective}: Classifications are made by observers, not the classified actors themselves
+    \item \textbf{Symmetric relations}: Co-classification is inherently undirected, avoiding artifacts of linking conventions
+    \item \textbf{Third-party validation}: Connection requires multiple independent curators to agree
+    \item \textbf{Actor-type agnosticism}: Lists can include any actor type without preconditions
+\end{itemize}
+
+
+\subsection{Six-Step Procedure}
+
+We implement a six-step procedure:\sidenote{\textbf{Iterative expansion}---the procedure iteratively expands from seed actors, enabling field discovery without predetermined boundaries.}
+
+\begin{enumerate}
+    \item \textbf{Seed selection}: Identify a small number of Twitter accounts that are core participants in the field of interest
+    \item \textbf{Network discovery}: For each seed, identify related accounts through list co-memberships
+    \item \textbf{Denoising}: Remove weakly connected actors using random walk centrality
+    \item \textbf{Network merging}: Combine seed networks into a single field representation
+    \item \textbf{Visualization}: Apply force-directed layout for visual exploration
+    \item \textbf{Sub-region identification}: Detect communities and characterize through content analysis
+\end{enumerate}
+
+Steps 2--3 warrant elaboration. For each seed account $s$:
+
+\begin{enumerate}
+    \item Collect all lists $\mathcal{L}_s$ of which $s$ is a member (filtering lists with $>500$ members as likely bot-generated)
+    \item For each list $L \in \mathcal{L}_s$, collect all members
+    \item Retain members with $\geq k$ lists in common with $s$
+    \item Repeat for each retained member (one additional hop)
+    \item Result: Two-ring network around seed
+\end{enumerate}
+
+Denoising removes peripheral actors through simulated random walks:\sidenote{\textbf{Random walk denoising}---retains actors through which relational ``traffic'' flows, removing tangentially connected nodes.}
+
+\begin{enumerate}
+    \item Simulate many two-step random walks from $s$, weighted by co-classification strength
+    \item Count visits to each actor
+    \item Remove actors with below-average visit counts
+\end{enumerate}
+
+This preserves actors densely connected to the seed while removing noise.
+
+
+\subsection{Sub-Region Detection and Content Analysis}
+
+After merging seed networks, we detect sub-regions using the Louvain algorithm, which identifies groups of actors more densely connected internally than externally.\sidenote{\textbf{Modularity optimization}---the Louvain algorithm optimizes modularity without requiring a predetermined number of communities.} This definition converges with field-theoretic notions that ``participants interact more frequently and fatefully with one another than with actors outside the field.''
+
+For each sub-region, we conduct content analysis on Twitter biographies---the 255-character self-descriptions users write. Processing includes:
+
+\begin{itemize}
+    \item Language detection (preserving multilingual sub-regions)
+    \item N-gram extraction (capturing multi-word expressions like ``social innovation'' or ``climate tech'')
+    \item TF-IDF weighting to identify characteristic vocabulary
+\end{itemize}
+
+The most frequent terms characterize each sub-region's identity, enabling interpretation of what binds its members.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Data Collection: Seeding the EIT Field}
+%═══════════════════════════════════════════════════════════════════════════════
+\labsec{data}
+
+\subsection{Seed Selection Criteria}
+
+Seed selection determines the field that emerges.\sidenote{\textbf{Researcher judgment}---seed selection embeds researcher judgment about what constitutes the field's core---a feature, not a bug, enabling reproducibility and exploration.} Guidelines for selection:
+
+\begin{enumerate}
+    \item Seeds should be selected by domain experts
+    \item Seeds should be moderately active on Twitter (belonging to dozens of lists)
+    \item Seeds should be ``spread apart''---not too similar, to capture field diversity
+    \item Seeds should be specific to the field (avoiding multifaceted actors)
+\end{enumerate}
+
+For the European innovation intermediary field centered on EIT, we select seeds spanning:
+
+\begin{itemize}
+    \item \textbf{Institutional level}: @EIT\_EU (the EIT itself)
+    \item \textbf{Established KICs}: @ClimateKIC, @EITDigital, @InnoEnergy
+    \item \textbf{Newer KICs}: @EITHealth, @EITFood, @EIT\_Urban
+    \item \textbf{Cross-cutting}: @EITCommunity (alumni network)
+\end{itemize}
+
+This selection captures the EIT ecosystem's institutional core while varying by thematic domain and organizational maturity.
+
+\begin{margintable}
+\centering
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{Seed Account} & \textbf{Type} \\
+\midrule
+@EIT\_EU & Institutional \\
+@ClimateKIC & Established KIC \\
+@EITDigital & Established KIC \\
+@InnoEnergy & Established KIC \\
+@EITHealth & Newer KIC \\
+@EITFood & Newer KIC \\
+@EIT\_Urban & Newer KIC \\
+@EITCommunity & Cross-cutting \\
+\bottomrule
+\end{tabular}
+\caption{Seed accounts for field mapping}
+\labtab{seeds}
+\end{margintable}
+
+
+\subsection{Data Collection Infrastructure}
+
+We collected data from Twitter's API prior to API access restrictions implemented in 2023.\sidenote{\textbf{Platform changes}---alternative platforms (Bluesky, Mastodon) offer similar list functionality for future replication.} The collection comprised:
+
+\begin{itemize}
+    \item Twitter user profiles
+    \item Public lists
+    \item List membership relations stored in key-value database
+\end{itemize}
+
+For each seed, we applied the discovery procedure with parameters:
+\begin{itemize}
+    \item Minimum co-classification threshold: $k = 3$
+    \item Maximum lists per user: 100
+    \item Maximum users per ring: 10,000 (ring 1), 100,000 (ring 2)
+\end{itemize}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Findings: Structure of the Innovation Intermediary Field}
+%═══════════════════════════════════════════════════════════════════════════════
+\labsec{findings}
+
+\subsection{Aggregate Network Properties}
+
+Merging the eight seed networks produced a connected network of actors linked by co-classification relations.\sidenote{\textbf{Connectedness}---the network's connectedness confirms that seeds belong to a coherent relational space, not isolated sub-fields.} Key properties include:
+
+\begin{itemize}
+    \item Single connected component---all seeds tap into the same underlying field
+    \item Moderate density---actors are selectively rather than uniformly connected
+    \item Clear modularity---distinct sub-regions emerge from community detection
+\end{itemize}
+
+The single connected component confirms that all seeds---despite spanning different thematic domains---are perceived by external curators as belonging to a unified relational space.
+
+
+\subsection{Sub-Region Structure}
+
+Louvain community detection identified ten primary sub-regions.\sidenote{\textbf{ForceAtlas2}---the visualization uses ForceAtlas2 layout: connected actors attract, unconnected actors repel.} Content analysis of Twitter biographies reveals characteristic vocabulary for each sub-region:
+
+\begin{center}
+\small
+\begin{tabular}{clp{5cm}}
+\toprule
+\textbf{ID} & \textbf{Label} & \textbf{Characteristic Terms} \\
+\midrule
+1 & Climate \& Sustainability & climate, sustainable, energy, green, carbon, environment \\
+2 & Digital \& Tech Startups & startup, tech, digital, innovation, entrepreneur, founder \\
+3 & Health Innovation & health, healthcare, patient, medtech, biotech, pharma \\
+4 & EU Policy \& Funding & EU, European, policy, Horizon, research, funding \\
+5 & Higher Education & university, professor, research, academic, PhD, education \\
+6 & Impact \& Social Innovation & impact, social, SDG, sustainable, purpose, change \\
+7 & Food \& Agriculture & food, agri, farm, sustainable, agriculture, nutrition \\
+8 & Urban \& Mobility & city, urban, mobility, transport, smart, future \\
+9 & Venture Capital & VC, investor, fund, portfolio, invest, venture \\
+10 & Corporate Innovation & corporate, innovation, R\&D, strategy, transformation \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Sub-regions identified through community detection}
+\end{center}
+
+
+\subsection{Actor Heterogeneity}
+
+A key advantage of curation-based field mapping is capturing actor heterogeneity.\sidenote{\textbf{Actor heterogeneity}---the presence of diverse organizational forms---is theoretically expected in fields but often empirically obscured by data source limitations.} Manual coding of a random sample reveals substantial diversity:
+
+\begin{itemize}
+    \item \textbf{Individuals} (professionals, researchers, entrepreneurs)
+    \item \textbf{Startups and SMEs}
+    \item \textbf{Research institutions}
+    \item \textbf{Universities}
+    \item \textbf{Large corporations}
+    \item \textbf{Government and public agencies}
+    \item \textbf{NGOs and nonprofits}
+    \item \textbf{Media and publications}
+    \item \textbf{Industry associations}
+    \item \textbf{Investment funds}
+\end{itemize}
+
+This heterogeneity---spanning individuals, organizations of various forms, and intermediaries of different types---confirms the field's interstitial character. No single organizational form dominates; the field is constituted precisely by relations among diverse actors.
+
+
+\subsection{KIC Positioning Within the Field}
+
+Where do the KICs themselves sit within this externally-perceived field structure?\sidenote{\textbf{Central vs.\ peripheral}---KIC positioning reveals whether external observers perceive KICs as central integrators or peripheral specialists.}
+
+KICs occupy characteristic positions:
+
+\begin{itemize}
+    \item \textbf{Thematic anchoring}: Each KIC sits near the center of its thematic sub-region (EIT Health near Health Innovation, EIT Food near Food \& Agriculture, etc.)
+    \item \textbf{Cross-regional bridging}: KICs maintain connections to multiple sub-regions, particularly to EU Policy \& Funding and Higher Education
+    \item \textbf{Relative centrality}: The EIT institutional account occupies a central position with connections across all thematic sub-regions
+\end{itemize}
+
+This positioning confirms the KICs' interstitial character: they are perceived as belonging to their thematic domains while also bridging to the broader innovation ecosystem.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Triangulation: External Classification Meets Internal Configuration}
+%═══════════════════════════════════════════════════════════════════════════════
+\labsec{triangulation}
+
+The previous chapter identified sociotype configurations from KIC self-presentations; this chapter identifies field structure from external classifications. How do these perspectives align?\sidenote{\textbf{Validity check}---triangulation between internal and external perspectives tests whether organizational self-understanding corresponds to external perception.}
+
+\subsection{Mapping Sociotypes to Sub-Regions}
+
+We can ask: do the sociotype configurations identified internally correspond to the sub-regions identified externally?
+
+\begin{center}
+\small
+\begin{tabular}{lp{4cm}p{4cm}}
+\toprule
+\textbf{Sociotype} & \textbf{Internal Character} & \textbf{Corresponding Sub-Regions} \\
+\midrule
+Connective & Platform, broker, ecosystem builder & Distributed across sub-regions; not localized \\
+Acceleration & Startup support, funding, scaling & Venture Capital; Digital \& Tech Startups \\
+Development & Education, training, certification & Higher Education \\
+Knowledge & Research, discovery, validation & Research institutions; Higher Education \\
+Accountability & Impact delivery, policy contribution & EU Policy \& Funding; Impact \& Social Innovation \\
+Sectoral & Domain-specific stakeholders & Thematic sub-regions (Climate, Health, Food, etc.) \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Correspondence between internal sociotypes and external sub-regions}
+\end{center}
+
+Key observations:
+
+\begin{enumerate}
+    \item \textbf{Connective configuration is not a sub-region}: The ecosystem orchestration that KICs claim internally does not correspond to a distinct external sub-region. This makes sense: connection is a \textit{function}, not a \textit{domain}. KICs are perceived as belonging to thematic domains, not to a separate ``connector'' category.
+
+    \item \textbf{Sectoral configurations map to thematic sub-regions}: The domain-specific counterroles KICs address (patients, farmers, cities) correspond to externally-identified thematic communities. External classification validates internal sectoral positioning.
+
+    \item \textbf{Accountability configuration corresponds to EU Policy sub-region}: The peripheral Accountability sociotype identified internally corresponds to a distinct external sub-region focused on EU policy and funding. This suggests that accountability relationships, while compartmentalized internally, are recognized externally as a coherent relational space.
+\end{enumerate}
+
+
+\subsection{Bridging Roles}
+
+Which actors bridge sub-regions in the external classification?\sidenote{\textbf{Bridging actors}---occupy positions analogous to multivocal categories; they connect distinct sub-regions through classification overlap.} We compute bridging scores based on cross-sub-region connections:
+
+\begin{equation}
+    B_i = \frac{\sum_{j: c_j \neq c_i} w_{ij}}{\sum_j w_{ij}}
+\end{equation}
+
+where $c_i$ is actor $i$'s sub-region assignment. High bridging scores indicate actors who connect across sub-regions.
+
+High-bridging actors tend to be:
+\begin{itemize}
+    \item Umbrella organizations (EIT, European Commission units)
+    \item Media outlets covering innovation broadly
+    \item Individuals with multi-domain expertise
+    \item Funding organizations with cross-sectoral portfolios
+\end{itemize}
+
+This external bridging structure partially validates the internal finding that ecosystem orchestration is central: the actors perceived as most cross-regional are precisely those claiming connector roles.
+
+
+\subsection{Conforming vs.\ Interfacing Strategies}
+
+Two strategic positions actors can occupy:
+
+\begin{itemize}
+    \item \textbf{Conforming}: Interacting primarily with peers within one's sub-region, reinforcing boundaries
+    \item \textbf{Interfacing}: Maintaining connections both within and across sub-regions, serving as conduits
+\end{itemize}
+
+We operationalize these through the ratio of within-sub-region to cross-sub-region connections.\sidenote{\textbf{Interface pattern}---conforming actors have high within-region ratios; interfacing actors have balanced ratios.} KICs exhibit an \textbf{interfacing} pattern: they are classified with their thematic peers but also maintain substantial cross-regional classification. This external validation supports the internal finding that KICs exploit multivocal categories to satisfy diverse constituencies.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Discussion: What External Classification Reveals}
+%═══════════════════════════════════════════════════════════════════════════════
+\labsec{discussion}
+
+\subsection{The Field as Perceived}
+
+The curation-based approach reveals how external observers perceive the European innovation intermediary field.\sidenote{\textbf{Perception vs.\ reality}---external classification captures the field as it exists in collective perception, not just organizational aspiration.} Several findings merit discussion:
+
+\textbf{Thematic organization}: The field is primarily organized thematically (climate, health, digital, food, urban) rather than by organizational type or geographic region. This suggests that external observers perceive EIT's knowledge triangle integration through sectoral lenses, not through abstract functional categories.
+
+\textbf{EU policy as distinct region}: The identification of a distinct EU Policy \& Funding sub-region confirms that the public accountability dimension---peripheral in KIC self-presentation---is recognized externally as a coherent relational space. Actors in this sub-region (European Commission units, funding agencies, policy researchers) form their own community, connected to but distinct from thematic domains.
+
+\textbf{Individual prominence}: The high proportion of individual actors (professionals, entrepreneurs, researchers) in the identified field underscores that fields are constituted by persons, not just organizations. KICs' constituencies include not just partner institutions but the individuals who inhabit them.
+
+
+\subsection{Limitations of External Classification}
+
+External classification captures perception, not necessarily reality.\sidenote{\textbf{Perception limits}---classification reflects what curators \textit{perceive} as belonging together, which may diverge from actual interaction patterns.} Several limitations apply:
+
+\begin{itemize}
+    \item \textbf{Curator bias}: Twitter list creators are not representative; their classifications reflect particular vantage points
+    \item \textbf{Platform specificity}: Actors absent from Twitter are invisible; field structure may differ on other platforms
+    \item \textbf{Temporal snapshot}: Classification reflects a moment; field structure evolves
+    \item \textbf{Semantic ambiguity}: Co-classification does not reveal \textit{why} actors are grouped together
+\end{itemize}
+
+These limitations make triangulation with internal perspectives essential. Where external classification and internal configuration align, we gain confidence in findings; where they diverge, we gain insight into gaps between perception and self-understanding.
+
+
+\subsection{Methodological Contributions}
+
+This chapter demonstrates the value of curation-based field mapping for studying innovation intermediaries:\sidenote{\textbf{Issue agnostic}---the methodology is applicable to any field where actors maintain social media presence.}
+
+\begin{enumerate}
+    \item \textbf{Actor heterogeneity}: The method captures diverse actor types without organizational form restrictions
+    \item \textbf{Boundary fluidity}: Field boundaries emerge from classification patterns rather than analyst predetermination
+    \item \textbf{Relational structure}: Sub-region detection reveals how the field is internally differentiated
+    \item \textbf{Comparative potential}: The method applies across fields, enabling comparative research
+\end{enumerate}
+
+For the EIT ecosystem specifically, the method enables tracking how the innovation intermediary field evolves as KICs mature and new actors enter.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Conclusion}
+%═══════════════════════════════════════════════════════════════════════════════
+\labsec{conclusion}
+
+This chapter has mapped the European innovation intermediary field through social curation---the accumulated classification acts by which external observers group actors together. The resulting field structure complements and validates the internal sociotype configurations identified in the previous chapter.
+
+Key findings include:
+
+\begin{itemize}
+    \item The field is organized primarily by thematic domain, with distinct sub-regions for climate, health, digital, food, and urban innovation
+    \item KICs occupy positions that anchor their respective thematic sub-regions while bridging to the broader ecosystem
+    \item Actor heterogeneity is substantial: individuals, startups, universities, corporations, and government agencies all participate in the field
+    \item EU policy and funding constitutes a distinct sub-region, externally validating the internal accountability configuration
+\end{itemize}
+
+The triangulation of internal and external perspectives suggests that KICs' interstitial character is not merely self-proclaimed but externally recognized.\sidenote{\textbf{External validation}---strengthens claims about KICs' distinctive organizational character.} External observers classify KICs as belonging to their thematic domains while also recognizing their cross-domain bridging function.
+
+Future research might extend this approach temporally, tracking how field structure evolves as the EIT ecosystem matures. Comparative application to other innovation intermediary ecosystems would test whether the structural patterns identified here are specific to EIT or characteristic of innovation intermediaries more broadly.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Chapter Summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Social curation} methods leverage external classification acts to map field structure without predetermined boundaries.
+
+\item \textbf{Ten sub-regions} characterize the European innovation intermediary field: Climate \& Sustainability, Digital \& Tech, Health, EU Policy, Higher Education, Impact, Food, Urban, Venture Capital, and Corporate Innovation.
+
+\item \textbf{KICs occupy interfacing positions}---anchoring thematic sub-regions while bridging to the broader ecosystem.
+
+\item \textbf{Actor heterogeneity} is substantial, spanning individuals, startups, universities, corporations, and government agencies.
+
+\item \textbf{Triangulation} between internal sociotypes and external sub-regions validates KICs' interstitial character.
+
+\item The \textbf{Connective sociotype} does not map to an external sub-region---connection is a function, not a domain.
+\end{itemize}
+\end{summarybox}
+
+\end{document}

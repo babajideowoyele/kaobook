@@ -1,0 +1,898 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Methodology: Design Science Research for Cartographic Innovation}
+\labch{method}
+\margintoc
+
+\begin{chapteroverview}
+This chapter explains \textit{how} we conducted this research. We employed \textbf{Design Science Research} (DSR)---a methodology suited for building and evaluating artifacts that solve real problems. Our artifact is the \RoleBox toolkit for multimodal cartography of intermediary role constellations. This chapter establishes why DSR fits our goals, details the systematic process we followed, documents our data collection and analytical workflows, and addresses rigor and limitations with transparency.
+\end{chapteroverview}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{The Methodological Challenge}
+\labsec{method:challenge}
+%═══════════════════════════════════════════════════════════════════════════════
+
+This dissertation faces an unusual methodological challenge. We are not merely testing hypotheses against existing data or building theory from qualitative interpretation. We are \textit{building something}---a toolkit for mapping role constellations that does not yet exist.
+
+\sidenote{\faPuzzlePiece\ \textbf{The core challenge}---We needed methods that didn't exist. So we had to build them. That requires a different kind of research.}
+
+Chapter~\ref{ch:background} identified a \textbf{cartographic gap}: the field has sophisticated conceptual frameworks for thinking about intermediary roles but lacks methodological tools adequate to its own insights. Categories abound; maps are absent. The literature tells us \emph{what kinds} of intermediaries exist but cannot show us \emph{where} they are positioned relative to each other, how their constellations form, or how those constellations evolve.
+
+Traditional research methodologies do not quite fit this challenge:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Quantitative methods] assume measures already exist. We needed to create them---operationalizing ``role'' across multiple data modalities where no validated instruments exist.
+\item[Qualitative methods] assume phenomena to interpret. We needed to build infrastructure for systematic observation before interpretation could begin.
+\item[Mixed methods] combine existing approaches. We needed something genuinely new---not a combination of established techniques but novel methods for a novel problem.
+\end{description}
+
+What we required was a methodology for \textit{building and evaluating research tools}---creating artifacts that enable new kinds of inquiry while simultaneously using those artifacts to generate substantive findings.
+
+\begin{insightbox}[The Cartographer's Dilemma]
+A cartographer mapping unknown territory faces a bootstrapping problem: you need methods to create maps, but the adequacy of methods can only be assessed against the territory they reveal. We could not know whether our multimodal approach would work until we built it; we could not build it without theoretical guidance about what to look for. DSR provides a framework for navigating this productive circularity.
+\end{insightbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Design Science Research: Building as Inquiry}
+\labsec{method:dsr}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Design Science Research (DSR) is a methodology originating in information systems that treats the creation of artifacts as a legitimate---indeed, central---form of research contribution. The core insight is deceptively simple: sometimes the best way to understand a problem is to build something that solves it.
+
+\sidenote{\textbf{DSR Origins}---Developed in information systems by Simon (1996), Hevner et al. (2004), and Peffers et al. (2007). Now applied across design-oriented disciplines including engineering, architecture, and increasingly, social science.}
+
+\subsection{The Logic of Design Science}
+
+DSR differs fundamentally from both natural science (explaining what \emph{is}) and interpretive science (understanding what things \emph{mean}). It belongs to the ``sciences of the artificial''---inquiry into things that \emph{could be} but do not yet exist.
+
+% Using captionof to avoid kaobook caption recursion issue
+\begin{center}
+\begin{tikzpicture}[
+    scale=1.2,
+    box/.style={
+        draw=#1!60,
+        rounded corners=3pt,
+        fill=#1!12,
+        minimum width=2.4cm,
+        minimum height=0.55cm,
+        font=\tiny,
+        align=center,
+        line width=0.5pt
+    },
+    arrow/.style={-{Stealth[length=2mm, width=1.5mm]}, #1, line width=1.2pt},
+    title/.style={font=\sffamily\bfseries\small, text=#1},
+    output/.style={font=\tiny\itshape, text=Slate}
+]
+
+    % ==================== NATURAL SCIENCE ====================
+    \begin{scope}[xshift=-5cm]
+        \node[title=Azure] at (0,3) {\faFlask\ Natural Science};
+
+        \node[box=Azure] (ns1) at (0,2) {Theory};
+        \node[box=Azure] (ns2) at (0,1) {Hypothesis};
+        \node[box=Azure] (ns3) at (0,0) {Test};
+
+        \draw[arrow=Azure] (ns1) -- (ns2);
+        \draw[arrow=Azure] (ns2) -- (ns3);
+
+        \node[output] at (0,-0.8) {Output: \textbf{Explanations}};
+
+        % Subtle deductive indicator
+        \node[font=\tiny, text=Azure!60, rotate=90, anchor=south] at (-1.6,1) {deductive};
+    \end{scope}
+
+    % ==================== INTERPRETIVE SCIENCE ====================
+    \begin{scope}[xshift=0cm]
+        \node[title=PandaForest] at (0,3) {\faSearch\ Interpretive Science};
+
+        \node[box=PandaBamboo] (is1) at (0,2) {Phenomenon};
+        \node[box=PandaBamboo] (is2) at (0,1) {Immersion};
+        \node[box=PandaBamboo] (is3) at (0,0) {Interpret};
+
+        \draw[arrow=PandaBamboo] (is1) -- (is2);
+        \draw[arrow=PandaBamboo] (is2) -- (is3);
+
+        \node[output] at (0,-0.8) {Output: \textbf{Understanding}};
+
+        % Subtle inductive indicator
+        \node[font=\tiny, text=PandaBamboo!60, rotate=90, anchor=south] at (-1.6,1) {inductive};
+    \end{scope}
+
+    % ==================== DESIGN SCIENCE ====================
+    \begin{scope}[xshift=5cm]
+        \node[title=Marigold!90!black] at (0,3) {\faWrench\ Design Science};
+
+        % Cycle nodes - positioned in diamond
+        \node[box=Marigold] (prob) at (0,2) {Problem};
+        \node[box=Marigold] (des) at (1.4,1) {Design};
+        \node[box=Marigold] (bld) at (0,0) {Build};
+        \node[box=Marigold] (eva) at (-1.4,1) {Evaluate};
+
+        % Cycle arrows
+        \draw[arrow=Marigold] (prob.east) to[out=0, in=90] (des.north);
+        \draw[arrow=Marigold] (des.south) to[out=-90, in=0] (bld.east);
+        \draw[arrow=Marigold] (bld.west) to[out=180, in=-90] (eva.south);
+        \draw[arrow=Marigold] (eva.north) to[out=90, in=180] (prob.west);
+
+        \node[output] at (0,-0.8) {Output: \textbf{Artifacts + Knowledge}};
+
+        % Subtle iterative indicator
+        \node[font=\tiny, text=Marigold!70, anchor=center] at (0,1) {iterative};
+    \end{scope}
+
+    % ==================== CONNECTING ELEMENTS (optional) ====================
+    % Subtle separators
+    \draw[Slate!20, dashed, line width=0.5pt] (-2.5,-1.2) -- (-2.5,3.3);
+    \draw[Slate!20, dashed, line width=0.5pt] (2.5,-1.2) -- (2.5,3.3);
+
+\end{tikzpicture}
+\captionof{figure}[Three research paradigms]{Three research paradigms. Natural science explains \emph{what is}; interpretive science understands \emph{what things mean}; design science creates \emph{what could be}. DSR's iterative cycle generates both artifacts and knowledge about artifact design.}
+\label{fig:three-paradigms}
+\end{center}
+
+The key distinctions from traditional research:
+
+% Using captionof to avoid kaobook caption recursion issue
+\tableminimal
+\small
+\begin{center}
+\begin{tabular}{@{}p{3.5cm}p{3.5cm}p{3.5cm}@{}}
+\toprule
+\textbf{Dimension} & \textbf{Traditional Research} & \textbf{Design Science Research} \\
+\midrule
+Primary output & Knowledge claims & Artifacts \emph{plus} knowledge \\
+Core activity & Testing or interpreting & Building and evaluating \\
+Validation logic & Correspondence to reality & Utility for purpose \\
+Success criterion & Is it true? Is it insightful? & Does it work? Is it useful? \\
+Theory role & Tested against data & Embodied in artifact design \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Traditional research vs. Design Science Research}
+\end{center}
+\normalsize
+
+\sidenote{\faLightbulb[regular]\ \textbf{Key insight}---DSR doesn't replace theory; it generates theory \textit{through} building. The artifact embodies design knowledge that can be abstracted into transferable principles.}
+
+\subsection{Why DSR Fits This Research}
+
+DSR is appropriate when four conditions hold. All four apply to our research:
+
+\begin{enumerate}[leftmargin=*, itemsep=0.5em]
+\item \textbf{A real problem exists that current tools cannot solve.}
+
+Chapter~\ref{ch:background} documented the cartographic gap: rich conceptual frameworks but no methods for systematically mapping role constellations at scale. Researchers must choose between qualitative depth (30--50 actors) and quantitative breadth (losing theoretical meaning). The problem is real and consequential.
+
+\item \textbf{Solving the problem requires creating something new.}
+
+No existing toolkit combines multimodal data collection, theory-guided role identification, relational mapping, and cross-modal validation. We could not address the gap by applying existing methods differently; we needed to build new infrastructure.
+
+\item \textbf{The artifact itself contributes knowledge.}
+
+The \RoleBox toolkit embodies methodological knowledge about \emph{how} to map intermediary roles---which data sources reveal which role dimensions, how to integrate signals across modalities, what validation strategies work. This design knowledge transfers beyond our specific application.
+
+\item \textbf{Evaluation is possible through demonstration and use.}
+
+We can apply the toolkit to the EIT ecosystem, assess whether it produces meaningful maps, compare results with theory-derived expectations, and gather feedback from practitioners. The artifact's utility is empirically assessable.
+\end{enumerate}
+
+\begin{propositionbox}
+\textbf{DSR Fit Proposition:} When the research goal is to enable new forms of inquiry rather than to conduct inquiry with existing tools, Design Science Research provides appropriate methodological scaffolding---legitimizing artifact creation as research contribution while maintaining rigor through systematic evaluation.
+\end{propositionbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{The DSR Process: From Problem to Artifact}
+\labsec{method:process}
+%═══════════════════════════════════════════════════════════════════════════════
+
+We followed Peffers et al.'s (2007) six-activity DSR process model, adapted for our context. The process is explicitly iterative---we cycled through activities multiple times over four years, with each cycle refining both the artifact and our understanding of the problem.
+
+\sidenote{\faClock\ \textbf{Timeline}---2021: Problem identification. 2022: First design iteration. 2023: Core development, EIT data collection. 2024: Integration, evaluation, refinement. 2025: Dissertation completion.}
+
+% Using captionof to avoid kaobook caption recursion issue
+\begin{center}
+\begin{tikzpicture}[scale=0.92]
+    % Activity boxes
+    \node[rectangle, rounded corners=8pt, draw=Azure, fill=Azure!12,
+          minimum width=2.4cm, minimum height=2cm, line width=1.5pt, align=center]
+          (a1) at (0,0) {\scriptsize\textbf{1. Problem}\\\scriptsize\textbf{Identification}\\[3pt]\tiny Literature review\\\tiny Gap analysis\\\tiny Ch 1--2};
+
+    \node[rectangle, rounded corners=8pt, draw=PandaBamboo, fill=PandaBamboo!12,
+          minimum width=2.4cm, minimum height=2cm, line width=1.5pt, align=center]
+          (a2) at (3.2,0) {\scriptsize\textbf{2. Objectives}\\\scriptsize\textbf{Definition}\\[3pt]\tiny Design requirements\\\tiny Success criteria\\\tiny Ch 3};
+
+    \node[rectangle, rounded corners=8pt, draw=Marigold, fill=Marigold!12,
+          minimum width=2.4cm, minimum height=2cm, line width=1.5pt, align=center]
+          (a3) at (6.4,0) {\scriptsize\textbf{3. Design \&}\\\scriptsize\textbf{Development}\\[3pt]\tiny Architecture\\\tiny Implementation\\\tiny Ch 4--5};
+
+    \node[rectangle, rounded corners=8pt, draw=PandaRose, fill=PandaRose!12,
+          minimum width=2.4cm, minimum height=2cm, line width=1.5pt, align=center]
+          (a4) at (9.6,0) {\scriptsize\textbf{4. Demon-}\\\scriptsize\textbf{stration}\\[3pt]\tiny EIT application\\\tiny Pattern discovery\\\tiny Ch 6--13};
+
+    \node[rectangle, rounded corners=8pt, draw=AccentPurple, fill=AccentPurple!12,
+          minimum width=2.4cm, minimum height=2cm, line width=1.5pt, align=center]
+          (a5) at (12.8,0) {\scriptsize\textbf{5. Evaluation}\\[6pt]\tiny Technical assessment\\\tiny Theoretical testing\\\tiny Ch 14};
+
+    \node[rectangle, rounded corners=8pt, draw=CoverGold, fill=CoverGold!12,
+          minimum width=2.4cm, minimum height=2cm, line width=1.5pt, align=center]
+          (a6) at (16,0) {\scriptsize\textbf{6. Communi-}\\\scriptsize\textbf{cation}\\[3pt]\tiny Dissertation\\\tiny Open source\\\tiny Ch 15};
+
+    % Forward arrows
+    \draw[->, PandaCharcoal, line width=1.5pt] (a1) -- (a2);
+    \draw[->, PandaCharcoal, line width=1.5pt] (a2) -- (a3);
+    \draw[->, PandaCharcoal, line width=1.5pt] (a3) -- (a4);
+    \draw[->, PandaCharcoal, line width=1.5pt] (a4) -- (a5);
+    \draw[->, PandaCharcoal, line width=1.5pt] (a5) -- (a6);
+
+    % Iteration loops
+    \draw[->, PandaRose, line width=1.2pt, dashed]
+        (a5.south) -- ++(0,-0.9) -| node[pos=0.25, below, font=\tiny\itshape, text=PandaRose] {Design iteration} (a3.south);
+    \draw[->, Azure, line width=1pt, dotted]
+        (a4.north) -- ++(0,0.7) -| node[pos=0.25, above, font=\tiny\itshape, text=Azure] {Problem refinement} (a1.north);
+\end{tikzpicture}
+\captionof{figure}{The six-activity DSR process with iteration loops. Design iteration (dashed) refines the artifact based on evaluation; problem refinement (dotted) sharpens understanding based on demonstration findings.}
+\labfig{dsr-process}
+\end{center}
+
+\subsection{Activity 1: Problem Identification and Motivation}
+
+Problem identification drew on multiple sources:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Literature analysis}: Systematic review of intermediary and role constellation scholarship (Chapter~\ref{ch:background}) identified the cartographic gap---categories without maps, typologies without topographies
+\item \textbf{Community engagement}: Conference discussions at IST (International Sustainability Transitions), DRUID, and Eu-SPRI revealed shared frustration with methodological limitations
+\item \textbf{Practitioner input}: Conversations with EIT staff and KIC managers confirmed demand for ecosystem assessment tools
+\item \textbf{Personal experience}: Our own research obstacles---attempting role analysis with inadequate methods---motivated the search for alternatives
+\end{itemize}
+
+\sidenote{\faSearch\ \textbf{Problem sources}---Academic literature, conference discussions, practitioner needs, research obstacles.}
+
+The problem crystallized as: \emph{How can we systematically map intermediary role constellations at scale while preserving theoretical meaning?}
+
+\subsection{Activity 2: Define Objectives of a Solution}
+
+Based on theoretical foundations (Chapter~\ref{ch:theory}) and problem analysis, we defined six design objectives that a solution must achieve:
+
+% Using captionof to avoid kaobook caption recursion issue
+\tablestriped
+\small
+\begin{center}
+\begin{tabular}{@{}cp{2.5cm}p{7cm}@{}}
+\toprule
+\textbf{ID} & \textbf{Objective} & \textbf{Specification} \\
+\midrule
+O1 & \textbf{Scale} & Handle hundreds to thousands of organizations, not dozens---enabling population-level analysis \\
+O2 & \textbf{Multimodality} & Integrate multiple data types (text, network, visual, temporal) to capture role complexity \\
+O3 & \textbf{Relationality} & Map positions and relationships, not just attributes---producing actual cartography \\
+O4 & \textbf{Validation} & Enable comparison of claimed roles (self-presentation) vs. enacted roles (observed behavior) \\
+O5 & \textbf{Openness} & Be transparent, documented, and extensible---supporting replication and adaptation \\
+O6 & \textbf{Theoretical grounding} & Connect to transitions theory, not just pattern-finding---ensuring maps are interpretable \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Design objectives for the \RoleBox toolkit}
+\end{center}
+\normalsize
+
+These objectives translate directly into evaluation criteria: a successful artifact must demonstrably achieve each objective.
+
+\subsection{Activity 3: Design and Development}
+
+This was the core creative work---designing architecture, selecting technologies, implementing pipelines, and iterating through failures. Chapter~\ref{ch:xray} details the resulting artifact; here we describe the design \emph{process}.
+
+\sidenote{\faWrench\ \textbf{Design iterations}---v0.1: Single-modality proof of concept. v0.5: Multi-modality pipelines. v1.0: Full integration layer. v1.5: Refinement based on EIT application.}
+
+We followed an iterative prototyping approach:
+
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Prototype}: Build minimal viable version for one modality
+\item \textbf{Test}: Apply to subset of EIT data (100 organizations)
+\item \textbf{Fail}: Identify what breaks, what produces noise, what misses signal
+\item \textbf{Learn}: Document failure modes and successful patterns
+\item \textbf{Refine}: Improve based on learning
+\item \textbf{Expand}: Add next modality; return to step 1
+\item \textbf{Integrate}: Once all modalities work individually, build integration layer
+\item \textbf{Iterate}: Cycle through entire system based on full-scale application
+\end{enumerate}
+
+Key design decisions emerged through this process:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Modular architecture] Early monolithic designs proved brittle. We restructured into independent modules that can be used separately or together.
+\item[Theory-guided features] Initial atheoretical feature extraction produced uninterpretable results. We redesigned extraction to target theoretically meaningful role dimensions.
+\item[Cross-modal linking] Entity resolution across modalities was harder than anticipated. We developed a dedicated linking layer with fuzzy matching and human verification.
+\item[Validation by design] Rather than treating validation as afterthought, we built comparison mechanisms (claimed vs. enacted) into the core architecture.
+\end{description}
+
+\subsection{Activity 4: Demonstration}
+
+Demonstration applies the artifact to a real problem, showing that it works. Chapters~\ref{ch:websites}--\ref{ch:integration} demonstrate the \RoleBox toolkit on the EIT ecosystem:
+
+\sidenote{\faFlask\ \textbf{Demonstration scope}---6,487 organizations, 8 EIT KICs, 5 data modalities, 2019--2024 timeframe, 218,000+ records.}
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Website analysis} (Chapter~\ref{ch:websites}): Self-presented identities and claimed roles
+\item \textbf{News analysis} (Chapter~\ref{ch:news}): Media portrayal and attributed roles
+\item \textbf{Network analysis} (Chapter~\ref{ch:networks}): Relational positions and structural roles
+\item \textbf{Investment analysis} (Chapter~\ref{ch:investment}): Resource flows and financial positioning
+\item \textbf{Visual analysis} (Chapter~\ref{ch:visual}): Aesthetic positioning and symbolic roles
+\item \textbf{Integration} (Chapter~\ref{ch:integration}): Cross-modal synthesis and validation
+\end{itemize}
+
+Demonstration is not mere illustration---it is part of evaluation, showing whether the artifact produces useful, interpretable, theoretically meaningful results.
+
+\subsection{Activity 5: Evaluation}
+
+Evaluation assesses whether the artifact achieves its objectives. We employ multiple evaluation strategies:
+
+% Using captionof to avoid kaobook caption recursion issue
+\tableminimal
+\small
+\begin{center}
+\begin{tabular}{@{}p{3cm}p{3.5cm}p{3.5cm}@{}}
+\toprule
+\textbf{Strategy} & \textbf{What It Assesses} & \textbf{How We Apply It} \\
+\midrule
+Technical evaluation & Does it work correctly? & Performance metrics, error rates, computational efficiency, edge case handling \\
+Empirical evaluation & Does it reveal patterns? & Novelty and interpretability of EIT findings; comparison with prior knowledge \\
+Theoretical evaluation & Does it connect to theory? & Testing propositions derived from intermediary literature \\
+Comparative evaluation & Does it improve on alternatives? & Comparison with single-modality approaches and existing methods \\
+Practical evaluation & Is it useful? & Feedback from EIT practitioners and transitions researchers \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Evaluation strategies and their application}
+\end{center}
+\normalsize
+
+Chapter~\ref{ch:evaluation} presents detailed evaluation results. The key question is not ``Is it perfect?'' but ``Does it advance our ability to map role constellations beyond what was previously possible?''
+
+\subsection{Activity 6: Communication}
+
+Communication shares the artifact and generated knowledge with relevant communities:
+
+\sidenote{\faShare\ \textbf{Communication channels}---This dissertation, open-source code (GitHub), archived datasets (Zenodo), conference presentations, journal articles.}
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{This dissertation}: Primary communication vehicle, documenting problem, artifact, demonstration, and evaluation
+\item \textbf{Open-source repository}: All code publicly available with documentation
+\item \textbf{Archived data}: Processed datasets deposited for replication
+\item \textbf{Academic publications}: Selected findings published in peer-reviewed venues
+\item \textbf{Practitioner engagement}: Presentations to EIT stakeholders
+\end{itemize}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{The \RoleBox Artifact: Architecture Overview}
+\labsec{method:artifact}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The artifact we built is the \textbf{\RoleBox toolkit}---an integrated system for multimodal cartography of role constellations. Chapter~\ref{ch:toolkit} provides detailed technical documentation; here we present the architectural overview.
+
+\subsection{Three-Layer Architecture}
+
+The toolkit comprises three layers, each with distinct responsibilities:
+
+% Using captionof to avoid kaobook caption recursion issue
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % Layer 1: Data Collection
+    \node[rectangle, rounded corners=8pt, draw=Azure, fill=Azure!8,
+          minimum width=14cm, minimum height=2.4cm, line width=1.5pt] (layer1) at (0,4) {};
+    \node[font=\sffamily\bfseries\small, text=Azure, anchor=west] at (-6.8,5) {Layer 1: Data Collection};
+    \node[font=\tiny\itshape, text=Slate, anchor=east] at (6.8,5) {Gathering raw traces};
+
+    \node[rectangle, rounded corners=4pt, draw=Azure!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (-5,3.9)
+          {\textbf{Web Scraper}\\URLs, HTML,\\metadata};
+    \node[rectangle, rounded corners=4pt, draw=Azure!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (-2.3,3.9)
+          {\textbf{News APIs}\\LexisNexis,\\MediaCloud};
+    \node[rectangle, rounded corners=4pt, draw=Azure!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (0.4,3.9)
+          {\textbf{Investment DB}\\Crunchbase,\\Dealroom};
+    \node[rectangle, rounded corners=4pt, draw=Azure!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (3.1,3.9)
+          {\textbf{Social APIs}\\Twitter/X,\\LinkedIn};
+    \node[rectangle, rounded corners=4pt, draw=Azure!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (5.8,3.9)
+          {\textbf{Image Capture}\\Screenshots,\\logos};
+
+    % Layer 2: Processing
+    \node[rectangle, rounded corners=8pt, draw=PandaBamboo, fill=PandaBamboo!8,
+          minimum width=14cm, minimum height=2.4cm, line width=1.5pt] (layer2) at (0,1.2) {};
+    \node[font=\sffamily\bfseries\small, text=PandaBamboo, anchor=west] at (-6.8,2.2) {Layer 2: Processing \& Analysis};
+    \node[font=\tiny\itshape, text=Slate, anchor=east] at (6.8,2.2) {Extracting signals};
+
+    \node[rectangle, rounded corners=4pt, draw=PandaBamboo!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (-5,1.1)
+          {\textbf{NLP Pipeline}\\Topic modeling,\\NER, sentiment};
+    \node[rectangle, rounded corners=4pt, draw=PandaBamboo!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (-2.3,1.1)
+          {\textbf{Network Engine}\\Graph construction,\\centrality, clustering};
+    \node[rectangle, rounded corners=4pt, draw=PandaBamboo!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (0.4,1.1)
+          {\textbf{Visual Analyzer}\\Color, composition,\\CNN features};
+    \node[rectangle, rounded corners=4pt, draw=PandaBamboo!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (3.1,1.1)
+          {\textbf{Temporal Engine}\\Time series,\\event detection};
+    \node[rectangle, rounded corners=4pt, draw=PandaBamboo!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (5.8,1.1)
+          {\textbf{Entity Resolver}\\Fuzzy matching,\\deduplication};
+
+    % Layer 3: Integration
+    \node[rectangle, rounded corners=8pt, draw=CoverGold, fill=CoverGold!8,
+          minimum width=14cm, minimum height=2.4cm, line width=1.5pt] (layer3) at (0,-1.6) {};
+    \node[font=\sffamily\bfseries\small, text=CoverGold, anchor=west] at (-6.8,-0.6) {Layer 3: Integration \& Output};
+    \node[font=\tiny\itshape, text=Slate, anchor=east] at (6.8,-0.6) {Synthesizing maps};
+
+    \node[rectangle, rounded corners=4pt, draw=CoverGold!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (-5,-1.7)
+          {\textbf{Cross-Modal}\\Link modalities,\\align signals};
+    \node[rectangle, rounded corners=4pt, draw=CoverGold!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (-2.3,-1.7)
+          {\textbf{Validation}\\Claimed vs.\\enacted roles};
+    \node[rectangle, rounded corners=4pt, draw=CoverGold!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (0.4,-1.7)
+          {\textbf{Role Classifier}\\Theory-guided\\categorization};
+    \node[rectangle, rounded corners=4pt, draw=CoverGold!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (3.1,-1.7)
+          {\textbf{Map Generator}\\Embeddings,\\projections};
+    \node[rectangle, rounded corners=4pt, draw=CoverGold!60, fill=white,
+          minimum width=2.2cm, minimum height=1.3cm, font=\tiny, align=center] at (5.8,-1.7)
+          {\textbf{Export \& Viz}\\Interactive maps,\\data export};
+
+    % Arrows between layers
+    \draw[->, PandaCharcoal, line width=1.5pt] (0,2.7) -- (0,2.45);
+    \draw[->, PandaCharcoal, line width=1.5pt] (0,-0.05) -- (0,-0.35);
+
+    % Side annotations with icons
+    \node[font=\tiny, text=Slate, align=right, anchor=east] at (-7.5,4) {Raw\\data};
+    \node[font=\tiny, text=Slate, align=right, anchor=east] at (-7.5,1.2) {Features\\signals};
+    \node[font=\tiny, text=Slate, align=right, anchor=east] at (-7.5,-1.6) {Maps\\insights};
+
+\end{tikzpicture}
+\captionof{figure}[The \RoleBox toolkit architecture]{The \RoleBox toolkit architecture. Layer~1 collects raw digital traces from multiple sources; Layer~2 processes traces into analytical signals using specialized engines; Layer~3 integrates signals into cartographic outputs. Each component operates independently but contributes to integrated multimodal analysis.}
+\label{fig:toolkit-architecture}
+\end{center}
+
+\sidenote{\faLayerGroup\ \textbf{Three layers}---\textcolor{Azure}{Collection}: Gathering traces. \textcolor{PandaBamboo}{Processing}: Extracting signals. \textcolor{CoverGold}{Integration}: Synthesizing maps.}
+
+The architecture reflects our design objectives:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.2em]
+\item[Modularity] (O5): Each component can be used independently or in combination. Researchers can employ the NLP pipeline without the visual analyzer, or add new data sources without modifying existing pipelines.
+\item[Extensibility] (O5): New modalities can be added by creating collection and processing modules that output standardized feature formats for the integration layer.
+\item[Transparency] (O5): All code is documented and version-controlled. Processing decisions are logged for auditability.
+\item[Reproducibility] (O5): Workflows are containerized and can be re-executed on new data with documented parameters.
+\end{description}
+
+\subsection{Data Flow}
+
+Data flows through the system in a structured pipeline:
+
+% Using captionof to avoid kaobook caption recursion issue
+\begin{center}
+\begin{tikzpicture}[scale=1.5, every node/.style={font=\footnotesize}]
+    % Flow nodes
+    \node[draw, rounded corners, fill=Slate!10, minimum width=1.5cm] (raw) at (0,0) {Raw URLs};
+    \node[draw, rounded corners, fill=Azure!15, minimum width=1.5cm] (html) at (2.5,0) {HTML/JSON};
+    \node[draw, rounded corners, fill=PandaBamboo!15, minimum width=1.5cm] (feat) at (5,0) {Features};
+    \node[draw, rounded corners, fill=Marigold!15, minimum width=1.5cm] (embed) at (7.5,0) {Embeddings};
+    \node[draw, rounded corners, fill=CoverGold!15, minimum width=1.5cm] (map) at (10,0) {Maps};
+
+    % Arrows with labels
+    \draw[->, thick] (raw) -- node[above] {scrape} (html);
+    \draw[->, thick] (html) -- node[above] {extract} (feat);
+    \draw[->, thick] (feat) -- node[above] {encode} (embed);
+    \draw[->, thick] (embed) -- node[above] {project} (map);
+
+    % Storage
+    \node[draw, cylinder, shape border rotate=90, fill=Slate!5,
+          minimum width=0.8cm, minimum height=0.6cm] (db) at (5,-1.5) {};
+    \node[below=0.1cm of db, font=\tiny] {PostgreSQL};
+    \draw[->, dashed, Slate] (html) -- (db);
+    \draw[->, dashed, Slate] (feat) -- (db);
+    \draw[->, dashed, Slate] (embed) -- (db);
+\end{tikzpicture}
+\captionof{figure}{Simplified data flow through the \RoleBox pipeline. Each stage transforms data and persists results to the database for traceability and reprocessing.}
+\labfig{data-flow}
+\end{center}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Data Collection: Sources and Workflows}
+\labsec{method:data}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The empirical component required substantial data collection across five modalities. Each modality captures different role dimensions; together they enable triangulation and validation.
+
+\subsection{Overview of Data Sources}
+
+% Using captionof to avoid kaobook caption recursion issue
+\tablestriped
+\small
+\begin{center}
+\begin{tabular}{@{}p{2cm}p{3cm}rrp{2cm}@{}}
+\toprule
+\textbf{Modality} & \textbf{Primary Source} & \textbf{Orgs} & \textbf{Records} & \textbf{Timeframe} \\
+\midrule
+Websites & Direct scraping & 6,487 & 12,400 pages & 2023 snapshot \\
+News & LexisNexis, MediaCloud, GDELT & 6,487 & 34,500 articles & 2019--2024 \\
+Investment & Crunchbase, Dealroom & 1,312 & 2,100 rounds & 2010--2024 \\
+Visual & Website screenshots & 6,487 & 13,200 images & 2023 snapshot \\
+Social & Twitter/X API & 2,389 & 1,156,000 tweets & 2019--2023 \\
+\midrule
+\textbf{Total} & & \textbf{6,487} & \textbf{218,200+} & \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Data collection summary across modalities}
+\end{center}
+\normalsize
+
+\sidenote{\faDatabase\ \textbf{Data scale}---6,487 organizations, 218,000+ records, 5 modalities, 5+ years coverage.}
+
+\subsection*{Population Definition and Sampling}
+
+Our target population is organizations connected to the EIT Knowledge and Innovation Communities. We employed a multi-stage sampling strategy:
+
+% Using captionof to avoid kaobook caption recursion issue
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    % Stages
+    \node[draw, rounded corners, fill=Azure!15, minimum width=3cm, minimum height=1cm,
+          font=\small, align=center] (s1) at (0,3) {\textbf{Stage 1: Seed}\\Official KIC lists};
+    \node[draw, rounded corners, fill=PandaBamboo!15, minimum width=3cm, minimum height=1cm,
+          font=\small, align=center] (s2) at (0,1.5) {\textbf{Stage 2: Expand}\\Partner references};
+    \node[draw, rounded corners, fill=Marigold!15, minimum width=3cm, minimum height=1cm,
+          font=\small, align=center] (s3) at (0,0) {\textbf{Stage 3: Validate}\\Cross-source check};
+    \node[draw, rounded corners, fill=CoverGold!15, minimum width=3cm, minimum height=1cm,
+          font=\small, align=center] (s4) at (0,-1.5) {\textbf{Stage 4: Bound}\\Inclusion criteria};
+
+    % Arrows
+    \draw[->, thick] (s1) -- (s2);
+    \draw[->, thick] (s2) -- (s3);
+    \draw[->, thick] (s3) -- (s4);
+
+    % Numbers
+    \node[font=\small, text=Azure] at (3,3) {n = 2,420};
+    \node[font=\small, text=PandaBamboo] at (3,1.5) {n = 8,934};
+    \node[font=\small, text=Marigold] at (3,0) {n = 7,812};
+    \node[font=\small, text=CoverGold] at (3,-1.5) {n = 6,487};
+\end{tikzpicture}
+\captionof{figure}{Multi-stage sampling strategy. Starting from official KIC partner lists, we expanded through network references, validated across sources, and applied inclusion criteria.}
+\labfig{sampling}
+\end{center}
+
+\sidenote{\faFilter\ \textbf{Inclusion criteria}---Listed as KIC partner, OR mentioned by 3+ partners, OR news coverage with KIC, OR investment from KIC fund; AND present in 2+ modalities.}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Stage 1 -- Seed] We scraped official partner directories from all eight KIC websites, yielding 2,420 confirmed partner organizations.
+
+\item[Stage 2 -- Expand] We extracted organization mentions from seed partner websites (``About,'' ``Partners,'' ``Portfolio'' pages), adding organizations referenced by multiple partners. This expanded the candidate set to 8,934 organizations.
+
+\item[Stage 3 -- Validate] We cross-referenced candidates against news databases and investment records, removing organizations with no independent evidence of EIT connection. This reduced the set to 7,812 validated organizations.
+
+\item[Stage 4 -- Bound] We applied inclusion criteria requiring presence in at least two data modalities (ensuring sufficient data for analysis). This produced the final sample of 6,487 organizations.
+\end{description}
+
+\subsection{Collection Workflows by Modality}
+
+Each modality required specialized collection procedures:
+
+\subsubsection{Website Collection}
+
+\begin{enumerate}[leftmargin=*, itemsep=0.2em]
+\item \textbf{URL resolution}: Verify current URLs, handle redirects, detect defunct sites
+\item \textbf{Crawling}: Depth-limited crawl (max 3 levels) capturing HTML, metadata, and assets
+\item \textbf{Screenshot capture}: Automated browser rendering of homepage and key pages
+\item \textbf{Text extraction}: Convert HTML to clean text; preserve structure information
+\item \textbf{Rate limiting}: Respectful crawling with delays; honor robots.txt
+\end{enumerate}
+
+\sidenote{\faGlobe\ \textbf{Website workflow}---Tool: Scrapy + Playwright. Pages/org: $\sim$2 (median). Success rate: 94\%. Duration: 3 weeks.}
+
+\subsubsection{News Collection}
+
+\begin{enumerate}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Query construction}: Organization name variants + KIC keywords
+\item \textbf{API queries}: LexisNexis (structured news), MediaCloud (online news), GDELT (global events)
+\item \textbf{Deduplication}: Remove duplicate articles across sources
+\item \textbf{Relevance filtering}: Verify articles actually discuss target organization
+\item \textbf{Full-text retrieval}: Obtain complete article text where available
+\end{enumerate}
+
+\sidenote{\faNewspaper\ \textbf{News workflow}---Sources: 3 APIs. Articles/org: $\sim$5 (median). Languages: EN (primary). Duration: 2 months.}
+
+\subsubsection{Investment Collection}
+
+\begin{enumerate}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Entity matching}: Match organizations to Crunchbase/Dealroom records
+\item \textbf{Funding retrieval}: Extract funding rounds, amounts, investors, dates
+\item \textbf{Investor expansion}: Add investor organizations to network
+\item \textbf{Validation}: Cross-check funding data across sources
+\end{enumerate}
+
+\sidenote{\faChartLine\ \textbf{Investment workflow}---Sources: Crunchbase, Dealroom. Match rate: 20\% (startups). Funding rounds: 2,100. Duration: 1 month.}
+
+\subsubsection{Visual Collection}
+
+\begin{enumerate}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Homepage screenshots}: Full-page renders at standardized resolution
+\item \textbf{Logo extraction}: Identify and extract organizational logos
+\item \textbf{Image cataloguing}: Index all images on crawled pages
+\item \textbf{Quality filtering}: Remove broken images, duplicates, stock photos
+\end{enumerate}
+
+\subsubsection{Social Media Collection}
+
+\begin{enumerate}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Account identification}: Match organizations to Twitter/X handles
+\item \textbf{Timeline retrieval}: Collect tweets within date range (API v2)
+\item \textbf{Engagement capture}: Record likes, retweets, replies
+\item \textbf{Network extraction}: Identify mentions, replies, quote tweets
+\end{enumerate}
+
+\sidenote{\faTwitter\ \textbf{Social workflow}---Platform: Twitter/X. Account match: 37\%. Tweets/account: $\sim$65 (median). Note: API access limited post-2023.}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Analytical Workflows}
+\labsec{method:analysis}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Each modality requires tailored analytical workflows. Here we summarize approaches; empirical chapters provide details.
+
+\subsection{Text Analysis Workflow}
+
+Text from websites and news undergoes a multi-stage NLP pipeline:
+
+% Using captionof to avoid kaobook caption recursion issue
+\begin{center}
+\begin{tikzpicture}[scale=0.75, every node/.style={font=\tiny}]
+    % Pipeline stages
+    \node[draw, rounded corners, fill=Azure!15, minimum width=1.8cm, minimum height=0.8cm]
+          (t1) at (0,0) {Raw Text};
+    \node[draw, rounded corners, fill=Azure!15, minimum width=1.8cm, minimum height=0.8cm]
+          (t2) at (2.5,0) {Clean Text};
+    \node[draw, rounded corners, fill=PandaBamboo!15, minimum width=1.8cm, minimum height=0.8cm]
+          (t3) at (5,0) {Tokens};
+    \node[draw, rounded corners, fill=PandaBamboo!15, minimum width=1.8cm, minimum height=0.8cm]
+          (t4) at (7.5,0) {Entities};
+    \node[draw, rounded corners, fill=Marigold!15, minimum width=1.8cm, minimum height=0.8cm]
+          (t5) at (10,0) {Topics};
+    \node[draw, rounded corners, fill=CoverGold!15, minimum width=1.8cm, minimum height=0.8cm]
+          (t6) at (12.5,0) {Embeddings};
+
+    % Arrows with labels
+    \draw[->, thick] (t1) -- node[above] {preprocess} (t2);
+    \draw[->, thick] (t2) -- node[above] {tokenize} (t3);
+    \draw[->, thick] (t3) -- node[above] {NER} (t4);
+    \draw[->, thick] (t4) -- node[above] {LDA/BERTopic} (t5);
+    \draw[->, thick] (t5) -- node[above] {encode} (t6);
+\end{tikzpicture}
+\captionof{figure}{Text analysis pipeline from raw text through embeddings.}
+\labfig{text-pipeline}
+\end{center}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.2em]
+\item[Preprocessing] Language detection, encoding normalization, boilerplate removal
+\item[Tokenization] Sentence and word segmentation using spaCy
+\item[Named Entity Recognition] Extract organizations, persons, locations, technologies
+\item[Topic Modeling] BERTopic for semantic clustering; guided LDA for theory-informed topics
+\item[Embedding] Sentence-BERT for dense vector representations enabling similarity computation
+\end{description}
+
+\subsection{Network Analysis Workflow}
+
+Networks are constructed from multiple relationship types:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Partnership networks}: Edges from co-membership in KICs, joint projects
+\item \textbf{Citation networks}: Edges from website hyperlinks, news co-mentions
+\item \textbf{Investment networks}: Edges from funding relationships
+\item \textbf{Social networks}: Edges from Twitter mentions, retweets
+\end{itemize}
+
+Analysis employs standard network metrics (degree, betweenness, eigenvector centrality) plus community detection (Louvain, Infomap) and structural equivalence measures.
+
+\subsection{Visual Analysis Workflow}
+
+Visual analysis extracts features from website screenshots and logos:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.2em]
+\item[Color analysis] Dominant colors, palette complexity, color harmony
+\item[Composition] Layout structure, visual hierarchy, whitespace usage
+\item[CNN features] Pre-trained ResNet features for visual similarity
+\item[Logo analysis] Shape features, color schemes, symbolic elements
+\end{description}
+
+\subsection{Integration Workflow}
+
+The integration layer synthesizes signals across modalities:
+
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Entity alignment}: Ensure same organization linked across modalities
+\item \textbf{Feature normalization}: Scale features to comparable ranges
+\item \textbf{Multi-view embedding}: Learn joint representation from all modalities
+\item \textbf{Role classification}: Apply theory-guided classifiers to combined features
+\item \textbf{Validation scoring}: Compare claimed roles (websites) vs. enacted roles (news, networks)
+\item \textbf{Map generation}: Project embeddings to 2D/3D for visualization
+\end{enumerate}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Ensuring Rigor}
+\labsec{method:rigor}
+%═══════════════════════════════════════════════════════════════════════════════
+
+DSR has sometimes been criticized as ``just building things'' without scientific rigor. We take rigor seriously, addressing it through multiple mechanisms.
+
+\subsection{DSR Guidelines Compliance}
+
+Following Hevner et al. (2004), we explicitly address seven DSR guidelines:
+
+% Using captionof to avoid kaobook caption recursion issue
+\tablestriped
+\small
+\begin{center}
+\begin{tabular}{@{}p{3.5cm}p{7.5cm}@{}}
+\toprule
+\textbf{Guideline} & \textbf{How We Address It} \\
+\midrule
+1. Design as artifact & \RoleBox is a concrete, functional toolkit---not just concepts \\
+2. Problem relevance & Addresses documented cartographic gap (Chapter~\ref{ch:background}) \\
+3. Design evaluation & Multiple evaluation strategies: technical, empirical, theoretical, practical \\
+4. Research contributions & New methods (toolkit), tested propositions, open infrastructure \\
+5. Research rigor & Systematic process, documented decisions, transparent limitations \\
+6. Design as search & Iterative refinement through four major versions \\
+7. Communication of research & Dissertation, open code, archived data, publications \\
+\bottomrule
+\end{tabular}
+\captionof{table}{DSR rigor guidelines and how we address them}
+\end{center}
+\normalsize
+
+\sidenote{\faCheckCircle\ \textbf{Seven guidelines}---Hevner et al. (2004) established canonical DSR guidelines. We address each explicitly.}
+
+\subsection{Validity Considerations}
+
+We consider standard validity threats:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
+\item[Construct validity] \textit{Do our measures capture what we claim?}
+
+We address this through multiple operationalizations of role concepts (textual, relational, visual) and cross-modal validation. If claimed and enacted roles diverge, we investigate rather than ignore the discrepancy.
+
+\item[Internal validity] \textit{Are patterns real or artifacts of methods?}
+
+We address this through robustness checks (alternative parameter settings), sensitivity analysis (how results change with different thresholds), and triangulation (do different modalities converge?).
+
+\item[External validity] \textit{Do findings generalize beyond EIT?}
+
+We are \emph{cautious} about generalization. EIT is a specific European policy context with designed intermediaries. We provide open infrastructure enabling replication in other contexts but make no strong generalization claims.
+
+\item[Reliability] \textit{Would others get similar results?}
+
+We address this through documented code, archived data, version-controlled workflows, and containerized execution environments. The entire analysis can be re-executed.
+\end{description}
+
+\subsection{Triangulation Strategy}
+
+Triangulation is central to our validation approach:
+
+% Using captionof to avoid kaobook caption recursion issue
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Triangle
+    \node[draw, circle, fill=Azure!20, minimum size=1.5cm, font=\tiny, align=center]
+          (txt) at (0,2) {Text\\signals};
+    \node[draw, circle, fill=PandaBamboo!20, minimum size=1.5cm, font=\tiny, align=center]
+          (net) at (-2,-1) {Network\\signals};
+    \node[draw, circle, fill=Marigold!20, minimum size=1.5cm, font=\tiny, align=center]
+          (vis) at (2,-1) {Visual\\signals};
+
+    % Center
+    \node[draw, circle, fill=CoverGold!30, minimum size=1.2cm, font=\tiny\bfseries, align=center]
+          (role) at (0,0) {Role\\position};
+
+    % Connections
+    \draw[thick, Slate!50] (txt) -- (role);
+    \draw[thick, Slate!50] (net) -- (role);
+    \draw[thick, Slate!50] (vis) -- (role);
+    \draw[dashed, Slate!30] (txt) -- (net);
+    \draw[dashed, Slate!30] (net) -- (vis);
+    \draw[dashed, Slate!30] (vis) -- (txt);
+\end{tikzpicture}
+\captionof{figure}{Triangulation across modalities. Role positions are inferred from convergent signals; divergent signals prompt investigation rather than averaging.}
+\labfig{triangulation}
+\end{center}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Ethical Considerations}
+\labsec{method:ethics}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Our research involves organizational data from public sources. We addressed ethical considerations proactively:
+
+\sidenote{\faBalanceScale\ \textbf{Ethics principles}---Public data only, organizational focus, no individual identification, platform compliance, open science.}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Public data] All collected data was publicly available---organizational websites, published news, public investment records, public social media posts. No private or access-controlled data was used.
+
+\item[Organizational focus] Our unit of analysis is organizations, not individuals. We do not profile, identify, or analyze individual persons beyond their public organizational roles.
+
+\item[Anonymization] Where individuals are quoted (e.g., in news articles), we anonymize unless the quote is from a public statement by a named official spokesperson.
+
+\item[Platform compliance] We complied with terms of service for all data sources. Rate limiting, robots.txt compliance, and API quotas were respected.
+
+\item[Data sharing] Aggregated and processed data are made available for research purposes. Raw data that could enable re-identification or violate platform terms is not shared.
+\end{description}
+
+The research was reviewed and approved by the university ethics board.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Limitations}
+\labsec{method:limitations}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Every methodology has limitations. We are explicit about ours:
+
+\begin{criticalbox}[Methodological Limitations]
+\begin{enumerate}[leftmargin=*, itemsep=0.4em]
+\item \textbf{Single ecosystem}: We study EIT deeply but cannot claim findings generalize to other innovation ecosystems. EIT is a designed, policy-driven, European context.
+
+\item \textbf{Digital trace bias}: Organizations with weak digital presence are underrepresented. Small organizations, those in non-English contexts, and those avoiding public visibility may be systematically missed.
+
+\item \textbf{Snapshot emphasis}: Most analyses are cross-sectional snapshots (2023). Temporal dynamics are captured through news and investment histories but website/visual data are point-in-time.
+
+\item \textbf{English language bias}: NLP pipelines are optimized for English. Non-English content (particularly from Southern and Eastern European partners) is underrepresented in text analysis.
+
+\item \textbf{Platform dependencies}: API access changes affected data collection. Twitter/X restrictions post-2023 limited social media coverage. Future replication may face different access constraints.
+
+\item \textbf{Interpretive judgment}: Despite systematic methods, role identification involves researcher judgment---in codebook development, threshold setting, and pattern interpretation.
+\end{enumerate}
+\end{criticalbox}
+
+\sidenote{\faHeart\ \textbf{Honest limitations}---Acknowledging limitations strengthens rather than weakens research. Others can address what we could not.}
+
+These limitations do not invalidate the research---they \emph{bound} it. We are building a toolkit and demonstrating its potential, not claiming definitive answers. The open infrastructure enables others to extend, adapt, and apply the approach in contexts where our limitations matter less.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Chapter Summary}
+\labsec{method:summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+This chapter established \textbf{Design Science Research} as our methodology---appropriate because we are building something new (the \RoleBox toolkit) rather than testing hypotheses with existing methods.
+
+\textbf{Key methodological elements:}
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Six-activity DSR process}: Problem identification → objectives definition → design \& development → demonstration → evaluation → communication, with iteration loops
+
+\item \textbf{Six design objectives}: Scale, multimodality, relationality, validation capability, openness, and theoretical grounding
+
+\item \textbf{Three-layer architecture}: Data collection, processing \& analysis, integration \& output---modular, extensible, transparent
+
+\item \textbf{Five data modalities}: Websites, news, investment, visual, social media---218,000+ records across 6,487 organizations
+
+\item \textbf{Multi-stage sampling}: Seed from official lists → expand through references → validate across sources → bound by inclusion criteria
+
+\item \textbf{Rigorous evaluation}: Technical, empirical, theoretical, comparative, and practical assessment strategies
+
+\item \textbf{Explicit limitations}: Single ecosystem, digital trace bias, snapshot emphasis, language bias, platform dependencies, interpretive judgment
+\end{itemize}
+
+The methodology enables us to build cartographic infrastructure while simultaneously using that infrastructure to map the EIT ecosystem. The next chapter details the \RoleBox toolkit architecture and implementation.
+\end{summarybox}
+
+\sidenote{\faArrowRight\ \textit{Next:} Chapter~\ref{ch:toolkit}: The \RoleBox{} Toolkit---detailed technical documentation of components, pipelines, and integration methods.}
+
+\end{document}

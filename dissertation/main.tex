@@ -1,0 +1,270 @@
+%========================================================================================
+% ROLEBOX DISSERTATION - MODULAR STRUCTURE
+% Compile with: lualatex (recommended) or xelatex
+% Run 2-3 passes for references, then biber, then 2 more passes
+%========================================================================================
+\documentclass[
+    fontsize=10pt,
+    a4paper,
+    twoside=false,
+    open=any,
+    secnumdepth=2,
+    numbers=noenddot,
+]{kaobook}
+
+%========================================================================================
+% PACKAGES AND CONFIGURATION
+%========================================================================================
+
+% Compilation check
+\RequirePackage{iftex}
+\ifxetex\else\ifluatex\else
+  \ClassError{kaobook}{This template requires XeLaTeX or LuaLaTeX}{}
+\fi\fi
+
+% Language support (required by kaorefs for \addto command)
+\usepackage[english]{babel}
+
+% Subfiles for modular chapters
+\usepackage{subfiles}
+
+% Font configuration (Fira Sans)
+\usepackage[firasans]{kaofonts}
+
+% Custom RoleBox styling (colors, environments, icons)
+\usepackage{kaoci-rolebox}
+
+%----------------------------------------------------------------------------------------
+% GRAPHICS
+%----------------------------------------------------------------------------------------
+% graphicx, tikz, booktabs, multirow already loaded by kao.sty
+\graphicspath{{figures/}{chapters/}{./}}
+
+% Additional TikZ libraries beyond what kao.sty loads
+\usetikzlibrary{
+    shapes.geometric,
+    decorations.pathreplacing,
+    calligraphy,
+    arrows.meta,
+    positioning,
+    calc,
+    backgrounds,
+    fit,
+    decorations.pathmorphing,
+    patterns,
+    matrix
+}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween,statistics}
+
+%----------------------------------------------------------------------------------------
+% TABLES
+%----------------------------------------------------------------------------------------
+% booktabs, multirow already loaded by kao.sty
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{colortbl}
+
+%----------------------------------------------------------------------------------------
+% BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+\usepackage{kaobiblio}
+\addbibresource{dissertation/references.bib}
+
+%----------------------------------------------------------------------------------------
+% MATH PACKAGES (load before kaotheorems to avoid conflicts)
+%----------------------------------------------------------------------------------------
+\usepackage{amsmath,mathtools}
+
+%----------------------------------------------------------------------------------------
+% THEOREMS AND REFERENCES
+%----------------------------------------------------------------------------------------
+\usepackage[framed]{kaotheorems}
+% Undefine mathtools' \refeq before kaorefs redefines it
+\let\refeq\undefined
+\usepackage{kaorefs}
+
+%----------------------------------------------------------------------------------------
+% ADDITIONAL PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{listings}
+\usepackage{fontawesome5}
+
+% Code listings for JavaScript etc.
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with, let, const},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+  morestring=[b]`
+}
+
+%----------------------------------------------------------------------------------------
+% DOCUMENT METADATA
+%----------------------------------------------------------------------------------------
+\newcommand{\RoleBox}{\textsc{RoleBox}}
+\newcommand{\RoleSim}{\textsc{RoleSim}}
+\newcommand{\myauthor}{Babajide Alamu Owoyele}
+\newcommand{\mytitle}{Towards Multimodal Cartography of Role Constellations in Sustainability Transitions}
+\newcommand{\myuniversity}{Erasmus University Rotterdam}
+\newcommand{\mydepartment}{Dutch Research Institute For Transitions}
+\newcommand{\mypromotor}{Prof. dr. Derk Loorbach}
+\newcommand{\mycopromotorA}{Prof.dr. Gerard de Melo}
+\newcommand{\mycopromotorB}{Dr. Jonathan Antonion Edleman}
+\newcommand{\mydate}{2025}
+
+\title{\mytitle}
+\author{\myauthor}
+\date{\mydate}
+
+% Margin TOC depth
+\setcounter{margintocdepth}{1}
+
+%========================================================================================
+% FIX KAOBOOK CAPTION RECURSION
+%========================================================================================
+% The kao.sty caption hooks cause infinite recursion with some packages.
+% Solution: Patch the figure and table environments to reset \caption
+\makeatletter
+\AtBeginDocument{%
+    % Save the original caption command (before kao.sty hooks redefine it)
+    \let\kaociOrigCaption\caption%
+    % Patch the figure begin to restore original caption
+    \pretocmd{\figure}{\let\caption\kaociOrigCaption}{}{}%
+    \pretocmd{\table}{\let\caption\kaociOrigCaption}{}{}%
+}
+\makeatother
+
+%========================================================================================
+% BEGIN DOCUMENT
+%========================================================================================
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+% FRONT MATTER
+%----------------------------------------------------------------------------------------
+\frontmatter
+
+% Title page
+\subfile{dissertation/frontmatter/titlepage}
+
+% Copyright page
+\subfile{dissertation/frontmatter/copyright}
+
+% Dedication (optional)
+% \subfile{frontmatter/dedication}
+
+% Abstract
+\subfile{dissertation/frontmatter/abstract}
+
+% Acknowledgments
+% \subfile{frontmatter/acknowledgments}
+
+% Table of contents
+\tableofcontents
+
+% List of figures (optional)
+% \listoffigures
+
+% List of tables (optional)
+% \listoftables
+
+%----------------------------------------------------------------------------------------
+% MAIN MATTER
+%----------------------------------------------------------------------------------------
+\mainmatter
+\setchapterstyle{kao}
+
+%========================================================================================
+% PART I: FOUNDATIONS
+%========================================================================================
+\part{Foundations}
+
+\subfile{dissertation/chapters/01-introduction}
+
+\subfile{dissertation/intermezzos/eit-communities}  % EIT context for the empirical setting
+
+\subfile{dissertation/chapters/02-role-categories}
+
+\subfile{dissertation/chapters/03-methodology}
+
+\subfile{dissertation/intermezzos/rolexray}  % Methodological tool introduction
+
+\subfile{dissertation/chapters/04-role-constellations}
+
+\subfile{dissertation/intermezzos/multimodal-cartography}  % Conceptual framework bridge
+
+\subfile{dissertation/intermezzos/rolesim}  % Simulation tool - moved here per Option C
+
+%========================================================================================
+% PART II: DATA MODALITIES
+%========================================================================================
+\part{Data Modalities}
+
+% Each intermezzo introduces a data source used in the empirical chapters
+\subfile{dissertation/intermezzos/websites}
+\subfile{dissertation/intermezzos/roledna}  % RoleDNA stays here - describes the data encoding
+\subfile{dissertation/intermezzos/news-media}
+\subfile{dissertation/intermezzos/crunchbase}
+\subfile{dissertation/intermezzos/social-media}
+\subfile{dissertation/intermezzos/visual-materials}
+
+%========================================================================================
+% PART III: EMPIRICAL STUDIES
+%========================================================================================
+\part{Empirical Studies}
+
+\subfile{dissertation/chapters/05-interstitial-pluralism}
+\subfile{dissertation/chapters/06-rolefield}
+\subfile{dissertation/chapters/07-venture-positioning}
+\subfile{dissertation/chapters/08-visual-registers}
+\subfile{dissertation/chapters/09-power-agency}
+
+\subfile{dissertation/intermezzos/triangulation}  % Integration method
+
+%========================================================================================
+% PART IV: SYNTHESIS AND CONCLUSIONS
+%========================================================================================
+\part{Synthesis and Conclusions}
+
+\subfile{dissertation/chapters/10-synthesis}
+\subfile{dissertation/chapters/11-discussion}
+\subfile{dissertation/chapters/12-conclusion}
+
+%----------------------------------------------------------------------------------------
+% BACK MATTER
+%----------------------------------------------------------------------------------------
+\backmatter
+
+% Bibliography
+\printbibliography[heading=bibintoc, title=References]
+
+% Appendices
+\appendix
+\subfile{dissertation/appendices/A-data-protocols}
+\subfile{dissertation/appendices/B-analytical-methods}
+\subfile{dissertation/appendices/C-supplementary-figures}
+\subfile{dissertation/appendices/D-codebook}
+\subfile{dissertation/appendices/E-robustness}
+\subfile{dissertation/appendices/F-ethics}
+\subfile{dissertation/appendices/G-glossary}
+\subfile{dissertation/appendices/H-software}
+
+% Summary (Dutch)
+% \subfile{backmatter/samenvatting}
+
+% About the author
+% \subfile{backmatter/about}
+
+\end{document}

@@ -1,0 +1,241 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\intermezzo{Websites: Mapping Claimed Identity}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[Azure] (-2,0) rectangle (-1.7,0.08);
+    \fill[Azure!70] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[Azure!50] (-1,0) rectangle (-0.7,0.08);
+    \fill[Azure!30] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[Azure!15] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{chapteroverview}
+Websites are shop windows. Organizations curate them to project who they \emph{want} to be seen as---their \textbf{claimed identity}. This chapter establishes why website data matters for role constellation cartography, how we collect and analyze it, and what the first modality of \RoleBox reveals about the EIT ecosystem. We discover that what actors \emph{say} they are is only the beginning of understanding what they \emph{do}.
+\end{chapteroverview}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Why Websites? The First Layer of Cartography}
+%═══════════════════════════════════════════════════════════════════════════════
+
+In the Intermezzo on Multimodal Cartography, we distinguished five maps of role constellations: declared, attributed, enacted, relational, and aesthetic. \textbf{Websites are the primary source for the declared map}---how organizations present themselves to the world.
+
+\sidenote{\textbf{Recall from Intermezzo:} \textcolor{Azure}{\textbf{Declared}} $\leftarrow$ Websites, \textcolor{PandaBamboo}{Attributed} $\leftarrow$ News, \textcolor{Marigold}{Enacted} $\leftarrow$ Activities, \textcolor{AccentPurple}{Relational} $\leftarrow$ Networks, \textcolor{AccentCoral}{Aesthetic} $\leftarrow$ Visuals.}
+
+Why start here? Three reasons:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
+\item[Ubiquity.] Over 95\% of organizations in innovation ecosystems maintain websites. Unlike patents (only some actors file), funding records (only recipients appear), or news coverage (only ``newsworthy'' actors), websites provide \textbf{near-universal coverage}.
+
+\item[Self-authorship.] Organizations write their own websites. This gives us direct access to \emph{how they want to be seen}---their identity claims, vocabulary choices, and relationship assertions. No intermediary filters the message.
+
+\item[Relationality.] Websites are inherently networked. Hyperlinks connect organizations; partner pages list collaborators; logos signal affiliations. The web is already a \emph{graph}---we simply need to extract it.
+\end{description}
+
+But websites have a fundamental limitation: \textbf{they show what actors \emph{want} us to see, not necessarily what \emph{is}}. A startup may claim ``global partnerships'' while having three employees. A university may emphasize ``entrepreneurial culture'' while publishing zero patents. This is not a flaw in website data---it \emph{is} the data. The gap between claim and reality is itself informative.
+
+\begin{insightbox}[Connecting to CAS Theory]
+Chapter~\ref{ch:cas} argued that roles \emph{emerge} from interactions, not from self-declaration. Websites give us one input to emergence---actors' \textbf{identity bids}. But emergence requires testing these bids against responses: Do others recognize the claimed role? Do network positions support it? Do resources flow accordingly? Websites are necessary but not sufficient for role cartography.
+\end{insightbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{What Websites Contain: A Data Anatomy}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Before collecting website data, we need to understand what websites \emph{are} as data sources. A website is not a single document but a structured collection of pages, each serving different communicative functions.
+
+\sidenote{\textbf{Website as \textit{signum}:} Recall from the Cartography Intermezzo: websites are deliberate \emph{signals} (signa), not accidental footprints. But their structure, links, and metadata are often \emph{vestigia}---traces left unconsidered.}
+
+\subsection*{Page Types and Their Signals}
+
+Different pages reveal different aspects of claimed identity:
+
+% Using captionof to avoid kaobook caption recursion issue
+\tablestriped
+\scriptsize
+\begin{center}
+\begin{tabular}{@{}p{2cm}p{4cm}p{4.5cm}@{}}
+\toprule
+\stripedhead{Page Type} & \stripedhead{Typical Content} & \stripedhead{Role Signal} \\
+\midrule
+\textbf{Homepage} & Mission statement, value proposition, hero imagery & Core identity claim; primary vocabulary \\
+\textbf{About/Who We Are} & History, team, organizational structure & Self-categorization; legitimacy markers \\
+\textbf{Partners/Network} & Logos, named collaborators, consortium memberships & Claimed relational position \\
+\textbf{Services/What We Do} & Offerings, capabilities, target audiences & Functional role claims \\
+\textbf{Projects/Portfolio} & Case studies, funded initiatives, outcomes & Evidence for claimed capabilities \\
+\textbf{News/Blog} & Announcements, thought leadership, event participation & Dynamic positioning; discourse alignment \\
+\textbf{Team/People} & Staff profiles, expertise areas, advisory boards & Human capital signals \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Website page types and the role signals they contain}
+\end{center}
+\normalsize
+
+\subsection*{Textual Signals: Vocabulary as Identity}
+
+The words organizations choose reveal how they position themselves. Consider these vocabulary contrasts:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item ``\textbf{Research}'' vs. ``\textbf{Innovation}'' vs. ``\textbf{Solutions}'' --- signals position on knowledge-to-market spectrum
+\item ``\textbf{We facilitate}'' vs. ``\textbf{We develop}'' vs. ``\textbf{We invest}'' --- signals functional role
+\item ``\textbf{Ecosystem}'' vs. ``\textbf{Network}'' vs. ``\textbf{Consortium}'' --- signals relational self-concept
+\item ``\textbf{Sustainable}'' vs. ``\textbf{Green}'' vs. ``\textbf{Clean}'' --- signals discourse alignment
+\end{itemize}
+
+These aren't just stylistic choices---they're \textbf{identity claims} that position actors within the transition landscape.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Data Collection: Building the Declared Map}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection*{Scope and Coverage}
+
+We collected website data for \textbf{6,487 organizations} connected to the EIT Knowledge and Innovation Communities.
+
+% Using captionof to avoid kaobook caption recursion issue
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\minimalhead{Metric} & \minimalhead{Value} \\
+\midrule
+Organizations in sample & 6,487 \\
+Organizations with accessible websites & 6,142 (94.7\%) \\
+Total pages collected & 127,400 \\
+Average pages per organization & 20.7 \\
+Total text extracted & 48.3 million words \\
+Unique outbound hyperlinks & 892,000 \\
+Collection period & March--June 2023 \\
+Primary language (English) & 78\% of content \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Website data collection summary}
+\end{center}
+
+\sidenote{\faGlobe\ \textbf{Coverage note:} 5.3\% of organizations lacked accessible websites (defunct, redirected to social media, or access-blocked). These are \emph{not} randomly missing---they skew toward smaller, newer, or failed organizations.}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Findings: What Claimed Identity Reveals}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection*{Finding 1: Vocabulary Convergence Creates a ``Legitimacy Language''}
+
+Across 6,142 organizational websites, we find striking \textbf{vocabulary convergence}. Certain terms appear nearly universally: ``innovation'' (94\%), ``sustainable'' (89\%), ``solutions'' (85\%), ``partners'' (82\%).
+
+\begin{insightbox}[The Legitimacy Language Trap]
+Vocabulary convergence creates a double bind. Organizations \emph{must} use innovation/sustainability vocabulary to be recognized as legitimate players. But universal usage means the vocabulary carries little distinctive information. Result: claimed identity becomes partly \textbf{performative conformity}---saying what must be said to gain entry, not what uniquely describes oneself.
+\end{insightbox}
+
+\subsection*{Finding 2: The Knowledge Triangle Is Imbalanced}
+
+EIT's founding mission emphasizes equal integration of \textbf{Education}, \textbf{Research}, and \textbf{Business}---the ``knowledge triangle.'' Website vocabulary tells a different story: Business vocabulary dominates (41\%), followed by research (38\%). Education vocabulary is substantially underrepresented (21\%)---despite EIT's explicit education mission.
+
+\sidenote{\faExclamationTriangle\ \textbf{Gap identified:} Education vocabulary is systematically underweighted. Organizations \emph{claim} less educational identity than EIT's model would suggest.}
+
+\subsection*{Finding 3: Five Claimed Role Clusters Emerge}
+
+Combining vocabulary, network position, and self-classification, we identify \textbf{five distinct clusters} of claimed identity:
+
+% Using captionof to avoid kaobook caption recursion issue
+\tablestriped
+\scriptsize
+\begin{center}
+\begin{tabular}{@{}p{2.3cm}rp{3.5cm}p{3.5cm}@{}}
+\toprule
+\stripedhead{Cluster} & \stripedhead{N} & \stripedhead{Vocabulary Signature} & \stripedhead{Network Position} \\
+\midrule
+Core Coordinators & 89 & ``ecosystem,'' ``platform,'' ``orchestrate,'' ``coordinate'' & High in-degree, high out-degree, high betweenness \\
+Research Anchors & 847 & ``research,'' ``scientific,'' ``knowledge,'' ``excellence'' & High in-degree, moderate out-degree \\
+Innovation Engines & 1,203 & ``solution,'' ``develop,'' ``market,'' ``scale'' & Moderate out-degree, low in-degree \\
+Boundary Spanners & 412 & ``bridge,'' ``connect,'' ``facilitate,'' ``network'' & High betweenness, moderate degree \\
+Specialized Contributors & 3,591 & Domain-specific terms; narrow focus & Low centrality; peripheral positions \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Characteristics of five claimed role clusters}
+\end{center}
+\normalsize
+
+\subsection*{Finding 4: The ``Intermediary Inflation'' Problem}
+
+A striking finding: \textbf{34\% of organizations} use language associated with intermediary or connector roles. They claim to ``bridge,'' ``facilitate,'' ``connect,'' or ``orchestrate.''
+
+This is far higher than network positions support. If one-third of actors are connectors, \emph{who is being connected?} Only 13\% occupy high-betweenness bridging positions in the hyperlink network---a 21-percentage-point gap.
+
+\begin{criticalbox}[Interpreting the Gap]
+The gap between claimed intermediary roles and network bridging positions could indicate:
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item \textbf{Aspirational claiming}: Organizations want to \emph{become} connectors
+\item \textbf{Legitimacy performance}: ``Intermediary'' language confers status regardless of function
+\item \textbf{Invisible bridging}: Some intermediation happens through channels websites don't capture
+\item \textbf{Website lag}: Network positions evolved but websites weren't updated
+\end{itemize}
+Resolving which interpretation holds requires other modalities---news coverage, investment flows, observed activities. This is precisely why multimodal cartography matters.
+\end{criticalbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Limitations of Website Analysis}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{criticalbox}[What Websites Cannot Tell Us]
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Snapshot bias}: Websites captured at one time; no temporal dynamics without archives
+\item \textbf{Curation bias}: Organizations control content; strategic self-presentation, not ground truth
+\item \textbf{English bias}: 78\% English content; non-English actors underrepresented in text analysis
+\item \textbf{Hyperlink decay}: Some claimed partnerships may be outdated; websites lag reality
+\item \textbf{Absence ≠ evidence}: Not mentioning something doesn't mean it doesn't exist
+\item \textbf{Small actor invisibility}: Organizations with minimal web presence are underweighted
+\end{enumerate}
+\end{criticalbox}
+
+These limitations are not reasons to dismiss website data---they are reasons to \textbf{complement it with other modalities}.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Chapter Summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+Website analysis provides the first modality of multimodal cartography---the \textbf{declared map} of claimed identity. Key findings:
+
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Near-universal coverage}: 94.7\% of EIT ecosystem organizations have accessible websites.
+
+\item \textbf{Vocabulary convergence}: A shared ``legitimacy language'' creates performative conformity that limits differentiation.
+
+\item \textbf{Knowledge triangle imbalance}: Business vocabulary (41\%) dominates over research (38\%) and education (21\%).
+
+\item \textbf{Five claimed role clusters}: Core Coordinators, Research Anchors, Innovation Engines, Boundary Spanners, and Specialized Contributors emerge through self-organization.
+
+\item \textbf{Intermediary inflation}: 34\% claim connector roles, but only 13\% occupy bridging network positions.
+\end{itemize}
+
+Claims are starting points, not conclusions. The next chapter examines how \emph{others} see these actors---the attributed identity revealed through news media coverage.
+\end{summarybox}
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[Azure] (-2,0) rectangle (-1.7,0.08);
+    \fill[Azure!70] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[Azure!50] (-1,0) rectangle (-0.7,0.08);
+    \fill[Azure!30] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[Azure!15] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\closeintermezzo
+
+\end{document}

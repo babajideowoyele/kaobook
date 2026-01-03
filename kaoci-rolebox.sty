@@ -1,0 +1,531 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% kaoci-rolebox.sty
+% RoleBox Dissertation Custom Styling
+%
+% Custom colors, environments, and icons for the
+% "Multimodal Cartography of Role Constellations" dissertation
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{kaoci-rolebox}[2024/01/01 v1.0 RoleBox Dissertation Styling]
+
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{changepage}  % For adjustwidth environment
+
+%========================================================================================
+% ROLEBOX COLOR PALETTE (Streamlined)
+%========================================================================================
+
+% --- NEUTRALS (text & backgrounds) ---
+\definecolor{RBblack}{HTML}{1A1A1A}       % Primary text
+\definecolor{RBcharcoal}{HTML}{3D3D3D}    % Secondary text, borders
+\definecolor{RBcream}{HTML}{FBF8F3}       % Box backgrounds
+
+% --- BRAND (cover & headers) ---
+\definecolor{RBdark}{HTML}{1a1a2e}        % Cover background
+\definecolor{RBgold}{HTML}{d4a84b}        % Cover accent, highlights
+
+% --- SEMANTIC COLORS ---
+\definecolor{RBdata}{HTML}{007FFF}        % Data, technology (Azure blue)
+\definecolor{RBnature}{HTML}{558B2F}      % Sustainability, methods (Forest green)
+\definecolor{RBwarn}{HTML}{E3B841}        % Warnings, insights (Marigold)
+\definecolor{RBerror}{HTML}{ec7063}       % Errors, caveats (Coral)
+
+% --- ACCENT PALETTE (charts, diagrams, role categories) ---
+\definecolor{RBpurple}{HTML}{9b59b6}      % Roles, concepts
+\definecolor{RBcyan}{HTML}{5dade2}        % Methods, process
+\definecolor{RBgreen}{HTML}{58d68d}       % Success, positive
+\definecolor{RBpink}{HTML}{e8b4b8}        % Soft highlight
+\definecolor{RBteal}{HTML}{1abc9c}        % Alternative accent
+
+% --- LEGACY ALIASES (for backward compatibility with existing content) ---
+\colorlet{PandaBlack}{RBblack}
+\colorlet{PandaCharcoal}{RBcharcoal}
+\colorlet{PandaCream}{RBcream}
+\colorlet{PandaIvory}{RBcream}
+\colorlet{CoverDark}{RBdark}
+\colorlet{CoverGold}{RBgold}
+\colorlet{Azure}{RBdata}
+\colorlet{PandaForest}{RBnature}
+\colorlet{PandaBamboo}{RBnature}
+\colorlet{Marigold}{RBwarn}
+\colorlet{AccentCoral}{RBerror}
+\colorlet{AccentPurple}{RBpurple}
+\colorlet{AccentCyan}{RBcyan}
+\colorlet{AccentGreen}{RBgreen}
+\colorlet{AccentPink}{RBpink}
+\colorlet{AccentTeal}{RBteal}
+\colorlet{PandaRose}{RBpink}
+\colorlet{PandaBlush}{RBpink}
+
+% --- ADDITIONAL COLORS used in dissertation ---
+\definecolor{Slate}{HTML}{708090}          % Slate gray for secondary elements
+\colorlet{darkgray}{RBcharcoal}
+
+%========================================================================================
+% ICON SHORTCUTS (requires fontawesome5)
+%========================================================================================
+
+\RequirePackage{fontawesome5}
+
+% Status icons
+\newcommand{\iconok}{\textcolor{AccentGreen}{\faCheckCircle}}
+\newcommand{\iconwarn}{\textcolor{Marigold}{\faExclamationTriangle}}
+\newcommand{\iconerr}{\textcolor{AccentCoral}{\faTimesCircle}}
+\newcommand{\iconinfo}{\textcolor{Azure}{\faInfoCircle}}
+
+% Category-colored icons
+\newcommand{\icondata}[1]{\textcolor{Azure}{#1}}
+\newcommand{\iconprocess}[1]{\textcolor{PandaForest}{#1}}
+\newcommand{\iconintegrate}[1]{\textcolor{CoverGold}{#1}}
+\newcommand{\iconrole}[1]{\textcolor{AccentPurple}{#1}}
+
+%========================================================================================
+% CUSTOM TCOLORBOX ENVIRONMENTS
+%========================================================================================
+
+% RoleBox concept box (named roleconceptbox to avoid conflict with \RoleBox command)
+\newtcolorbox{roleconceptbox}[1][]{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{AccentPurple},
+    colback=PandaCream,
+    colbacktitle=AccentPurple,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    #1
+}
+
+% Insight box - for key findings (optional title in brackets)
+\newtcolorbox{insightbox}[1][]{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{CoverGold},
+    colback=PandaIvory,
+    fonttitle=\bfseries\sffamily,
+    coltitle=CoverGold!80!black,
+    attach title to upper={\par\smallskip},
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    title={#1},
+}
+
+% Method box - for methodological notes
+\newtcolorbox{methodbox}[1][]{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{AccentCyan},
+    colback=white,
+    fonttitle=\bfseries\sffamily,
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    #1
+}
+
+% Data box - for data descriptions
+\newtcolorbox{databox}[1][]{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{PandaForest},
+    colback=PandaCream,
+    fonttitle=\bfseries\sffamily,
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    #1
+}
+
+% Warning/Caveat box
+\newtcolorbox{caveatbox}[1][]{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{AccentCoral},
+    colback=PandaBlush!30,
+    fonttitle=\bfseries\sffamily,
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    #1
+}
+
+% Critical box - for important warnings/caveats with title
+\newtcolorbox{criticalbox}[1][]{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{AccentCoral},
+    colback=AccentCoral!10,
+    colbacktitle=AccentCoral,
+    coltitle=white,
+    fonttitle=\bfseries\sffamily,
+    attach title to upper={\par\smallskip},
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    title={#1},
+}
+
+% Important box - for key takeaways
+\newtcolorbox{importantbox}{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=1pt,
+    colframe=AccentPurple!50,
+    colback=AccentPurple!5,
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+}
+
+% Chapter overview box - appears at start of chapters
+\newtcolorbox{chapteroverview}{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=2\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={4pt}{0pt}{PandaBamboo},
+    colback=PandaCream,
+    sharp corners,
+    left=12pt,
+    right=12pt,
+    top=10pt,
+    bottom=10pt,
+    fontupper=\itshape,
+}
+
+% Summary box - for chapter summaries
+\newtcolorbox{summarybox}{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{PandaBamboo},
+    colback=PandaBamboo!10,
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+}
+
+% Proposition box - for theoretical propositions
+\newtcolorbox{propositionbox}{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=1pt,
+    colframe=AccentPurple!40,
+    colback=AccentPurple!5,
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+}
+
+% Panda Quote - for emphasized quotations
+\newtcolorbox{pandaquote}{%
+    enhanced,
+    breakable,
+    colback=PandaCream,
+    frame hidden,
+    borderline west={1.5pt}{0pt}{PandaCharcoal},
+    left=15pt,
+    right=15pt,
+    top=10pt,
+    bottom=10pt,
+    before upper={\large\textcolor{PandaCharcoal}{``}\kern-3pt},
+    after upper={\kern-3pt\textcolor{PandaCharcoal}{''}},
+    fontupper=\itshape,
+}
+
+%========================================================================================
+% RESEARCH QUESTION ENVIRONMENTS
+%========================================================================================
+
+% Main research question box
+\newtcolorbox{mainrq}{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=2pt,
+    colframe=AccentPurple,
+    colback=AccentPurple!8,
+    sharp corners,
+    left=12pt,
+    right=12pt,
+    top=10pt,
+    bottom=10pt,
+    fontupper=\large\itshape,
+}
+
+% Sub research question box
+\newtcolorbox{subrq}{%
+    breakable,
+    enhanced,
+    before skip=0.8\topskip,
+    after skip=0.8\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={2pt}{0pt}{AccentPurple!60},
+    colback=AccentPurple!5,
+    sharp corners,
+    left=10pt,
+    right=10pt,
+    top=6pt,
+    bottom=6pt,
+}
+
+%========================================================================================
+% THEOREM-LIKE ENVIRONMENTS
+%========================================================================================
+
+% RoleDef - custom definition box with title support (use instead of definition
+% when you need a titled definition box that doesn't conflict with kaotheorems)
+\newtcolorbox{roledef}[1][]{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=0pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{Azure},
+    colback=Azure!8,
+    fonttitle=\bfseries\sffamily,
+    coltitle=Azure,
+    attach title to upper={\par\smallskip},
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    title={#1},
+}
+
+%========================================================================================
+% INTERMEZZO COMMAND
+%========================================================================================
+
+% Counter for intermezzo pages (tracks pages used by intermezzos)
+\newcounter{intermezzopages}
+\newcounter{savedpage}
+
+% Save original sidenote format for restoration
+\newcounter{savedsidenote}
+
+% Intermezzo - special unnumbered chapters between main chapters
+% These are "stealth" sections:
+%   - Roman numeral page numbers (separate from main content)
+%   - Appear in TOC at a lower level (not as chapters)
+%   - Don't count toward main page numbering
+%   - Have their own running headers (not the previous chapter's)
+%   - Use symbol marks for sidenotes (*, †, ‡, etc.) instead of numbers
+\newcommand{\intermezzo}[1]{%
+    \cleardoublepage
+    % Save current page number and switch to roman numerals for intermezzo
+    \setcounter{savedpage}{\value{page}}%
+    \pagenumbering{roman}%
+    \setcounter{page}{1}%
+    %
+    % Switch sidenotes to use symbols instead of numbers
+    \setcounter{savedsidenote}{\value{sidenote}}%
+    \setcounter{sidenote}{0}%
+    \renewcommand{\thesidenote}{\fnsymbol{sidenote}}%
+    %
+    % Set running headers for this intermezzo (KOMA-Script)
+    \markleft{Intermezzo: #1}%
+    \markright{Intermezzo: #1}%
+    %
+    \thispagestyle{empty}%
+    \vspace*{2.5cm}
+    \begin{center}
+        {\color{AccentPurple}\rule{2cm}{2pt}}\\[0.8cm]
+        {\Large\scshape\color{Slate} Intermezzo}\\[0.4cm]
+        {\LARGE\bfseries\sffamily\color{PandaCharcoal} #1}\\[0.8cm]
+        {\color{AccentPurple}\rule{2cm}{2pt}}
+    \end{center}
+    \vspace{1.5cm}
+    % Add to TOC as a special entry (indented, italic, smaller)
+    \addtocontents{toc}{\protect\vspace{0.3em}}%
+    \addtocontents{toc}{\protect\contentsline{section}{\protect\textit{Intermezzo: #1}}{\thepage}{}}%
+    \addtocontents{toc}{\protect\vspace{0.3em}}%
+}
+
+% Command to end intermezzo and restore page numbering
+\newcommand{\closeintermezzo}{%
+    \cleardoublepage
+    % Restore arabic sidenote numbering
+    \renewcommand{\thesidenote}{\arabic{sidenote}}%
+    \setcounter{sidenote}{\value{savedsidenote}}%
+    %
+    \pagenumbering{arabic}%
+    \setcounter{page}{\value{savedpage}}%
+}
+
+%========================================================================================
+% TABLE STYLING COMMANDS
+%========================================================================================
+
+% Minimal table style (clean, simple)
+\newcommand{\tableminimal}{%
+    \renewcommand{\arraystretch}{1.3}%
+    \small%
+}
+
+% Striped table style (alternating row colors)
+\newcommand{\tablestriped}{%
+    \renewcommand{\arraystretch}{1.3}%
+    \small%
+    \rowcolors{2}{PandaCream!50}{white}%
+}
+
+% Table header styling
+\newcommand{\minimalhead}[1]{\textbf{\textcolor{PandaCharcoal}{#1}}}
+\newcommand{\stripedhead}[1]{\textbf{\textcolor{PandaForest}{#1}}}
+
+%========================================================================================
+% CHAPTER STYLE FOR ROLEBOX
+%========================================================================================
+
+% Custom chapter style with accent color
+\DeclareDocumentCommand{\chapterstylerolebox}{}{%
+    \renewcommand*{\chapterformat}{%
+        \mbox{\color{AccentPurple}\chapappifchapterprefix{\nobreakspace}\scalebox{2.85}{\thechapter\autodot}}%
+    }%
+    \renewcommand\chapterlinesformat[3]{%
+        \vspace{3.5\vscale}%
+        \if@twoside%
+            \Ifthispageodd{%
+                \smash{\makebox[0pt][l]{%
+                    \parbox[b]{\textwidth}{\flushright{\color{PandaCharcoal}##3}}%
+                    \makebox[\marginparsep][c]{\color{AccentPurple}\rule[-2\vscale]{2pt}{27.4\vscale+\f@size mm}}%
+                    \parbox[b]{\marginparwidth}{##2}%
+                }}%
+            }{%
+                \smash{\makebox[\textwidth][r]{%
+                    \parbox[b]{\marginparwidth}{\flushright{##2}}%
+                    \makebox[\marginparsep][c]{\color{AccentPurple}\rule[-2\vscale]{2pt}{27.4\vscale+\f@size mm}}%
+                    \parbox[b]{\textwidth}{\flushleft{\color{PandaCharcoal}##3}}%
+                }}%
+            }%
+        \else%
+            \smash{\makebox[0pt][l]{%
+                \parbox[b]{\textwidth}{\flushright{\color{PandaCharcoal}##3}}%
+                \makebox[\marginparsep][c]{\color{AccentPurple}\rule[-2\vscale]{2pt}{27.4\vscale+\f@size mm}}%
+                \parbox[b]{\marginparwidth}{##2}%
+            }}%
+        \fi%
+    }%
+    \RedeclareSectionCommand[beforeskip=0cm,afterskip=10\vscale]{chapter}%
+    \setlength{\mtocshift}{-3.5\vscale}%
+}
+
+%========================================================================================
+% HYPERREF COLORS
+%========================================================================================
+
+\newcommand{\useroleboxcolors}{%
+    \hypersetup{%
+        citecolor=PandaForest,%
+        filecolor=AccentPurple,%
+        linkcolor=PandaCharcoal,%
+        urlcolor=Azure,%
+    }%
+}
+
+%========================================================================================
+% UTILITY COMMANDS
+%========================================================================================
+
+% Role category formatting
+\newcommand{\role}[1]{\textsc{\textcolor{AccentPurple}{#1}}}
+\newcommand{\actor}[1]{\textbf{#1}}
+\newcommand{\concept}[1]{\textit{#1}}
+
+% Inline colored highlights
+\newcommand{\hlpurple}[1]{\colorbox{AccentPurple!20}{#1}}
+\newcommand{\hlgold}[1]{\colorbox{CoverGold!30}{#1}}
+\newcommand{\hlgreen}[1]{\colorbox{AccentGreen!20}{#1}}
+\newcommand{\hlcyan}[1]{\colorbox{AccentCyan!20}{#1}}
+
+%========================================================================================
+% APPLY STYLING
+%========================================================================================
+
+% Automatically apply RoleBox colors
+\AtBeginDocument{%
+    \useroleboxcolors%
+}
+
+%========================================================================================
+% FIX KAOBOOK CAPTION RECURSION BUG
+%========================================================================================
+% The kao.sty redefines \caption inside figure/table environments using
+% \AtBeginEnvironment (via etoolbox), which can cause infinite recursion with
+% certain package combinations (tcolorbox + floatrow).
+%
+% Solution: The simplest workaround is to use \captionof{figure/table}{...}
+% inside a center environment instead of wrapping in \begin{figure}...\end{figure}.
+% See the dissertation files for examples.
+%
+% Alternative fix that works: Clear the etoolbox hooks after they're set.
+\AtEndPreamble{%
+    \patchcmd{\figure}{\begin@float}{\togglefalse{kaocaption}\begin@float}{}{}%
+    \patchcmd{\table}{\begin@float}{\togglefalse{kaocaption}\begin@float}{}{}%
+}
+
+\endinput

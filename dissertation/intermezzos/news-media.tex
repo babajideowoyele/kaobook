@@ -1,0 +1,145 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\intermezzo{News Media: Mapping Attributed Identity}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[PandaBamboo] (-2,0) rectangle (-1.7,0.08);
+    \fill[PandaBamboo!70] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[PandaBamboo!50] (-1,0) rectangle (-0.7,0.08);
+    \fill[PandaBamboo!30] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[PandaBamboo!15] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{chapteroverview}
+This chapter examines how news media serve as both a mirror and shaper of sustainability transitions. We explore theoretical perspectives on media's role in transition discourse, methodological approaches from text mining to discourse analysis, empirical studies extracting actor roles from news, and the datasets and toolkits that enable large-scale media analysis for understanding multi-actor constellations and systemic dynamics.
+\end{chapteroverview}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Introduction}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Sustainability transitions are complex, multi-actor processes. News media are more than just observers; they actively shape and reflect the dialogue around change.
+
+\sidenote{\textbf{Media as Actors:} How journalists report on environmental issues can influence public perceptions, political decisions, and social awareness---making media coverage itself a force in transitions.}
+
+\begin{insightbox}[News as Running Record]
+News archives offer a running record of events, debates, and viewpoints involving various organizations and institutions. By analyzing this media content, scholars can identify which actors are involved in a transition and discern the roles they play or are ascribed in public discourse.
+\end{insightbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Media Coverage and Actor Roles in Transitions}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Media coverage is a window into the socio-political landscape of a sustainability transition. News articles often chronicle who is doing what---which organizations advocate or oppose certain innovations, which government agencies implement policies, which firms invest in new technologies.
+
+\sidenote{\textbf{Role Indicators:} Frequent quotes from a government agency suggest a policymaking role; coverage of protests highlights activist roles; profiles of startups show entrepreneurial roles.}
+
+Researchers tracking media debates over technologies such as nuclear power, carbon capture, or biofuels often reveal distinct actor roles:
+
+\begin{description}[leftmargin=0.5cm]
+\item[Incumbent firms] Portrayed as defending the regime or emphasizing reliability
+\item[Innovative startups] Cast as disruptors or pioneers
+\item[Government officials] Framed as regulators or enablers
+\item[NGOs/advocates] Acting as watchdogs or change agents
+\end{description}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Methodological Approaches to News Analysis}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Researchers employ a mix of \textbf{quantitative text mining} and \textbf{qualitative content analysis}:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Named Entity Recognition] Automatically identify entities (organizations, people, locations) in text using NLP tools like spaCy or NLTK.
+
+\item[Topic Modeling] Unsupervised machine learning to discover latent themes by clustering co-occurring words.
+
+\item[Sentiment Analysis] Gauge the tone of media coverage towards technologies or actors over time.
+
+\item[Discourse Network Analysis] Combines content coding with network analysis, linking actors to concepts they advocate.
+
+\item[Event History Analysis] Compile chronologies of events to analyze system change dynamics.
+\end{description}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Data Sources for News in Transition Studies}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Several datasets and repositories enable large-volume news article retrieval:
+
+\sidenote{\textbf{Data Access:} LexisNexis (Nexis Uni), Factiva, NewsBank, GDELT, Web scraping \& APIs.}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[LexisNexis \& Factiva] Commercial databases aggregating news from thousands of outlets worldwide with historical depth.
+
+\item[GDELT] Continuously updated event database parsed from global news using automated algorithms. Codes actors, locations, and tone.
+
+\item[Media Cloud] MIT's open-source platform for online news analysis.
+
+\item[Web Scraping] Custom collection using tools like Newspaper3k or official APIs (e.g., NYT API).
+\end{description}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Insights into Multi-Actor Constellations}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Analyzing news data yields insights into multi-actor constellations:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Power Dynamics] Media visibility indicates agenda-setting power. Increased presence of new voices may signal power shifts.
+
+\item[Actor Networks] Co-occurrence analysis maps perceived relationships and coalitions.
+
+\item[Intermediary Identification] News may highlight actors who facilitate change across regions or sectors.
+
+\item[Temporal Dynamics] Longitudinal analysis captures tipping points and narrative shifts.
+\end{description}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Chapter Summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{News media} actively shape public perceptions, political decisions, and societal values around sustainability transitions.
+
+\item \textbf{Media coverage} provides a window into the socio-political landscape, framing actors as heroes, villains, or victims.
+
+\item \textbf{Methodological approaches} range from NER and topic modeling to discourse network analysis and event history analysis.
+
+\item \textbf{Data sources} include commercial databases (LexisNexis, Factiva), computational databases (GDELT), and specialized archives.
+
+\item \textbf{Multi-actor constellations} can be mapped through actor co-occurrence, coalition formation, and intermediary identification.
+
+\item \textbf{Temporal dynamics} show how narratives shift, tipping points emerge, and external shocks reshape transition discourse.
+\end{itemize}
+\end{summarybox}
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tikzpicture}
+    \fill[PandaBamboo] (-2,0) rectangle (-1.7,0.08);
+    \fill[PandaBamboo!70] (-1.5,0) rectangle (-1.2,0.08);
+    \fill[PandaBamboo!50] (-1,0) rectangle (-0.7,0.08);
+    \fill[PandaBamboo!30] (-0.5,0) rectangle (-0.2,0.08);
+    \fill[PandaBamboo!15] (0,0) rectangle (0.3,0.08);
+\end{tikzpicture}
+\end{center}
+
+\closeintermezzo
+
+\end{document}
