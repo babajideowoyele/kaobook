@@ -1,0 +1,6 @@
+[submodule "dissertation/data/rolebox-wikipedia"]
+	path = dissertation/data/rolebox-wikipedia
+	url = https://github.com/babajideowoyele/rolebox-wikipedia.git
+[submodule "dissertation/data/rolesim"]
+	path = dissertation/data/rolesim
+	url = https://github.com/babajideowoyele/rolesim.git
