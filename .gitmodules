@@ -4,3 +4,6 @@
 [submodule "dissertation/data/rolesim"]
 	path = dissertation/data/rolesim
 	url = https://github.com/babajideowoyele/rolesim.git
+[submodule "dissertation/data/rolexray"]
+	path = dissertation/data/rolexray
+	url = https://github.com/babajideowoyele/METAFRASIA.git
