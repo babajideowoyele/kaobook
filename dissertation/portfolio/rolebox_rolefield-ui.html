@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROLEFIELD - Field Mapping Through Social Curation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#f5f5f5;color:#000;line-height:1.5}
+    .icon-box{width:40px;height:40px;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0}
+    .icon-box-sm{width:32px;height:32px;font-size:14px}
+    .icon-box-lg{width:48px;height:48px;font-size:18px}
+    .icon-box-outline{background:#fff;color:#000;border:2px solid #000}
+    .icon-box-gray{background:#e5e5e5;color:#666}
+    .icon-box-success{background:#e8f5e9;color:#2e7d32}
+    .icon-box-warning{background:#fff8e1;color:#f57f17}
+    .icon-box-error{background:#ffebee;color:#c62828}
+    .icon-box-info{background:#e3f2fd;color:#1565c0}
+    .card{background:#fff;border:1px solid #e5e5e5}
+    .card-elevated{background:#fff;border:3px solid #000;position:relative}
+    .card-elevated::before{content:'';position:absolute;top:-3px;left:-3px;right:-3px;bottom:-3px;background:#000;z-index:-1;transform:translate(6px,6px)}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;border:none}
+    .btn-primary{background:#000;color:#fff}.btn-primary:hover{background:#333}
+    .btn-secondary{background:#fff;color:#000;border:2px solid #000}.btn-secondary:hover{background:#000;color:#fff}
+    .btn-ghost{background:transparent;color:#000;padding:8px 16px}.btn-ghost:hover{background:#f0f0f0}
+    .btn-sm{padding:8px 16px;font-size:12px}
+    .btn-icon{width:36px;height:36px;padding:0;justify-content:center}
+    .tag{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;font-size:11px;font-weight:600}
+    .tag-default{background:#000;color:#fff}
+    .tag-outline{background:#fff;color:#000;border:1px solid #000}
+    .tag-gray{background:#e5e5e5;color:#666}
+    .tag-success{background:#e8f5e9;color:#2e7d32}
+    .tag-warning{background:#fff8e1;color:#f57f17}
+    .tag-error{background:#ffebee;color:#c62828}
+    .tag-info{background:#e3f2fd;color:#1565c0}
+    .tag-climate{background:#e8f5e9;color:#2e7d32}
+    .tag-digital{background:#e3f2fd;color:#1565c0}
+    .tag-health{background:#ffebee;color:#c62828}
+    .tag-food{background:#fff8e1;color:#f57f17}
+    .progress-bar{height:6px;background:#e5e5e5;border-radius:3px;overflow:hidden}
+    .progress-bar-fill{height:100%;background:#000;transition:width .3s}
+    .input{width:100%;padding:12px 16px;font-family:inherit;font-size:14px;border:2px solid #e5e5e5}
+    .input:focus{outline:none;border-color:#000}
+    .select{width:100%;padding:10px 12px;font-family:inherit;font-size:13px;border:2px solid #e5e5e5;background:#fff;cursor:pointer}
+    .app-frame{min-height:100vh;display:flex;flex-direction:column}
+    .app-header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:#fff;border-bottom:1px solid #e5e5e5;flex-wrap:wrap;gap:12px}
+    .app-logo{font-size:18px;font-weight:700;display:flex;align-items:center;gap:12px}
+    .app-nav{display:flex;gap:4px;flex-wrap:wrap}
+    .app-nav a{font-size:13px;color:#666;text-decoration:none;padding:8px 12px;transition:all .2s;border-radius:4px}
+    .app-nav a:hover{background:#f5f5f5;color:#000}
+    .app-nav a.active{background:#000;color:#fff}
+    .app-body{display:flex;flex:1}
+    .app-sidebar{width:280px;background:#fafafa;border-right:1px solid #e5e5e5;padding:24px;flex-shrink:0}
+    .app-main{flex:1;padding:32px;overflow-y:auto}
+    .main-content{max-width:1200px;margin:0 auto}
+    .stat-card{text-align:center;padding:20px}
+    .stat-value{font-size:32px;font-weight:300;margin-bottom:4px}
+    .stat-label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px}
+    .config-section{margin-bottom:24px}
+    .config-section h4{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:12px}
+    .region-row{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid #e5e5e5}
+    .region-row:last-child{border-bottom:none}
+    .region-row:hover{background:#fafafa}
+    .color-dot{width:12px;height:12px;border-radius:50%}
+    .ranking-bar{height:8px;background:#e5e5e5;border-radius:4px;overflow:hidden;flex:1}
+    .ranking-bar-fill{height:100%;background:#000;border-radius:4px}
+    .network-canvas{background:#fafafa;border:1px solid #e5e5e5;min-height:300px;display:flex;align-items:center;justify-content:center}
+    .plot-placeholder{text-align:center;color:#999}
+    .legend-item{display:flex;align-items:center;gap:8px;font-size:12px}
+    .accent-line{height:2px;background:linear-gradient(90deg,#000 0%,transparent 100%);max-width:100px}
+    .step-badge{width:28px;height:28px;background:#e5e5e5;color:#666;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;border-radius:50%}
+    .step-badge.active{background:#000;color:#fff}
+    .step-badge.complete{background:#2e7d32;color:#fff}
+    .sociotype-tag{padding:4px 8px;font-size:10px;font-weight:600;border:1px solid}
+    .sociotype-connective{background:#e3f2fd;color:#1565c0;border-color:#1565c0}
+    .sociotype-acceleration{background:#f3e5f5;color:#7b1fa2;border-color:#7b1fa2}
+    .sociotype-knowledge{background:#e8f5e9;color:#2e7d32;border-color:#2e7d32}
+    .sociotype-accountability{background:#ffebee;color:#c62828;border-color:#c62828}
+    .cli-panel{background:#1a1a1a;color:#fff;padding:16px;font-family:'SF Mono',Monaco,monospace;font-size:12px;margin-top:24px}
+    .cli-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .cli-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888}
+    .cli-content{background:#000;padding:12px;overflow-x:auto;border-radius:4px}
+    .cli-content code{color:#00ff88}
+    h1{font-size:28px;font-weight:300}h1 span{font-weight:600}
+    h2{font-size:20px;font-weight:600;margin-bottom:12px}
+    h3{font-size:16px;font-weight:600;margin-bottom:8px}
+    h4{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+    .text-sm{font-size:13px}.text-xs{font-size:11px}.text-gray{color:#666}
+    .flex{display:flex}.flex-col{flex-direction:column}.flex-1{flex:1}
+    .gap-4{gap:4px}.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}.gap-24{gap:24px}
+    .items-center{align-items:center}.items-start{align-items:flex-start}
+    .justify-between{justify-content:space-between}.justify-center{justify-content:center}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .mb-4{margin-bottom:4px}.mb-8{margin-bottom:8px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}.mb-32{margin-bottom:32px}
+    .p-12{padding:12px}.p-16{padding:16px}.p-24{padding:24px}
+    .border-b{border-bottom:1px solid #e5e5e5}
+    .w-full{width:100%}
+    .screen{display:none}.screen.active{display:block}
+    .seed-card{padding:16px;border:2px solid #e5e5e5;cursor:pointer;transition:all .2s}
+    .seed-card:hover{border-color:#000}
+    .seed-card.selected{border-color:#000;background:#fafafa}
+    .matrix-cell{padding:6px;text-align:center;font-size:10px;font-weight:500}
+    @media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr)}.app-sidebar{width:240px}}
+    @media(max-width:768px){.app-body{flex-direction:column}.app-sidebar{width:100%;border-right:none;border-bottom:1px solid #e5e5e5}.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="app-frame">
+  <div class="app-header">
+    <div class="flex items-center gap-16" style="flex-wrap:wrap">
+      <div class="app-logo"><i class="fas fa-broadcast-tower"></i> ROLEFIELD</div>
+      <div class="app-nav">
+        <a href="#" class="active" onclick="showScreen(0);return false">Dashboard</a>
+        <a href="#" onclick="showScreen(1);return false">Seeds</a>
+        <a href="#" onclick="showScreen(2);return false">Discovery</a>
+        <a href="#" onclick="showScreen(3);return false">Network</a>
+        <a href="#" onclick="showScreen(4);return false">Regions</a>
+        <a href="#" onclick="showScreen(5);return false">Triangulation</a>
+        <a href="#" onclick="showScreen(6);return false">Bridging</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-12">
+      <span class="text-sm text-gray">Field: <strong>EIT Innovation</strong></span>
+      <button class="btn btn-ghost btn-sm"><i class="fas fa-cog"></i></button>
+    </div>
+  </div>
+
+  <!-- Screen 0: Dashboard -->
+  <div class="screen active" id="screen-0">
+    <div class="app-body">
+      <div class="app-main">
+        <div class="main-content">
+          <div class="flex justify-between items-start mb-32" style="flex-wrap:wrap;gap:16px">
+            <div>
+              <h1 class="mb-8">Field Mapping <span>Dashboard</span></h1>
+              <p class="text-gray">European Innovation Intermediaries · Social Curation Analysis</p>
+              <div class="accent-line" style="margin-top:16px"></div>
+            </div>
+            <button class="btn btn-primary" onclick="showScreen(1)"><i class="fas fa-plus"></i> New Field</button>
+          </div>
+
+          <div class="card p-16 mb-32">
+            <div class="flex items-center justify-between" style="flex-wrap:wrap;gap:12px">
+              <div class="flex items-center gap-16" style="flex-wrap:wrap">
+                <div class="flex items-center gap-8"><div class="step-badge complete">1</div><span class="text-sm">Seeds</span></div>
+                <div style="width:40px;height:2px;background:#2e7d32"></div>
+                <div class="flex items-center gap-8"><div class="step-badge complete">2</div><span class="text-sm">Discovery</span></div>
+                <div style="width:40px;height:2px;background:#2e7d32"></div>
+                <div class="flex items-center gap-8"><div class="step-badge complete">3</div><span class="text-sm">Denoise</span></div>
+                <div style="width:40px;height:2px;background:#2e7d32"></div>
+                <div class="flex items-center gap-8"><div class="step-badge complete">4</div><span class="text-sm">Merge</span></div>
+                <div style="width:40px;height:2px;background:#2e7d32"></div>
+                <div class="flex items-center gap-8"><div class="step-badge complete">5</div><span class="text-sm">Visualize</span></div>
+                <div style="width:40px;height:2px;background:#2e7d32"></div>
+                <div class="flex items-center gap-8"><div class="step-badge active">6</div><span class="text-sm">Regions</span></div>
+              </div>
+              <span class="tag tag-success"><i class="fas fa-check"></i> Pipeline Complete</span>
+            </div>
+          </div>
+
+          <h4 class="mb-16"><i class="fas fa-bolt" style="margin-right:8px"></i> QUICK START</h4>
+          <div class="grid-4 mb-32">
+            <div class="card-elevated p-16" style="cursor:pointer" onclick="showScreen(1)">
+              <div class="icon-box mb-16"><i class="fas fa-seedling"></i></div>
+              <h3>Select Seeds</h3>
+              <p class="text-xs text-gray">Define core field participants</p>
+            </div>
+            <div class="card-elevated p-16" style="cursor:pointer" onclick="showScreen(2)">
+              <div class="icon-box mb-16"><i class="fas fa-search"></i></div>
+              <h3>Run Discovery</h3>
+              <p class="text-xs text-gray">Find actors via co-classification</p>
+            </div>
+            <div class="card-elevated p-16" style="cursor:pointer" onclick="showScreen(4)">
+              <div class="icon-box mb-16"><i class="fas fa-layer-group"></i></div>
+              <h3>Analyze Regions</h3>
+              <p class="text-xs text-gray">Louvain community detection</p>
+            </div>
+            <div class="card-elevated p-16" style="cursor:pointer" onclick="showScreen(5)">
+              <div class="icon-box mb-16"><i class="fas fa-compress-arrows-alt"></i></div>
+              <h3>Triangulate</h3>
+              <p class="text-xs text-gray">Internal ↔ External mapping</p>
+            </div>
+          </div>
+
+          <div class="grid-4 mb-32">
+            <div class="card stat-card">
+              <div class="icon-box" style="margin:0 auto 12px"><i class="fas fa-seedling"></i></div>
+              <div class="stat-value">8</div>
+              <div class="stat-label">Seed KICs</div>
+            </div>
+            <div class="card stat-card">
+              <div class="icon-box icon-box-success" style="margin:0 auto 12px"><i class="fas fa-users"></i></div>
+              <div class="stat-value">12,847</div>
+              <div class="stat-label">Actors Discovered</div>
+            </div>
+            <div class="card stat-card">
+              <div class="icon-box icon-box-info" style="margin:0 auto 12px"><i class="fas fa-project-diagram"></i></div>
+              <div class="stat-value">487K</div>
+              <div class="stat-label">Relations</div>
+            </div>
+            <div class="card stat-card">
+              <div class="icon-box icon-box-warning" style="margin:0 auto 12px"><i class="fas fa-layer-group"></i></div>
+              <div class="stat-value">10</div>
+              <div class="stat-label">Sub-Regions</div>
+            </div>
+          </div>
+
+          <div class="grid-2 mb-32">
+            <div class="card">
+              <div class="p-16 border-b"><h3><i class="fas fa-layer-group" style="margin-right:8px"></i> Top Sub-Regions</h3></div>
+              <div class="p-16">
+                <div class="region-row"><div class="color-dot" style="background:#2e7d32"></div><span class="text-sm flex-1">Climate & Sustainability</span><div class="ranking-bar"><div class="ranking-bar-fill" style="width:95%"></div></div><span class="text-sm" style="width:60px;text-align:right">2,340</span></div>
+                <div class="region-row"><div class="color-dot" style="background:#7b1fa2"></div><span class="text-sm flex-1">Digital & Tech Startups</span><div class="ranking-bar"><div class="ranking-bar-fill" style="width:88%"></div></div><span class="text-sm" style="width:60px;text-align:right">2,180</span></div>
+                <div class="region-row"><div class="color-dot" style="background:#c62828"></div><span class="text-sm flex-1">Health Innovation</span><div class="ranking-bar"><div class="ranking-bar-fill" style="width:76%"></div></div><span class="text-sm" style="width:60px;text-align:right">1,890</span></div>
+                <div class="region-row"><div class="color-dot" style="background:#f57f17"></div><span class="text-sm flex-1">EU Policy & Funding</span><div class="ranking-bar"><div class="ranking-bar-fill" style="width:67%"></div></div><span class="text-sm" style="width:60px;text-align:right">1,650</span></div>
+                <div class="region-row"><div class="color-dot" style="background:#1565c0"></div><span class="text-sm flex-1">Higher Education</span><div class="ranking-bar"><div class="ranking-bar-fill" style="width:57%"></div></div><span class="text-sm" style="width:60px;text-align:right">1,420</span></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="p-16 border-b"><h3><i class="fas fa-chart-pie" style="margin-right:8px"></i> Actor Types</h3></div>
+              <div class="p-16">
+                <div class="grid-2 gap-12">
+                  <div class="flex items-center gap-8 p-12" style="background:#fafafa"><div class="icon-box icon-box-sm icon-box-outline"><i class="fas fa-user"></i></div><div><p class="text-sm" style="font-weight:500">Individuals</p><p class="text-xs text-gray">33% · 4,235</p></div></div>
+                  <div class="flex items-center gap-8 p-12" style="background:#fafafa"><div class="icon-box icon-box-sm icon-box-outline"><i class="fas fa-rocket"></i></div><div><p class="text-sm" style="font-weight:500">Startups</p><p class="text-xs text-gray">22% · 2,827</p></div></div>
+                  <div class="flex items-center gap-8 p-12" style="background:#fafafa"><div class="icon-box icon-box-sm icon-box-outline"><i class="fas fa-flask"></i></div><div><p class="text-sm" style="font-weight:500">Research</p><p class="text-xs text-gray">12% · 1,542</p></div></div>
+                  <div class="flex items-center gap-8 p-12" style="background:#fafafa"><div class="icon-box icon-box-sm icon-box-outline"><i class="fas fa-university"></i></div><div><p class="text-sm" style="font-weight:500">Universities</p><p class="text-xs text-gray">11% · 1,413</p></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mb-16"><i class="fas fa-seedling" style="margin-right:8px"></i> SEED ACCOUNTS</h4>
+          <div class="card">
+            <div class="grid-4" style="gap:0">
+              <div class="flex items-center gap-12 p-16 border-b" style="border-right:1px solid #e5e5e5"><div class="icon-box icon-box-sm"><i class="fas fa-building"></i></div><div><p class="text-sm" style="font-weight:500">@EIT_EU</p><p class="text-xs text-gray">Institutional</p></div></div>
+              <div class="flex items-center gap-12 p-16 border-b" style="border-right:1px solid #e5e5e5"><div class="icon-box icon-box-sm icon-box-success"><i class="fas fa-leaf"></i></div><div><p class="text-sm" style="font-weight:500">@ClimateKIC</p><p class="text-xs text-gray">Climate</p></div></div>
+              <div class="flex items-center gap-12 p-16 border-b" style="border-right:1px solid #e5e5e5"><div class="icon-box icon-box-sm icon-box-info"><i class="fas fa-microchip"></i></div><div><p class="text-sm" style="font-weight:500">@EITDigital</p><p class="text-xs text-gray">Digital</p></div></div>
+              <div class="flex items-center gap-12 p-16 border-b"><div class="icon-box icon-box-sm icon-box-warning"><i class="fas fa-bolt"></i></div><div><p class="text-sm" style="font-weight:500">@InnoEnergy</p><p class="text-xs text-gray">Energy</p></div></div>
+              <div class="flex items-center gap-12 p-16" style="border-right:1px solid #e5e5e5"><div class="icon-box icon-box-sm icon-box-error"><i class="fas fa-heartbeat"></i></div><div><p class="text-sm" style="font-weight:500">@EITHealth</p><p class="text-xs text-gray">Health</p></div></div>
+              <div class="flex items-center gap-12 p-16" style="border-right:1px solid #e5e5e5"><div class="icon-box icon-box-sm" style="background:#fff8e1;color:#f57f17"><i class="fas fa-seedling"></i></div><div><p class="text-sm" style="font-weight:500">@EITFood</p><p class="text-xs text-gray">Food</p></div></div>
+              <div class="flex items-center gap-12 p-16" style="border-right:1px solid #e5e5e5"><div class="icon-box icon-box-sm icon-box-gray"><i class="fas fa-city"></i></div><div><p class="text-sm" style="font-weight:500">@EIT_Urban</p><p class="text-xs text-gray">Urban</p></div></div>
+              <div class="flex items-center gap-12 p-16"><div class="icon-box icon-box-sm icon-box-outline"><i class="fas fa-users"></i></div><div><p class="text-sm" style="font-weight:500">@EITCommunity</p><p class="text-xs text-gray">Alumni</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 1: Seeds -->
+  <div class="screen" id="screen-1">
+    <div class="app-body">
+      <div class="app-sidebar">
+        <h4 class="mb-16">STEP 1: SEEDS</h4>
+        <p class="text-sm text-gray mb-24">Select core participants with high relevance and visibility in the field</p>
+        <div class="config-section">
+          <h4>Selection Guidelines</h4>
+          <div class="flex flex-col gap-8">
+            <div class="flex items-start gap-8"><i class="fas fa-check" style="color:#2e7d32;margin-top:2px"></i><span class="text-xs">Expert consensus on core participants</span></div>
+            <div class="flex items-start gap-8"><i class="fas fa-check" style="color:#2e7d32;margin-top:2px"></i><span class="text-xs">Minimum 30+ list memberships</span></div>
+            <div class="flex items-start gap-8"><i class="fas fa-check" style="color:#2e7d32;margin-top:2px"></i><span class="text-xs">Spread apart (capture diversity)</span></div>
+            <div class="flex items-start gap-8"><i class="fas fa-check" style="color:#2e7d32;margin-top:2px"></i><span class="text-xs">Field-specific (avoid multifaceted)</span></div>
+          </div>
+        </div>
+        <div class="config-section">
+          <h4>Coverage Stats</h4>
+          <div class="card p-12">
+            <div class="flex justify-between mb-8"><span class="text-xs text-gray">Total Lists</span><span class="text-sm" style="font-weight:600">2,303</span></div>
+            <div class="flex justify-between"><span class="text-xs text-gray">Avg per Seed</span><span class="text-sm" style="font-weight:600">288</span></div>
+          </div>
+        </div>
+        <button class="btn btn-primary w-full" onclick="showScreen(2)"><i class="fas fa-arrow-right"></i> Next: Discovery</button>
+      </div>
+      <div class="app-main">
+        <div class="flex justify-between items-start mb-24" style="flex-wrap:wrap;gap:12px">
+          <div><h2>Seed Account Selection</h2><p class="text-sm text-gray">EIT and KIC accounts as core field participants</p></div>
+          <button class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i> Add Seed</button>
+        </div>
+        <div class="grid-2 mb-24">
+          <div class="seed-card selected">
+            <div class="flex items-center gap-16"><div class="icon-box"><i class="fas fa-building"></i></div><div class="flex-1"><div class="flex items-center gap-8 mb-4"><span class="text-sm" style="font-weight:600">@EIT_EU</span><span class="tag tag-default">Institutional</span></div><p class="text-xs text-gray">EIT (European Institute of Innovation & Technology)</p><div class="flex gap-16 mt-8"><span class="text-xs"><strong>45.2K</strong> followers</span><span class="text-xs"><strong>312</strong> lists</span></div></div><input type="checkbox" checked></div>
+          </div>
+          <div class="seed-card selected">
+            <div class="flex items-center gap-16"><div class="icon-box icon-box-success"><i class="fas fa-leaf"></i></div><div class="flex-1"><div class="flex items-center gap-8 mb-4"><span class="text-sm" style="font-weight:600">@ClimateKIC</span><span class="tag tag-climate">Climate</span></div><p class="text-xs text-gray">EIT Climate-KIC · Europe's climate innovation initiative</p><div class="flex gap-16 mt-8"><span class="text-xs"><strong>89.4K</strong> followers</span><span class="text-xs"><strong>567</strong> lists</span></div></div><input type="checkbox" checked></div>
+          </div>
+          <div class="seed-card selected">
+            <div class="flex items-center gap-16"><div class="icon-box icon-box-info"><i class="fas fa-microchip"></i></div><div class="flex-1"><div class="flex items-center gap-8 mb-4"><span class="text-sm" style="font-weight:600">@EITDigital</span><span class="tag tag-digital">Digital</span></div><p class="text-xs text-gray">EIT Digital · Digital transformation & deep tech</p><div class="flex gap-16 mt-8"><span class="text-xs"><strong>52.1K</strong> followers</span><span class="text-xs"><strong>423</strong> lists</span></div></div><input type="checkbox" checked></div>
+          </div>
+          <div class="seed-card selected">
+            <div class="flex items-center gap-16"><div class="icon-box icon-box-warning"><i class="fas fa-bolt"></i></div><div class="flex-1"><div class="flex items-center gap-8 mb-4"><span class="text-sm" style="font-weight:600">@InnoEnergy</span><span class="tag tag-warning">Energy</span></div><p class="text-xs text-gray">EIT InnoEnergy · Sustainable energy innovation</p><div class="flex gap-16 mt-8"><span class="text-xs"><strong>34.8K</strong> followers</span><span class="text-xs"><strong>289</strong> lists</span></div></div><input type="checkbox" checked></div>
+          </div>
+          <div class="seed-card selected">
+            <div class="flex items-center gap-16"><div class="icon-box icon-box-error"><i class="fas fa-heartbeat"></i></div><div class="flex-1"><div class="flex items-center gap-8 mb-4"><span class="text-sm" style="font-weight:600">@EITHealth</span><span class="tag tag-health">Health</span></div><p class="text-xs text-gray">EIT Health · Healthcare innovation network</p><div class="flex gap-16 mt-8"><span class="text-xs"><strong>28.9K</strong> followers</span><span class="text-xs"><strong>234</strong> lists</span></div></div><input type="checkbox" checked></div>
+          </div>
+          <div class="seed-card selected">
+            <div class="flex items-center gap-16"><div class="icon-box" style="background:#fff8e1;color:#f57f17"><i class="fas fa-seedling"></i></div><div class="flex-1"><div class="flex items-center gap-8 mb-4"><span class="text-sm" style="font-weight:600">@EITFood</span><span class="tag tag-food">Food</span></div><p class="text-xs text-gray">EIT Food · Food system transformation</p><div class="flex gap-16 mt-8"><span class="text-xs"><strong>21.4K</strong> followers</span><span class="text-xs"><strong>198</strong> lists</span></div></div><input type="checkbox" checked></div>
+          </div>
+        </div>
+        <div class="cli-panel">
+          <div class="cli-header"><span class="cli-title"><i class="fas fa-terminal" style="margin-right:8px"></i> CLI Equivalent</span><button class="btn btn-ghost btn-sm" style="color:#888"><i class="fas fa-copy"></i> Copy</button></div>
+          <div class="cli-content"><code>rolefield seeds add @EIT_EU @ClimateKIC @EITDigital @InnoEnergy @EITHealth @EITFood @EIT_Urban @EITCommunity</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 2: Discovery -->
+  <div class="screen" id="screen-2">
+    <div class="app-body">
+      <div class="app-sidebar">
+        <h4 class="mb-16">STEPS 2-4: DISCOVERY</h4>
+        <p class="text-sm text-gray mb-24">Co-classification network construction via list memberships</p>
+        <div class="config-section">
+          <h4>Parameters</h4>
+          <div class="mb-16"><label class="text-xs text-gray mb-4" style="display:block">Min Lists in Common (k)</label><div class="flex items-center gap-8"><input type="range" style="flex:1" min="2" max="10" value="3"><span class="text-sm" style="font-weight:600;width:30px">3</span></div></div>
+          <div class="mb-16"><label class="text-xs text-gray mb-4" style="display:block">Max List Size</label><input class="input" type="number" value="500" style="padding:8px 12px"></div>
+          <div class="mb-16"><label class="text-xs text-gray mb-4" style="display:block">Lists per User Cap</label><input class="input" type="number" value="100" style="padding:8px 12px"></div>
+        </div>
+        <button class="btn btn-primary w-full mb-16"><i class="fas fa-play"></i> Run Discovery</button>
+        <button class="btn btn-secondary w-full" onclick="showScreen(3)"><i class="fas fa-arrow-right"></i> View Network</button>
+      </div>
+      <div class="app-main">
+        <div class="flex justify-between items-start mb-24"><div><h2>Actor Discovery Pipeline</h2><p class="text-sm text-gray">Two-ring expansion, denoising, and network merging</p></div></div>
+        <div class="grid-3 mb-24">
+          <div class="card-elevated p-16"><div class="icon-box mb-12"><i class="fas fa-search"></i></div><h3 style="font-size:14px">Step 2: Discovery</h3><p class="text-xs text-gray mb-12">Find actors sharing ≥k lists with seeds</p><span class="tag tag-success"><i class="fas fa-check"></i> Complete</span></div>
+          <div class="card-elevated p-16"><div class="icon-box mb-12"><i class="fas fa-filter"></i></div><h3 style="font-size:14px">Step 3: Denoising</h3><p class="text-xs text-gray mb-12">Random walk centrality filtering</p><span class="tag tag-success"><i class="fas fa-check"></i> Complete</span></div>
+          <div class="card-elevated p-16"><div class="icon-box mb-12"><i class="fas fa-compress-arrows-alt"></i></div><h3 style="font-size:14px">Step 4: Merge</h3><p class="text-xs text-gray mb-12">Combine 8 seed networks</p><span class="tag tag-success"><i class="fas fa-check"></i> Complete</span></div>
+        </div>
+        <div class="card mb-24">
+          <div class="p-16 border-b"><h3><i class="fas fa-info-circle" style="margin-right:8px"></i> Co-Classification Formula</h3></div>
+          <div class="p-16">
+            <div style="background:#fafafa;padding:16px;font-family:monospace;font-size:14px;text-align:center;margin-bottom:16px">w<sub>ij</sub> = |{L : a<sub>i</sub> ∈ L ∧ a<sub>j</sub> ∈ L}| ≥ k</div>
+            <p class="text-sm text-gray">Two actors are connected if they are jointly classified in at least k lists by independent curators.</p>
+          </div>
+        </div>
+        <div class="grid-4 mb-24">
+          <div class="card stat-card"><div class="stat-value">12,847</div><div class="stat-label">Actors</div></div>
+          <div class="card stat-card"><div class="stat-value">487,293</div><div class="stat-label">Relations</div></div>
+          <div class="card stat-card"><div class="stat-value">34,521</div><div class="stat-label">Lists Used</div></div>
+          <div class="card stat-card"><div class="stat-value">18,432</div><div class="stat-label">Curators</div></div>
+        </div>
+        <div class="cli-panel">
+          <div class="cli-header"><span class="cli-title"><i class="fas fa-terminal" style="margin-right:8px"></i> Discovery Log</span></div>
+          <div class="cli-content"><code>[INFO] Loaded 8 seed accounts<br>[INFO] Database: 53,150,075 profiles, 3,692,097 lists<br>[STEP 2] Processing seed @EIT_EU... found 4,200 actors<br>[STEP 2] Processing seed @ClimateKIC... found 8,200 actors<br>[STEP 3] Running denoising (random walk)... removed 2,847 peripheral actors<br>[STEP 4] Merging networks... 12,847 unique actors<br><span style="color:#00ff88">[SUCCESS] Discovery complete!</span></code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 3: Network -->
+  <div class="screen" id="screen-3">
+    <div class="app-body">
+      <div class="app-sidebar">
+        <h4 class="mb-16">STEP 5: NETWORK</h4>
+        <div class="config-section">
+          <h4>Metrics</h4>
+          <div class="card p-12">
+            <div class="flex justify-between mb-8"><span class="text-xs text-gray">Density</span><span class="text-sm">0.0059</span></div>
+            <div class="flex justify-between mb-8"><span class="text-xs text-gray">Modularity</span><span class="text-sm">0.72</span></div>
+            <div class="flex justify-between mb-8"><span class="text-xs text-gray">Avg Degree</span><span class="text-sm">75.8</span></div>
+            <div class="flex justify-between"><span class="text-xs text-gray">Components</span><span class="text-sm" style="color:#2e7d32;font-weight:600">1</span></div>
+          </div>
+        </div>
+        <div class="config-section">
+          <h4>Region Colors</h4>
+          <div class="flex flex-col gap-8">
+            <div class="legend-item"><div class="color-dot" style="background:#2e7d32"></div> Climate</div>
+            <div class="legend-item"><div class="color-dot" style="background:#7b1fa2"></div> Digital</div>
+            <div class="legend-item"><div class="color-dot" style="background:#c62828"></div> Health</div>
+            <div class="legend-item"><div class="color-dot" style="background:#f57f17"></div> EU Policy</div>
+            <div class="legend-item"><div class="color-dot" style="background:#1565c0"></div> Education</div>
+          </div>
+        </div>
+        <div class="config-section">
+          <h4>Export</h4>
+          <div class="flex flex-col gap-8">
+            <button class="btn btn-secondary btn-sm w-full"><i class="fas fa-download"></i> GEXF (Gephi)</button>
+            <button class="btn btn-secondary btn-sm w-full"><i class="fas fa-download"></i> GraphML</button>
+          </div>
+        </div>
+      </div>
+      <div class="app-main">
+        <div class="flex justify-between items-start mb-24" style="flex-wrap:wrap;gap:12px">
+          <div><h1 class="mb-4">Field <span>Network</span></h1><p class="text-sm text-gray">12,847 actors · 487,293 relations · ForceAtlas2 layout</p></div>
+          <div class="flex gap-8"><button class="btn btn-ghost btn-sm"><i class="fas fa-search-plus"></i></button><button class="btn btn-ghost btn-sm"><i class="fas fa-search-minus"></i></button><button class="btn btn-secondary btn-sm"><i class="fas fa-expand"></i> Fullscreen</button></div>
+        </div>
+        <div class="card mb-24">
+          <div class="network-canvas" style="height:450px">
+            <div class="plot-placeholder"><i class="fas fa-project-diagram" style="font-size:64px;margin-bottom:16px;display:block"></i><p class="text-sm">Interactive network visualization</p><p class="text-xs">Nodes colored by sub-region, sized by intensity score</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="p-16 border-b flex justify-between items-center"><h3>Edge Threshold</h3><span class="text-sm">20%</span></div>
+          <div class="p-16"><input type="range" style="width:100%" min="0" max="100" value="20"><p class="text-xs text-gray" style="margin-top:8px">Filter edges by co-classification strength</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 4: Regions -->
+  <div class="screen" id="screen-4">
+    <div class="app-body">
+      <div class="app-sidebar">
+        <h4 class="mb-16">STEP 6: REGIONS</h4>
+        <p class="text-sm text-gray mb-24">Louvain community detection and content analysis</p>
+        <div class="config-section">
+          <h4>All Regions (10)</h4>
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-8 p-8" style="background:#fafafa;cursor:pointer"><div class="color-dot" style="background:#2e7d32"></div><span class="text-xs flex-1">Climate</span><span class="text-xs text-gray">2,340</span></div>
+            <div class="flex items-center gap-8 p-8" style="cursor:pointer"><div class="color-dot" style="background:#7b1fa2"></div><span class="text-xs flex-1">Digital</span><span class="text-xs text-gray">2,180</span></div>
+            <div class="flex items-center gap-8 p-8" style="cursor:pointer"><div class="color-dot" style="background:#c62828"></div><span class="text-xs flex-1">Health</span><span class="text-xs text-gray">1,890</span></div>
+            <div class="flex items-center gap-8 p-8" style="cursor:pointer"><div class="color-dot" style="background:#f57f17"></div><span class="text-xs flex-1">EU Policy</span><span class="text-xs text-gray">1,650</span></div>
+            <div class="flex items-center gap-8 p-8" style="cursor:pointer"><div class="color-dot" style="background:#1565c0"></div><span class="text-xs flex-1">Education</span><span class="text-xs text-gray">1,420</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="app-main">
+        <div class="flex justify-between items-start mb-24" style="flex-wrap:wrap;gap:12px"><div><h1 class="mb-4">Sub-Region <span>Analysis</span></h1><p class="text-sm text-gray">Content analysis of Twitter biographies per community</p></div><button class="btn btn-secondary btn-sm"><i class="fas fa-redo"></i> Re-run Louvain</button></div>
+        <div class="card mb-24">
+          <div class="p-16 border-b"><div class="flex items-center gap-12"><div class="color-dot" style="background:#2e7d32;width:16px;height:16px"></div><h3 style="margin:0">Climate & Sustainability</h3><span class="tag tag-default">2,340 actors</span></div></div>
+          <div class="p-16">
+            <div class="grid-3 mb-16">
+              <div class="card stat-card" style="border:1px solid #e5e5e5"><div class="stat-value" style="font-size:24px">18.2%</div><div class="stat-label">Field Share</div></div>
+              <div class="card stat-card" style="border:1px solid #e5e5e5"><div class="stat-value" style="font-size:24px">0.72</div><div class="stat-label">Centrality</div></div>
+              <div class="card stat-card" style="border:1px solid #e5e5e5"><div class="stat-value" style="font-size:24px">0.18</div><div class="stat-label">Density</div></div>
+            </div>
+            <h4 class="mb-12">CHARACTERISTIC VOCABULARY (TF-IDF)</h4>
+            <div class="flex gap-8 mb-16" style="flex-wrap:wrap">
+              <span class="tag tag-outline">climate</span><span class="tag tag-outline">sustainable</span><span class="tag tag-outline">energy</span><span class="tag tag-outline">green</span><span class="tag tag-outline">carbon</span><span class="tag tag-outline">environment</span>
+            </div>
+            <h4 class="mb-12">SAMPLE ACTORS</h4>
+            <div class="flex flex-col gap-8">
+              <div class="flex items-center gap-12 p-12" style="background:#fafafa"><div class="icon-box icon-box-sm icon-box-success"><i class="fas fa-leaf"></i></div><div class="flex-1"><p class="text-sm" style="font-weight:500">@ClimateAction_EU</p><p class="text-xs text-gray">EU climate policy advocate</p></div><span class="text-xs">Intensity: 0.89</span></div>
+              <div class="flex items-center gap-12 p-12" style="background:#fafafa"><div class="icon-box icon-box-sm icon-box-outline"><i class="fas fa-user"></i></div><div class="flex-1"><p class="text-sm" style="font-weight:500">@GreenTechFounder</p><p class="text-xs text-gray">Cleantech entrepreneur & investor</p></div><span class="text-xs">Intensity: 0.76</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 5: Triangulation -->
+  <div class="screen" id="screen-5">
+    <div class="app-body">
+      <div class="app-main">
+        <div class="main-content">
+          <div class="flex justify-between items-start mb-32"><div><h1 class="mb-8">Triangulation: <span>Internal ↔ External</span></h1><p class="text-gray">Mapping internal sociotype configurations to externally-identified sub-regions</p><div class="accent-line" style="margin-top:16px"></div></div></div>
+          <div class="card mb-24">
+            <div class="p-16 border-b"><h3><i class="fas fa-compress-arrows-alt" style="margin-right:8px"></i> Sociotype → Sub-Region Correspondence</h3></div>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:13px">
+                <thead><tr style="background:#fafafa"><th style="padding:12px 16px;text-align:left">Sociotype</th><th style="padding:12px 16px;text-align:left">Internal Character</th><th style="padding:12px 16px;text-align:left">Corresponding Regions</th><th style="padding:12px 16px;text-align:left">Alignment</th></tr></thead>
+                <tbody>
+                  <tr class="border-b"><td style="padding:12px 16px"><span class="sociotype-tag sociotype-connective"><i class="fas fa-network-wired"></i> Connective</span></td><td style="padding:12px 16px" class="text-sm">Platform, broker, ecosystem builder</td><td style="padding:12px 16px" class="text-sm text-gray">Distributed (not localized)</td><td style="padding:12px 16px"><span class="tag tag-warning">Function ≠ Domain</span></td></tr>
+                  <tr class="border-b"><td style="padding:12px 16px"><span class="sociotype-tag sociotype-acceleration"><i class="fas fa-rocket"></i> Acceleration</span></td><td style="padding:12px 16px" class="text-sm">Startup support, funding, scaling</td><td style="padding:12px 16px" class="text-sm">Venture Capital; Digital & Tech</td><td style="padding:12px 16px"><span class="tag tag-success"><i class="fas fa-check"></i> Strong</span></td></tr>
+                  <tr class="border-b"><td style="padding:12px 16px"><span class="sociotype-tag sociotype-knowledge"><i class="fas fa-flask"></i> Knowledge</span></td><td style="padding:12px 16px" class="text-sm">Research, discovery, validation</td><td style="padding:12px 16px" class="text-sm">Research; Higher Education</td><td style="padding:12px 16px"><span class="tag tag-success"><i class="fas fa-check"></i> Strong</span></td></tr>
+                  <tr class="border-b"><td style="padding:12px 16px"><span class="sociotype-tag sociotype-accountability"><i class="fas fa-chart-line"></i> Accountability</span></td><td style="padding:12px 16px" class="text-sm">Impact delivery, policy contribution</td><td style="padding:12px 16px" class="text-sm">EU Policy & Funding</td><td style="padding:12px 16px"><span class="tag tag-success"><i class="fas fa-check"></i> Validated</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="grid-2 mb-24">
+            <div class="card">
+              <div class="p-16 border-b"><h3><i class="fas fa-lightbulb" style="margin-right:8px"></i> Key Observations</h3></div>
+              <div class="p-16">
+                <div class="p-12 mb-12" style="background:#fff8e1;border-left:3px solid #f57f17"><p class="text-sm" style="font-weight:600;margin-bottom:4px">Connective ≠ Sub-Region</p><p class="text-xs text-gray">Connection is a <em>function</em>, not a <em>domain</em>. KICs are perceived as belonging to thematic domains, not a separate "connector" category.</p></div>
+                <div class="p-12 mb-12" style="background:#e8f5e9;border-left:3px solid #2e7d32"><p class="text-sm" style="font-weight:600;margin-bottom:4px">Sectoral → Thematic Regions</p><p class="text-xs text-gray">Domain-specific counterroles correspond to externally-identified thematic communities.</p></div>
+                <div class="p-12" style="background:#e3f2fd;border-left:3px solid #1565c0"><p class="text-sm" style="font-weight:600;margin-bottom:4px">Accountability = EU Policy</p><p class="text-xs text-gray">The peripheral Accountability sociotype corresponds to a distinct external sub-region.</p></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="p-16 border-b"><h3><i class="fas fa-th" style="margin-right:8px"></i> Seed Overlap Matrix (Jaccard)</h3></div>
+              <div class="p-16" style="overflow-x:auto">
+                <table style="width:100%;border-collapse:collapse;font-size:10px">
+                  <thead><tr><th class="matrix-cell"></th><th class="matrix-cell">EIT</th><th class="matrix-cell">Clim</th><th class="matrix-cell">Dig</th><th class="matrix-cell">Ener</th><th class="matrix-cell">Hlth</th></tr></thead>
+                  <tbody>
+                    <tr><td class="matrix-cell" style="font-weight:600">EIT</td><td class="matrix-cell" style="background:#000;color:#fff">1.00</td><td class="matrix-cell" style="background:rgba(0,0,0,0.4);color:#fff">.52</td><td class="matrix-cell" style="background:rgba(0,0,0,0.45);color:#fff">.48</td><td class="matrix-cell" style="background:rgba(0,0,0,0.5);color:#fff">.51</td><td class="matrix-cell" style="background:rgba(0,0,0,0.35)">.38</td></tr>
+                    <tr><td class="matrix-cell" style="font-weight:600">Clim</td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#000;color:#fff">1.00</td><td class="matrix-cell" style="background:rgba(0,0,0,0.3)">.32</td><td class="matrix-cell" style="background:rgba(0,0,0,0.6);color:#fff">.61</td><td class="matrix-cell" style="background:rgba(0,0,0,0.25)">.28</td></tr>
+                    <tr><td class="matrix-cell" style="font-weight:600">Dig</td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#000;color:#fff">1.00</td><td class="matrix-cell" style="background:rgba(0,0,0,0.35)">.37</td><td class="matrix-cell" style="background:rgba(0,0,0,0.4)">.42</td></tr>
+                    <tr><td class="matrix-cell" style="font-weight:600">Ener</td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#000;color:#fff">1.00</td><td class="matrix-cell" style="background:rgba(0,0,0,0.3)">.31</td></tr>
+                    <tr><td class="matrix-cell" style="font-weight:600">Hlth</td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#000;color:#fff">1.00</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 6: Bridging -->
+  <div class="screen" id="screen-6">
+    <div class="app-body">
+      <div class="app-sidebar">
+        <h4 class="mb-16">BRIDGING ANALYSIS</h4>
+        <p class="text-sm text-gray mb-24">Identify actors connecting sub-regions</p>
+        <div class="config-section">
+          <h4>Bridging Metrics</h4>
+          <div class="card p-12">
+            <div class="flex justify-between mb-8"><span class="text-xs text-gray">Betweenness</span><span class="text-sm">Normalized</span></div>
+            <div class="flex justify-between mb-8"><span class="text-xs text-gray">Bridge Score</span><span class="text-sm">Cross-region ties</span></div>
+            <div class="flex justify-between"><span class="text-xs text-gray">Diversity</span><span class="text-sm">Region entropy</span></div>
+          </div>
+        </div>
+        <div class="config-section">
+          <h4>Top Bridges</h4>
+          <div class="flex flex-col gap-8">
+            <div class="flex items-center gap-8 p-8" style="background:#fafafa"><span class="text-xs flex-1">@EUstartups</span><span class="text-xs text-gray">0.89</span></div>
+            <div class="flex items-center gap-8 p-8"><span class="text-xs flex-1">@InnovationHub</span><span class="text-xs text-gray">0.84</span></div>
+            <div class="flex items-center gap-8 p-8"><span class="text-xs flex-1">@TechEurope</span><span class="text-xs text-gray">0.81</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="app-main">
+        <div class="flex justify-between items-start mb-24"><div><h1 class="mb-4">Bridging <span>Analysis</span></h1><p class="text-sm text-gray">Actors connecting thematic sub-regions</p></div></div>
+        <div class="card mb-24">
+          <div class="p-16 border-b"><h3><i class="fas fa-random" style="margin-right:8px"></i> Cross-Region Connections</h3></div>
+          <div class="p-16">
+            <div class="grid-3 mb-16">
+              <div class="card stat-card" style="border:1px solid #e5e5e5"><div class="stat-value" style="font-size:24px">847</div><div class="stat-label">Bridge Actors</div></div>
+              <div class="card stat-card" style="border:1px solid #e5e5e5"><div class="stat-value" style="font-size:24px">12.4K</div><div class="stat-label">Cross-Region Ties</div></div>
+              <div class="card stat-card" style="border:1px solid #e5e5e5"><div class="stat-value" style="font-size:24px">0.67</div><div class="stat-label">Avg Bridge Score</div></div>
+            </div>
+            <h4 class="mb-12">TOP BRIDGING ACTORS</h4>
+            <div class="flex flex-col gap-8">
+              <div class="flex items-center gap-12 p-12" style="background:#fafafa"><div class="icon-box icon-box-sm"><i class="fas fa-random"></i></div><div class="flex-1"><p class="text-sm" style="font-weight:500">@InnovationHub</p><p class="text-xs text-gray">Connects: Health ↔ Digital ↔ Education</p></div><span class="text-xs">Bridge: 0.84</span></div>
+              <div class="flex items-center gap-12 p-12" style="background:#fafafa"><div class="icon-box icon-box-sm"><i class="fas fa-random"></i></div><div class="flex-1"><p class="text-sm" style="font-weight:500">@TechEurope</p><p class="text-xs text-gray">Connects: Energy ↔ Digital ↔ Climate</p></div><span class="text-xs">Bridge: 0.81</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="p-16 border-b"><h3><i class="fas fa-th" style="margin-right:8px"></i> Region-to-Region Bridge Matrix</h3></div>
+          <div class="p-16" style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:11px">
+              <thead><tr><th class="matrix-cell"></th><th class="matrix-cell">Climate</th><th class="matrix-cell">Digital</th><th class="matrix-cell">Health</th><th class="matrix-cell">Policy</th><th class="matrix-cell">Edu</th></tr></thead>
+              <tbody>
+                <tr><td class="matrix-cell" style="font-weight:600">Climate</td><td class="matrix-cell" style="background:#2e7d32;color:#fff">—</td><td class="matrix-cell" style="background:rgba(46,125,50,0.3)">234</td><td class="matrix-cell" style="background:rgba(46,125,50,0.2)">156</td><td class="matrix-cell" style="background:rgba(46,125,50,0.4)">312</td><td class="matrix-cell" style="background:rgba(46,125,50,0.25)">189</td></tr>
+                <tr><td class="matrix-cell" style="font-weight:600">Digital</td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#7b1fa2;color:#fff">—</td><td class="matrix-cell" style="background:rgba(123,31,162,0.3)">278</td><td class="matrix-cell" style="background:rgba(123,31,162,0.2)">198</td><td class="matrix-cell" style="background:rgba(123,31,162,0.35)">245</td></tr>
+                <tr><td class="matrix-cell" style="font-weight:600">Health</td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#c62828;color:#fff">—</td><td class="matrix-cell" style="background:rgba(198,40,40,0.25)">167</td><td class="matrix-cell" style="background:rgba(198,40,40,0.4)">289</td></tr>
+                <tr><td class="matrix-cell" style="font-weight:600">Policy</td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#f57f17;color:#fff">—</td><td class="matrix-cell" style="background:rgba(245,127,23,0.3)">201</td></tr>
+                <tr><td class="matrix-cell" style="font-weight:600">Edu</td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#1565c0;color:#fff">—</td></tr>
+              </tbody>
+            </table>
+            <p class="text-xs text-gray" style="margin-top:12px">Values show number of bridging actors between regions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showScreen(n){
+  document.querySelectorAll('.screen').forEach((s,i)=>{s.classList.toggle('active',i===n)});
+  document.querySelectorAll('.app-nav a').forEach((a,i)=>{a.classList.toggle('active',i===n)});
+}
+</script>
+</body>
+</html>-1"><p class="text-sm" style="font-weight:500">@EUstartups</p><p class="text-xs text-gray">Connects: Digital ↔ Climate ↔ Policy</p></div><span class="text-xs">Bridge: 0.89</span></div>
+              <div class="flex items-center gap-12 p-12" style="background:#fafafa"><div class="icon-box icon-box-sm"><i class="fas fa-random"></i></div><div class="flex

@@ -19,31 +19,25 @@ This chapter introduces \textbf{multimodal cartography} as a response: a systema
 \section{The Urgency of Navigating Transitions}
 \label{sec:intro:urgency}
 
-\sidenote{\textbf{420 ppm}---CO₂ levels in 2023, unseen for three million years.}
+We are living through what historians may one day call the Great Reckoning. Climate change has outpaced many scientific predictions \needcite{ipcc-ar6-2023}.\sidenote{\textbf{420 ppm}---CO\textsubscript{2} levels in 2023, unseen for three million years.} Biodiversity loss continues at what some scientists characterize as a sixth mass extinction \needcite{ipbes-biodiversity}. Social inequalities have widened, exacerbated by technological disruption and pandemic aftershocks. These crises share a common origin: the unsustainability of systems that have dominated since the industrial revolution.
 
-We are living through what historians may one day call the Great Reckoning. Climate change has outpaced many scientific predictions. Biodiversity loss continues at what some scientists characterize as a sixth mass extinction. Social inequalities have widened, exacerbated by technological disruption and pandemic aftershocks. These crises share a common origin: the unsustainability of systems that have dominated since the industrial revolution.
-
-\sidenote{\textbf{Transitions}---Deep structural changes in technologies, institutions, practices, and power relations.}
-
-Addressing these challenges requires more than incremental fixes. We need \emph{transitions}---fundamental shifts in how societies produce energy, grow food, move people, and organize economic life. The shift from coal to renewables. From industrial to regenerative agriculture. From private cars to shared mobility. Each touches every dimension of socio-technical systems.
+Addressing these challenges requires more than incremental fixes. We need \emph{transitions}\sidenote{\textbf{Transitions}---Deep structural changes in technologies, institutions, practices, and power relations.}---fundamental shifts in how societies produce energy, grow food, move people, and organize economic life. The shift from coal to renewables. From industrial to regenerative agriculture. From private cars to shared mobility. Each touches every dimension of socio-technical systems.
 
 Over three decades, sustainability transitions research has developed sophisticated frameworks for understanding these transformations. The Multi-Level Perspective sees transitions emerging from interactions between niche innovations, dominant regimes, and broader landscape pressures \sidecite{geels2002technological}.\sidenote{The MLP remains the field's most influential framework, though it has faced critiques for underspecifying actor agency and micro-level dynamics.} Strategic Niche Management explores how protected spaces help radical innovations mature \cite{smith2007snm}. Transition Management investigates governance approaches for steering complex systems toward sustainability \cite{kemp2007tm}.
 
 These frameworks have generated valuable insights. But the field faces a persistent problem---one that motivates this entire dissertation.
 
-% Margin figure showing depth-breadth trade-off
-\begin{marginfigure}[-2cm]
-\centering
-\begin{tikzpicture}[scale=0.5]
+% Figure showing depth-breadth trade-off (converted from margin to body)
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
     % Simple visual showing the tension
-    \node[draw, circle, fill=Azure!20, minimum size=1.2cm, font=\scriptsize, align=center] (qual) at (0,2) {Deep\\N=30};
-    \node[draw, circle, fill=Marigold!20, minimum size=1.2cm, font=\scriptsize, align=center] (quant) at (0,-2) {Broad\\N=10k};
-    \draw[<->, thick, PandaCharcoal] (qual) -- (quant) node[midway, right, font=\tiny] {Trade-off?};
+    \node[draw, circle, fill=Azure!20, minimum size=2.4cm, font=\small, align=center] (qual) at (0,3) {Deep\\N=30};
+    \node[draw, circle, fill=Marigold!20, minimum size=2.4cm, font=\small, align=center] (quant) at (0,-3) {Broad\\N=10k};
+    \draw[<->, thick, PandaCharcoal] (qual) -- (quant) node[midway, right, font=\small] {Trade-off?};
 \end{tikzpicture}
-
-\scriptsize\textit{The depth-breadth trade-off.}
+\captionof{figure}{The depth-breadth trade-off in transitions research.}
 \label{fig:intro:depth-breadth}
-\end{marginfigure}
+\end{center}
 
 \section{The Methodological Divide}
 \label{sec:intro:divide}
@@ -52,27 +46,21 @@ These frameworks have generated valuable insights. But the field faces a persist
 
 Most transitions research is qualitative and case-based. Researchers spend years embedded in transition arenas, conducting interviews, analyzing documents, observing how actors negotiate visions and navigate institutional barriers. This work excels at capturing complexity, contingency, and context. It reveals how actors make sense of change, how meanings shift, how power operates through discourse.
 
-\sidenote{\textbf{The Dutch example}---Years of embedded research yielding rich insights, but examining only dozens of actors.}
+Consider the exemplary studies of the Dutch energy transition \needcite{verbong-dutch-energy},\sidenote{\textbf{The Dutch example}---Years of embedded research yielding rich insights, but examining only dozens of actors.} or the longitudinal analyses tracing organic agriculture's evolution from countercultural movement to mainstream practice \needcite{smith-organic-agriculture}. These provide the theoretical depth that makes transitions research valuable.
 
-Consider the exemplary studies of the Dutch energy transition, or the longitudinal analyses tracing organic agriculture's evolution from countercultural movement to mainstream practice. These provide the theoretical depth that makes transitions research valuable.
-
-But this tradition has limits. Case studies typically examine thirty to fifty actors---enough for rich understanding, not enough for pattern identification. By the time a transition is documented, it has largely already happened. Cross-case comparison remains challenging when contexts differ and operationalization varies.\sidenote{Qualitative strengths: deep context, rich meaning, process tracing, actor voice. Limits: small samples, hard to generalize, retrospective, hard to compare.}
+But this tradition has limits.\sidenote{Qualitative strengths: deep context, rich meaning, process tracing, actor voice. Limits: small samples, hard to generalize, retrospective, hard to compare.} Case studies typically examine thirty to fifty actors---enough for rich understanding, not enough for pattern identification. By the time a transition is documented, it has largely already happened. Cross-case comparison remains challenging when contexts differ and operationalization varies.
 
 \subsection{The Computational Turn}
 
-Meanwhile, computational social science has developed powerful methods for analyzing large-scale social phenomena. Network analysis reveals hidden collaborative structures. Natural language processing extracts themes from millions of documents. Machine learning identifies patterns invisible to human observation.
-
-\sidenote{\textbf{Scale possibilities}---Studies now analyze thousands of patents, millions of tweets, and entire startup ecosystems.}
+Meanwhile, computational social science has developed powerful methods for analyzing large-scale social phenomena \needcite{lazer-css-2009}.\sidenote{\textbf{Scale possibilities}---Studies now analyze thousands of patents, millions of tweets, and entire startup ecosystems.} Network analysis reveals hidden collaborative structures. Natural language processing extracts themes from millions of documents. Machine learning identifies patterns invisible to human observation.
 
 Applied to transitions, these methods promise to overcome scale limitations. Researchers have mapped innovation networks through patent analysis, tracked climate discourse dynamics on Twitter, and analyzed startup ecosystems at population level \cite{jacobides2018towards,phillips2019innovation}. The potential is substantial.
 
-Yet computational approaches face their own problems---particularly regarding theory. Many studies begin with available data rather than theoretical questions, leading to sophisticated analysis of what \emph{can} be measured rather than what \emph{matters}. The rich concepts animating transitions research---intentionality, power, meaning, legitimacy, institutional work---often resist straightforward operationalization.\sidenote{Computational strengths: population scale, pattern detection, replicability, high-frequency. Limits: theory-light, validation hard, context-blind, digital only.}
+Yet computational approaches face their own problems---particularly regarding theory.\sidenote{Computational strengths: population scale, pattern detection, replicability, high-frequency. Limits: theory-light, validation hard, context-blind, digital only.} Many studies begin with available data rather than theoretical questions, leading to sophisticated analysis of what \emph{can} be measured rather than what \emph{matters}. The rich concepts animating transitions research---intentionality, power, meaning, legitimacy, institutional work---often resist straightforward operationalization.
 
 \subsection{Why Bridging Requires Design}
 
-\sidenote{\textbf{The design metaphor}---Like bridge engineering, methodological bridging requires attention to materials and constraints.}
-
-The divide between these approaches is not absolute\textemdash some researchers combine methods, some studies integrate data types. But such integration remains ad hoc rather than systematic, opportunistic rather than principled.
+The divide between these approaches is not absolute\textemdash some researchers combine methods, some studies integrate data types.\sidenote{\textbf{The design metaphor}---Like bridge engineering, methodological bridging requires attention to materials and constraints.} But such integration remains ad hoc rather than systematic, opportunistic rather than principled.
 
 What is missing is explicit methodological work on \emph{how} to bridge these approaches while preserving each tradition's strengths. This dissertation argues that bridging requires treating integration as a \textbf{design problem}. Given particular materials (concepts, data, methods, expertise) and constraints (validity, resources, ethics), how can we construct artifacts enabling analysis that neither approach achieves alone?
 
@@ -84,9 +72,7 @@ This is where Design Science Research enters the picture. But before introducing
 
 \subsection{What Are Role Constellations?}
 
-Transitions unfold through the actions of diverse actors occupying different positions and performing different functions. Some develop radical innovations in protected niches. Others maintain incumbent regimes. Still others broker connections, build coalitions, or provide legitimacy. Understanding these differentiated positions\textemdash what we call \emph{roles}\textemdash is essential for explaining why some transitions accelerate while others stall.
-
-\sidenote{\textbf{Role}---A position or function enacted through relationships and activities, not fixed identity.}
+Transitions unfold through the actions of diverse actors occupying different positions and performing different functions. Some develop radical innovations in protected niches. Others maintain incumbent regimes. Still others broker connections, build coalitions, or provide legitimacy. Understanding these differentiated positions\textemdash what we call \emph{roles}\textemdash is essential for explaining why some transitions accelerate while others stall.\sidenote{\textbf{Role}---A position or function enacted through relationships and activities, not fixed identity.}
 
 But roles do not exist in isolation. A niche innovation needs more than just entrepreneurs. It requires financiers willing to bet on uncertainty, brokers who can translate between worlds, legitimators who confer credibility, and sometimes even sympathetic regime insiders. Transitions depend not only on what actors do individually, but on how diverse roles configure together.
 
@@ -94,23 +80,20 @@ But roles do not exist in isolation. A niche innovation needs more than just ent
 A \textbf{role constellation} is the dynamic configuration of roles that an actor or set of actors performs, including how these roles relate to each other, evolve over time, and combine to enable (or constrain) transition processes.
 \end{roledef}
 
-\sidenote{\textbf{Two levels}---(1) Multiple roles one actor performs, or (2) roles configured across a network. We focus on the first.}
+The concept operates at two levels.\sidenote{\textbf{Two levels}---(1) Multiple roles one actor performs, or (2) roles configured across a network. We focus on the first.} At the \emph{actor level}, a role constellation describes the portfolio of roles a single organization performs\textemdash how a university might simultaneously act as knowledge producer, network convenor, and policy advisor. At the \emph{system level}, it describes how different actors' roles combine into functional configurations that support innovation and change.
 
-The concept operates at two levels. At the \emph{actor level}, a role constellation describes the portfolio of roles a single organization performs\textemdash how a university might simultaneously act as knowledge producer, network convenor, and policy advisor. At the \emph{system level}, it describes how different actors' roles combine into functional configurations that support innovation and change.
-
-% Margin figure: role constellation (using marginfigure with captionof workaround)
-\begin{marginfigure}[0.5cm]
-\centering
-\begin{tikzpicture}[scale=0.5]
+% Figure: role constellation (converted from margin to body)
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
     % Central intermediary
-    \node[draw, rounded corners, fill=Marigold!40, minimum size=0.9cm, font=\tiny, align=center] (inter) at (0,0) {Org};
+    \node[draw, rounded corners, fill=Marigold!40, minimum size=1.8cm, font=\small, align=center] (inter) at (0,0) {Org};
 
     % Its roles (inner constellation)
-    \node[draw, circle, fill=Azure!30, minimum size=0.5cm, font=\tiny] (r1) at (1.2,1.2) {B};
-    \node[draw, circle, fill=PandaBamboo!30, minimum size=0.5cm, font=\tiny] (r2) at (1.5,0) {F};
-    \node[draw, circle, fill=AccentPurple!30, minimum size=0.5cm, font=\tiny] (r3) at (1.2,-1.2) {A};
-    \node[draw, circle, fill=AccentCyan!30, minimum size=0.5cm, font=\tiny] (r4) at (-1.2,1.2) {C};
-    \node[draw, circle, fill=AccentCoral!30, minimum size=0.5cm, font=\tiny] (r5) at (-1.5,0) {V};
+    \node[draw, circle, fill=Azure!30, minimum size=1.0cm, font=\small] (r1) at (2.4,2.4) {B};
+    \node[draw, circle, fill=PandaBamboo!30, minimum size=1.0cm, font=\small] (r2) at (3.0,0) {F};
+    \node[draw, circle, fill=AccentPurple!30, minimum size=1.0cm, font=\small] (r3) at (2.4,-2.4) {A};
+    \node[draw, circle, fill=AccentCyan!30, minimum size=1.0cm, font=\small] (r4) at (-2.4,2.4) {C};
+    \node[draw, circle, fill=AccentCoral!30, minimum size=1.0cm, font=\small] (r5) at (-3.0,0) {V};
 
     % Connections to roles
     \foreach \x in {r1,r2,r3,r4,r5} {
@@ -118,21 +101,19 @@ The concept operates at two levels. At the \emph{actor level}, a role constellat
     }
 
     % Outer network (faded)
-    \node[draw, circle, fill=Slate!15, minimum size=0.4cm] (n1) at (2.4,1.6) {};
-    \node[draw, circle, fill=Slate!15, minimum size=0.4cm] (n2) at (2.6,0) {};
+    \node[draw, circle, fill=Slate!15, minimum size=0.8cm] (n1) at (4.8,3.2) {};
+    \node[draw, circle, fill=Slate!15, minimum size=0.8cm] (n2) at (5.2,0) {};
     \draw[dashed, Slate!40] (r1) -- (n1);
     \draw[dashed, Slate!40] (r2) -- (n2);
 \end{tikzpicture}
 
-\scriptsize\textit{Role constellation (colored) and network (gray).}
+\captionof{figure}{Role constellation (colored) and network connections (gray).}
 \label{fig:intro:constellation}
-\end{marginfigure}
+\end{center}
 
 \subsection{Scope: Intermediaries and Their Roles}
 
-\sidenote{\textbf{Intermediaries}---Organizations bridging innovators and regimes, translating between logics, navigating barriers.}
-
-Intermediary organizations occupy a special place in transitions. Positioned between innovators and regimes, between sectors, between policy and practice, they perform critical bridging functions: facilitating connections, translating between logics, providing resources, conferring legitimacy, and helping innovations navigate institutional barriers.
+Intermediary organizations occupy a special place in transitions \needcite{kivimaa-intermediaries-2019}.\sidenote{\textbf{Intermediaries}---Organizations bridging innovators and regimes, translating between logics, navigating barriers.} Positioned between innovators and regimes, between sectors, between policy and practice, they perform critical bridging functions: facilitating connections, translating between logics, providing resources, conferring legitimacy, and helping innovations navigate institutional barriers.
 
 This dissertation focuses specifically on \textbf{intermediary organizations and their role constellations}. We ask: what roles do intermediaries perform? How do these roles combine and evolve? What explains variation across intermediaries and over time?
 
@@ -172,9 +153,7 @@ This dissertation proposes \textbf{multimodal cartography} as a methodological r
 \textbf{Multimodal cartography} is a methodological approach that integrates multiple data modalities (text, networks, images, video, structured databases) to construct systematic representations of complex social phenomena\textemdash in this case, the role constellations of intermediary organizations in sustainability transitions.
 \end{roledef}
 
-\sidenote{\textbf{Why multimodal?}---Organizations \emph{claim} roles on websites, \emph{perform} them on Twitter, and are \emph{perceived} differently in media.}
-
-The ``multimodal'' dimension is essential. Roles are not singular phenomena observable through any single lens. An intermediary may claim a convening role on its website, perform a brokering role through its Twitter interactions, and be perceived as an advocate in news coverage. These are not contradictions to be resolved but facets to be mapped. Single-modality analysis\textemdash whether text-only, network-only, or interview-only\textemdash inevitably misses dimensions that other modalities would reveal.
+The ``multimodal'' dimension is essential.\sidenote{\textbf{Why multimodal?}---Organizations \emph{claim} roles on websites, \emph{perform} them on Twitter, and are \emph{perceived} differently in media.} Roles are not singular phenomena observable through any single lens. An intermediary may claim a convening role on its website, perform a brokering role through its Twitter interactions, and be perceived as an advocate in news coverage. These are not contradictions to be resolved but facets to be mapped. Single-modality analysis\textemdash whether text-only, network-only, or interview-only\textemdash inevitably misses dimensions that other modalities would reveal.
 
 This dissertation develops \RoleBox as the platform for multimodal cartography, instantiating six data modalities in an integrated analytical environment. But before detailing the artifacts, we must establish the methodological framework that guides their construction: Design Science Research.
 
@@ -184,21 +163,15 @@ This dissertation develops \RoleBox as the platform for multimodal cartography, 
 
 \subsection{Why Design?}
 
-The challenge of bridging methodological divides is not primarily a matter of applying existing methods more skillfully or collecting more data. Rather, it requires \emph{creating} new methodological artifacts\textemdash conceptual frameworks, analytical tools, integration protocols, validation procedures\textemdash that enable forms of analysis not previously possible.
-
-\sidenote{\textbf{Design problem}---Given materials and constraints, how can artifacts enable new analytical capabilities?}
+The challenge of bridging methodological divides is not primarily a matter of applying existing methods more skillfully or collecting more data. Rather, it requires \emph{creating} new methodological artifacts\textemdash conceptual frameworks, analytical tools, integration protocols, validation procedures\textemdash that enable forms of analysis not previously possible.\sidenote{\textbf{Design problem}---Given materials and constraints, how can artifacts enable new analytical capabilities?}
 
 This is fundamentally a design problem. Engineers designing a bridge must understand materials, forces, and contexts. Similarly, bridging methodological divides requires systematic attention to what each approach offers, where tensions arise, and how artifacts can be constructed that enable productive integration. The question shifts from ``which method is better?'' to ``what can we build that serves both traditions?''
 
 \subsection{Design Science in Sustainability Transitions: Uncharted Territory}
 
-\sidenote{\textbf{Design Science Research}---Paradigm treating artifact creation and evaluation as scientific contribution.}
+Design Science Research (DSR) provides a systematic framework for this kind of methodological innovation.\sidenote{\textbf{Design Science Research}---Paradigm treating artifact creation and evaluation as scientific contribution.} \sidecite{hevner2004design} Originating in information systems research \needcite{march-smith-dsr-1995}, DSR treats the creation and evaluation of novel artifacts as legitimate scientific contribution \cite{peffers2007dsr}. Unlike explanatory research that seeks to understand existing phenomena, or critical research that interrogates power and assumptions, design research asks: \emph{what new capabilities become possible through systematic artifact creation?}
 
-Design Science Research (DSR) provides a systematic framework for this kind of methodological innovation \sidecite{hevner2004design}. Originating in information systems research, DSR treats the creation and evaluation of novel artifacts as legitimate scientific contribution \cite{peffers2007dsr}. Unlike explanatory research that seeks to understand existing phenomena, or critical research that interrogates power and assumptions, design research asks: \emph{what new capabilities become possible through systematic artifact creation?}
-
-Yet DSR remains largely uncharted territory in sustainability transitions research. The field has produced sophisticated theoretical frameworks\textemdash the Multi-Level Perspective, Strategic Niche Management, Transition Management\textemdash but has devoted far less attention to the \emph{artifacts} that enable empirical analysis.
-
-\sidenote{\textbf{The artifact gap}---Transitions research excels at theory but rarely produces reusable tools or datasets.}
+Yet DSR remains largely uncharted territory in sustainability transitions research.\sidenote{\textbf{The artifact gap}---Transitions research excels at theory but rarely produces reusable tools or datasets.} The field has produced sophisticated theoretical frameworks\textemdash the Multi-Level Perspective, Strategic Niche Management, Transition Management\textemdash but has devoted far less attention to the \emph{artifacts} that enable empirical analysis.
 
 \begin{itemize}[leftmargin=*, itemsep=0.3em]
 \item \textbf{Analytical platforms} with documented codebases that others can deploy
@@ -211,9 +184,7 @@ Yet DSR remains largely uncharted territory in sustainability transitions resear
 
 This absence is consequential. Without such artifacts, each research team starts from scratch. Findings cannot be replicated or extended. Methodological innovations remain locked in individual projects rather than accumulating as shared infrastructure. The field advances through theoretical refinement but lacks the material foundations for cumulative empirical progress.\sidenote{Artifacts developed: \RoleBox{} (platform), \RoleSim{} (simulation), 6 data modalities (datasets), pipelines (workflows), integration protocols, and replication guidelines.}
 
-\sidenote{\textbf{Importing from IS}---This dissertation adapts DSR from information systems for social science methodology.}
-
-This dissertation imports the Design Science paradigm from information systems to address this gap. The contribution is not merely to \emph{use} computational methods but to \emph{design, document, and share} the artifacts that make multimodal cartography accessible and reproducible.
+This dissertation imports the Design Science paradigm from information systems to address this gap.\sidenote{\textbf{Importing from IS}---This dissertation adapts DSR from information systems for social science methodology.} The contribution is not merely to \emph{use} computational methods but to \emph{design, document, and share} the artifacts that make multimodal cartography accessible and reproducible.
 
 \subsection{Four Meta-Design Requirements}
 
@@ -245,9 +216,7 @@ The overarching question guiding this dissertation is:
 How can we systematically develop multimodal cartography for mapping role constellations of intermediary organizations in sustainability transitions, and what do such maps reveal?
 \end{mainrq}
 
-\sidenote{\textbf{Two dimensions}---Methodological (how to map) and empirical (what maps reveal).}
-
-This question combines methodological and empirical ambitions. It asks not only \emph{how} to construct the cartographic apparatus but also \emph{what} we learn by using it. Four sub-questions structure the inquiry:
+This question combines methodological and empirical ambitions.\sidenote{\textbf{Two dimensions}---Methodological (how to map) and empirical (what maps reveal).} It asks not only \emph{how} to construct the cartographic apparatus but also \emph{what} we learn by using it. Four sub-questions structure the inquiry:
 
 \begin{subrq}
 \textbf{Theoretical Foundation}\\
@@ -291,9 +260,7 @@ Clarity requires specifying not only what this dissertation attempts but also wh
 
 \textbf{Empirically}, the dissertation focuses on European Institute of Innovation and Technology (EIT) Knowledge and Innovation Communities as the primary case.\sidenote{Eight EIT KICs, 2010--2023. European innovation intermediaries.} This choice enables comparison across sustainability domains with consistent institutional framing and substantial digital traces.
 
-\sidenote{Digital traces only; offline activities not captured.}
-
-\textbf{Methodologically}, the heavy reliance on digital trace data privileges what is observable online. Organizations with limited digital presence, interactions through non-digital channels, and dimensions leaving few digital traces are underrepresented or invisible.
+\textbf{Methodologically}, the heavy reliance on digital trace data privileges what is observable online.\sidenote{Digital traces only; offline activities not captured.} Organizations with limited digital presence, interactions through non-digital channels, and dimensions leaving few digital traces are underrepresented or invisible.
 
 \textbf{Theoretically}, the dissertation focuses on micro-level role constellation dynamics rather than macro-level regime change. It treats landscape pressures and regime structures as context rather than primary objects of study.
 
@@ -320,6 +287,6 @@ The chapters that follow document this journey. They present not a smooth narrat
 
 The urgency of sustainability transitions demands that researchers continually expand their methodological repertoires while maintaining theoretical rigor and reflexive honesty. This dissertation contributes one set of tools, one theoretical lens, one empirical demonstration, and one open invitation.\sidenote{An invitation: whether this path leads somewhere valuable depends on others walking it.} The maps we draw are never the territory. But better maps might help us navigate the territory more wisely.
 
-The journey begins in Chapter~\ref{ch:litrev}, where we survey the territory itself: sustainability transitions, the actors who shape them, and the roles those actors play.
+The journey begins in Chapter~\ref{ch:background}, where we survey the territory itself: sustainability transitions, the actors who shape them, and the roles those actors play.
 
 \end{document}

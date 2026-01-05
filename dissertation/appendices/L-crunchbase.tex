@@ -1,0 +1,104 @@
+% !TEX root = ../main.tex
+%************************************************
+\chapter{Crunchbase: Mapping Investment Networks}
+\label{app:crunchbase}
+%************************************************
+
+\noindent\textit{This appendix examines Crunchbase as a data source for studying innovation ecosystems, particularly startup-driven sustainability transitions. We explore the platform's unique ability to map inter-organizational networks through investment, acquisition, and founder relationships. The appendix addresses data extraction methods, analytical techniques, and integration strategies while acknowledging critical limitations around coverage bias and reproducibility.}
+
+\bigskip
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Overview: Scope, Strengths, and Limitations}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\textbf{Crunchbase} is a prominent online platform compiling information on innovative companies (especially startups), the people behind them, and their funding activities.
+
+%\sidenote{\textbf{Platform Scale (2024):} 1M+ organizations, 199 countries, hundreds of thousands of people and investment records.}
+
+Since its creation in 2007, it has grown into one of the largest directories of startups worldwide, providing detailed information not easily obtainable from official sources.
+
+\subsection*{Data Assembly Model}
+
+Crunchbase's dataset is \textbf{community- and partner-driven}:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Registered users (entrepreneurs, executives) create/update profiles
+\item Partnerships with ~3,000 investment firms for portfolio updates
+\item ML-augmented verification
+\item In-house data analysts
+\end{itemize}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Data Richness: Relational Structure}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Unlike patent databases or news archives, Crunchbase explicitly encodes \textbf{relationships}:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Funding Relationships] Which investors funded which companies, amounts, and rounds
+\item[Acquisition Relationships] Which companies acquired which others
+\item[People Relationships] Founders, executives, board members across companies
+\item[Accelerator Relationships] Which programs supported which startups
+\end{description}
+
+%\sidenote{\textbf{Network Construction:} Crunchbase data naturally generates bipartite networks (investor-company) and one-mode projections (co-investor networks).}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Analytical Applications}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection*{Investment Network Analysis}
+
+Funding data enables construction of investor-startup networks revealing:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Central vs. peripheral investors
+\item Sector specialization patterns
+\item Geographic concentration
+\item Syndication patterns (co-investment)
+\end{itemize}
+
+\subsection*{Founder Network Analysis}
+
+Serial entrepreneurs and board members create ties between organizations:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Knowledge transfer pathways
+\item Entrepreneurial communities
+\item Spin-off dynamics
+\end{itemize}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Critical Limitations}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{criticalbox}[Coverage and Bias Issues]
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{US/Tech bias}: North American and technology sectors overrepresented
+\item \textbf{Survivorship bias}: Failed companies underreported
+\item \textbf{Self-reporting}: Data quality depends on user contributions
+\item \textbf{Recency bias}: Historical data less complete
+\item \textbf{Access barriers}: Full API access requires commercial subscription
+\end{itemize}
+\end{criticalbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Chapter Summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Crunchbase} provides rich relational data on startups, investors, and their connections.
+
+\item \textbf{Network construction} is natural: funding rounds create investor-company ties; people create company-company ties.
+
+\item \textbf{Analytical applications} include investment network analysis, founder mobility tracking, and ecosystem mapping.
+
+\item \textbf{Critical limitations} include geographic/sectoral bias, survivorship bias, and data access barriers.
+
+\item \textbf{Integration with other modalities} strengthens validity by triangulating investment patterns with claimed identities and media coverage.
+\end{itemize}
+\end{summarybox}

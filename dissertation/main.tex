@@ -28,8 +28,8 @@
 % Subfiles for modular chapters
 \usepackage{subfiles}
 
-% Font configuration (Fira Sans)
-\usepackage[firasans]{kaofonts}
+% Font configuration (Fira Sans Light - lighter weight for easier reading)
+\usepackage[firasanslight]{kaofonts}
 
 % Custom RoleBox styling (colors, environments, icons)
 \usepackage{kaoci-rolebox}
@@ -38,7 +38,7 @@
 % GRAPHICS
 %----------------------------------------------------------------------------------------
 % graphicx, tikz, booktabs, multirow already loaded by kao.sty
-\graphicspath{{figures/}{chapters/}{./}}
+\graphicspath{{dividers/images/}{dissertation/figures/}{figures/}{chapters/}{./}}
 
 % Additional TikZ libraries beyond what kao.sty loads
 \usetikzlibrary{
@@ -174,72 +174,85 @@
 % Table of contents
 \tableofcontents
 
-% List of figures (optional)
-% \listoffigures
+% List of figures
+\listoffigures
 
-% List of tables (optional)
-% \listoftables
+% List of tables
+\listoftables
 
 %----------------------------------------------------------------------------------------
 % MAIN MATTER
 %----------------------------------------------------------------------------------------
 \mainmatter
 \setchapterstyle{kao}
+% Adjust margin TOC vertical position to prevent bleeding
+% The kao chapter style sets \mtocshift to -3.5\vscale, but this still causes
+% bleeding with long chapter titles. We override it by setting a more negative value.
+% Using -6.5\vscale for extra safety with long titles
+\setlength{\mtocshift}{-6.5\vscale}
 
 %========================================================================================
 % PART I: FOUNDATIONS
 %========================================================================================
 \part{Foundations}
 
+\chapterdivider{ch1-introduction}
 \subfile{dissertation/chapters/01-introduction}
 
+\chapterdivider{intermezzo}
 \subfile{dissertation/intermezzos/eit-communities}  % EIT context for the empirical setting
 
+\chapterdivider{ch2-litrev}
 \subfile{dissertation/chapters/02-role-categories}
 
+\chapterdivider{ch3-cas}
 \subfile{dissertation/chapters/03-methodology}
 
+\chapterdivider{intermezzo}
 \subfile{dissertation/intermezzos/rolexray}  % Methodological tool introduction
 
+\chapterdivider{ch4-methodology}
 \subfile{dissertation/chapters/04-role-constellations}
 
+\chapterdivider{intermezzo}
 \subfile{dissertation/intermezzos/multimodal-cartography}  % Conceptual framework bridge
 
-\subfile{dissertation/intermezzos/rolesim}  % Simulation tool - moved here per Option C
-
 %========================================================================================
-% PART II: DATA MODALITIES
-%========================================================================================
-\part{Data Modalities}
-
-% Each intermezzo introduces a data source used in the empirical chapters
-\subfile{dissertation/intermezzos/websites}
-\subfile{dissertation/intermezzos/roledna}  % RoleDNA stays here - describes the data encoding
-\subfile{dissertation/intermezzos/news-media}
-\subfile{dissertation/intermezzos/crunchbase}
-\subfile{dissertation/intermezzos/social-media}
-\subfile{dissertation/intermezzos/visual-materials}
-
-%========================================================================================
-% PART III: EMPIRICAL STUDIES
+% PART II: EMPIRICAL STUDIES
 %========================================================================================
 \part{Empirical Studies}
 
+\chapterdivider{ch5-eit-case}
 \subfile{dissertation/chapters/05-interstitial-pluralism}
+
+\chapterdivider{ch6-websites}
 \subfile{dissertation/chapters/06-rolefield}
+
+\chapterdivider{ch7-twitter}
 \subfile{dissertation/chapters/07-venture-positioning}
+
+\chapterdivider{intermezzo}
+\subfile{dissertation/intermezzos/rolesim}  % Simulation tool - after venture/Crunchbase data
+
+\chapterdivider{ch8-news}
 \subfile{dissertation/chapters/08-visual-registers}
+
+\chapterdivider{ch9-investment}
 \subfile{dissertation/chapters/09-power-agency}
 
 \subfile{dissertation/intermezzos/triangulation}  % Integration method
 
 %========================================================================================
-% PART IV: SYNTHESIS AND CONCLUSIONS
+% PART III: SYNTHESIS AND CONCLUSIONS
 %========================================================================================
 \part{Synthesis and Conclusions}
 
+\chapterdivider{ch10-visual}
 \subfile{dissertation/chapters/10-synthesis}
+
+\chapterdivider{ch11-video}
 \subfile{dissertation/chapters/11-discussion}
+
 \subfile{dissertation/chapters/12-conclusion}
 
 %----------------------------------------------------------------------------------------
@@ -260,11 +273,41 @@
 \subfile{dissertation/appendices/F-ethics}
 \subfile{dissertation/appendices/G-glossary}
 \subfile{dissertation/appendices/H-software}
+\subfile{dissertation/appendices/I-wikipedia-data}
+
+%========================================================================================
+% INTERSTITIUM: DATA MODALITIES
+%========================================================================================
+\part{Interstitium: Data Modalities}
+
+\subfile{dissertation/appendices/J-websites}
+\subfile{dissertation/appendices/K-news-media}
+\subfile{dissertation/appendices/L-crunchbase}
+\subfile{dissertation/appendices/M-social-media}
+\subfile{dissertation/appendices/N-visual-materials}
 
 % Summary (Dutch)
 % \subfile{backmatter/samenvatting}
 
 % About the author
 % \subfile{backmatter/about}
+
+% Propositions (stellingen)
+\subfile{dissertation/frontmatter/propositions}
+
+%========================================================================================
+% PART: PORTFOLIO
+%========================================================================================
+\part{Portfolio}
+
+\subfile{dissertation/intermezzos/roledna}  % RoleDNA - describes the data encoding
+
+% Grant submissions
+\subfile{dissertation/portfolio/grant-nwo-xs}
+\subfile{dissertation/portfolio/grant-tdcc-synapsis}
+
+% Tool interfaces
+\subfile{dissertation/portfolio/maskbench}
+\subfile{dissertation/portfolio/maskanyone}
 
 \end{document}

@@ -3,7 +3,7 @@
 
 \begin{document}
 
-\chapter{Methodology: Design Science Research for Cartographic Innovation}
+\chapter{Design Science Methodology}
 \labch{method}
 \margintoc
 
@@ -19,9 +19,7 @@ This chapter explains \textit{how} we conducted this research. We employed \text
 
 This dissertation faces an unusual methodological challenge. We are not merely testing hypotheses against existing data or building theory from qualitative interpretation. We are \textit{building something}---a toolkit for mapping role constellations that does not yet exist.
 
-\sidenote{\faPuzzlePiece\ \textbf{The core challenge}---We needed methods that didn't exist. So we had to build them. That requires a different kind of research.}
-
-Chapter~\ref{ch:background} identified a \textbf{cartographic gap}: the field has sophisticated conceptual frameworks for thinking about intermediary roles but lacks methodological tools adequate to its own insights. Categories abound; maps are absent. The literature tells us \emph{what kinds} of intermediaries exist but cannot show us \emph{where} they are positioned relative to each other, how their constellations form, or how those constellations evolve.
+Chapter~\ref{ch:background} identified a \textbf{cartographic gap}:\sidenote{\faPuzzlePiece\ \textbf{The core challenge}---We needed methods that didn't exist. So we had to build them. That requires a different kind of research.} the field has sophisticated conceptual frameworks for thinking about intermediary roles but lacks methodological tools adequate to its own insights. Categories abound; maps are absent. The literature tells us \emph{what kinds} of intermediaries exist but cannot show us \emph{where} they are positioned relative to each other, how their constellations form, or how those constellations evolve.
 
 Traditional research methodologies do not quite fit this challenge:
 
@@ -45,11 +43,11 @@ A cartographer mapping unknown territory faces a bootstrapping problem: you need
 
 Design Science Research (DSR) is a methodology originating in information systems that treats the creation of artifacts as a legitimate---indeed, central---form of research contribution. The core insight is deceptively simple: sometimes the best way to understand a problem is to build something that solves it.
 
-\sidenote{\textbf{DSR Origins}---Developed in information systems by Simon (1996), Hevner et al. (2004), and Peffers et al. (2007). Now applied across design-oriented disciplines including engineering, architecture, and increasingly, social science.}
+\sidenote{\textbf{DSR Origins}---Developed in information systems by Simon \needcite{simon-sciences-artificial}, Hevner et al. \needcite{hevner-dsr-2004}, and Peffers et al. \needcite{peffers-dsr-2007}. Now applied across design-oriented disciplines including engineering, architecture, and increasingly, social science.}
 
 \subsection{The Logic of Design Science}
 
-DSR differs fundamentally from both natural science (explaining what \emph{is}) and interpretive science (understanding what things \emph{mean}). It belongs to the ``sciences of the artificial''---inquiry into things that \emph{could be} but do not yet exist.
+DSR differs fundamentally from both natural science (explaining what \emph{is}) and interpretive science (understanding what things \emph{mean}). It belongs to the ``sciences of the artificial'' \needcite{simon-sciences-artificial}---inquiry into things that \emph{could be} but do not yet exist.
 
 % Using captionof to avoid kaobook caption recursion issue
 \begin{center}
@@ -191,9 +189,7 @@ We can apply the toolkit to the EIT ecosystem, assess whether it produces meanin
 \labsec{method:process}
 %═══════════════════════════════════════════════════════════════════════════════
 
-We followed Peffers et al.'s (2007) six-activity DSR process model, adapted for our context. The process is explicitly iterative---we cycled through activities multiple times over four years, with each cycle refining both the artifact and our understanding of the problem.
-
-\sidenote{\faClock\ \textbf{Timeline}---2021: Problem identification. 2022: First design iteration. 2023: Core development, EIT data collection. 2024: Integration, evaluation, refinement. 2025: Dissertation completion.}
+We followed Peffers et al.'s (2007) six-activity DSR process model \needcite{peffers-dsr-2007}, adapted for our context.\sidenote{\faClock\ \textbf{Timeline}---2021: Problem identification. 2022: First design iteration. 2023: Core development, EIT data collection. 2024: Integration, evaluation, refinement. 2025: Dissertation completion.} The process is explicitly iterative---we cycled through activities multiple times over four years, with each cycle refining both the artifact and our understanding of the problem.
 
 % Using captionof to avoid kaobook caption recursion issue
 \begin{center}
@@ -251,13 +247,11 @@ Problem identification drew on multiple sources:
 \item \textbf{Personal experience}: Our own research obstacles---attempting role analysis with inadequate methods---motivated the search for alternatives
 \end{itemize}
 
-\sidenote{\faSearch\ \textbf{Problem sources}---Academic literature, conference discussions, practitioner needs, research obstacles.}
-
-The problem crystallized as: \emph{How can we systematically map intermediary role constellations at scale while preserving theoretical meaning?}
+The problem crystallized as:\sidenote{\faSearch\ \textbf{Problem sources}---Academic literature, conference discussions, practitioner needs, research obstacles.} \emph{How can we systematically map intermediary role constellations at scale while preserving theoretical meaning?}
 
 \subsection{Activity 2: Define Objectives of a Solution}
 
-Based on theoretical foundations (Chapter~\ref{ch:theory}) and problem analysis, we defined six design objectives that a solution must achieve:
+Based on theoretical foundations (Chapter~\ref{ch:cas}) and problem analysis, we defined six design objectives that a solution must achieve:
 
 % Using captionof to avoid kaobook caption recursion issue
 \tablestriped
@@ -283,9 +277,7 @@ These objectives translate directly into evaluation criteria: a successful artif
 
 \subsection{Activity 3: Design and Development}
 
-This was the core creative work---designing architecture, selecting technologies, implementing pipelines, and iterating through failures. Chapter~\ref{ch:xray} details the resulting artifact; here we describe the design \emph{process}.
-
-\sidenote{\faWrench\ \textbf{Design iterations}---v0.1: Single-modality proof of concept. v0.5: Multi-modality pipelines. v1.0: Full integration layer. v1.5: Refinement based on EIT application.}
+This was the core creative work---designing architecture, selecting technologies, implementing pipelines, and iterating through failures.\sidenote{\faWrench\ \textbf{Design iterations}---v0.1: Single-modality proof of concept. v0.5: Multi-modality pipelines. v1.0: Full integration layer. v1.5: Refinement based on EIT application.} The empirical chapters detail the resulting artifact in action; here we describe the design \emph{process}.
 
 We followed an iterative prototyping approach:
 
@@ -311,17 +303,15 @@ Key design decisions emerged through this process:
 
 \subsection{Activity 4: Demonstration}
 
-Demonstration applies the artifact to a real problem, showing that it works. Chapters~\ref{ch:websites}--\ref{ch:integration} demonstrate the \RoleBox toolkit on the EIT ecosystem:
-
-\sidenote{\faFlask\ \textbf{Demonstration scope}---6,487 organizations, 8 EIT KICs, 5 data modalities, 2019--2024 timeframe, 218,000+ records.}
+Demonstration applies the artifact to a real problem, showing that it works.\sidenote{\faFlask\ \textbf{Demonstration scope}---6,487 organizations, 8 EIT KICs, 5 data modalities, 2019--2024 timeframe, 218,000+ records.} The empirical chapters demonstrate the \RoleBox toolkit on the EIT ecosystem:
 
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item \textbf{Website analysis} (Chapter~\ref{ch:websites}): Self-presented identities and claimed roles
-\item \textbf{News analysis} (Chapter~\ref{ch:news}): Media portrayal and attributed roles
-\item \textbf{Network analysis} (Chapter~\ref{ch:networks}): Relational positions and structural roles
-\item \textbf{Investment analysis} (Chapter~\ref{ch:investment}): Resource flows and financial positioning
-\item \textbf{Visual analysis} (Chapter~\ref{ch:visual}): Aesthetic positioning and symbolic roles
-\item \textbf{Integration} (Chapter~\ref{ch:integration}): Cross-modal synthesis and validation
+\item \textbf{Sociotype analysis} (Chapter~\ref{ch:interstitial}): Internal role configurations and interstitial positioning
+\item \textbf{Field mapping} (Chapter~\ref{ch:rolefield}): External classification and field structure
+\item \textbf{Investment analysis} (Chapter~\ref{ch:venture}): Resource flows and venture positioning
+\item \textbf{Visual analysis} (Chapter~\ref{ch:visual}): Aesthetic positioning and symbolic registers
+\item \textbf{Power analysis} (Chapter~\ref{ch:power}): Agency and power dynamics in discourse
+\item \textbf{Synthesis} (Chapter~\ref{ch:synthesis}): Cross-modal integration and validation
 \end{itemize}
 
 Demonstration is not mere illustration---it is part of evaluation, showing whether the artifact produces useful, interpretable, theoretically meaningful results.
@@ -349,13 +339,11 @@ Practical evaluation & Is it useful? & Feedback from EIT practitioners and trans
 \end{center}
 \normalsize
 
-Chapter~\ref{ch:evaluation} presents detailed evaluation results. The key question is not ``Is it perfect?'' but ``Does it advance our ability to map role constellations beyond what was previously possible?''
+Chapter~\ref{ch:discussion} presents detailed evaluation results. The key question is not ``Is it perfect?'' but ``Does it advance our ability to map role constellations beyond what was previously possible?''
 
 \subsection{Activity 6: Communication}
 
-Communication shares the artifact and generated knowledge with relevant communities:
-
-\sidenote{\faShare\ \textbf{Communication channels}---This dissertation, open-source code (GitHub), archived datasets (Zenodo), conference presentations, journal articles.}
+Communication shares the artifact and generated knowledge with relevant communities:\sidenote{\faShare\ \textbf{Communication channels}---This dissertation, open-source code (GitHub), archived datasets (Zenodo), conference presentations, journal articles.}
 
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
 \item \textbf{This dissertation}: Primary communication vehicle, documenting problem, artifact, demonstration, and evaluation
@@ -371,7 +359,7 @@ Communication shares the artifact and generated knowledge with relevant communit
 \labsec{method:artifact}
 %═══════════════════════════════════════════════════════════════════════════════
 
-The artifact we built is the \textbf{\RoleBox toolkit}---an integrated system for multimodal cartography of role constellations. Chapter~\ref{ch:toolkit} provides detailed technical documentation; here we present the architectural overview.
+The artifact we built is the \textbf{\RoleBox toolkit}---an integrated system for multimodal cartography of role constellations. The appendices provide detailed technical documentation; here we present the architectural overview.
 
 \subsection{Three-Layer Architecture}
 
@@ -534,11 +522,9 @@ Social & Twitter/X API & 2,389 & 1,156,000 tweets & 2019--2023 \\
 \end{center}
 \normalsize
 
-\sidenote{\faDatabase\ \textbf{Data scale}---6,487 organizations, 218,000+ records, 5 modalities, 5+ years coverage.}
-
 \subsection*{Population Definition and Sampling}
 
-Our target population is organizations connected to the EIT Knowledge and Innovation Communities. We employed a multi-stage sampling strategy:
+Our target population is organizations connected to the EIT Knowledge and Innovation Communities.\sidenote{\faDatabase\ \textbf{Data scale}---6,487 organizations, 218,000+ records, 5 modalities, 5+ years coverage.} We employed a multi-stage sampling strategy:
 
 % Using captionof to avoid kaobook caption recursion issue
 \begin{center}
@@ -568,10 +554,8 @@ Our target population is organizations connected to the EIT Knowledge and Innova
 \labfig{sampling}
 \end{center}
 
-\sidenote{\faFilter\ \textbf{Inclusion criteria}---Listed as KIC partner, OR mentioned by 3+ partners, OR news coverage with KIC, OR investment from KIC fund; AND present in 2+ modalities.}
-
 \begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Stage 1 -- Seed] We scraped official partner directories from all eight KIC websites, yielding 2,420 confirmed partner organizations.
+\item[Stage 1 -- Seed] We scraped official partner directories from all eight KIC websites,\sidenote{\faFilter\ \textbf{Inclusion criteria}---Listed as KIC partner, OR mentioned by 3+ partners, OR news coverage with KIC, OR investment from KIC fund; AND present in 2+ modalities.} yielding 2,420 confirmed partner organizations.
 
 \item[Stage 2 -- Expand] We extracted organization mentions from seed partner websites (``About,'' ``Partners,'' ``Portfolio'' pages), adding organizations referenced by multiple partners. This expanded the candidate set to 8,934 organizations.
 
@@ -591,10 +575,8 @@ Each modality required specialized collection procedures:
 \item \textbf{Crawling}: Depth-limited crawl (max 3 levels) capturing HTML, metadata, and assets
 \item \textbf{Screenshot capture}: Automated browser rendering of homepage and key pages
 \item \textbf{Text extraction}: Convert HTML to clean text; preserve structure information
-\item \textbf{Rate limiting}: Respectful crawling with delays; honor robots.txt
+\item \textbf{Rate limiting}: Respectful crawling with delays; honor robots.txt\sidenote{\faGlobe\ \textbf{Website workflow}---Tool: Scrapy + Playwright. Pages/org: $\sim$2 (median). Success rate: 94\%. Duration: 3 weeks.}
 \end{enumerate}
-
-\sidenote{\faGlobe\ \textbf{Website workflow}---Tool: Scrapy + Playwright. Pages/org: $\sim$2 (median). Success rate: 94\%. Duration: 3 weeks.}
 
 \subsubsection{News Collection}
 
@@ -603,10 +585,8 @@ Each modality required specialized collection procedures:
 \item \textbf{API queries}: LexisNexis (structured news), MediaCloud (online news), GDELT (global events)
 \item \textbf{Deduplication}: Remove duplicate articles across sources
 \item \textbf{Relevance filtering}: Verify articles actually discuss target organization
-\item \textbf{Full-text retrieval}: Obtain complete article text where available
+\item \textbf{Full-text retrieval}: Obtain complete article text where available\sidenote{\faNewspaper\ \textbf{News workflow}---Sources: 3 APIs. Articles/org: $\sim$5 (median). Languages: EN (primary). Duration: 2 months.}
 \end{enumerate}
-
-\sidenote{\faNewspaper\ \textbf{News workflow}---Sources: 3 APIs. Articles/org: $\sim$5 (median). Languages: EN (primary). Duration: 2 months.}
 
 \subsubsection{Investment Collection}
 
@@ -614,10 +594,8 @@ Each modality required specialized collection procedures:
 \item \textbf{Entity matching}: Match organizations to Crunchbase/Dealroom records
 \item \textbf{Funding retrieval}: Extract funding rounds, amounts, investors, dates
 \item \textbf{Investor expansion}: Add investor organizations to network
-\item \textbf{Validation}: Cross-check funding data across sources
+\item \textbf{Validation}: Cross-check funding data across sources\sidenote{\faChartLine\ \textbf{Investment workflow}---Sources: Crunchbase, Dealroom. Match rate: 20\% (startups). Funding rounds: 2,100. Duration: 1 month.}
 \end{enumerate}
-
-\sidenote{\faChartLine\ \textbf{Investment workflow}---Sources: Crunchbase, Dealroom. Match rate: 20\% (startups). Funding rounds: 2,100. Duration: 1 month.}
 
 \subsubsection{Visual Collection}
 
@@ -634,10 +612,8 @@ Each modality required specialized collection procedures:
 \item \textbf{Account identification}: Match organizations to Twitter/X handles
 \item \textbf{Timeline retrieval}: Collect tweets within date range (API v2)
 \item \textbf{Engagement capture}: Record likes, retweets, replies
-\item \textbf{Network extraction}: Identify mentions, replies, quote tweets
+\item \textbf{Network extraction}: Identify mentions, replies, quote tweets\sidenote{\faTwitter\ \textbf{Social workflow}---Platform: Twitter/X. Account match: 37\%. Tweets/account: $\sim$65 (median). Note: API access limited post-2023.}
 \end{enumerate}
-
-\sidenote{\faTwitter\ \textbf{Social workflow}---Platform: Twitter/X. Account match: 37\%. Tweets/account: $\sim$65 (median). Note: API access limited post-2023.}
 
 
 %═══════════════════════════════════════════════════════════════════════════════
@@ -681,10 +657,10 @@ Text from websites and news undergoes a multi-stage NLP pipeline:
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.2em]
 \item[Preprocessing] Language detection, encoding normalization, boilerplate removal
-\item[Tokenization] Sentence and word segmentation using spaCy
+\item[Tokenization] Sentence and word segmentation using spaCy \needcite{honnibal-spacy-2020}
 \item[Named Entity Recognition] Extract organizations, persons, locations, technologies
-\item[Topic Modeling] BERTopic for semantic clustering; guided LDA for theory-informed topics
-\item[Embedding] Sentence-BERT for dense vector representations enabling similarity computation
+\item[Topic Modeling] BERTopic \needcite{grootendorst-bertopic} for semantic clustering; guided LDA for theory-informed topics \needcite{blei-lda-2003}
+\item[Embedding] Sentence-BERT \needcite{reimers-sbert-2019} for dense vector representations enabling similarity computation
 \end{description}
 
 \subsection{Network Analysis Workflow}
@@ -698,7 +674,7 @@ Networks are constructed from multiple relationship types:
 \item \textbf{Social networks}: Edges from Twitter mentions, retweets
 \end{itemize}
 
-Analysis employs standard network metrics (degree, betweenness, eigenvector centrality) plus community detection (Louvain, Infomap) and structural equivalence measures.
+Analysis employs standard network metrics (degree, betweenness, eigenvector centrality) \needcite{newman-networks-2010} plus community detection (Louvain \needcite{blondel-louvain-2008}, Infomap \needcite{rosvall-infomap-2008}) and structural equivalence measures.
 
 \subsection{Visual Analysis Workflow}
 
@@ -707,7 +683,7 @@ Visual analysis extracts features from website screenshots and logos:
 \begin{description}[leftmargin=0.5cm, itemsep=0.2em]
 \item[Color analysis] Dominant colors, palette complexity, color harmony
 \item[Composition] Layout structure, visual hierarchy, whitespace usage
-\item[CNN features] Pre-trained ResNet features for visual similarity
+\item[CNN features] Pre-trained ResNet \needcite{he-resnet-2016} features for visual similarity
 \item[Logo analysis] Shape features, color schemes, symbolic elements
 \end{description}
 
@@ -734,7 +710,7 @@ DSR has sometimes been criticized as ``just building things'' without scientific
 
 \subsection{DSR Guidelines Compliance}
 
-Following Hevner et al. (2004), we explicitly address seven DSR guidelines:
+Following Hevner et al. \needcite{hevner-dsr-2004}, we explicitly address seven DSR guidelines:
 
 % Using captionof to avoid kaobook caption recursion issue
 \tablestriped
@@ -757,11 +733,9 @@ Following Hevner et al. (2004), we explicitly address seven DSR guidelines:
 \end{center}
 \normalsize
 
-\sidenote{\faCheckCircle\ \textbf{Seven guidelines}---Hevner et al. (2004) established canonical DSR guidelines. We address each explicitly.}
-
 \subsection{Validity Considerations}
 
-We consider standard validity threats:
+We consider standard validity threats:\sidenote{\faCheckCircle\ \textbf{Seven guidelines}---Hevner et al. \needcite{hevner-dsr-2004} established canonical DSR guidelines. We address each explicitly.}
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.4em]
 \item[Construct validity] \textit{Do our measures capture what we claim?}
@@ -818,9 +792,7 @@ Triangulation is central to our validation approach:
 \labsec{method:ethics}
 %═══════════════════════════════════════════════════════════════════════════════
 
-Our research involves organizational data from public sources. We addressed ethical considerations proactively:
-
-\sidenote{\faBalanceScale\ \textbf{Ethics principles}---Public data only, organizational focus, no individual identification, platform compliance, open science.}
+Our research involves organizational data from public sources.\sidenote{\faBalanceScale\ \textbf{Ethics principles}---Public data only, organizational focus, no individual identification, platform compliance, open science.} We addressed ethical considerations proactively:
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.3em]
 \item[Public data] All collected data was publicly available---organizational websites, published news, public investment records, public social media posts. No private or access-controlled data was used.
@@ -860,9 +832,7 @@ Every methodology has limitations. We are explicit about ours:
 \end{enumerate}
 \end{criticalbox}
 
-\sidenote{\faHeart\ \textbf{Honest limitations}---Acknowledging limitations strengthens rather than weakens research. Others can address what we could not.}
-
-These limitations do not invalidate the research---they \emph{bound} it. We are building a toolkit and demonstrating its potential, not claiming definitive answers. The open infrastructure enables others to extend, adapt, and apply the approach in contexts where our limitations matter less.
+These limitations do not invalidate the research---they \emph{bound} it.\sidenote{\faHeart\ \textbf{Honest limitations}---Acknowledging limitations strengthens rather than weakens research. Others can address what we could not.} We are building a toolkit and demonstrating its potential, not claiming definitive answers. The open infrastructure enables others to extend, adapt, and apply the approach in contexts where our limitations matter less.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
@@ -890,9 +860,7 @@ This chapter established \textbf{Design Science Research} as our methodology---a
 \item \textbf{Explicit limitations}: Single ecosystem, digital trace bias, snapshot emphasis, language bias, platform dependencies, interpretive judgment
 \end{itemize}
 
-The methodology enables us to build cartographic infrastructure while simultaneously using that infrastructure to map the EIT ecosystem. The next chapter details the \RoleBox toolkit architecture and implementation.
+The methodology enables us to build cartographic infrastructure while simultaneously using that infrastructure to map the EIT ecosystem.\sidenote{\faArrowRight\ \textit{Next:} Chapter~\ref{ch:cas}: Role Constellations as Complex Adaptive Systems---the theoretical foundation for understanding why role constellations behave as they do.} The next chapter provides the theoretical foundation for understanding role constellations as complex adaptive systems.
 \end{summarybox}
-
-\sidenote{\faArrowRight\ \textit{Next:} Chapter~\ref{ch:toolkit}: The \RoleBox{} Toolkit---detailed technical documentation of components, pipelines, and integration methods.}
 
 \end{document}

@@ -420,22 +420,34 @@
 % TABLE STYLING COMMANDS
 %========================================================================================
 
-% Minimal table style (clean, simple)
+% Consistent black & white table style (default for all tables)
+% - Clean, professional appearance
+% - Alternating light gray rows for readability
+% - Black headers
+\newcommand{\tablebw}{%
+    \renewcommand{\arraystretch}{1.3}%
+    \small%
+    \rowcolors{2}{gray!10}{white}%
+}
+
+% Minimal table style (clean, simple, no row colors)
 \newcommand{\tableminimal}{%
     \renewcommand{\arraystretch}{1.3}%
     \small%
 }
 
-% Striped table style (alternating row colors)
+% Striped table style - now uses grayscale for consistency
+% (Previously used PandaCream, now uses light gray)
 \newcommand{\tablestriped}{%
     \renewcommand{\arraystretch}{1.3}%
     \small%
-    \rowcolors{2}{PandaCream!50}{white}%
+    \rowcolors{2}{gray!10}{white}%
 }
 
-% Table header styling
-\newcommand{\minimalhead}[1]{\textbf{\textcolor{PandaCharcoal}{#1}}}
-\newcommand{\stripedhead}[1]{\textbf{\textcolor{PandaForest}{#1}}}
+% Table header styling - consistent black & white
+\newcommand{\tablehead}[1]{\textbf{#1}}
+\newcommand{\minimalhead}[1]{\textbf{#1}}
+\newcommand{\stripedhead}[1]{\textbf{#1}}
 
 %========================================================================================
 % CHAPTER STYLE FOR ROLEBOX
@@ -503,6 +515,46 @@
 \newcommand{\hlcyan}[1]{\colorbox{AccentCyan!20}{#1}}
 
 %========================================================================================
+% CHAPTER DIVIDERS
+%========================================================================================
+% Full-page divider image before chapters
+% Usage: \chapterdivider{ch1-introduction} (without extension)
+% Images should be in dividers/images/ folder as PNG files
+\newcommand{\chapterdivider}[1]{%
+    \clearpage
+    \thispagestyle{empty}%
+    \null
+    \vfill
+    \begin{center}
+        \includegraphics[width=0.85\textwidth,keepaspectratio]{#1.png}%
+    \end{center}
+    \vfill
+    \null
+}
+
+%========================================================================================
+% PLACEHOLDER CITATIONS
+%========================================================================================
+% Use \needcite{description} to mark sentences that need citations.
+% Shows [?] in red in the PDF and generates a warning in the log.
+% Easy to search: grep -r "needcite" dissertation/
+% Example: Intermediaries play a crucial role in transitions \needcite{intermediary-role}.
+
+\makeatletter
+\newcommand{\needcite}[1]{%
+  \textcolor{red}{[?]}%
+  \@latex@warning{Citation needed: #1}%
+}
+
+% Alternative: shows the description in margin (useful during drafting)
+\newcommand{\needcitemargin}[1]{%
+  \textcolor{red}{[?]}%
+  \marginnote{\textcolor{red}{\scriptsize CITE: #1}}%
+  \@latex@warning{Citation needed: #1}%
+}
+\makeatother
+
+%========================================================================================
 % APPLY STYLING
 %========================================================================================
 
@@ -511,7 +563,6 @@
     \useroleboxcolors%
 }
 
-%========================================================================================
 % FIX KAOBOOK CAPTION RECURSION BUG
 %========================================================================================
 % The kao.sty redefines \caption inside figure/table environments using

@@ -3,7 +3,9 @@
 
 \begin{document}
 
-% Title page
+%===============================================================================
+% PAGE 1: COVER PAGE (Title + Image + Author)
+%===============================================================================
 \begin{titlepage}
 \begin{center}
 
@@ -13,9 +15,29 @@
 
 \vspace{1.5cm}
 
+% RoleBox cover image
+\includegraphics[width=0.65\textwidth,keepaspectratio]{rolebox-html.png}
+
+\vfill
+
 {\Large\itshape \myauthor}
 
-\vspace{3cm}
+\vspace{1cm}
+
+\end{center}
+\end{titlepage}
+
+%===============================================================================
+% PAGE 2: FORMAL METADATA PAGE
+%===============================================================================
+\thispagestyle{empty}
+\begin{center}
+
+\vspace*{1cm}
+
+{\LARGE\bfseries\sffamily\color{PandaCharcoal} \mytitle}
+
+\vspace{1cm}
 
 {\large A dissertation submitted to the}\\[0.3cm]
 {\large\bfseries \mydepartment}\\[0.3cm]
@@ -23,17 +45,47 @@
 {\large in partial fulfillment of the requirements}\\[0.3cm]
 {\large for the degree of Doctor of Philosophy}
 
+\vspace{1.5cm}
+
+{\Large\itshape \myauthor}
+
+\vspace{2cm}
+
+%--- Supervisory Committee ---
+\begin{tabular}{rl}
+\textbf{Promotor:} & \mypromotor \\[0.3cm]
+\textbf{Co-promotor:} & \mycopromotorA \\[0.3cm]
+\textbf{Co-promotor:} & \mycopromotorB \\
+\end{tabular}
+
+\vspace{1.5cm}
+
+%--- Doctoral Committee ---
+{\large\bfseries Doctoral Committee}
+
+\vspace{0.5cm}
+
+\begin{tabular}{rl}
+\textit{Internal Examiner:} & [Name], \textit{Erasmus University Rotterdam} \\[0.2cm]
+\textit{External Examiner:} & [Name], \textit{[University]} \\[0.2cm]
+\textit{External Examiner:} & [Name], \textit{[University]} \\
+\end{tabular}
+
 \vfill
 
-{\large Promotor: \mypromotor}\\[0.2cm]
-{\large Co-promotor: \mycopromotorA}\\[0.2cm]
-{\large Co-promotor: \mycopromotorB}
+%--- Defence Information ---
+{\large\bfseries Public Defence}
+
+\vspace{0.3cm}
+
+[Date TBD]\\[0.2cm]
+[Time TBD]\\[0.2cm]
+Senaatszaal, Erasmus Building\\
+Erasmus University Rotterdam
 
 \vspace{1cm}
 
-{\large \mydate}
-
 \end{center}
-\end{titlepage}
+\clearpage
 
 \end{document}

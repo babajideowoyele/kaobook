@@ -20,41 +20,39 @@ This chapter provides the theoretical foundation for multimodal cartography. We 
 \labsec{cas:intro}
 %═══════════════════════════════════════════════════════════════════════════════
 
-Chapter~\ref{ch:background} documented a persistent tension in how transitions research handles intermediary roles. The field has produced sophisticated typologies---systemic, niche, regime-based, process, user intermediaries---yet these categories struggle to capture what practitioners and close observers consistently report: roles are fluid, context-dependent, multiply-enacted, and relationally constituted. An organization classified as a ``niche intermediary'' in one analysis may simultaneously perform regime-based functions in another domain, shift toward systemic coordination over time, and be perceived entirely differently by different network partners.
-
-\sidenote{\textbf{The category problem}---Typologies answer ``what kind?'' but intermediaries don't stay in boxes. We need theory that explains \emph{why} roles shift, combine, and emerge.}
+Chapter~\ref{ch:background} documented a persistent tension in how transitions research handles intermediary roles. The field has produced sophisticated typologies---systemic, niche, regime-based, process, user intermediaries---yet these categories struggle to capture what practitioners and close observers consistently report:\sidenote{\textbf{The category problem}---Typologies answer ``what kind?'' but intermediaries don't stay in boxes. We need theory that explains \emph{why} roles shift, combine, and emerge.} roles are fluid, context-dependent, multiply-enacted, and relationally constituted. An organization classified as a ``niche intermediary'' in one analysis may simultaneously perform regime-based functions in another domain, shift toward systemic coordination over time, and be perceived entirely differently by different network partners.
 
 The six problems identified in Chapter~\ref{ch:background}---definitional ambiguity, static categorization, actor-centric bias, normative loading, methodological constraints, and theoretical fragmentation---share a common root: they treat roles as \emph{attributes} rather than \emph{emergent properties}. A broker ``has'' brokerage as an attribute; an intermediary ``is'' a particular type. This framing imports assumptions from classical organizational theory that may not hold for the dynamic, relational phenomena we seek to understand.
 
 What if roles are not attributes that actors possess but patterns that \emph{emerge} from interactions? What if constellations are not collections of categorized actors but self-organizing systems that generate their own structure? What if the apparent messiness---roles shifting, boundaries blurring, functions combining---is not methodological noise but systemic signal?
 
-\begin{marginfigure}
-\centering
-\begin{tikzpicture}[scale=0.55]
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
     % Left: Categories (boxes)
-    \node[font=\scriptsize\bfseries, text=Slate] at (-2, 2.5) {Categories};
-    \node[draw, rectangle, fill=Slate!15, minimum width=1cm, minimum height=0.6cm, font=\tiny] at (-2.5, 1.5) {Type A};
-    \node[draw, rectangle, fill=Slate!15, minimum width=1cm, minimum height=0.6cm, font=\tiny] at (-1.5, 1.5) {Type B};
-    \node[draw, rectangle, fill=Slate!15, minimum width=1cm, minimum height=0.6cm, font=\tiny] at (-2, 0.5) {Type C};
+    \node[font=\small\bfseries, text=Slate] at (-4, 4) {Categories};
+    \node[draw, rectangle, fill=Slate!15, minimum width=2cm, minimum height=1cm, font=\small] at (-5, 2.5) {Type A};
+    \node[draw, rectangle, fill=Slate!15, minimum width=2cm, minimum height=1cm, font=\small] at (-3, 2.5) {Type B};
+    \node[draw, rectangle, fill=Slate!15, minimum width=2cm, minimum height=1cm, font=\small] at (-4, 0.8) {Type C};
 
     % Right: Systems (network)
-    \node[font=\scriptsize\bfseries, text=AccentPurple] at (2, 2.5) {Systems};
-    \node[draw, circle, fill=AccentPurple!20, minimum size=0.4cm] (s1) at (1.3, 1.5) {};
-    \node[draw, circle, fill=AccentPurple!20, minimum size=0.4cm] (s2) at (2.7, 1.5) {};
-    \node[draw, circle, fill=AccentPurple!20, minimum size=0.4cm] (s3) at (1.5, 0.5) {};
-    \node[draw, circle, fill=AccentPurple!20, minimum size=0.4cm] (s4) at (2.5, 0.5) {};
-    \node[draw, circle, fill=AccentPurple!20, minimum size=0.4cm] (s5) at (2, 1) {};
+    \node[font=\small\bfseries, text=AccentPurple] at (4, 4) {Systems};
+    \node[draw, circle, fill=AccentPurple!20, minimum size=0.8cm] (s1) at (2.6, 2.5) {};
+    \node[draw, circle, fill=AccentPurple!20, minimum size=0.8cm] (s2) at (5.4, 2.5) {};
+    \node[draw, circle, fill=AccentPurple!20, minimum size=0.8cm] (s3) at (3, 0.8) {};
+    \node[draw, circle, fill=AccentPurple!20, minimum size=0.8cm] (s4) at (5, 0.8) {};
+    \node[draw, circle, fill=AccentPurple!20, minimum size=0.8cm] (s5) at (4, 1.6) {};
     \draw[thick, AccentPurple!50] (s1) -- (s5) -- (s2);
     \draw[thick, AccentPurple!50] (s3) -- (s5) -- (s4);
     \draw[thick, AccentPurple!50] (s1) -- (s3);
     \draw[thick, AccentPurple!50] (s2) -- (s4);
 
     % Arrow
-    \draw[->, thick, PandaCharcoal] (-0.3, 1) -- (0.5, 1);
+    \draw[->, thick, PandaCharcoal, line width=1.5pt] (-0.5, 1.8) -- (1.2, 1.8);
 \end{tikzpicture}
-\caption{From categorical thinking (fixed boxes) to systems thinking (emergent patterns from interactions).}
+
+\captionof{figure}{From categorical thinking (fixed boxes) to systems thinking (emergent patterns from interactions).}
 \labfig{categories-to-systems}
-\end{marginfigure}
+\end{center}
 
 These questions point toward \textbf{Complex Adaptive Systems} theory as a reconceptualizing frame. CAS theory offers mechanisms---emergence, self-organization, co-evolution, non-linearity, feedback---that are both theoretically substantive and methodologically tractable. It explains \emph{why} we should expect the patterns that categorical approaches struggle to accommodate, while generating propositions that multimodal cartography can test.
 
@@ -70,11 +68,9 @@ CAS theory is not merely a metaphor or analogy. It provides specific mechanisms 
 
 \subsection{What Makes a System ``Complex'' and ``Adaptive''}
 
-Systems thinking has informed organization studies since Katz and Kahn's (1978) conceptualization of organizations as open systems. However, as Phillips and Ritala (2019) observe, much organizational research invokes ``system'' language without engaging systems thinking principles. The ecosystem concept, despite its systems etymology, has often been applied as metaphor rather than theoretical foundation---what Badinelli et al. (2012, p. 499) criticized as describing ``interconnectedness of entities'' without adhering to ``systems thinking principles, which often disrupt traditional thinking.''
+Systems thinking has informed organization studies since Katz and Kahn's \needcite{katz-kahn-1978} conceptualization of organizations as open systems. However, as Phillips and Ritala \needcite{phillips-ritala-2019} observe, much organizational research invokes ``system'' language without engaging systems thinking principles.\sidenote{\textbf{Systems vs. ``systems''}---Many studies use systems language descriptively without adopting systems-theoretic reasoning. CAS theory demands more rigorous engagement with mechanisms, not just vocabulary.} The ecosystem concept, despite its systems etymology, has often been applied as metaphor rather than theoretical foundation---what Badinelli et al. \needcite{badinelli-2012} criticized as describing ``interconnectedness of entities'' without adhering to ``systems thinking principles, which often disrupt traditional thinking.''
 
-\sidenote{\textbf{Systems vs. ``systems''}---Many studies use systems language descriptively without adopting systems-theoretic reasoning. CAS theory demands more rigorous engagement with mechanisms, not just vocabulary.}
-
-A \textbf{system} is an entity with interconnected components whose relationships permit identification of a boundary-maintaining process \cite{laszlo1998}. Systems become \textbf{complex} when the number and density of relationships makes prediction difficult---not merely complicated (many parts) but genuinely complex (emergent, non-linear). \textbf{Complex adaptive systems} involve components that adapt or learn as they interact, organizing without being controlled by any singular entity \cite{holland1995}.
+A \textbf{system} is an entity with interconnected components whose relationships permit identification of a boundary-maintaining process \needcite{laszlo-systems-1998}. Systems become \textbf{complex} when the number and density of relationships makes prediction difficult---not merely complicated (many parts) but genuinely complex (emergent, non-linear). \textbf{Complex adaptive systems} involve components that adapt or learn as they interact, organizing without being controlled by any singular entity \needcite{holland-hidden-order-1995}.
 
 % Using captionof to avoid kaobook caption recursion issue
 \tableminimal
@@ -107,7 +103,7 @@ Role constellations exhibit all CAS characteristics:
 
 \subsection{The Phillips-Ritala Framework: Three Dimensions}
 
-Phillips and Ritala's (2019) methodological framework for ecosystem research provides essential scaffolding for our approach. They identify three dimensions that any rigorous CAS-based inquiry must address: \textbf{conceptual}, \textbf{structural}, and \textbf{temporal}. Each dimension poses distinct questions and requires specific methodological attention.
+Phillips and Ritala's \needcite{phillips-ritala-2019} methodological framework for ecosystem research provides essential scaffolding for our approach. They identify three dimensions that any rigorous CAS-based inquiry must address: \textbf{conceptual}, \textbf{structural}, and \textbf{temporal}. Each dimension poses distinct questions and requires specific methodological attention.
 
 % Using captionof to avoid kaobook caption recursion issue
 \begin{center}
@@ -136,9 +132,7 @@ Phillips and Ritala's (2019) methodological framework for ecosystem research pro
 \labfig{three-dimensions}
 \end{center}
 
-\sidenote{\textbf{Three questions}---\textcolor{Azure}{Conceptual}: How do we think about the system? \textcolor{PandaBamboo}{Structural}: What do we know about its structure? \textcolor{Marigold}{Temporal}: How does it change over time?}
-
-The \textbf{conceptual dimension} addresses epistemological considerations: How do we define system boundaries? Whose perspectives matter? What theoretical positioning guides inquiry? For role constellations, this means grappling with where intermediation begins and ends, how different actors perceive the same constellation differently, and what theoretical lens renders roles visible.
+The \textbf{conceptual dimension} addresses\sidenote{\textbf{Three questions}---\textcolor{Azure}{Conceptual}: How do we think about the system? \textcolor{PandaBamboo}{Structural}: What do we know about its structure? \textcolor{Marigold}{Temporal}: How does it change over time?} epistemological considerations: How do we define system boundaries? Whose perspectives matter? What theoretical positioning guides inquiry? For role constellations, this means grappling with where intermediation begins and ends, how different actors perceive the same constellation differently, and what theoretical lens renders roles visible.
 
 The \textbf{structural dimension} concerns ontology: What are the system's components and their relationships? How is hierarchy organized? What patterns of connection characterize the constellation? For our purposes, this means mapping which organizations perform which roles, how role-performers relate to each other, and what network structures emerge.
 
@@ -158,9 +152,7 @@ Building on CAS theory and the three-dimensional framework, we identify six mech
 
 \subsection{Mechanism 1: Emergence}
 
-\textbf{Emergence} refers to macro-level patterns arising from micro-level interactions that cannot be predicted from, or reduced to, the properties of individual components \cite{holland1997}. Emergent properties are not designed or intended; they arise spontaneously from the density and nature of interactions.
-
-\sidenote{\textbf{Emergence}---Macro patterns arising from micro interactions. The ``whole'' exhibits properties not found in any ``part.''}
+\textbf{Emergence} refers to macro-level patterns arising from micro-level interactions that cannot be predicted from, or reduced to, the properties of individual components \needcite{holland-emergence-1997}.\sidenote{\textbf{Emergence}---Macro patterns arising from micro interactions. The ``whole'' exhibits properties not found in any ``part.''} Emergent properties are not designed or intended; they arise spontaneously from the density and nature of interactions.
 
 In role constellations, emergence manifests when:
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
@@ -178,9 +170,7 @@ Emergence has profound methodological implications. If roles emerge from interac
 
 \subsection{Mechanism 2: Self-Organization}
 
-\textbf{Self-organization} is the process by which structure emerges without external control or central coordination \cite{kauffman1993}. In self-organizing systems, order arises from local interactions following simple rules, not from top-down design.
-
-\sidenote{\textbf{Self-organization}---Order without a designer. Structure emerges from local interactions, not central planning.}
+\textbf{Self-organization} is the process by which structure emerges without external control or central coordination \needcite{kauffman-origins-order-1993}.\sidenote{\textbf{Self-organization}---Order without a designer. Structure emerges from local interactions, not central planning.} In self-organizing systems, order arises from local interactions following simple rules, not from top-down design.
 
 Role constellations self-organize when:
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
@@ -192,46 +182,47 @@ Role constellations self-organize when:
 
 Self-organization does not mean absence of structure; rather, it means structure arising endogenously. Even highly ordered constellations---with clear role differentiation, stable hierarchies, and predictable interaction patterns---may have self-organized rather than being designed. The EIT ecosystem offers an interesting test case: KICs were designed by policy, but the role constellations they have developed over fifteen years reflect substantial self-organization within designed parameters.
 
-\begin{marginfigure}
-\centering
-\begin{tikzpicture}[scale=0.5]
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
     % Time 1: Random
-    \node[font=\tiny\bfseries, text=Slate] at (0, 2.5) {$t_1$: Initial};
-    \foreach \i in {1,...,8} {
-        \pgfmathsetmacro{\x}{rand*1.5}
-        \pgfmathsetmacro{\y}{rand*1.5}
-        \node[draw, circle, fill=Slate!30, minimum size=0.25cm] at (\x, \y) {};
-    }
+    \node[font=\small\bfseries, text=Slate] at (0, 4) {$t_1$: Initial};
+    \node[draw, circle, fill=Slate!30, minimum size=0.5cm] at (-0.8, 2.2) {};
+    \node[draw, circle, fill=Slate!30, minimum size=0.5cm] at (0.3, 2.8) {};
+    \node[draw, circle, fill=Slate!30, minimum size=0.5cm] at (0.9, 1.8) {};
+    \node[draw, circle, fill=Slate!30, minimum size=0.5cm] at (-0.2, 1.2) {};
+    \node[draw, circle, fill=Slate!30, minimum size=0.5cm] at (0.6, 0.6) {};
+    \node[draw, circle, fill=Slate!30, minimum size=0.5cm] at (-0.6, 0.4) {};
+    \node[draw, circle, fill=Slate!30, minimum size=0.5cm] at (0.1, 3.4) {};
+    \node[draw, circle, fill=Slate!30, minimum size=0.5cm] at (-0.4, 2.9) {};
+
+    % Arrow
+    \draw[->, thick, PandaCharcoal, line width=1.5pt] (2.2, 1.8) -- (4.2, 1.8);
 
     % Time 2: Clustered
-    \node[font=\tiny\bfseries, text=Slate] at (5, 2.5) {$t_2$: Self-organized};
-    \node[draw, circle, fill=Azure!40, minimum size=0.25cm] (a1) at (4.2, 1.2) {};
-    \node[draw, circle, fill=Azure!40, minimum size=0.25cm] (a2) at (4.5, 0.8) {};
-    \node[draw, circle, fill=Azure!40, minimum size=0.25cm] (a3) at (4.8, 1.3) {};
-    \node[draw, circle, fill=Marigold!40, minimum size=0.25cm] (b1) at (5.5, 0.3) {};
-    \node[draw, circle, fill=Marigold!40, minimum size=0.25cm] (b2) at (5.8, -0.1) {};
-    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.25cm] (c1) at (4.3, -0.5) {};
-    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.25cm] (c2) at (4.7, -0.8) {};
-    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.25cm] (c3) at (5.1, -0.4) {};
+    \node[font=\small\bfseries, text=Slate] at (7.5, 4) {$t_2$: Self-organized};
+    \node[draw, circle, fill=Azure!40, minimum size=0.5cm] (a1) at (5.8, 2.8) {};
+    \node[draw, circle, fill=Azure!40, minimum size=0.5cm] (a2) at (6.4, 2.2) {};
+    \node[draw, circle, fill=Azure!40, minimum size=0.5cm] (a3) at (7.0, 2.9) {};
+    \node[draw, circle, fill=Marigold!40, minimum size=0.5cm] (b1) at (8.5, 1.2) {};
+    \node[draw, circle, fill=Marigold!40, minimum size=0.5cm] (b2) at (9.1, 0.6) {};
+    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.5cm] (c1) at (6.0, 0.4) {};
+    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.5cm] (c2) at (6.8, -0.1) {};
+    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.5cm] (c3) at (7.6, 0.5) {};
 
     \draw[thick, Slate!40] (a1) -- (a2) -- (a3);
     \draw[thick, Slate!40] (b1) -- (b2);
     \draw[thick, Slate!40] (c1) -- (c2) -- (c3) -- (c1);
     \draw[dashed, Slate!30] (a2) -- (b1);
     \draw[dashed, Slate!30] (b2) -- (c3);
-
-    % Arrow
-    \draw[->, thick, PandaCharcoal] (2, 0.5) -- (3, 0.5);
 \end{tikzpicture}
-\caption{Self-organization: from initial dispersion to clustered structure through local interactions, without central coordination.}
+
+\captionof{figure}{Self-organization: from initial dispersion to clustered structure through local interactions, without central coordination.}
 \labfig{self-organization}
-\end{marginfigure}
+\end{center}
 
 \subsection{Mechanism 3: Co-evolution}
 
-\textbf{Co-evolution} describes the mutual adaptation of system components and their environment \cite{kauffman1991}. In co-evolutionary dynamics, changes in one component alter the selection pressures on others, triggering cascading adaptations. The system and its environment shape each other recursively.
-
-\sidenote{\textbf{Co-evolution}---Mutual adaptation. Components and environment shape each other through recursive feedback.}
+\textbf{Co-evolution} describes the mutual adaptation of system components and their environment \needcite{kauffman-coevolution-1991}.\sidenote{\textbf{Co-evolution}---Mutual adaptation. Components and environment shape each other through recursive feedback.} In co-evolutionary dynamics, changes in one component alter the selection pressures on others, triggering cascading adaptations. The system and its environment shape each other recursively.
 
 Role constellations co-evolve when:
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
@@ -245,9 +236,7 @@ Co-evolution implies that constellations cannot be understood in isolation from 
 
 \subsection{Mechanism 4: Non-linearity}
 
-\textbf{Non-linearity} means that effects are not proportional to causes \cite{anderson1999}. Small changes can produce large effects (sensitivity to initial conditions); large interventions may produce minimal response (system resistance); similar actions in different contexts yield different outcomes (context-dependence).
-
-\sidenote{\textbf{Non-linearity}---Effects disproportionate to causes. Small changes may trigger cascades; large interventions may produce nothing.}
+\textbf{Non-linearity} means that effects are not proportional to causes \needcite{anderson-complexity-1999}.\sidenote{\textbf{Non-linearity}---Effects disproportionate to causes. Small changes may trigger cascades; large interventions may produce nothing.} Small changes can produce large effects (sensitivity to initial conditions); large interventions may produce minimal response (system resistance); similar actions in different contexts yield different outcomes (context-dependence).
 
 In role constellations, non-linearity appears as:
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
@@ -261,9 +250,7 @@ Non-linearity complicates both prediction and intervention. Linear thinking---``
 
 \subsection{Mechanism 5: Feedback Loops}
 
-\textbf{Feedback loops} are circular causal chains where outputs become inputs \cite{sterman2000}. Positive (reinforcing) feedback amplifies change; negative (balancing) feedback dampens it. CAS behavior emerges from the interplay of multiple feedback loops operating at different timescales.
-
-\sidenote{\textbf{Feedback loops}---Outputs become inputs. Reinforcing loops amplify; balancing loops stabilize.}
+\textbf{Feedback loops} are circular causal chains where outputs become inputs \needcite{sterman-business-dynamics-2000}.\sidenote{\textbf{Feedback loops}---Outputs become inputs. Reinforcing loops amplify; balancing loops stabilize.} Positive (reinforcing) feedback amplifies change; negative (balancing) feedback dampens it. CAS behavior emerges from the interplay of multiple feedback loops operating at different timescales.
 
 Role constellations exhibit both feedback types:
 
@@ -314,9 +301,7 @@ Role constellations exhibit both feedback types:
 
 \subsection{Mechanism 6: Fitness Landscapes}
 
-\textbf{Fitness landscapes} provide a spatial metaphor for adaptation \cite{kauffman1993}. Organizations occupy positions in a multi-dimensional space defined by role characteristics; each position has associated ``fitness'' (viability, effectiveness). The landscape is not fixed but deforms as other actors move and as environmental conditions change.
-
-\sidenote{\textbf{Fitness landscapes}---Adaptive terrain. Organizations seek ``peaks'' but the landscape shifts as others move and environment changes.}
+\textbf{Fitness landscapes} provide a spatial metaphor for adaptation \needcite{kauffman-origins-order-1993}.\sidenote{\textbf{Fitness landscapes}---Adaptive terrain. Organizations seek ``peaks'' but the landscape shifts as others move and environment changes.} Organizations occupy positions in a multi-dimensional space defined by role characteristics; each position has associated ``fitness'' (viability, effectiveness). The landscape is not fixed but deforms as other actors move and as environmental conditions change.
 
 In role constellations:
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
@@ -330,8 +315,8 @@ The fitness landscape metaphor illuminates several constellation phenomena:
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
 \item \textbf{Local optima traps}: Organizations may occupy suboptimal peaks, unable to traverse valleys to reach higher peaks
 \item \textbf{Niche partitioning}: Multiple intermediaries can coexist by occupying different peaks
-\item \textbf{Red Queen dynamics}: Organizations must continuously adapt just to maintain relative position as the landscape shifts
-\item \textbf{Punctuated equilibrium}: Long periods of stability (on peaks) interrupted by rapid change (landscape deformation)
+\item \textbf{Red Queen dynamics} \needcite{valen-red-queen-1973}: Organizations must continuously adapt just to maintain relative position as the landscape shifts
+\item \textbf{Punctuated equilibrium} \needcite{gould-eldredge-punctuated-1977}: Long periods of stability (on peaks) interrupted by rapid change (landscape deformation)
 \end{itemize}
 
 \begin{insightbox}[The Cartographic Connection]
@@ -340,9 +325,7 @@ The fitness landscape metaphor directly connects CAS theory to cartographic meth
 
 \subsection{From Observation to Simulation: The \RoleSim Complement}
 
-Empirical cartography reveals where actors \emph{are} on the fitness landscape and how they \emph{have} moved. But CAS theory raises questions that observation alone cannot answer: What \emph{would} happen if a key intermediary exited? How \emph{might} the constellation restructure under different policy scenarios? Which role configurations \emph{could} emerge but haven't?
-
-\sidenote{\textbf{Counterfactual necessity}---CAS dynamics involve path dependence and contingency. Understanding \emph{why} constellations evolved as they did requires exploring paths not taken.}
+Empirical cartography reveals where actors \emph{are} on the fitness landscape and how they \emph{have} moved. But CAS theory raises questions that observation alone cannot answer:\sidenote{\textbf{Counterfactual necessity}---CAS dynamics involve path dependence and contingency. Understanding \emph{why} constellations evolved as they did requires exploring paths not taken.} What \emph{would} happen if a key intermediary exited? How \emph{might} the constellation restructure under different policy scenarios? Which role configurations \emph{could} emerge but haven't?
 
 These counterfactual questions are central to CAS understanding. Path dependence (Mechanism 4: Non-linearity) means observed trajectories represent one realization among many possibilities. Co-evolution (Mechanism 3) couples constellation dynamics to environmental conditions that themselves might have unfolded differently. Without counterfactual exploration, we risk mistaking contingent outcomes for necessary ones.
 
@@ -395,9 +378,7 @@ The \RoleSim agent-based model, introduced in Intermezzo B, operationalizes this
 \item \textbf{Environmental coupling}: Fitness functions that shift based on simulated policy and technology trajectories
 \end{itemize}
 
-\sidenote{\textbf{\RoleSim}---Agent-based model implementing CAS mechanisms. Parameterized from \RoleBox{} empirics. Enables counterfactual exploration of constellation dynamics. See Intermezzo B.}
-
-Crucially, \RoleSim is \emph{parameterized from empirical cartography}. Initial agent configurations, fitness function shapes, and interaction network structures derive from \RoleBox analysis of the EIT ecosystem. This grounding ensures simulation explores variations on observed reality, not arbitrary parameter spaces. Conversely, simulation results can be \emph{validated} against empirical patterns---if simulated dynamics produce constellation structures wildly divergent from observation, the mechanism specification requires revision.
+Crucially, \RoleSim is \emph{parameterized from empirical cartography}.\sidenote{\textbf{\RoleSim}---Agent-based model implementing CAS mechanisms. Parameterized from \RoleBox{} empirics. Enables counterfactual exploration of constellation dynamics. See Intermezzo B.} Initial agent configurations, fitness function shapes, and interaction network structures derive from \RoleBox analysis of the EIT ecosystem. This grounding ensures simulation explores variations on observed reality, not arbitrary parameter spaces. Conversely, simulation results can be \emph{validated} against empirical patterns---if simulated dynamics produce constellation structures wildly divergent from observation, the mechanism specification requires revision.
 
 \begin{importantbox}
 \textbf{The observation-simulation dialectic.} Neither cartography nor simulation alone suffices for CAS understanding:
@@ -422,9 +403,7 @@ Integrating the six mechanisms, we arrive at a reconceptualization of role const
 A \textbf{role constellation} is a complex adaptive system comprising intermediary organizations whose roles emerge from their interactions, self-organize into differentiated configurations, and co-evolve with each other and their environment through non-linear dynamics mediated by feedback loops across a shifting fitness landscape.
 \end{roledef}
 
-\sidenote{\textbf{Key shift}---Roles are not actor attributes but \emph{system properties}; they emerge from, are sustained by, and change through relational dynamics.}
-
-This reconceptualization has several implications:
+This reconceptualization has several implications:\sidenote{\textbf{Key shift}---Roles are not actor attributes but \emph{system properties}; they emerge from, are sustained by, and change through relational dynamics.}
 
 \begin{enumerate}[leftmargin=*, itemsep=0.4em]
 \item \textbf{Roles are relational, not attributional.} An intermediary's role is not something it ``has'' but something it ``does'' in relation to others. The same organization may enact different roles depending on which relationships are activated.
@@ -465,11 +444,9 @@ Longitudinal tracking across data modalities; event detection; trajectory analys
 \end{center}
 \normalsize
 
-\sidenote{\textbf{Multimodal necessity}---Each dimension requires multiple data sources. No single modality captures boundaries, structure, \emph{and} dynamics adequately.}
-
 \subsection{Levels of Analysis}
 
-CAS theory demands attention to multiple levels of analysis and their interactions. Following Phillips and Ritala's emphasis on multilevel understanding, we distinguish three levels for role constellation analysis:
+CAS theory demands attention to multiple levels of analysis and their interactions.\sidenote{\textbf{Multimodal necessity}---Each dimension requires multiple data sources. No single modality captures boundaries, structure, \emph{and} dynamics adequately.} Following Phillips and Ritala's emphasis on multilevel understanding, we distinguish three levels for role constellation analysis:
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.3em]
 \item[Micro level: Individual intermediaries] Organizations with their own strategies, resources, and activities. The micro level is where agency resides and where we observe specific role performances.
@@ -532,9 +509,7 @@ Crucially, these levels interact:
 \labsec{cas:propositions}
 %═══════════════════════════════════════════════════════════════════════════════
 
-Theoretical frameworks gain value through empirical engagement. The CAS reconceptualization generates specific propositions about role constellation dynamics---predictions that multimodal cartography can test. We organize fifteen propositions around the six mechanisms, grouped into conceptual, structural, and temporal domains.
-
-\sidenote{\textbf{Proposition logic}---Each proposition derives from CAS mechanisms, specifies observable patterns, and can be assessed with cartographic methods. Chapter~\ref{ch:synthesis} evaluates empirical support.}
+Theoretical frameworks gain value through empirical engagement.\sidenote{\textbf{Proposition logic}---Each proposition derives from CAS mechanisms, specifies observable patterns, and can be assessed with cartographic methods. Chapter~\ref{ch:synthesis} evaluates empirical support.} The CAS reconceptualization generates specific propositions about role constellation dynamics---predictions that multimodal cartography can test. We organize fifteen propositions around the six mechanisms, grouped into conceptual, structural, and temporal domains.
 
 \subsection{Propositions on Emergence (P1--P3)}
 
@@ -725,9 +700,7 @@ The CAS reconceptualization has direct implications for how we design cartograph
 
 \subsection{Why Multimodality is Necessary, Not Optional}
 
-CAS theory explains why single-modality approaches systematically underperform for role constellation analysis:
-
-\sidenote{\textbf{Multimodal necessity}---CAS properties (emergence, multiple levels, diverse perspectives) cannot be captured by any single data source. Integration is required by theory, not just desirable for robustness.}
+CAS theory explains why single-modality approaches systematically underperform for role constellation analysis:\sidenote{\textbf{Multimodal necessity}---CAS properties (emergence, multiple levels, diverse perspectives) cannot be captured by any single data source. Integration is required by theory, not just desirable for robustness.}
 
 \begin{enumerate}[leftmargin=*, itemsep=0.4em]
 \item \textbf{Emergence requires multiple observation points.} Emergent properties are not visible from inside the system. Self-reports (interviews, websites) capture how actors perceive their roles; external observation (networks, news) captures how roles manifest behaviorally. Neither alone captures emergence.
@@ -776,9 +749,7 @@ CAS theory suggests validation strategies. If roles are emergent and relational,
 
 \subsection{Simulation as Theoretical Laboratory}
 
-Beyond empirical validation, CAS theory requires \textbf{generative testing}: can the proposed mechanisms, when instantiated computationally, \emph{produce} patterns resembling observed constellations? This is where \RoleSim becomes essential.
-
-\sidenote{\textbf{Generative test}---If mechanisms are correctly specified, simulation should generate patterns resembling observation. Failure indicates missing or misspecified mechanisms.}
+Beyond empirical validation, CAS theory requires \textbf{generative testing}:\sidenote{\textbf{Generative test}---If mechanisms are correctly specified, simulation should generate patterns resembling observation. Failure indicates missing or misspecified mechanisms.} can the proposed mechanisms, when instantiated computationally, \emph{produce} patterns resembling observed constellations? This is where \RoleSim becomes essential.
 
 Agent-based modeling enables several theory-testing strategies unavailable to purely empirical approaches:
 
@@ -827,9 +798,7 @@ Agent-based modeling enables several theory-testing strategies unavailable to pu
 \labsec{cas:bridge}
 %═══════════════════════════════════════════════════════════════════════════════
 
-The CAS reconceptualization creates both opportunity and obligation. The opportunity: we now have theoretical grounding for why multimodal, relational, temporal methods are necessary. The obligation: we must build methodological artifacts that operationalize these theoretical commitments.
-
-\sidenote{\textbf{Theory $\rightarrow$ Method}---CAS theory specifies \emph{what} to look for; Design Science Research provides \emph{how} to build tools that look effectively.}
+The CAS reconceptualization creates both opportunity and obligation.\sidenote{\textbf{Theory $\rightarrow$ Method}---CAS theory specifies \emph{what} to look for; Design Science Research provides \emph{how} to build tools that look effectively.} The opportunity: we now have theoretical grounding for why multimodal, relational, temporal methods are necessary. The obligation: we must build methodological artifacts that operationalize these theoretical commitments.
 
 This is where Design Science Research (DSR) enters. As Chapter~\ref{ch:method} will elaborate, DSR treats the creation of artifacts---tools, methods, frameworks---as a legitimate research contribution. The artifacts we build embody theoretical choices: what counts as a role, how relationships are detected, which dynamics matter. Theory guides design; design enables theory-testing.
 
@@ -867,7 +836,7 @@ This is where Design Science Research (DSR) enters. As Chapter~\ref{ch:method} w
 The four Meta-Design Requirements introduced in Chapter~\ref{ch:intro} connect directly to CAS theory:
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[MDR-1: Theory-Data Reconciliation] CAS concepts (emergence, self-organization) must be translated into measurable features. This chapter has begun that work; Chapter~\ref{ch:rolebox} completes it.
+\item[MDR-1: Theory-Data Reconciliation] CAS concepts (emergence, self-organization) must be translated into measurable features. This chapter has begun that work; the empirical chapters complete it.
 
 \item[MDR-2: Hypothesis-Driven Data Selection] The fifteen propositions specify what data we need. We don't collect everything available; we collect what tests CAS predictions.
 
@@ -894,9 +863,7 @@ The Intermezzo has prepared the terrain; this chapter has provided the theoretic
 \labsec{cas:limitations}
 %═══════════════════════════════════════════════════════════════════════════════
 
-CAS theory is powerful but not unlimited. We acknowledge several boundary conditions:
-
-\sidenote{\textbf{Honest boundaries}---CAS theory illuminates certain phenomena while leaving others in shadow. Acknowledging limits strengthens rather than weakens theoretical application.}
+CAS theory is powerful but not unlimited.\sidenote{\textbf{Honest boundaries}---CAS theory illuminates certain phenomena while leaving others in shadow. Acknowledging limits strengthens rather than weakens theoretical application.} We acknowledge several boundary conditions:
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.4em]
 \item[Not all systems are equally complex.] Some intermediary configurations may be simple enough that categorical approaches suffice. CAS theory adds value for genuinely complex constellations; it may be overkill for small, stable, centrally-coordinated settings.
@@ -942,9 +909,7 @@ This chapter established Complex Adaptive Systems theory as the theoretical foun
 
 \vspace{1em}
 
-With theoretical foundations established, we turn to methodology. Chapter~\ref{ch:method} presents the Design Science Research framework guiding artifact development. Chapters~\ref{ch:rolebox} and \ref{ch:rolesim} document the \RoleBox and \RoleSim artifacts that operationalize CAS-informed multimodal cartography. The empirical chapters that follow test whether the fifteen propositions hold in the EIT ecosystem---and what we learn when they do or don't.
-
-\sidenote{\faArrowRight\ \textit{Next:} Chapter~\ref{ch:method}: Methodology---Design Science Research as the framework for building cartographic infrastructure.}
+With theoretical foundations established, we turn to methodology.\sidenote{\faArrowRight\ \textit{Next:} Chapter~\ref{ch:method}: Methodology---Design Science Research as the framework for building cartographic infrastructure.} Chapter~\ref{ch:method} presents the Design Science Research framework guiding artifact development. Chapters~\ref{ch:rolebox} and \ref{ch:rolesim} document the \RoleBox and \RoleSim artifacts that operationalize CAS-informed multimodal cartography. The empirical chapters that follow test whether the fifteen propositions hold in the EIT ecosystem---and what we learn when they do or don't.
 
 The map we have drawn in this chapter is itself a kind of cartography: a theoretical terrain showing where concepts are positioned, how mechanisms connect, what propositions follow. The challenge now is to build tools capable of mapping empirical terrain with corresponding rigor.
 
