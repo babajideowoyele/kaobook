@@ -8,18 +8,18 @@
 \margintoc
 
 \begin{chapteroverview}
-Before we can map role constellations, we must understand how the field has conceptualized them. This chapter surveys role-based perspectives in sustainability transitions research, examines how major frameworks handle actor roles, and pays particular attention to intermediaries---the focal actors of this dissertation. We trace intermediary conceptualization from bilateral brokers to systemic actors, examine their functions and dynamics, and conclude by identifying six persistent problems that motivate our cartographic response.
+Before we can map role constellations, we must understand how the field has conceptualized them. This chapter surveys role-based perspectives in sustainability transitions research, examines how major frameworks handle actor roles, and pays particular attention to intermediaries---the focal actors of this dissertation. We trace intermediary conceptualization from bilateral brokers to systemic actors, examine their functions and dynamics, and conclude by identifying six persistent problems that motivate our cartographic response. This directly addresses our first sub-research question on developing a conceptual framework for theory-guided yet empirically open role analysis.
 \end{chapteroverview}
 
 
 %===============================================================================
-\section{From Actors to Roles to Constellations}
+\section{From Actors to Roles to Constellations}[Actors to Constellations]
 \labsec{background:intro}
 %===============================================================================
 
 Sustainability transitions are fundamentally \textbf{multi-actor processes}. No single organization---however powerful---can transform an energy system, reshape a food regime, or reconfigure urban mobility alone. Transitions emerge from the coordinated and contested actions of diverse actors: startups and incumbents, policymakers and activists, researchers and users, investors and intermediaries.
 
-Early transition frameworks acknowledged this diversity but offered limited vocabulary for analyzing it \needcite{markard-actors-2012}.\sidenote{\textbf{Theoretical gap}---Frameworks distinguish actor types but not how roles evolve and interrelate.} The Multi-Level Perspective distinguished niche innovators from regime incumbents. Strategic Niche Management identified network builders and expectation managers. Transition Management convened frontrunners in transition arenas. Yet these frameworks treated roles implicitly---as background assumptions rather than objects of analysis.
+Early transition frameworks acknowledged this diversity but offered limited vocabulary for analyzing it \cite{markard2012sustainability}.\sidenote{\textbf{Theoretical gap}---Frameworks distinguish actor types but not how roles evolve and interrelate.} The Multi-Level Perspective distinguished niche innovators from regime incumbents. Strategic Niche Management identified network builders and expectation managers. Transition Management convened frontrunners in transition arenas. Yet these frameworks treated roles implicitly---as background assumptions rather than objects of analysis.
 
 In recent years, scholars have argued that understanding \emph{who does what} in transitions---and how actors' roles evolve and combine---is crucial for explaining why some transitions accelerate while others stall. This has generated growing interest in \textbf{role constellations} as analytic tools for unpacking social dynamics of systemic change.
 
@@ -29,29 +29,38 @@ A \textbf{role constellation} is a configuration of actor roles and their interr
 
 The formal introduction of role constellations to transition research is often traced to \textcite{wittmayer2017roles}, who imported sociological role theory to provide vocabulary for analyzing changing actor interactions over time. They argued that transition studies needed to move beyond identifying actor \emph{types} (who is present) to analyzing actor \emph{roles} (what functions actors perform and how these combine).
 
+% Figure 2.1: Actor vs. role constellations - enlarged
 \begin{center}
-\begin{tikzpicture}[scale=1.2]
+\begin{tikzpicture}[scale=1.3]
     % Actor constellation (left)
-    \node[font=\small\bfseries] at (-4, 3.5) {Actor Constellation};
-    \node[draw, circle, fill=Slate!20, minimum size=1.0cm] (a1) at (-6, 1.5) {};
-    \node[draw, circle, fill=Slate!20, minimum size=1.0cm] (a2) at (-4, 2.5) {};
-    \node[draw, circle, fill=Slate!20, minimum size=1.0cm] (a3) at (-2, 1.5) {};
-    \node[draw, circle, fill=Slate!20, minimum size=1.0cm] (a4) at (-4, 0.5) {};
-    \node[font=\small, text=Slate] at (-4, -0.8) {Who is present?};
+    \node[font=\normalsize\bfseries] at (-4, 4) {Actor Constellation};
+    \node[draw, circle, fill=Slate!20, minimum size=1.2cm] (a1) at (-6, 1.8) {};
+    \node[draw, circle, fill=Slate!20, minimum size=1.2cm] (a2) at (-4, 2.8) {};
+    \node[draw, circle, fill=Slate!20, minimum size=1.2cm] (a3) at (-2, 1.8) {};
+    \node[draw, circle, fill=Slate!20, minimum size=1.2cm] (a4) at (-4, 0.6) {};
+    \node[font=\small\itshape, text=Slate] at (-4, -0.8) {Who is present?};
+
+    % Arrow between
+    \draw[->, very thick, AccentPurple!60, line width=2pt] (-0.5, 1.5) -- (0.5, 1.5);
 
     % Role constellation (right)
-    \node[font=\small\bfseries] at (4, 3.5) {Role Constellation};
-    \node[draw, circle, fill=Azure!30, minimum size=1.0cm, font=\small] (r1) at (2, 2) {B};
-    \node[draw, circle, fill=Marigold!30, minimum size=1.0cm, font=\small] (r2) at (4, 2.5) {F};
-    \node[draw, circle, fill=PandaBamboo!30, minimum size=1.0cm, font=\small] (r3) at (6, 2) {C};
-    \node[draw, circle, fill=AccentPurple!30, minimum size=1.0cm, font=\small] (r4) at (4, 0.5) {A};
+    \node[font=\normalsize\bfseries] at (4, 4) {Role Constellation};
+    \node[draw, circle, fill=Azure!30, minimum size=1.2cm, font=\small\bfseries] (r1) at (2, 2.2) {B};
+    \node[draw, circle, fill=Marigold!30, minimum size=1.2cm, font=\small\bfseries] (r2) at (4, 2.8) {F};
+    \node[draw, circle, fill=PandaBamboo!30, minimum size=1.2cm, font=\small\bfseries] (r3) at (6, 2.2) {C};
+    \node[draw, circle, fill=AccentPurple!30, minimum size=1.2cm, font=\small\bfseries] (r4) at (4, 0.6) {A};
     \draw[thick, PandaCharcoal!50] (r1) -- (r2) -- (r3);
     \draw[thick, PandaCharcoal!50] (r2) -- (r4);
     \draw[dashed, PandaCharcoal!30] (r1) -- (r4) -- (r3);
-    \node[font=\small, text=Slate] at (4, -0.8) {What do they do?};
-\end{tikzpicture}
+    \node[font=\small\itshape, text=Slate] at (4, -0.8) {What do they do?};
 
-\captionof{figure}{Actor vs. role constellations. The former identifies presence; the latter maps functions and relationships.}
+    % Legend
+    \node[font=\tiny, text=Slate] at (2, -1.5) {B=Broker};
+    \node[font=\tiny, text=Slate] at (3.5, -1.5) {F=Funder};
+    \node[font=\tiny, text=Slate] at (4.8, -1.5) {C=Connector};
+    \node[font=\tiny, text=Slate] at (6.2, -1.5) {A=Advocate};
+\end{tikzpicture}
+\captionof{figure}{Actor constellations identify \emph{who} is present; role constellations map \emph{what} they do and how functions interrelate. The same actors (left) can be analyzed through different role lenses (right), revealing functions (B=Broker, F=Funder, C=Connector, A=Advocate) and relationships between them.}
 \label{fig:background:actor-vs-role}
 \end{center}
 
@@ -61,31 +70,56 @@ Crucially, roles are not fixed attributes but \textbf{emergent and malleable}. T
 
 
 %===============================================================================
-\section{Roles Across Theoretical Frameworks}
+\section{Roles Across Theoretical Frameworks}[Roles in Theory]
 \labsec{background:frameworks}
 %===============================================================================
 
 How do the major transition frameworks conceptualize roles? Each offers a partial map with characteristic strengths and blind spots.\sidenote{\textbf{Different lenses}---Each framework illuminates some roles while obscuring others.}
 
-\subsection*{The Multi-Level Perspective}
+% Theoretical frameworks comparison - scaled up for better visibility
+\begin{center}
+\begin{tikzpicture}[scale=1.0,
+    fwbox/.style={draw, rounded corners=4pt, fill=#1!25, minimum width=3.2cm, minimum height=1.4cm, align=center, font=\small}
+]
+    \node[fwbox=Azure] (mlp) at (0,0) {\textbf{MLP}\\[0.1em]\scriptsize Niche--Regime\\dynamics};
+    \node[fwbox=PandaBamboo] (tm) at (4,0) {\textbf{TM}\\[0.1em]\scriptsize Frontrunner\\arenas};
+    \node[fwbox=Marigold] (snm) at (8,0) {\textbf{SNM}\\[0.1em]\scriptsize Network\\builders};
+    \node[fwbox=AccentPurple] (tis) at (12,0) {\textbf{TIS}\\[0.1em]\scriptsize System\\functions};
+
+    % Connecting lines showing overlap
+    \draw[<->, dashed, Slate!50, thick] (mlp) -- (tm);
+    \draw[<->, dashed, Slate!50, thick] (tm) -- (snm);
+    \draw[<->, dashed, Slate!50, thick] (snm) -- (tis);
+
+    % Key roles below each
+    \node[font=\tiny, text=Slate, text width=3cm, align=center] at (0,-1.2) {Niche actors vs.\\regime incumbents};
+    \node[font=\tiny, text=Slate, text width=3cm, align=center] at (4,-1.2) {Visionaries in\\protected spaces};
+    \node[font=\tiny, text=Slate, text width=3cm, align=center] at (8,-1.2) {Expectation managers,\\cosmopolitan actors};
+    \node[font=\tiny, text=Slate, text width=3cm, align=center] at (12,-1.2) {Entrepreneurs,\\legitimators};
+\end{tikzpicture}
+\captionof{figure}{Four major transition frameworks emphasize different role categories. Each illuminates some actors while obscuring others, and boundaries between frameworks are porous rather than fixed.}
+\label{fig:background:frameworks}
+\end{center}
+
+\subsection{The Multi-Level Perspective}
 
 The \textbf{Multi-Level Perspective (MLP)} distinguishes actors by their position in niche-regime-landscape dynamics \sidecite{geels2002technological}. Niche actors create starting points for systemic change, benefiting from protective spaces that support experimentation. Regime actors can be sources of or structures for agency---incumbents initially tend to downplay transformation needs but may eventually adapt \cite{geels2004mlp}. Landscape actors are definitionally problematic; the MLP treats landscape as ``background'' with no activities, though civil society sometimes represents landscape-level cultural trends.
 
-\subsection*{Transition Management}
+\subsection{Transition Management}
 
 \textbf{Transition Management} emphasizes frontrunners---visionary actors who experiment with alternatives in protected arenas \sidecite{kemp2007tm}. It distinguishes strategic (long-term vision), tactical (coalitions and networks), operational (experiments and projects), and reflexive (learning and monitoring) activities, implying differentiated roles at each level.
 
-\subsection*{Strategic Niche Management}
+\subsection{Strategic Niche Management}
 
 \textbf{Strategic Niche Management (SNM)} identifies actors performing three niche-building processes: articulating visions and expectations, building social networks, and facilitating learning \sidecite{smith2007snm}. ``Cosmopolitan actors'' perform critical aggregation activities, translating lessons from local experiments to the global niche through professional organizations, specialized journals, and conference networks.
 
-\subsection*{Innovation Systems Approaches}
+\subsection{Innovation Systems Approaches}
 
 \textbf{Innovation Systems} approaches---particularly Technological Innovation Systems (TIS)---identify seven system-building functions: knowledge development and diffusion, influence on search direction, entrepreneurial experimentation, market formation, resource mobilization, legitimation, and positive externalities \sidecite{bergek2008tis}. Different actor types contribute to different functions.
 
 
 %===============================================================================
-\section{Fischer \& Newig: A Systematic Review of Actor Typologies}
+\section{Fischer \& Newig: A Systematic Review of Actor Typologies}[Fischer \& Newig]
 \labsec{background:fischer-newig}
 %===============================================================================
 
@@ -116,7 +150,7 @@ The review also reveals that intermediaries function as a cross-cutting category
 \labsec{background:wittmayer}
 %===============================================================================
 
-\textcite{wittmayer2017roles} made the seminal contribution\sidenote{\textbf{Wittmayer et al. (2017)}---Introduces sociological role theory to transition studies.} of explicitly importing sociological role theory into sustainability transitions research. Drawing on \textcite{biddle1986role}, they distinguish multiple conceptualizations of ``role'':
+\textcite{wittmayer2017roles} made the seminal contribution\sidenote{\textbf{Wittmayer et al. (2017)}---Introduces sociological role theory to transition studies. This dissertation explicitly builds on and operationalizes their framework through multimodal cartography.} of explicitly importing sociological role theory into sustainability transitions research. Drawing on \textcite{biddle1986role}, they distinguish multiple conceptualizations of ``role'':
 
 \textbf{Functional roles} emphasize positions within social systems and associated behavioral expectations. Organizations are expected to perform certain functions based on their structural position.
 
@@ -127,6 +161,16 @@ The review also reveals that intermediaries function as a cross-cutting category
 \textbf{Cognitive roles} emphasize mental schemas and scripts that guide behavior in particular situations.
 
 This multiplicity explains persistent definitional ambiguity: when researchers use ``role,'' they may invoke any of these meanings without explicit acknowledgment.
+
+Beyond these definitional distinctions, Wittmayer et al. identify \textbf{three complementary perspectives} on how roles function in transitions:\sidenote{\textbf{Three perspectives}---Each perspective suggests different analytical strategies, which this dissertation operationalizes through different data modalities.}
+
+\begin{enumerate}[nosep]
+\item \textbf{Roles as recognizable activities}: What actors \emph{do}---observable behaviors and practices that can be identified and categorized
+\item \textbf{Roles as resources}: Following \textcite{callero1994limits}, roles are ``cultural objects'' that actors strategically deploy to achieve goals
+\item \textbf{Roles as boundary objects}: Following \textcite{simpson2008role}, roles serve as points of negotiation where different actors contest meaning and attribution
+\end{enumerate}
+
+These three perspectives map directly onto the multimodal cartography developed in this dissertation. \textbf{Websites} capture roles as recognizable activities---what organizations claim to do. \textbf{Social media} reveals roles as resources---how actors strategically deploy role claims in interaction. \textbf{News media and visual materials} expose roles as boundary objects---where external observers attribute, contest, and negotiate role meanings. This operationalization transforms Wittmayer et al.'s theoretical framework into systematic empirical method.
 
 Crucially, Wittmayer et al. emphasize that roles are \textbf{dynamic and contested}.\sidenote{\textbf{Role dynamics}---Roles are actively constructed and negotiated, not merely occupied.} Actors actively construct roles through strategic action; they negotiate role boundaries with other actors; they resist role expectations that conflict with their interests or identities. This perspective transforms roles from static categories into \textbf{objects of struggle}.
 
@@ -144,18 +188,18 @@ However, their operationalization remains qualitative and case-specific. How doe
 
 
 %===============================================================================
-\section{De Haan \& Rotmans: Power and Agency in Role Analysis}
-\labsec{background:power}
+\section{De Haan \& Rotmans: Agency and Transformative Actors}[De Haan \& Rotmans]
+\labsec{background:dehaan}
 %===============================================================================
 
-\textcite{dehaan2018power} address a widely acknowledged gap\sidenote{\textbf{De Haan \& Rotmans (2018)}---Power-in-transition framework analyzes how power shapes role possibilities.}: the inadequate representation of actors and agency in transitions studies. They propose giving ``explanatory primacy to agency,'' presenting transitions as consequences of deliberate, value-driven actions rather than systemic forces.
+\textcite{dehaan2018power} address a widely acknowledged gap\sidenote{\textbf{De Haan \& Rotmans (2018)}---Agency-centered framework gives explanatory primacy to deliberate, value-driven action.}: the inadequate representation of actors and agency in transitions studies. They propose giving ``explanatory primacy to agency,'' presenting transitions as consequences of deliberate, value-driven actions rather than systemic forces.
 
 Their framework introduces a four-role typology for transformative actors:
 
 \begin{margintable}
 \centering
-\caption{Power types and transition roles}
-\label{tab:background:power-roles}
+\caption{Agency types and transition roles}
+\label{tab:background:agency-roles}
 \scriptsize
 \begin{tabular}{@{}p{1.8cm}p{2.2cm}@{}}
 \toprule
@@ -177,15 +221,15 @@ However, the typology covers only \textit{transformative} actors---those maintai
 
 
 %===============================================================================
-\section{Intermediary Functions and Typologies}
+\section{Intermediary Functions and Typologies}[Intermediary Functions]
 \labsec{background:intermediaries}
 %===============================================================================
 
-Given this dissertation's focus on intermediary organizations, we examine in depth how the literature has conceptualized intermediation---tracing its evolution from innovation studies into sustainability transitions research.\sidenote{\textbf{Conceptual evolution}---From bilateral brokers to systemic actors operating at network and system levels.}
+Given this dissertation's focus on intermediary organizations, we examine in depth how the literature has conceptualized intermediation---tracing its evolution from innovation studies into sustainability transitions research \cite{vanlente2020intermediaries}.\sidenote{\textbf{Conceptual evolution}---From bilateral brokers to systemic actors operating at network and system levels.}
 
-\subsection*{From Bilateral to Systemic Intermediaries}
+\subsection{From Bilateral to Systemic Intermediaries}
 
-The intellectual roots trace to innovation studies in the late 1990s \needcite{howells-intermediaries-2006}. The pivotal contribution came with \textcite{vanlente2003systemic} on ``Roles of Systemic Intermediaries in Transition Processes,'' distinguishing \textbf{systemic intermediaries} from traditional bilateral brokers. They argued these actors function at the \emph{system or network level} rather than mediating one-to-one exchanges, identifying three core functions: \textbf{articulation} of options and demand, \textbf{alignment} of actors, and \textbf{support of learning processes}.
+The intellectual roots trace to innovation studies in the late 1990s \cite{howells2006intermediation}. The pivotal contribution came with \textcite{vanlente2003systemic} on ``Roles of Systemic Intermediaries in Transition Processes,'' distinguishing \textbf{systemic intermediaries} from traditional bilateral brokers. They argued these actors function at the \emph{system or network level} rather than mediating one-to-one exchanges, identifying three core functions: \textbf{articulation} of options and demand, \textbf{alignment} of actors, and \textbf{support of learning processes}.
 
 The intermediary concept evolved as it merged with sustainability transitions theory. Within the MLP, intermediaries came to be understood as actors positioned \emph{between} levels---connecting niche innovations to regime transformation. In Strategic Niche Management, intermediaries perform critical aggregation activities that construct the ``global niche'' as a cognitive and social reality.
 
@@ -193,9 +237,9 @@ The intermediary concept evolved as it merged with sustainability transitions th
 Intermediaries do not merely connect actors---they \emph{aggregate} dispersed knowledge into coherent narratives. By circulating between local projects, they identify patterns, codify lessons, and construct shared understanding. Without this aggregation, individual experiments remain isolated and fail to accumulate into transition momentum.
 \end{insightbox}
 
-\subsection*{The Kivimaa Typology}
+\subsection{The Kivimaa Typology}
 
-The most influential recent contribution is \textcite{kivimaa2019intermediaries},\sidenote{\textbf{Kivimaa et al. (2019)}---Systematic review proposes five-type intermediary typology.} proposing a five-type typology:
+The most influential recent contribution is \textcite{kivimaa2019innovation},\sidenote{\textbf{Kivimaa et al. (2019)}---Systematic review proposes five-type intermediary typology.} proposing a five-type typology:
 
 \begin{margintable}
 \centering
@@ -219,7 +263,7 @@ User & Connects users to technologies \\
 
 Yet empirical studies reveal\sidenote{\textbf{Porous boundaries}---Intermediaries often span types and shift strategically.} that boundaries between types are porous---intermediaries often exhibit characteristics of multiple types simultaneously and may shift profiles strategically over time.
 
-\subsection*{Function Clusters}
+\subsection{Function Clusters}
 
 The extensive documentation of intermediary functions reveals four clusters:
 
@@ -231,41 +275,69 @@ The extensive documentation of intermediary functions reveals four clusters:
 
 \textbf{Institutional functions}: advocating for policy change; legitimation work to build social acceptance; shaping regulatory frameworks; supporting institutional infrastructure development.
 
-% Function cluster figure
+% Figure 2.2: Intermediary function clusters
 \begin{center}
-\begin{tikzpicture}[scale=0.8]
+\begin{tikzpicture}[scale=1.3]
     % Central intermediary
-    \node[draw, circle, fill=AccentPurple!30, minimum size=1.2cm, font=\small\bfseries] (I) at (0,0) {I};
+    \node[draw, circle, fill=AccentPurple!30, minimum size=1.6cm, font=\normalsize\bfseries] (I) at (0,0) {I};
 
-    % Function nodes
-    \node[draw, rounded corners, fill=Azure!20, font=\tiny, align=center] (K) at (-2.5, 1.5) {Knowledge};
-    \node[draw, rounded corners, fill=PandaBamboo!20, font=\tiny, align=center] (N) at (2.5, 1.5) {Network};
-    \node[draw, rounded corners, fill=Marigold!20, font=\tiny, align=center] (V) at (-2.5, -1.5) {Vision};
-    \node[draw, rounded corners, fill=PandaRose!20, font=\tiny, align=center] (In) at (2.5, -1.5) {Institutional};
+    % Function nodes - larger with more padding
+    \node[draw, rounded corners=4pt, fill=Azure!20, font=\small, align=center, minimum width=2.2cm, minimum height=0.9cm] (K) at (-3, 2) {Knowledge};
+    \node[draw, rounded corners=4pt, fill=PandaBamboo!20, font=\small, align=center, minimum width=2.2cm, minimum height=0.9cm] (N) at (3, 2) {Network};
+    \node[draw, rounded corners=4pt, fill=Marigold!20, font=\small, align=center, minimum width=2.2cm, minimum height=0.9cm] (V) at (-3, -2) {Vision};
+    \node[draw, rounded corners=4pt, fill=PandaRose!20, font=\small, align=center, minimum width=2.2cm, minimum height=0.9cm] (In) at (3, -2) {Institutional};
 
-    % Connections
-    \draw[thick, Azure!60, ->] (I) -- (K);
-    \draw[thick, PandaBamboo!60, ->] (I) -- (N);
-    \draw[thick, Marigold!60, ->] (I) -- (V);
-    \draw[thick, PandaRose!60, ->] (I) -- (In);
+    % Connections - thicker arrows
+    \draw[very thick, Azure!70, ->] (I) -- (K);
+    \draw[very thick, PandaBamboo!70, ->] (I) -- (N);
+    \draw[very thick, Marigold!70, ->] (I) -- (V);
+    \draw[very thick, PandaRose!70, ->] (I) -- (In);
 \end{tikzpicture}
 \captionof{figure}{Four function clusters performed by transition intermediaries.}
 \label{fig:background:functions}
 \end{center}
 
-\subsection*{Related Concepts}
+\subsection{Related Concepts}
 
-The intermediary concept operates alongside several related terms. \textbf{Boundary spanners} emphasize individual competencies for bridging knowledge domains, particularly at the science-policy interface \needcite{tushman-boundary-spanning}. \textbf{System builders} engage in strategic action to create favorable conditions, more directive than facilitative. \textbf{Transition brokers} represent systemic intermediaries fulfilling orchestration functions. \textbf{Orchestrators} exercise leadership and make strategic decisions, contrasting with facilitative orientations.
+The intermediary concept operates alongside several related terms. \textbf{Boundary spanners} emphasize individual competencies for bridging knowledge domains, particularly at the science-policy interface \cite{tushman1977boundary}. \textbf{System builders} engage in strategic action to create favorable conditions, more directive than facilitative. \textbf{Transition brokers} represent systemic intermediaries fulfilling orchestration functions. \textbf{Orchestrators} exercise leadership and make strategic decisions, contrasting with facilitative orientations.
 
 
 %===============================================================================
-\section{Kanda et al.: Intermediary Dynamics and System Levels}
+\section{Kanda et al.: Intermediary Dynamics and System Levels}[Kanda et al.]
 \labsec{background:dynamics}
 %===============================================================================
 
 \textcite{kanda2020conceptualising} address a specific gap\sidenote{\textbf{Kanda et al. (2020)}---Emphasizes temporal dynamics and ecology perspectives.}: how to conceptualize intermediary activities \textit{beyond} individual projects at the system level. Their key move: shift from \textit{systemic intermediaries} (actor category) to \textit{systemic intermediation} (activity description). Any intermediary may perform systemic activities; dedicated ``systemic intermediaries'' may also perform non-systemic activities.
 
 They propose four levels of intermediation based on the relational criterion ``in-between what?'':
+
+% Four levels of intermediation visualization - scaled up
+\begin{center}
+\begin{tikzpicture}[scale=1.1,
+    levelbox/.style={draw, rounded corners=4pt, fill=#1!20, minimum width=4cm, minimum height=1.2cm, align=center, font=\small}
+]
+    % Levels as stacked boxes
+    \node[levelbox=AccentPurple] (l3) at (0,4.5) {\textbf{Level 3}\\Actors--Institutions};
+    \node[levelbox=Marigold] (l2) at (0,2.8) {\textbf{Level 2}\\Between networks};
+    \node[levelbox=PandaBamboo] (l1) at (0,1.1) {\textbf{Level 1}\\Within network};
+    \node[levelbox=Azure] (l0) at (0,-0.6) {\textbf{Level 0}\\Bilateral};
+
+    % Examples on right with better formatting
+    \node[font=\scriptsize, text width=4.5cm, right=0.8cm of l3, align=left] {\faLandmark~Lobbying, vision articulation,\\policy translation};
+    \node[font=\scriptsize, text width=4.5cm, right=0.8cm of l2, align=left] {\faProjectDiagram~Coalition building,\\interaction spaces, common voice};
+    \node[font=\scriptsize, text width=4.5cm, right=0.8cm of l1, align=left] {\faUsers~Networking, knowledge transfer,\\legitimacy building};
+    \node[font=\scriptsize, text width=4.5cm, right=0.8cm of l0, align=left] {\faHandshake~Consulting, bilateral brokerage,\\one-to-one matching};
+
+    % Vertical arrow showing increasing systemic scope
+    \draw[->, very thick, Slate!70, line width=2pt] (-3,-0.6) -- (-3,4.5);
+    \node[font=\small\bfseries, text=Slate, rotate=90, anchor=south] at (-3.5,2) {Systemic Scope};
+
+    % In-between what? label
+    \node[font=\scriptsize\itshape, text=Slate] at (0,-1.5) {``In-between what?'' determines intermediation level};
+\end{tikzpicture}
+\captionof{figure}{Four levels of intermediation based on the relational criterion ``in-between what?'' (Kanda et al., 2020). Level 0 involves bilateral exchanges between individual entities. Level 1 mediates within a single network. Level 2 spans different network types. Level 3 transcends horizontal network interactions to engage with formal and informal institutions.}
+\label{fig:background:kanda-levels}
+\end{center}
 
 \textbf{Level 0}: In-between individual entities. One-to-one interactions with benefits accruing to individual parties. Typical: consultants, bilateral brokerage.
 
@@ -277,7 +349,7 @@ They propose four levels of intermediation based on the relational criterion ``i
 
 Key empirical finding: \textbf{non-systemic activities dominate}.\sidenote{\textbf{Phase-dependent roles}---Niche intermediaries dominate early; systemic intermediaries peak during acceleration; diffusion intermediaries become critical for mainstreaming.} Most intermediation is bilateral despite the literature's focus on ``systemic intermediaries.'' Systemic activities require financial stability, longevity, and sometimes neutrality---they are resource-intensive. Mandate matters as much as resources: limited-resource intermediaries with institutional change mandates can operate at Level 3, while well-resourced intermediaries with bilateral mandates may concentrate on Level 0.
 
-\subsection*{Emergence Pathways}
+\subsection{Emergence Pathways}
 
 Three intermediary emergence pathways shape characteristics and capabilities:
 
@@ -287,7 +359,7 @@ Three intermediary emergence pathways shape characteristics and capabilities:
 
 \textbf{Emergent}: arising spontaneously in response to system gaps, often without initially recognizing their intermediary function. Community energy groups and informal networks may gradually assume broader roles. These possess grassroots legitimacy but may lack resources.
 
-\subsection*{Evolution Across Transition Phases}
+\subsection{Evolution Across Transition Phases}
 
 What intermediaries need to do---and which types matter most---changes as transitions progress.
 
@@ -301,7 +373,7 @@ In \textbf{stabilization}, some intermediaries cease to exist as roles become un
 
 A crucial finding: ``without intermediary influence, pre-development is unlikely to lead to acceleration.'' Intermediaries provide continuity across phases, carrying lessons and relationships even as specific projects end.
 
-\subsection*{Ecologies of Intermediaries}
+\subsection{Ecologies of Intermediaries}
 
 Perhaps the most significant recent advance is recognizing that transitions involve \emph{multiple} intermediaries whose interactions shape outcomes.
 
@@ -315,28 +387,71 @@ Within ecologies, intermediaries exhibit both \textbf{complementary and competit
 
 
 %===============================================================================
-\section{Geographic and Methodological Considerations}
+\section{Geographic and Methodological Considerations}[Geography \& Methods]
 \labsec{background:context}
 %===============================================================================
 
 \textbf{Geographic context} matters substantially.\sidenote{\textbf{Context matters}---Geographic variation and methodological constraints shape knowledge production.} While European research dominates---particularly from the Netherlands, Finland, Germany, and UK---patterns vary across governance systems. The Sustainability Transitions Research Network's ``Transitions in Global South'' initiative has catalyzed research beyond Northern contexts, revealing that intermediary roles and ecosystem configurations differ with institutional environments, development trajectories, and power structures.
 
-\textbf{Methodological approaches} face persistent trade-offs. Qualitative case studies provide rich understanding of how intermediaries navigate complex contexts but cannot identify population-level patterns. Social network analysis maps relational structures but typically relies on single data sources and struggles to capture meaning. Computational and text-analytic approaches offer scale but often begin with available data rather than theoretical questions.
+\subsection{The Dominance of Designed Data}
 
-Each approach illuminates some aspects\sidenote{\textbf{Methodological tensions}---Depth vs. scale; meaning vs. pattern; theory vs. data.} while obscuring others. No single method captures the full terrain of intermediary role constellations.
+% Designed vs organic data visualization - moved to body for emphasis
+\begin{center}
+\begin{tikzpicture}[scale=1.0,
+    databox/.style={draw, rounded corners=4pt, fill=#1!25, minimum width=3.5cm, minimum height=1.4cm, align=center, font=\small}
+]
+    % Designed data (dominant)
+    \node[databox=Azure] (des) at (-3,0) {\faFile*\\[0.2em]\textbf{Designed Data}\\[0.1em]\scriptsize 82\% of studies};
+    \node[font=\scriptsize, text width=3cm, align=center, below=0.3cm of des] {Interviews, surveys,\\focus groups};
+
+    % Organic data (underused)
+    \node[databox=Marigold] (org) at (3,0) {\faGlobe\\[0.2em]\textbf{Organic Data}\\[0.1em]\scriptsize <5\% of studies};
+    \node[font=\scriptsize, text width=3cm, align=center, below=0.3cm of org] {Websites, social media,\\news, investments};
+
+    % Arrow showing the gap/opportunity
+    \draw[->, very thick, AccentPurple!70, line width=2pt] (des.east) -- (org.west) node[midway, above, font=\small\bfseries, text=AccentPurple] {Methodological Gap};
+
+    % Scale indicators
+    \node[font=\tiny, text=Slate, above=0.5cm of des] {Dozens of actors};
+    \node[font=\tiny, text=Slate, above=0.5cm of org] {Thousands of actors};
+\end{tikzpicture}
+\captionof{figure}{The dominance of designed data in transitions research. While 82\% of studies rely on interviews and surveys (reaching dozens of actors), organic data sources like websites and social media (capable of reaching thousands) remain largely untapped. This methodological gap motivates the multimodal cartographic approach.}
+\label{fig:background:data-types}
+\end{center}
+
+A striking but underappreciated feature of role constellation research is its near-total reliance on \textbf{designed data}---data created specifically for research purposes.\sidenote{\textbf{Designed vs. organic data}---Groves (2011) distinguishes data created \emph{for} research (surveys, interviews) from data existing \emph{independently} of research (digital traces, transaction logs).} Interviews, surveys, focus groups, workshop protocols---these are the dominant data sources in transitions research. \textcite{zolfagharian2019studying} found that 82\% of sustainability transitions studies use qualitative methods, with 58\% relying on interviews as the primary data source. Only 9\% employ quantitative methods, and most of these use survey instruments designed for specific studies.
+
+This reliance on designed data has consequences. Interview-based research captures what actors \emph{say} about their roles---their self-perceptions, interpretations, and narratives. Surveys impose researcher-defined categories that respondents must fit themselves into. Both approaches filter role information through actors' self-presentation and researchers' conceptual frameworks.
+
+More fundamentally, designed data does not scale. Each interview requires researcher time; each survey requires respondent cooperation. A study of thirty intermediaries represents substantial investment. A study of three hundred would be prohibitively expensive. A study of three thousand is essentially impossible with designed data methods.
+
+\subsection{Organic Data: The Uncharted Territory}
+
+\textbf{Organic data}---data generated independently of research purposes---offers an alternative.\sidenote{\textbf{Organic data sources}---Websites, social media, news coverage, funding databases, visual communications---all generated for organizational purposes, not research consumption.} Organizations create websites to present themselves to stakeholders. They post on social media to engage audiences. They appear in news coverage whether they seek it or not. They receive and make investments documented in financial databases. They produce visual communications for marketing and branding. None of this is created for researchers---but all of it carries information about organizational roles.
+
+The potential is substantial. Where designed data captures what actors \emph{say} they do, organic data can reveal what they \emph{actually} do: whom they connect with, how they present themselves, how others perceive them, where money flows. Where designed data reaches dozens of organizations, organic data can cover thousands. Where designed data offers snapshots, organic data can be collected longitudinally.
+
+Yet organic data remains largely uncharted territory in transitions research. \textcite{dehaan2019datadriven} observe that ``not only is there no such database but moreover it seems contrary to the way data are used in transitions research.'' The field has developed sophisticated theories about role dynamics but has not developed the data infrastructure to test them at scale.
+
+This is not merely a technical gap. It reflects deeper assumptions about what counts as valid evidence. Designed data privileges actor voice---the interpretations and meanings actors themselves assign to their roles. Organic data privileges behavioral traces---what actors do regardless of what they say. Both have validity; neither is sufficient. The question is how to combine them.
+
+\subsection{Methodological Trade-offs}
+
+Existing methodological approaches face persistent trade-offs.\sidenote{\textbf{Methodological tensions}---Depth vs. scale; meaning vs. pattern; theory vs. data.} Qualitative case studies provide rich understanding of how intermediaries navigate complex contexts but cannot identify population-level patterns. Social network analysis maps relational structures but typically relies on single data sources and struggles to capture meaning. Computational and text-analytic approaches offer scale but often begin with available data rather than theoretical questions.
+
+Each approach illuminates some aspects while obscuring others. No single method captures the full terrain of intermediary role constellations. The challenge is integration: how to combine designed data's depth with organic data's scale, qualitative richness with quantitative pattern detection, theoretical guidance with data-driven discovery.
 
 
 %===============================================================================
-\section{Synthesis: Convergences, Divergences, and Gaps}
+\section{Synthesis: Convergences, Divergences, and Gaps}[Synthesis]
 \labsec{background:synthesis}
 %===============================================================================
 
 Having reviewed individual contributions, we now synthesize across them to identify what these frameworks share, where they diverge, and what gaps remain.
 
-\subsection*{Comparative Overview}
+\subsection{Comparative Overview}
 
-\small
-\renewcommand{\arraystretch}{1.3}
+\tableminimal
 \begin{center}
 \begin{tabular}{@{}p{2.2cm}p{2.8cm}p{2.8cm}p{2.8cm}p{2.8cm}@{}}
 \toprule
@@ -384,9 +499,8 @@ Roles ``erratic''; change with phase \\
 \captionof{table}{Framework comparison across four actor/role contributions.}
 \label{tab:background:framework-comparison}
 \end{center}
-\normalsize
 
-\subsection*{Points of Convergence}
+\subsection{Points of Convergence}
 
 Despite originating from different intellectual traditions,\sidenote{\textbf{Five convergences}---Despite different theoretical origins, frameworks agree on key principles.} the four frameworks converge on several key insights:
 
@@ -400,10 +514,9 @@ Despite originating from different intellectual traditions,\sidenote{\textbf{Fiv
 
 \textbf{Typology limitations}: All find existing categories inadequate. De Haan \& Rotmans argue MLP cannot capture actor dynamics; Wittmayer et al. note transitions lack role vocabulary; Kanda et al. find ``systemic intermediary'' underspecified; Fischer \& Newig identify four unintegrated typologies coexisting.
 
-\subsection*{Points of Divergence}
+\subsection{Points of Divergence}
 
-\small
-\renewcommand{\arraystretch}{1.3}
+\tableminimal
 \begin{center}
 \begin{tabular}{@{}p{2.5cm}p{3cm}p{3cm}p{3cm}p{2.5cm}@{}}
 \toprule
@@ -439,41 +552,40 @@ Field-level \\
 \captionof{table}{Divergent dimensions across frameworks.}
 \label{tab:background:divergence}
 \end{center}
-\normalsize
 
-\subsection*{Shared Gaps}
+\subsection{Shared Gaps}
 
-Most consequentially, all four frameworks share several limitations:\sidenote{\textbf{Six gaps}---These limitations motivate the cartographic approach developed in this dissertation.}
+More striking than the divergences are the gaps all four frameworks share.\sidenote{\textbf{Six gaps}---These limitations motivate the cartographic approach developed in this dissertation.}
 
-\textbf{Operationalization}: All provide concepts without systematic methods for empirical identification. How does one identify a ``frontrunner'' or measure ``role constellation change''? Researcher interpretation dominates.
+None offers systematic \textbf{operationalization}. The frameworks provide concepts---frontrunners, connectors, role constellations---but not methods for identifying them empirically. How do you find a frontrunner without already knowing who drove the transition? Researcher interpretation fills the void, but interpretation varies.
 
-\textbf{Population-level analysis}: All work at case level. No framework addresses: How many actors of type X exist? What is the distribution across types? How do types cluster spatially or sectorally?
+None enables \textbf{population-level analysis}. Each works at case level. How many intermediaries exist in a given ecosystem? What is the distribution across types? Do certain configurations cluster geographically? These questions cannot be answered with existing approaches.
 
-\textbf{Cross-modal validation}: None systematically compare claimed roles (self-description) with enacted roles (observed behavior). Do organizations do what they say they do?
+None provides \textbf{cross-modal validation}. Organizations claim roles on their websites. Do they actually perform those roles? No framework systematically compares self-description with observed behavior. The assumption seems to be that what actors say matches what they do.
 
-\textbf{Boundary specification}: Role constellations, networks, systems---all invoked but boundaries left implicit. What defines membership? Where does one constellation end and another begin?
+None specifies \textbf{boundaries} clearly. Role constellations, networks, systems---all invoked, but where does one end and another begin? Membership criteria remain implicit. This makes comparison across studies difficult.
 
-\textbf{Power analysis}: Dependencies, resources, and constellations all gesture toward power but don't systematically analyze asymmetries, contestation, or domination.
+None develops systematic \textbf{power analysis}. Dependencies, resources, constellations---all gesture toward power without analyzing it directly \cite{avelino2024just}. Who dominates? Whose roles constrain others? What asymmetries shape constellation dynamics?
 
-\textbf{Failure and absence}: All focus on presence and function. What happens when roles go unfilled? When intermediaries fail? When actors exit?
+None addresses \textbf{failure and absence}. What happens when critical roles go unfilled? When intermediaries exit? When constellations contain gaps? The literature focuses on presence and function; absence remains theorized but unmapped.
 
-\subsection*{Toward Integration}
+\subsection{Toward Integration}
 
-The four papers collectively point toward a framework with three dimensions:
+The governance dimension adds a fourth consideration. \textcite{loorbach2017transitions} distinguish three approaches to governance in transitions: \textit{analyzing} governance (understanding how societal agency interacts with institutional change), \textit{evaluating} governance (assessing whether transition-oriented policies work), and \textit{experimental} governance (intervening through arenas, scenarios, and experiments).\sidenote{\textbf{Three governance approaches}---Analysis, evaluation, and experimentation \cite{loorbach2017transitions}.} Role constellations matter for all three: analysis requires mapping who performs what functions; evaluation requires understanding how role configurations enable or constrain policy effectiveness; experimentation requires identifying intervention points where new roles can be created or existing ones reconfigured.
 
-\begin{enumerate}[nosep]
-\item \textbf{Functional dimension}: What activities are performed? (Kivimaa's functions; Kanda et al.'s roles; De Haan \& Rotmans' frontrunner/connector/toppler)
+Despite their differences, these frameworks converge on a shared insight: understanding role constellations requires attending to three dimensions simultaneously.\sidenote{\textbf{Three dimensions}---Function, relation, time. Existing typologies emphasize one while backgrounding others.}
 
-\item \textbf{Relational dimension}: In-between what does action occur? (Kanda et al.'s levels; Wittmayer et al.'s constellations; Fischer \& Newig's dependencies)
+The \textbf{functional dimension} asks what activities are performed. Kivimaa's intermediary functions, Kanda et al.'s systemic activities, De Haan \& Rotmans' frontrunner/connector/toppler roles---all characterize what actors \emph{do}. But function alone is insufficient. The same activity---brokering knowledge, for instance---means different things depending on who performs it and between whom.
 
-\item \textbf{Temporal dimension}: How do positions change over transition phases? (De Haan \& Rotmans' trajectories; Wittmayer et al.'s temporary stabilizations)
-\end{enumerate}
+The \textbf{relational dimension} asks where action occurs. Kanda et al.'s ``in-between what?'' criterion, Wittmayer et al.'s constellation concept, Fischer \& Newig's actor dependencies---all recognize that roles exist only relative to other roles. An intermediary is not an intermediary in isolation; the role emerges from the space between other actors. Position in relational space determines what functions are available and effective.
 
-Existing typologies emphasize one dimension while backgrounding others.\sidenote{\textbf{Three dimensions}---Existing typologies emphasize one dimension while backgrounding others.} A comprehensive actor/role framework would characterize positions along all three simultaneously---specifying \textit{what} actors do, \textit{where} they are positioned relationally, and \textit{how} this changes over time.
+The \textbf{temporal dimension} asks how positions change. De Haan \& Rotmans trace role trajectories across transition phases; Wittmayer et al. describe roles as temporary stabilizations that shift as transitions unfold; Fischer \& Newig find that roles are ``erratic''---actors move between categories as circumstances change. Static typologies miss this dynamism.
+
+A comprehensive framework would characterize positions along all three dimensions---specifying \textit{what} actors do, \textit{where} they are positioned relationally, and \textit{how} this changes over time. The challenge is methodology: how do you map all three simultaneously at scale?
 
 
 %===============================================================================
-\section{Six Persistent Problems---and a Cartographic Response}
+\section{Six Persistent Problems---and a Cartographic Response}[Six Problems]
 \labsec{background:problems}
 %===============================================================================
 
@@ -507,7 +619,7 @@ Building on this synthesis, we identify six persistent problems that limit curre
 
 \end{enumerate}
 
-% Problem-response figure
+% Figure 2.3: Six problems and cartographic responses
 \begin{center}
 \begin{tikzpicture}[scale=0.95]
     % Problems on left
@@ -540,7 +652,7 @@ Building on this synthesis, we identify six persistent problems that limit curre
 \label{fig:background:problems-responses}
 \end{center}
 
-These reframings do not dissolve problems but \textbf{redirect} them. Definitional ambiguity becomes an invitation to layer-distinction rather than definitional policing. Static categorization becomes motivation for trajectory-tracing rather than better typologies. The problems remain productive tensions---but cartography offers new ways to work with them.
+These reframings do not dissolve the problems. Definitional ambiguity persists; static categorization remains a temptation; actor-centric bias is hard to shake. But cartography offers different ways to work with these tensions. Instead of seeking the ``right'' definition of intermediary, we can map how different definitions highlight different features of the same actors. Instead of building better typologies, we can trace how actors move through role space over time. The problems become generative rather than paralyzing.
 
 
 %===============================================================================
@@ -556,7 +668,7 @@ This chapter has surveyed how sustainability transitions research conceptualizes
 
 \item Roles are \textbf{malleable and relational}: they emerge through interaction, shift across transition phases, and gain meaning through position within constellations.
 
-\item \textbf{Key contributions} reviewed include: Fischer \& Newig's (2016) systematic typology mapping; Wittmayer et al.'s (2017) introduction of role theory; De Haan \& Rotmans' (2018) power-in-transition framework; and Kivimaa et al.'s (2019) and Kanda et al.'s (2020) intermediary syntheses.
+\item \textbf{Key contributions} reviewed include: Fischer \& Newig's (2016) systematic typology mapping; Wittmayer et al.'s (2017) introduction of role theory; De Haan \& Rotmans' (2018) agency-centered framework; and Kivimaa et al.'s (2019) and Kanda et al.'s (2020) intermediary syntheses.
 
 \item \textbf{Intermediaries} have evolved from bilateral brokers to systemic actors operating across niche-regime-landscape levels. The Kivimaa typology distinguishes systemic, regime-based, niche, process, and user intermediaries---but boundaries are porous.
 
@@ -568,12 +680,14 @@ This chapter has surveyed how sustainability transitions research conceptualizes
 
 \item The field's core limitation is \textbf{categorical thinking} where \textbf{cartographic thinking} is needed.
 \end{itemize}
+
+\noindent These six problems directly motivate our first sub-research question: \textit{What conceptual framework enables theory-guided but empirically open analysis of role constellations?} The literature provides conceptual vocabulary---role constellations, intermediary functions, ecologies---but lacks operationalization at scale. The cartographic reframings outlined above constitute this dissertation's theoretical response.
 \end{summarybox}
 
 \vspace{1em}
 
-The literature provides rich conceptual resources---typologies, function inventories, phase frameworks, ecology concepts---but methodology inadequate to its own insights. We have sophisticated ways to \emph{think} about intermediation but limited tools to \emph{map} it systematically.
+The literature provides rich conceptual resources---typologies, function inventories, phase frameworks, ecology concepts. What it lacks is methodology adequate to its own insights. Scholars have developed sophisticated ways to \emph{think} about role constellations. Tools to \emph{map} them systematically remain scarce. Theory outpaces method.
 
-The \textbf{Intermezzo} that follows introduces the empirical context for developing cartographic methods:\sidenote{\faArrowRight\ \textit{Next}: \textbf{Intermezzo}---The EIT Ecosystem. An introduction to the eight Knowledge and Innovation Communities that serve as this dissertation's empirical laboratory.} the European Institute of Innovation and Technology (EIT) and its eight Knowledge and Innovation Communities. These intermediary organizations---spanning climate, energy, food, health, digital, urban mobility, raw materials, and manufacturing---provide an ideal laboratory for multimodal cartography.
+This gap is where the dissertation intervenes. The next chapter presents the Design Science Research framework\sidenote{\textit{Next:} Chapter~\ref{ch:method}---Design Science Methodology: how artifacts and infrastructure enable systematic multimodal cartography.} that guides artifact construction, detailing Meta-Design Requirements and data collection workflows across six modalities. The EIT ecosystem introduced earlier provides the empirical laboratory; the methodology chapter provides the tools to map it.
 
 \end{document}

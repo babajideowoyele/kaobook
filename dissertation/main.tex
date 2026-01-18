@@ -3,13 +3,25 @@
 % Compile with: lualatex (recommended) or xelatex
 % Run 2-3 passes for references, then biber, then 2 more passes
 %========================================================================================
+
+%----------------------------------------------------------------------------------------
+% FAST COMPILATION OPTIONS (uncomment to enable)
+%----------------------------------------------------------------------------------------
+% Option 1: Draft mode - shows placeholders for images, faster compilation
+% \newcommand{\DRAFTMODE}{}
+
+% Option 2: Focus mode - only compile specific chapters (set below)
+% \newcommand{\FOCUSMODE}{}
+
+%----------------------------------------------------------------------------------------
 \documentclass[
     fontsize=10pt,
     a4paper,
     twoside=false,
     open=any,
-    secnumdepth=2,
+    secnumdepth=1,
     numbers=noenddot,
+    % draft,  % Uncomment for fastest compilation (no images, just boxes)
 ]{kaobook}
 
 %========================================================================================
@@ -67,6 +79,7 @@
 \usepackage{tabularx}
 \usepackage{longtable}
 \usepackage{colortbl}
+\usepackage{xspace}
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
@@ -91,7 +104,7 @@
 % ADDITIONAL PACKAGES
 %----------------------------------------------------------------------------------------
 \usepackage{listings}
-\usepackage{fontawesome5}
+% fontawesome5 already loaded by kaoci-rolebox
 
 % Code listings for JavaScript etc.
 \lstdefinelanguage{JavaScript}{
@@ -113,15 +126,15 @@
 %----------------------------------------------------------------------------------------
 % DOCUMENT METADATA
 %----------------------------------------------------------------------------------------
-\newcommand{\RoleBox}{\textsc{RoleBox}}
-\newcommand{\RoleSim}{\textsc{RoleSim}}
+\newcommand{\RoleBox}{\textsc{RoleBox}\xspace}
+\newcommand{\RoleSim}{\textsc{RoleSim}\xspace}
 \newcommand{\myauthor}{Babajide Alamu Owoyele}
 \newcommand{\mytitle}{Towards Multimodal Cartography of Role Constellations in Sustainability Transitions}
 \newcommand{\myuniversity}{Erasmus University Rotterdam}
 \newcommand{\mydepartment}{Dutch Research Institute For Transitions}
 \newcommand{\mypromotor}{Prof. dr. Derk Loorbach}
 \newcommand{\mycopromotorA}{Prof.dr. Gerard de Melo}
-\newcommand{\mycopromotorB}{Dr. Jonathan Antonion Edleman}
+\newcommand{\mycopromotorB}{Dr. Jonathan Antonio Edelman}
 \newcommand{\mydate}{2025}
 
 \title{\mytitle}
@@ -147,6 +160,32 @@
 \makeatother
 
 %========================================================================================
+% INTERMEZZO PAGE NUMBERING (stealth mode - separate roman numerals)
+%========================================================================================
+% Intermezzos use roman numerals and don't count toward dissertation page total.
+% This makes them "bonus content" - readable and in TOC but officially separate.
+
+\newcounter{savedpage}           % Counter to save main page number
+\newcounter{intermezzopage}      % Counter for intermezzo pages (persists across all)
+\setcounter{intermezzopage}{0}
+
+\newcommand{\beginintermezzo}{%
+    \clearpage
+    \setcounter{savedpage}{\value{page}}%           % Save current page number
+    \pagenumbering{roman}%                          % Switch to roman
+    \setcounter{page}{\value{intermezzopage}}%      % Continue from last intermezzo
+    \stepcounter{page}%                             % Start at next roman page
+}
+
+\newcommand{\endintermezzo}{%
+    \clearpage
+    \setcounter{intermezzopage}{\value{page}}%      % Save intermezzo position
+    \addtocounter{intermezzopage}{-1}%              % Adjust for next start
+    \pagenumbering{arabic}%                         % Back to arabic
+    \setcounter{page}{\value{savedpage}}%           % Restore main page number
+}
+
+%========================================================================================
 % BEGIN DOCUMENT
 %========================================================================================
 \begin{document}
@@ -169,7 +208,7 @@
 \subfile{dissertation/frontmatter/abstract}
 
 % Acknowledgments
-% \subfile{frontmatter/acknowledgments}
+\subfile{dissertation/frontmatter/acknowledgments}
 
 % Table of contents
 \tableofcontents
@@ -186,122 +225,210 @@
 \mainmatter
 \setchapterstyle{kao}
 % Adjust margin TOC vertical position to prevent bleeding
-% The kao chapter style sets \mtocshift to -3.5\vscale, but this still causes
-% bleeding with long chapter titles. We override it by setting a more negative value.
-% Using -6.5\vscale for extra safety with long titles
-\setlength{\mtocshift}{-6.5\vscale}
+% The kao chapter style sets \mtocshift to -3.5\vscale by default.
+% We use a moderate adjustment to balance between bleeding prevention and proper positioning.
+\setlength{\mtocshift}{-4.5\vscale}
 
 %========================================================================================
 % PART I: FOUNDATIONS
 %========================================================================================
-\part{Foundations}
+\ifdefined\FOCUSMODE
+    % FOCUS MODE: Only compile core chapters for faster iteration
+    \part{Foundations}
+    \chapterdivider{ch1-introduction}
+    \subfile{dissertation/chapters/01-introduction}
+    \chapterdivider{intermezzo}
+    \subfile{dissertation/intermezzos/eit-communities}
+    \chapterdivider{ch2-litrev}
+    \subfile{dissertation/chapters/02-role-categories}
+    \chapterdivider{ch3-cas}
+    \subfile{dissertation/chapters/03-methodology}
+    \chapterdivider{ch4-methodology}
+    \subfile{dissertation/chapters/04-role-constellations}
 
-\chapterdivider{ch1-introduction}
-\subfile{dissertation/chapters/01-introduction}
+    \part{Empirical Studies}
+    \chapterdivider{ch5-eit-case}
+    \subfile{dissertation/chapters/05-interstitial-pluralism}
+    \chapterdivider{ch6-websites}
+    \subfile{dissertation/chapters/06-rolefield}
+    \chapterdivider{ch7-crunchbase}
+    \subfile{dissertation/chapters/07-venture-positioning}
+    \chapterdivider{ch8-visual}
+    \subfile{dissertation/chapters/08-visual-registers}
+    \chapterdivider{ch9-power}
+    \subfile{dissertation/chapters/09-power-agency}
+\else
+    % FULL MODE: Compile all chapters
+    \part{Foundations}
 
-\chapterdivider{intermezzo}
-\subfile{dissertation/intermezzos/eit-communities}  % EIT context for the empirical setting
+    \chapterdivider{ch1-introduction}
+    \subfile{dissertation/chapters/01-introduction}
 
-\chapterdivider{ch2-litrev}
-\subfile{dissertation/chapters/02-role-categories}
+    \beginintermezzo
+    \chapterdivider{intermezzo}
+    \subfile{dissertation/intermezzos/eit-communities}  % EIT context for the empirical setting
+    \endintermezzo
 
-\chapterdivider{ch3-cas}
-\subfile{dissertation/chapters/03-methodology}
+    \chapterdivider{ch2-litrev}
+    \subfile{dissertation/chapters/02-role-categories}
 
-\chapterdivider{intermezzo}
-\subfile{dissertation/intermezzos/rolexray}  % Methodological tool introduction
+    \chapterdivider{ch3-cas}
+    \subfile{dissertation/chapters/03-methodology}
 
-\chapterdivider{ch4-methodology}
-\subfile{dissertation/chapters/04-role-constellations}
+    \beginintermezzo
+    \chapterdivider{intermezzo}
+    \subfile{dissertation/intermezzos/rolexray}  % Methodological tool introduction
+    \endintermezzo
 
-\chapterdivider{intermezzo}
-\subfile{dissertation/intermezzos/multimodal-cartography}  % Conceptual framework bridge
+    \chapterdivider{ch4-methodology}
+    \subfile{dissertation/chapters/04-role-constellations}
 
-%========================================================================================
-% PART II: EMPIRICAL STUDIES
-%========================================================================================
-\part{Empirical Studies}
+    \beginintermezzo
+    \chapterdivider{intermezzo}
+    \subfile{dissertation/portfolio/roledna/roledna}  % Discourse Network Analysis tool
+    \endintermezzo
 
-\chapterdivider{ch5-eit-case}
-\subfile{dissertation/chapters/05-interstitial-pluralism}
+    \beginintermezzo
+    \chapterdivider{intermezzo}
+    \subfile{dissertation/intermezzos/multimodal-cartography}  % Conceptual framework bridge
+    \endintermezzo
 
-\chapterdivider{ch6-websites}
-\subfile{dissertation/chapters/06-rolefield}
+    %========================================================================================
+    % PART II: EMPIRICAL STUDIES
+    %========================================================================================
+    \part{Empirical Studies}
 
-\chapterdivider{ch7-twitter}
-\subfile{dissertation/chapters/07-venture-positioning}
+    \chapterdivider{ch5-eit-case}
+    \subfile{dissertation/chapters/05-interstitial-pluralism}
 
-\chapterdivider{intermezzo}
-\subfile{dissertation/intermezzos/rolesim}  % Simulation tool - after venture/Crunchbase data
+    \chapterdivider{ch6-websites}
+    \subfile{dissertation/chapters/06-rolefield}
 
-\chapterdivider{ch8-news}
-\subfile{dissertation/chapters/08-visual-registers}
+    \chapterdivider{ch7-twitter}
+    \subfile{dissertation/chapters/07-venture-positioning}
 
-\chapterdivider{ch9-investment}
-\subfile{dissertation/chapters/09-power-agency}
+    \beginintermezzo
+    \chapterdivider{ch-rolesim}
+    \subfile{dissertation/intermezzos/rolesim}  % RoleSim chapter - agent-based modeling
+    \endintermezzo
 
-\subfile{dissertation/intermezzos/triangulation}  % Integration method
+    \chapterdivider{ch8-news}
+    \subfile{dissertation/chapters/08-visual-registers}
 
-%========================================================================================
-% PART III: SYNTHESIS AND CONCLUSIONS
-%========================================================================================
-\part{Synthesis and Conclusions}
+    \chapterdivider{ch9-investment}
+    \subfile{dissertation/chapters/09-power-agency}
 
-\chapterdivider{ch10-visual}
-\subfile{dissertation/chapters/10-synthesis}
+    %========================================================================================
+    % PART III: SYNTHESIS AND CONCLUSIONS
+    %========================================================================================
+    \part{Synthesis and Conclusions}
 
-\chapterdivider{ch11-video}
-\subfile{dissertation/chapters/11-discussion}
+    \chapterdivider{ch10-visual}
+    \subfile{dissertation/chapters/10-synthesis}
 
-\subfile{dissertation/chapters/12-conclusion}
+    \chapterdivider{ch-conclusion}
+    \subfile{dissertation/chapters/12-conclusion}
+\fi
 
 %----------------------------------------------------------------------------------------
 % BACK MATTER
 %----------------------------------------------------------------------------------------
 \backmatter
 
-% Bibliography
-\printbibliography[heading=bibintoc, title=References]
+\ifdefined\FOCUSMODE
+    % FOCUS MODE: Skip bibliography and appendices for faster iteration
+    % Just end the document cleanly
+\else
+    % FULL MODE: Include all back matter
+
+    % Bibliography
+    \printbibliography[heading=bibintoc, title=References]
+
+    %========================================================================================
+    % APPENDICES
+    %========================================================================================
+    \appendix
+
+    % Technical Documentation
+    \subfile{dissertation/appendices/A-software}
+    \subfile{dissertation/appendices/B-glossary}
+    \subfile{dissertation/appendices/I-cas-propositions}
+
+    %========================================================================================
+    % END OF DISSERTATION PAGE COUNT
+    %========================================================================================
+    % Everything after the glossary is supplementary material and does not count
+    % toward the official dissertation page total.
+
+    % Save the final dissertation page count for reference
+    \newcounter{dissertationpages}
+    \setcounter{dissertationpages}{\value{page}}
+
+    % Reset to roman numerals for supplementary materials
+    \clearpage
+    \pagenumbering{roman}
+    \setcounter{page}{1}
+
+    %========================================================================================
+    % SUPPLEMENTARY: DATA MODALITY DOCUMENTATION
+    %========================================================================================
+    \part*{Data Modalities}
+    \addcontentsline{toc}{part}{Data Modalities (Supplementary)}
+
+    \subfile{dissertation/appendices/C-wikipedia-data}
+    \subfile{dissertation/appendices/D-websites}
+    \subfile{dissertation/appendices/E-news-media}
+    \subfile{dissertation/appendices/F-crunchbase}
+    \subfile{dissertation/appendices/G-social-media}
+    \subfile{dissertation/appendices/H-visual-materials}
+    % \subfile{dissertation/appendices/J-eit-literature}  % Temporarily disabled - contains invalid characters
+
+    %========================================================================================
+    % SUPPLEMENTARY: ADDITIONAL MATERIALS
+    %========================================================================================
+
+    % Summary (Dutch)
+    % \subfile{backmatter/samenvatting}
+
+    % About the author
+    % \subfile{backmatter/about}
+
+    % Propositions (stellingen) - typically at end of Dutch dissertations
+    \subfile{dissertation/frontmatter/propositions}
+
+    %========================================================================================
+    % SUPPLEMENTARY: PORTFOLIO
+    %========================================================================================
+    \part*{Portfolio}
+    \addcontentsline{toc}{part}{Portfolio (Supplementary)}
+
+    % Grant submissions
+    \subfile{dissertation/portfolio/grant-nwo-xs}
+    \subfile{dissertation/portfolio/grant-tdcc-synapsis}
+
+    % Tool interfaces
+    \subfile{dissertation/portfolio/maskbench}
+    \subfile{dissertation/portfolio/maskanyone}
+
+    % Perspective articles
+    % \subfile{dissertation/portfolio/datacentering/datacentering} % Temporarily disabled - TeX capacity issues
+\fi
 
 %========================================================================================
-% APPENDICES
+% BACK COVER
 %========================================================================================
-\appendix
-
-% Technical Documentation
-\subfile{dissertation/appendices/A-software}
-\subfile{dissertation/appendices/B-glossary}
-
-% Data Modalities
-\subfile{dissertation/appendices/C-wikipedia-data}
-\subfile{dissertation/appendices/D-websites}
-\subfile{dissertation/appendices/E-news-media}
-\subfile{dissertation/appendices/F-crunchbase}
-\subfile{dissertation/appendices/G-social-media}
-\subfile{dissertation/appendices/H-visual-materials}
-
-% Summary (Dutch)
-% \subfile{backmatter/samenvatting}
-
-% About the author
-% \subfile{backmatter/about}
-
-% Propositions (stellingen) - typically at end of Dutch dissertations
-\subfile{dissertation/frontmatter/propositions}
-
-%========================================================================================
-% PART: PORTFOLIO
-%========================================================================================
-\part{Portfolio}
-
-\subfile{dissertation/intermezzos/roledna}  % RoleDNA - describes the data encoding
-
-% Grant submissions
-\subfile{dissertation/portfolio/grant-nwo-xs}
-\subfile{dissertation/portfolio/grant-tdcc-synapsis}
-
-% Tool interfaces
-\subfile{dissertation/portfolio/maskbench}
-\subfile{dissertation/portfolio/maskanyone}
+\ifdefined\FOCUSMODE
+    % Skip back cover in focus mode
+\else
+    \clearpage
+    \thispagestyle{empty}
+    \newgeometry{margin=0pt}
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=center] at (current page.center) {%
+            \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{back_cover.png}%
+        };
+    \end{tikzpicture}
+    \restoregeometry
+\fi
 
 \end{document}

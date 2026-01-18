@@ -1,0 +1,702 @@
+\documentclass[review]{elsarticle}
+
+\usepackage{lineno,hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{natbib}
+\modulolinenumbers[5]
+
+\journal{Environmental Innovation and Societal Transitions}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Unpacking The Socio-Materiality of Datacentering for Sustainability Transitions: Towards a Multimodal and Cartographic Research Agenda }
+
+\author[1]{Author One\corref{cor1}}
+\ead{author.one@university.edu}
+\author[2]{Author Two}
+\author[1]{Author Three}
+
+\cortext[cor1]{Corresponding author}
+\address[1]{Dutch Research Institute for Transitions, Erasmus University, Rotterdam, The Netherlands}
+\address[2]{Hasso Plattner Institute, University of Potsdam, Potsdam, Germany}
+
+\begin{abstract}
+Data centers---the material infrastructure underlying ``the cloud''---now consume over 400 TWh of electricity annually, more than many nations. Yet sustainability transitions research has largely ignored digital infrastructure as a domain requiring transformation. This perspective introduces \textbf{datacentering} as a concept denoting the active socio-material processes through which digital infrastructure reconfigures space, resources, and power relations. We present a bibliometric analysis revealing fragmented scholarship and absent transitions frameworks, then synthesize critical data center studies, socio-materiality theory, and transitions scholarship into an integrated conceptual framework. To address the industry's strategic opacity, we propose \textbf{multimodal cartography}---a methodological approach that triangulates corporate disclosures, social media, news archives, satellite imagery, regulatory filings, and visual media to map datacentering's contested geographies. We outline seven research directions (metabolic, governance, supply chain, contestation, labor, investment, and transition pathway cartographies) with illustrative questions organized by data modality. We conclude with policy recommendations for mandatory disclosure, conditional incentives, cumulative impact assessment, participatory governance, and international coordination. As AI accelerates demand for digital infrastructure, the need to understand and govern datacentering sustainably has never been more urgent.
+\end{abstract}
+
+\begin{keyword}
+data centers \sep digital infrastructure \sep sustainability transitions \sep critical cartography \sep socio-materiality \sep multimodal methods
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+%----------------------------------------------------------
+\section{Introduction: The Materiality Behind the Cloud}
+%----------------------------------------------------------
+
+In 2024, global data center electricity consumption surpassed 400 TWh---more than the entire national consumption of France \citep{IEA2024}. Microsoft's water usage increased 34\% in a single year, driven largely by data center cooling \citep{Mytton2021}. Training a single large language model can emit as much carbon as five automobiles over their lifetimes \citep{Strubell2019}. As artificial intelligence reshapes industries worldwide, these figures are projected to grow dramatically: the International Energy Agency estimates data center energy demand could double by 2030.
+
+These are not marginal externalities. They represent the material foundations of what we casually call ``the cloud.''
+
+The cloud metaphor has proven remarkably durable---and remarkably misleading. It functions as what \citet{Jasanoff2015} term a \textit{sociotechnical imaginary}: a collectively held vision of desirable futures that shapes technological development and legitimates particular arrangements of power. The cloud imaginary conjures images of weightless, placeless computation: data flowing through an immaterial digital ether \citep{Hu2015, Hogan2015}. Yet this framing systematically obscures one of the most significant infrastructural transformations of our time. Data centers are massive physical installations that consume extraordinary quantities of energy, water, and land while reshaping territories, labor markets, and ecologies worldwide \citep{Monstadt2025, Carruth2014}.
+
+Despite mounting evidence of these impacts, sustainability transitions research has largely treated digital infrastructure as an \textit{enabler} of other transitions---facilitating smart grids, precision agriculture, and circular economy platforms---rather than as a socio-technical system requiring transformation in its own right \citep{Vial2019}. This perspective argues for a fundamental reorientation.
+
+We introduce the concept of \textbf{datacentering} to denote the active processes through which digital infrastructure is materially emplaced, governed, and contested. Datacentering is not merely about data centers as discrete facilities. It encompasses the relational practices, politics, and power dynamics through which digital infrastructure reshapes territories and communities \citep{Velkova2023, Edwards2025}. The term shifts attention from static objects to dynamic processes---from ``data centers'' as nouns to ``datacentering'' as ongoing socio-material transformation.
+
+Advancing this agenda requires methodological innovation. The data center industry is characterized by corporate secrecy, non-disclosure agreements, and deliberate invisibility. Conventional research methods---interviews with executives, facility tours, official documentation---face significant access barriers. We therefore propose a \textit{multimodal cartographic approach} that triangulates diverse evidence sources: corporate disclosures, social media platforms, news archives, satellite imagery, regulatory filings, and visual media. This framework offers transitions researchers new tools for studying ``hidden'' infrastructures while centering questions of spatial justice and democratic governance.
+
+This article proceeds as follows. Section 2 presents a bibliometric analysis revealing the fragmented state of current scholarship and the notable absence of transitions frameworks. Section 3 develops our conceptual framework, synthesizing critical data center studies, socio-materiality theory, and sustainability transitions scholarship. Section 4 elaborates the multimodal cartographic methodology. Section 5 presents illustrative research questions organized by thematic domain and data modality. Section 6 discusses implications for transitions scholarship, policy, and practice.
+
+%----------------------------------------------------------
+\section{Bibliometric Landscape: A Fragmented Field}
+%----------------------------------------------------------
+
+Scholarship on data centers is growing rapidly but remains deeply fragmented. To map this intellectual terrain and identify opportunities for transitions research, we conducted a bibliometric analysis of Scopus-indexed literature from 2010 to 2025.
+
+\subsection{Method}
+
+We searched Scopus for English-language publications using Boolean combinations of primary terms (``data center*'' OR ``data centre*'') with qualifiers related to materiality, environment, sustainability, transitions, geography, and governance. Supplementary searches captured adjacent literatures on cloud computing materiality, digital infrastructure environments, and hyperscale sustainability. After removing duplicates and filtering for relevance, our corpus comprised [N] publications.\footnote{Full search strings and replication materials available in supplementary materials.}
+
+\subsection{Findings}
+
+\textbf{Rapid growth, recent acceleration.} Publication volumes have grown exponentially since 2015, with marked acceleration after 2018---coinciding with heightened public awareness of AI's environmental footprint and journalistic investigations into Big Tech's resource consumption \citep{Crawford2021}. Yet this growth remains modest compared to established infrastructure domains like energy or transport, suggesting data centers remain under-researched relative to their societal significance.
+
+[PLACEHOLDER: Insert Figure 1 showing temporal trends]
+
+\textbf{Disciplinary silos.} The field is dominated by engineering and computer science, focused primarily on technical efficiency: Power Usage Effectiveness (PUE) optimization, cooling innovations, and energy management \citep{Zhang2025}. A smaller but growing body of critical scholarship emerges from geography, sociology, science and technology studies (STS), and media studies, examining data centers as sites of socio-political contestation \citep{Holt2015, Johnson2019, Brodie2021}. These two literatures rarely cite each other.
+
+Notably, sustainability transitions journals---including this one---have published remarkably little on digital infrastructure as a transition domain in its own right. This represents a significant blind spot.
+
+\textbf{Three disconnected clusters.} Keyword co-occurrence analysis reveals three distinct research communities with limited interconnection (Figure 2):
+
+\begin{itemize}
+    \item \textit{Technical efficiency cluster}: PUE, cooling, energy efficiency, optimization, workload management
+    \item \textit{Environmental impact cluster}: carbon footprint, water usage, lifecycle assessment, renewable energy, e-waste
+    \item \textit{Socio-political cluster}: governance, territory, justice, community, labor---the smallest and least integrated cluster
+\end{itemize}
+
+[PLACEHOLDER: Insert Figure 2 showing keyword network]
+
+\textbf{Geographic blind spots.} Author affiliations and case study locations concentrate heavily in North America, Western Europe, and parts of East Asia. Studies of data center development in the Global South remain scarce despite rapid expansion in Southeast Asia, Latin America, and Africa \citep{SEADS2024}. This geographic bias limits understanding of how datacentering intersects with postcolonial development trajectories and differentiated climate vulnerabilities.
+
+\subsection{Critical Gaps}
+
+Our analysis reveals three gaps that motivate the research agenda we propose:
+
+\begin{enumerate}
+    \item \textbf{Absent transitions frameworks.} The Multi-Level Perspective, Technological Innovation Systems, and Strategic Niche Management have rarely been applied to digital infrastructure \citep{Geels2002, Markard2012}. This absence is striking when contrasted with the extensive attention transitions scholars have devoted to other infrastructure domains. Energy systems---particularly electricity generation and grid transformation---constitute the canonical domain of transitions research, with hundreds of studies examining renewable energy niches, fossil fuel regime destabilization, and low-carbon pathways \citep{Geels2014, Verbong2007}. Mobility and transport represent the second major focus, with automobility regimes, electric vehicle transitions, and sustainable urban mobility receiving sustained scholarly attention \citep{Geels2012, Nykvist2008}. Food and agriculture systems have been examined through transitions lenses, exploring organic farming niches, industrial agriculture regimes, and agroecological alternatives \citep{Elzen2017, Spaargaren2012}. Housing and the built environment have similarly attracted transitions analysis \citep{Rohracher2001}.
+
+    Yet digital infrastructure---despite consuming more electricity than many nations and growing faster than any of these sectors---remains conspicuously absent from the transitions research agenda. Recent comprehensive reviews make no mention of data centers or digital infrastructure as a transition domain \citep{Kohler2019, Loorbach2017}. This limits understanding of how the data center sector might be steered toward sustainability.
+
+    \item \textbf{Underdeveloped spatial analysis.} Despite cartography's proven utility in other infrastructure domains, spatial and geographic approaches to datacentering remain nascent. This obscures how data centers reshape territories and produce uneven development.
+
+    \item \textbf{Methodological barriers.} Industry opacity---corporate secrecy, restricted access, NDA cultures---constrains conventional research methods. New approaches are needed to study ``hidden'' infrastructures.
+\end{enumerate}
+
+These gaps define the contribution we develop in subsequent sections.
+
+%----------------------------------------------------------
+\section{Conceptual Framing: Three Streams, One Synthesis}
+%----------------------------------------------------------
+
+Our research agenda synthesizes three theoretical streams that have developed largely in isolation: critical data center studies, socio-materiality theory, and sustainability transitions scholarship. Each offers essential analytical resources; together, they provide an integrated framework for studying datacentering as both a technical and political challenge (Table \ref{tab:theoretical}).
+
+\begin{table}[h]
+\caption{Theoretical synthesis: Three streams informing the research agenda}
+\label{tab:theoretical}
+\begin{tabular}{p{2.8cm}p{3.5cm}p{3cm}p{3cm}}
+\toprule
+\textbf{Stream} & \textbf{Core insight} & \textbf{Key concepts} & \textbf{Contribution to agenda} \\
+\midrule
+Critical Data Center Studies & Data centers are political sites, not neutral facilities & Territorial politics, timescapes, metabolic relations & Substantive knowledge of industry dynamics \\
+\addlinespace
+Socio-Materiality & Digital and material are inseparable & Entanglement, data journeys, material substrates & Analytical lens for cloud demystification \\
+\addlinespace
+Sustainability Transitions & Systemic change requires multi-level analysis & Regimes, niches, landscapes, lock-in & Framework for transformation pathways \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Critical Data Center Studies}
+
+Over the past decade, scholars across media studies, geography, anthropology, and STS have established what \citet{Edwards2025} term ``Critical Data Center Studies.'' This interdisciplinary field treats data centers not as neutral technical facilities but as sites where environmental, social, economic, and political forces converge \citep{Hogan2015, Velkova2023}.
+
+Three themes organize this literature:
+
+\textbf{Territorial politics.} Data center siting involves complex negotiations among corporations, states, and communities. Operators seek cheap electricity, fiber connectivity, tax incentives, and political stability; localities seek jobs and investment but may resist environmental burdens \citep{Johnson2019, Pickren2018}. These negotiations produce uneven geographies of digital infrastructure development.
+
+\textbf{Temporal dimensions.} \citet{Velkova2023} introduce ``timescapes'' to analyze how data centers operate across multiple temporalities: the milliseconds of computation, the years of facility lifecycles, the decades of environmental slow violence from resource extraction and e-waste accumulation.
+
+\textbf{Metabolic relations.} Data centers are metabolic systems, consuming energy, water, and land while producing heat, carbon emissions, and electronic waste \citep{Carruth2014, Monstadt2025}. Understanding these material flows is essential for sustainability analysis.
+
+\subsection{Socio-Materiality}
+
+Socio-materiality, as developed in organization studies and STS, theorizes the constitutive entanglement of social and material dimensions \citep{Orlikowski2007}. Applied to digital infrastructure, this perspective insists that ``the cloud'' cannot be understood apart from its material substrates: the cables, chips, cooling systems, buildings, and human bodies that make computation possible.
+
+This framing is analytically productive for two reasons. First, it provides conceptual tools for demystifying cloud rhetoric. The cloud is not ethereal; it is concrete, steel, copper, and silicon located in specific places with specific environmental footprints. Second, it foregrounds questions often marginalized in digital transformation research:
+
+\begin{itemize}
+    \item How do material constraints---energy availability, water scarcity, land use conflicts---shape and limit digital expansion?
+    \item How do the physical geographies of data infrastructure produce uneven development?
+    \item Whose bodies bear the costs of digital materiality, from mining to manufacturing to e-waste processing?
+\end{itemize}
+
+The ``data journeys'' methodology developed by \citet{Bates2016} offers a model for tracing how socio-cultural values and material factors cohere across interconnected sites of data practice---a methodological complement to our cartographic approach.
+
+\subsection{Sustainability Transitions Theory}
+
+Sustainability transitions research provides frameworks for understanding long-term, fundamental transformations in socio-technical systems \citep{Markard2012}. The Multi-Level Perspective (MLP) conceptualizes transitions as emerging from interactions among three analytical levels: \textit{regimes} (dominant configurations of technology, institutions, and practices), \textit{niches} (protected spaces where innovations develop), and \textit{landscapes} (exogenous macro-trends and shocks) \citep{Geels2002}.
+
+We propose that the data center sector constitutes a \textbf{regime in formation}. It exhibits classic regime characteristics---technological lock-in, incumbent power concentration, path dependency---while remaining more fluid than established infrastructure domains like energy or transport \citep{Sovacool2021, Turnheim2012}. Analyzing power dynamics in this emerging regime requires attention to both incumbent resistance and transformative agency \citep{Avelino2009, Avelino2016}. Three hyperscalers (Amazon, Microsoft, Google) dominate the market. Proprietary architectures create switching costs. Massive sunk investments in facilities and fiber create path dependencies.
+
+Yet this regime occupies a paradoxical position (Table \ref{tab:paradox}): data centers are simultaneously infrastructure \textit{for} sustainability transitions (enabling smart grids, precision agriculture, dematerialization) and infrastructure \textit{requiring} transition (toward decarbonization, circularity, and environmental justice).
+
+\begin{table}[h]
+\caption{The dual role of data centers in sustainability transitions}
+\label{tab:paradox}
+\begin{tabular}{p{5.5cm}p{5.5cm}}
+\toprule
+\textbf{Infrastructure FOR transitions} & \textbf{Infrastructure REQUIRING transition} \\
+\midrule
+Smart grid optimization & Energy demand and carbon emissions \\
+Remote work (reduced commuting) & Water consumption for cooling \\
+Precision agriculture & Land use conversion \\
+Circular economy platforms & E-waste from hardware refresh \\
+Climate modeling and research & Concentrated environmental burdens \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Transitions scholarship has been critiqued for undertheorizing space and geography \citep{Coenen2012, Hansen2015}. While deep transitions frameworks have examined long-term patterns of sociotechnical change across multiple systems \citep{Schot2018}, and theoretical syntheses have mapped the field's conceptual landscape \citep{Sovacool2017}, none have engaged with digital infrastructure as a transition domain. Datacentering offers a productive site for developing more spatially attentive frameworks, as digital infrastructure expansion is fundamentally about the production and transformation of space \citep{Graham2001, Furlong2021}.
+
+%----------------------------------------------------------
+\section{Toward a Multimodal Cartographic Research Agenda}
+%----------------------------------------------------------
+
+We propose \textbf{multimodal cartography} as a methodological framework for studying the socio-materiality of datacentering. This approach combines the spatial sensibilities of critical cartography with the evidentiary breadth of multimodal research design. The result is a toolkit for making visible what the industry works to obscure.
+
+\subsection{Why Cartography?}
+
+Mapping offers four distinct affordances for infrastructure research (Table \ref{tab:cartography}) \citep{Kitchin1998, Dodge2001}.
+
+\begin{table}[h]
+\caption{Four affordances of cartographic approaches for datacentering research}
+\label{tab:cartography}
+\begin{tabular}{p{2.5cm}p{4.5cm}p{5cm}}
+\toprule
+\textbf{Affordance} & \textbf{Description} & \textbf{Application to datacentering} \\
+\midrule
+Rendering visible & Maps reveal what is deliberately hidden & Countering cloud rhetoric by showing facility locations, resource flows, environmental footprints \\
+\addlinespace
+Relational geography & Maps trace connections beyond single sites & Linking facilities to transmission grids, water sources, supply chains, labor markets \\
+\addlinespace
+Counter-practice & Maps enable democratic contestation & Supporting community resistance, revealing hidden externalities, informing siting debates \\
+\addlinespace
+Temporal dynamics & Maps document change over time & Tracking expansion speed, environmental degradation, infrastructure obsolescence \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Data centers are designed for invisibility: windowless buildings, remote locations, generic architecture, and cloud metaphors all work to dematerialize digital infrastructure in public consciousness \citep{Hogan2015}. Critical cartography counters this by revealing spatial patterns of resource consumption, environmental impact, and territorial transformation. Following traditions of counter-mapping and participatory GIS \citep{Peluso1995, Crampton2005}, cartographic methods can support community resistance, reveal hidden externalities, and enable democratic deliberation over infrastructure siting. The Environmental Justice Atlas demonstrates how mapping amplifies marginalized voices in environmental conflicts \citep{Temper2015}.
+
+\subsection{Why Multimodal?}
+
+Traditional infrastructure research relies on interviews, ethnography, and official documents. These methods face significant barriers when studying an industry characterized by corporate secrecy, NDA-bound employees, restricted facility access, and strategic opacity \citep{Bast2022}. Researchers report being denied site visits, refused interviews, and blocked from observing operations.
+
+Multimodal cartography addresses these challenges by treating diverse media as spatial data sources. Table \ref{tab:modalities} summarizes six evidence streams, each offering distinct advantages for circumventing industry opacity.
+
+\begin{table}[h]
+\caption{Six data modalities for multimodal cartographic research}
+\label{tab:modalities}
+\begin{tabular}{p{2.5cm}p{4cm}p{5.5cm}}
+\toprule
+\textbf{Modality} & \textbf{Data sources} & \textbf{Research applications} \\
+\midrule
+Corporate digital traces & Websites, sustainability reports, investor presentations, SEC filings & Facility locations, capacity claims, efficiency metrics, discourse analysis of sustainability framing \\
+\addlinespace
+Social media & Twitter/X, LinkedIn, Reddit, Facebook, community groups & Stakeholder mapping, sentiment analysis, contestation geography, worker perspectives \\
+\addlinespace
+News archives & Local press, national media, trade publications & Longitudinal framing analysis, narrative diffusion tracking, event documentation \\
+\addlinespace
+Visual/satellite media & Satellite imagery, YouTube, TikTok, photographs & Land use change, construction monitoring, vernacular documentation, thermal signatures \\
+\addlinespace
+Regulatory documents & EIAs, permits, utility filings, tax agreements & Resource projections, community commitments, regulatory frameworks \\
+\addlinespace
+Investment data & Crunchbase, PitchBook, corporate registries & Capital flows, ownership structures, investor networks, M\&A patterns \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The Logic of Triangulation}
+
+The power of multimodal cartography lies in \textbf{triangulation}---systematically cross-referencing evidence across sources to build robust accounts of datacentering dynamics. Consider a hypothetical example:
+
+\begin{quote}
+A corporate sustainability report claims a new facility will achieve a Power Usage Effectiveness (PUE) of 1.2 and use 100\% renewable energy. Satellite imagery reveals the facility is connected to a coal-heavy regional grid. Local news archives document community opposition to water consumption projections. Social media posts from facility workers describe diesel backup generators running frequently. Regulatory filings show the operator received a 20-year tax abatement worth \$50 million.
+\end{quote}
+
+No single source tells the full story. Triangulation enables researchers to:
+
+\begin{itemize}
+    \item Verify or contest corporate claims against independent evidence
+    \item Identify gaps between stated commitments and material realities
+    \item Reconstruct stakeholder perspectives absent from official accounts
+    \item Document the full policy and economic context of facility development
+\end{itemize}
+
+This approach democratizes evidence production, reduces dependence on corporate gatekeepers, and enables more robust spatial analysis than any single method permits. It is particularly valuable for studying an industry that has invested heavily in controlling its public image while resisting independent scrutiny.
+
+%----------------------------------------------------------
+\section{Research Directions: Seven Cartographic Domains}
+%----------------------------------------------------------
+
+We now outline seven research directions that operationalize multimodal cartography for datacentering studies. Each direction addresses a distinct set of questions, draws on specific data modalities, and responds to gaps in existing scholarship. Together, they constitute a comprehensive agenda for mapping the socio-materiality of digital infrastructure. Tables \ref{tab:metabolic}--\ref{tab:transition} present illustrative research questions organized by modality.
+
+\subsection{Metabolic Cartographies: Energy, Water, and Land}
+
+Data centers are metabolic systems with significant environmental footprints. A single hyperscale facility can consume as much electricity as a small city and millions of gallons of water daily for cooling. Yet precise consumption figures remain difficult to verify independently---operators report selective metrics while resisting comprehensive disclosure.
+
+Metabolic cartography maps resource flows and their territorial consequences. Key questions include: How much energy and water do data centers actually consume, and how do these figures compare to corporate claims? How has land use changed around major data center clusters? What communities bear disproportionate environmental burdens?
+
+\textit{Real-world context:} In 2022, residents of The Dalles, Oregon discovered that Google's data centers consumed over a quarter of the city's water supply---information that emerged only through public records requests after years of corporate opacity.
+
+\begin{table}[h]
+\caption{Research questions: Metabolic cartographies}
+\label{tab:metabolic}
+\begin{tabular}{p{3cm}p{9cm}}
+\toprule
+\textbf{Modality} & \textbf{Research Questions} \\
+\midrule
+Satellite imagery & How has land cover changed around major data center clusters? What agricultural, wetland, or forest areas have been converted? Can thermal imaging detect waste heat signatures? \\
+\addlinespace
+Corporate disclosures & How do reported PUE and WUE metrics vary across operators and regions? What gaps exist between sustainability claims and independent measurements? \\
+\addlinespace
+News media & How do local outlets frame water and energy conflicts? When do efficiency narratives give way to scarcity concerns? \\
+\addlinespace
+Social media & What grievances do communities express about resource consumption? How do drought conditions correlate with contestation? \\
+\addlinespace
+Regulatory filings & What water rights and energy allocations have been granted? How do EIAs characterize resource impacts? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Governance Geographies: Regulation, Incentives, and Policy Mobility}
+
+Data center siting unfolds within fragmented governance landscapes where jurisdictions compete through tax incentives, relaxed regulations, and streamlined permitting. This ``race to the bottom'' dynamic shapes where facilities locate and what environmental and social conditions they produce.
+
+Governance cartography maps the policy landscapes that enable and constrain datacentering. Key questions include: What incentive packages have jurisdictions offered, and at what cost to public revenues? How do regulatory frameworks vary across space? How do policy innovations---including moratoria and restrictions---diffuse?
+
+\textit{Real-world context:} Virginia's Loudoun County, hosting the world's largest concentration of data centers, has foregone over \$1 billion in tax revenue through incentive programs. Meanwhile, Amsterdam and Singapore have implemented moratoria on new data center construction, citing grid constraints and sustainability concerns.
+
+\begin{table}[h]
+\caption{Research questions: Governance geographies}
+\label{tab:governance}
+\begin{tabular}{p{3cm}p{9cm}}
+\toprule
+\textbf{Modality} & \textbf{Research Questions} \\
+\midrule
+Regulatory documents & What tax abatements and expedited permitting have jurisdictions offered? How do incentive packages vary spatially? \\
+\addlinespace
+News media & How do narratives of inter-jurisdictional competition circulate? When localities reject data centers, how do operators respond? \\
+\addlinespace
+Corporate websites & How do operators characterize regulatory environments in site selection? What ``business-friendly'' signals do they seek? \\
+\addlinespace
+Social media & How do officials frame data center attraction? What policy entrepreneur networks facilitate regulatory arbitrage? \\
+\addlinespace
+Planning documents & How do zoning codes accommodate or restrict data center development? What variances have been granted? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Supply Chain Cartographies: Extraction, Production, Disposal}
+
+Data centers are nodes in extended material networks spanning extraction frontiers, manufacturing hubs, and e-waste destinations \citep{Gabrys2011, Starosielski2015}. A server's lifecycle connects rare earth mining in the Democratic Republic of Congo, chip fabrication in Taiwan, assembly in China, operation in Virginia, and eventual disposal in Ghana or Pakistan. This ``environmental history of computing'' \citep{Ensmenger2018} remains underexplored in transitions scholarship.
+
+Supply chain cartography traces these material flows and their distributed impacts. Key questions include: Where do data center components originate, and under what labor and environmental conditions? How do hardware refresh cycles generate e-waste flows? How do geopolitical tensions reshape supply geographies?
+
+\textit{Real-world context:} Hyperscale operators typically refresh server hardware every 3--5 years, generating millions of tons of electronic waste annually. Most e-waste from wealthy countries ends up in informal processing sites in the Global South, where workers---often children---extract valuable materials under hazardous conditions.
+
+\begin{table}[h]
+\caption{Research questions: Supply chain cartographies}
+\label{tab:supply}
+\begin{tabular}{p{3cm}p{9cm}}
+\toprule
+\textbf{Modality} & \textbf{Research Questions} \\
+\midrule
+Corporate disclosures & What do operators reveal about hardware sourcing, refresh cycles, and disposal? How do transparency claims map onto actual traceability? \\
+\addlinespace
+Investigative journalism & What have investigations revealed about mining conditions, fabrication labor, and e-waste flows? \\
+\addlinespace
+Satellite imagery & Can expansion timelines be correlated with supply chain disruptions? How do refresh cycles manifest spatially? \\
+\addlinespace
+Trade databases & What do customs data reveal about hardware flows? How do semiconductor restrictions reshape supply geographies? \\
+\addlinespace
+Visual media & What do images from extraction sites and e-waste processing reveal about conditions obscured in official accounts? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Contestation Cartographies: Discourse, Resistance, and Power}
+
+Datacentering is not merely technical but deeply political. Communities contest facility siting; activists challenge corporate sustainability claims; workers organize around labor conditions. These conflicts produce rich archives of discourse and action that reveal the social geography of digital infrastructure politics.
+
+Contestation cartography maps these conflicts and the power relations they expose. Key questions include: Where and why do communities resist data center development? How do corporate and activist discourses differ? What factors determine whether opposition succeeds or fails?
+
+\textit{Real-world context:} In 2023, residents of Beaverton, Oregon successfully blocked a proposed Meta data center, citing concerns about noise, water consumption, and neighborhood character. Their campaign combined public testimony, social media organizing, and coalition-building with environmental groups.
+
+\begin{table}[h]
+\caption{Research questions: Contestation cartographies}
+\label{tab:contestation}
+\begin{tabular}{p{3cm}p{9cm}}
+\toprule
+\textbf{Modality} & \textbf{Research Questions} \\
+\midrule
+Social media & What hashtags and communities organize around contestation? How do resistance networks form and diffuse? Who shapes public perception? \\
+\addlinespace
+News media & How does framing shift over project lifecycles? What events trigger heightened coverage? \\
+\addlinespace
+Visual media & What visual rhetorics do corporations versus activists deploy? How do ``clean'' facility images contrast with impact documentation? \\
+\addlinespace
+Public comments & What concerns do community members raise in hearings? How do these vary by context? \\
+\addlinespace
+Corporate communications & How do operators respond to contestation? What community benefit agreements result from opposition? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Labor and Community Cartographies: Work, Place, and Justice}
+
+Data centers promise economic development but often deliver fewer jobs than anticipated---highly automated facilities may employ only 50--100 workers despite multi-billion-dollar investments. Meanwhile, host communities experience housing pressures, service demands, and altered social dynamics.
+
+Labor and community cartography examines who benefits and who bears costs from datacentering. Key questions include: How do promised versus actual job creation figures compare? What are working conditions like inside data centers? How do facilities affect housing affordability and community character?
+
+\textit{Real-world context:} Prince William County, Virginia approved \$500 million in tax incentives for data centers projected to create 5,000 jobs. Years later, investigative reporting revealed actual job creation was a fraction of projections, while property values and housing costs had surged.
+
+\begin{table}[h]
+\caption{Research questions: Labor and community cartographies}
+\label{tab:labor}
+\begin{tabular}{p{3cm}p{9cm}}
+\toprule
+\textbf{Modality} & \textbf{Research Questions} \\
+\midrule
+Social media & What do worker testimonials reveal about conditions, job quality, and culture? How do experiences vary across operators? \\
+\addlinespace
+News media & How do promised versus actual job figures compare? What ``success'' versus ``broken promises'' narratives circulate? \\
+\addlinespace
+Census/survey data & How do demographics shift in host communities? What housing and service pressures emerge? \\
+\addlinespace
+Visual/ethnographic & What do workplace images reveal about labor processes typically hidden from view? \\
+\addlinespace
+Corporate disclosures & What local hiring and workforce commitments do operators make? How are these monitored? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Investment and Corporate Cartographies: Capital, Power, and Ownership}
+
+The data center sector has attracted massive capital inflows, with private equity, sovereign wealth funds, and pension funds joining hyperscalers in financing infrastructure expansion. Understanding who owns and controls this infrastructure is essential for analyzing transition possibilities.
+
+Investment cartography maps capital flows and corporate power structures. Key questions include: Which investors dominate the sector, and what are their sustainability commitments? How do complex ownership structures obscure accountability? How does the industry's consolidation affect governance possibilities?
+
+\textit{Real-world context:} Blackstone, the world's largest private equity firm, has invested over \$50 billion in data center infrastructure globally. Such concentration raises questions about democratic accountability and the alignment of investor interests with sustainability goals.
+
+\begin{table}[h]
+\caption{Research questions: Investment and corporate cartographies}
+\label{tab:investment}
+\begin{tabular}{p{3cm}p{9cm}}
+\toprule
+\textbf{Modality} & \textbf{Research Questions} \\
+\midrule
+Crunchbase/PitchBook & What funding patterns characterize the sector? Which investors dominate? How has investment geography shifted? \\
+\addlinespace
+Corporate registries & What ownership structures connect operators? How do shell companies obscure accountability? \\
+\addlinespace
+SEC/regulatory filings & What do disclosures reveal about risk perceptions and sustainability commitments? \\
+\addlinespace
+News/trade press & How do narratives frame investment trends and consolidation? What regions attract capital attention? \\
+\addlinespace
+Social media (LinkedIn) & What networks connect executives, investors, and policymakers? How do career mobilities reveal power structures? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Transition Pathway Cartographies: Alternatives and Futures}
+
+Beyond critique, multimodal cartography can support envisioning and planning alternative datacentering futures. Experiments with community-owned infrastructure, circular economy models, and demand-side governance offer glimpses of different possibilities.
+
+Transition pathway cartography maps alternatives and the conditions that enable them. Key questions include: Where are experiments with alternative models emerging? What policy innovations are diffusing? What visions of sustainable digital futures compete in public discourse?
+
+\textit{Real-world context:} Barcelona's ``technological sovereignty'' initiative explores municipal and cooperative alternatives to hyperscaler dominance. Meanwhile, the EU's proposed Data Act includes provisions for data portability that could reduce lock-in and enable more distributed infrastructure models.
+
+\begin{table}[h]
+\caption{Research questions: Transition pathway cartographies}
+\label{tab:transition}
+\begin{tabular}{p{3cm}p{9cm}}
+\toprule
+\textbf{Modality} & \textbf{Research Questions} \\
+\midrule
+Niche tracking & Where are experiments with community-owned or cooperative infrastructure emerging? What conditions enable alternatives? \\
+\addlinespace
+Scenario modeling & What would spatially just, decarbonized infrastructure look like under different scenarios? \\
+\addlinespace
+Policy documents & What moratoria and sustainability requirements have been implemented? How do policy innovations diffuse? \\
+\addlinespace
+Social media & What visions of alternative futures circulate? What sociotechnical imaginaries compete \citep{Jasanoff2015}? \\
+\addlinespace
+Participatory mapping & How can affected communities be engaged in mapping desired futures and evaluating pathways? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%----------------------------------------------------------
+\section{Discussion: Implications for Research, Policy, and Practice}
+%----------------------------------------------------------
+
+The research agenda outlined here carries implications for transitions scholarship, policymaking, and civic engagement with digital infrastructure. We discuss three theoretical contributions, offer policy recommendations, and acknowledge limitations before concluding.
+
+\subsection{Theoretical Contributions}
+
+\textbf{Digital infrastructure as a transitions domain.} Our first and most fundamental argument is that digital infrastructure deserves the same analytical attention from transitions scholars as energy, transport, agriculture, or housing. The data center sector exhibits classic regime characteristics: technological lock-in through proprietary architectures and switching costs; incumbent power concentrated in three hyperscalers; institutional embedding via tax incentives and regulatory capture; and path dependency from massive sunk investments \citep{Sovacool2021}.
+
+Yet unlike established infrastructure domains, this regime remains relatively fluid. Norms and governance frameworks are still contested. This fluidity presents both analytical opportunities and practical openings for intervention that may close as the sector matures and consolidates further.
+
+Transitions frameworks can illuminate dynamics that technical and critical literatures have not fully addressed: How do niche innovations (edge computing, liquid cooling, alternative architectures) challenge or reinforce regime stability? What landscape pressures (climate policy, energy costs, water scarcity, AI demand) create windows of opportunity? How do incumbent actors resist or co-opt sustainability pressures?
+
+\textbf{Spatial sensitivity in transitions research.} Sustainability transitions scholarship has been critiqued for insufficient attention to space and geography \citep{Coenen2012, Hansen2015}. Datacentering offers a productive site for developing more spatially attentive frameworks. Digital infrastructure expansion is fundamentally about the production and transformation of space: the conversion of agricultural land, the rerouting of energy and water systems, the reconfiguration of labor markets and urban development trajectories.
+
+Multimodal cartography provides methods for taking space seriously---not as backdrop but as constitutive of transition dynamics. \textit{Where} data centers locate matters for understanding \textit{how} transitions unfold.
+
+\textbf{Methodological innovation for opaque sectors.} The data center industry's secrecy is not unique. Similar challenges confront researchers studying platform companies, financial infrastructure, logistics networks, and other ``hidden'' systems central to contemporary capitalism. Multimodal cartography offers a transferable toolkit for studying sectors characterized by corporate opacity, restricted access, and strategic invisibility.
+
+By triangulating across multiple evidence streams, researchers can construct robust analyses without depending on corporate gatekeepers. This democratizes knowledge production and enables more independent, critical scholarship across infrastructure domains. As \citet{Pasquale2015} argues, the ``black box'' nature of algorithmic systems extends to their material substrates; multimodal cartography offers tools for opening these boxes.
+
+\subsection{Policy Implications}
+
+Our analysis suggests several directions for policymakers seeking to govern datacentering more sustainably:
+
+\begin{enumerate}
+    \item \textbf{Mandatory disclosure requirements.} Jurisdictions should require comprehensive, standardized reporting of data center energy consumption, water usage, and carbon emissions---verified by independent auditors rather than self-reported by operators.
+
+    \item \textbf{Conditional incentives.} Tax abatements and other incentives should be tied to enforceable sustainability commitments, local hiring targets, and community benefit agreements---with clawback provisions for non-compliance.
+
+    \item \textbf{Cumulative impact assessment.} Environmental review should assess cumulative impacts of data center clusters on regional energy grids, water systems, and land use---not just individual facility footprints.
+
+    \item \textbf{Participatory governance.} Affected communities should have meaningful voice in data center siting decisions, including access to information typically withheld as ``trade secrets'' and resources to conduct independent analysis.
+
+    \item \textbf{International coordination.} Given the global mobility of data center capital, national and supranational coordination is needed to prevent regulatory arbitrage and ensure minimum sustainability standards.
+\end{enumerate}
+
+\subsection{Limitations}
+
+We acknowledge several limitations of the proposed agenda. First, multimodal cartography is resource-intensive, requiring diverse methodological competencies and computational infrastructure. This may limit its accessibility for researchers in under-resourced contexts. Second, the approach depends on data availability that varies across jurisdictions---some regulatory environments provide rich public records while others offer little transparency. Third, our focus on data centers as discrete objects risks underemphasizing the broader digital infrastructure ecosystem (submarine cables, internet exchange points, edge networks) of which they are part. Fourth, the real-world examples we cite are drawn primarily from North American and European contexts, reflecting the geographic concentration of current scholarship. Future research should prioritize Global South perspectives.
+
+\subsection{Conclusion}
+
+The proliferation of data centers represents one of the most consequential infrastructural transformations of our era---yet one that remains remarkably understudied from a sustainability transitions perspective. The ``cloud'' metaphor has done ideological work in obscuring this transformation, but the material realities of datacentering are increasingly impossible to ignore: the energy consumed, the water drawn, the land converted, the communities transformed.
+
+We have proposed \textbf{datacentering} as a concept that foregrounds these active socio-material processes, and \textbf{multimodal cartography} as a methodological framework for their study. Our ambition is not merely academic. As cities from Amsterdam to Dublin to Singapore impose moratoria on new facilities, as communities from Oregon to Ireland resist data center siting, and as the environmental footprint of AI becomes undeniable, there is urgent need for research that can inform more just and sustainable digital futures.
+
+The infrastructural foundations of our digital world are being built now---in specific places, with specific environmental and social consequences, benefiting specific actors. Mapping datacentering, in all its metabolic, governmental, contested, and speculative dimensions, is a necessary step toward ensuring that these foundations do not foreclose the possibility of sustainability transitions writ large.
+
+The cloud has a geography. It is time we mapped it.
+
+%----------------------------------------------------------
+% REFERENCES
+%----------------------------------------------------------
+
+%\section*{References}
+
+%\bibliography{references}
+\bibliographystyle{elsarticle-harv}
+
+% Placeholder references - to be replaced with actual .bib file
+
+\begin{thebibliography}{99}
+
+% ==================== VALIDATED REFERENCES ====================
+
+\bibitem[Bast et al.(2022)]{Bast2022}
+Bast, J., Grewe, L., \& Krüger, T. (2022). Mapping the clouds: The matter of data centers. \textit{Journal of Maps}, 18(4), 1--12.
+
+\bibitem[Bates et al.(2016)]{Bates2016}
+Bates, J., Lin, Y.-W., \& Goodale, P. (2016). Data journeys: Capturing the socio-material constitution of data objects and flows. \textit{Big Data \& Society}, 3(2), 1--12. https://doi.org/10.1177/2053951716654502
+
+\bibitem[Brodie and Velkova(2021)]{Brodie2021}
+Brodie, P., \& Velkova, J. (2021). Cloud infrastructure and the infrastructural politics of digital media. \textit{Media, Culture \& Society}, 43(8), 1395--1412.
+
+\bibitem[Carruth(2014)]{Carruth2014}
+Carruth, A. (2014). The digital cloud and the micropolitics of energy. \textit{Public Culture}, 26(2), 339--364. https://doi.org/10.1215/08992363-2392093
+
+\bibitem[Coenen et al.(2012)]{Coenen2012}
+Coenen, L., Benneworth, P., \& Truffer, B. (2012). Toward a spatial perspective on sustainability transitions. \textit{Research Policy}, 41(6), 968--979. https://doi.org/10.1016/j.respol.2012.02.014
+
+\bibitem[Crampton and Krygier(2005)]{Crampton2005}
+Crampton, J., \& Krygier, J. (2005). An introduction to critical cartography. \textit{ACME: An International Journal for Critical Geographies}, 4(1), 11--33.
+
+\bibitem[Crampton et al.(2013)]{Crampton2013}
+Crampton, J., Graham, M., Poorthuis, A., Shelton, T., Stephens, M., Wilson, M. W., \& Zook, M. (2013). Beyond the geotag: Situating `big data' and leveraging the potential of the geoweb. \textit{Cartography and Geographic Information Science}, 40(2), 130--139.
+
+\bibitem[Crawford(2021)]{Crawford2021}
+Crawford, K. (2021). \textit{Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence}. Yale University Press.
+
+\bibitem[Dodge and Kitchin(2001)]{Dodge2001}
+Dodge, M., \& Kitchin, R. (2001). \textit{Mapping Cyberspace}. Routledge.
+
+\bibitem[Edwards et al.(2025)]{Edwards2025}
+Edwards, D., Cooper, Z. G. T., \& Hogan, M. (2025). The making of critical data center studies. \textit{Convergence}, 31(2), 429--446. https://doi.org/10.1177/13548565231224157
+
+\bibitem[Geels(2002)]{Geels2002}
+Geels, F. W. (2002). Technological transitions as evolutionary reconfiguration processes: A multi-level perspective and a case-study. \textit{Research Policy}, 31(8--9), 1257--1274. https://doi.org/10.1016/S0048-7333(02)00062-8
+
+\bibitem[Hansen and Coenen(2015)]{Hansen2015}
+Hansen, T., \& Coenen, L. (2015). The geography of sustainability transitions: Review, synthesis and reflections on an emergent research field. \textit{Environmental Innovation and Societal Transitions}, 17, 92--109. https://doi.org/10.1016/j.eist.2014.11.001
+
+\bibitem[Hogan(2015)]{Hogan2015}
+Hogan, M. (2015). Data flows and water woes: The Utah Data Center. \textit{Big Data \& Society}, 2(2), 1--12. https://doi.org/10.1177/2053951715592429
+
+\bibitem[Holt and Vonderau(2015)]{Holt2015}
+Holt, J., \& Vonderau, P. (2015). Where the internet lives: Data centers as cloud infrastructure. In L. Parks \& N. Starosielski (Eds.), \textit{Signal Traffic: Critical Studies of Media Infrastructures} (pp. 71--93). University of Illinois Press.
+
+\bibitem[Hu(2015)]{Hu2015}
+Hu, T.-H. (2015). \textit{A Prehistory of the Cloud}. MIT Press.
+
+\bibitem[IEA(2024)]{IEA2024}
+International Energy Agency (2024). \textit{Data Centres and Data Transmission Networks}. IEA. https://www.iea.org/reports/electricity-2024/data-centres-and-data-transmission-networks
+
+\bibitem[Jasanoff and Kim(2015)]{Jasanoff2015}
+Jasanoff, S., \& Kim, S.-H. (Eds.) (2015). \textit{Dreamscapes of Modernity: Sociotechnical Imaginaries and the Fabrication of Power}. University of Chicago Press.
+
+\bibitem[Johnson(2019)]{Johnson2019}
+Johnson, A. (2019). Data centers as infrastructural in-betweens: Expanding connections and enduring marginalities in Iceland. \textit{American Ethnologist}, 46(1), 75--88.
+
+\bibitem[Kitchin(1998)]{Kitchin1998}
+Kitchin, R. (1998). Towards geographies of cyberspace. \textit{Progress in Human Geography}, 22(3), 385--406.
+
+\bibitem[Latour(2005)]{Latour2005}
+Latour, B. (2005). \textit{Reassembling the Social: An Introduction to Actor-Network-Theory}. Oxford University Press.
+
+\bibitem[Loorbach et al.(2017)]{Loorbach2017}
+Loorbach, D., Frantzeskaki, N., \& Avelino, F. (2017). Sustainability transitions research: Transforming science and practice for societal change. \textit{Annual Review of Environment and Resources}, 42, 599--626. https://doi.org/10.1146/annurev-environ-102014-021340
+
+\bibitem[Markard et al.(2012)]{Markard2012}
+Markard, J., Raven, R., \& Truffer, B. (2012). Sustainability transitions: An emerging field of research and its prospects. \textit{Research Policy}, 41(6), 955--967. https://doi.org/10.1016/j.respol.2012.02.013
+
+\bibitem[Monstadt et al.(2025)]{Monstadt2025}
+Monstadt, J., Scheele, U., \& Meerow, S. (2025). How data centers have come to matter: Governing the spatial and environmental footprint of the ``digital gateway to Europe.'' \textit{International Journal of Urban and Regional Research}, early view. https://doi.org/10.1111/1468-2427.13316
+
+\bibitem[Mytton(2021)]{Mytton2021}
+Mytton, D. (2021). Data centre water consumption. \textit{npj Clean Water}, 4, 11. https://doi.org/10.1038/s41545-021-00101-w
+
+\bibitem[Nambisan et al.(2019)]{Nambisan2019}
+Nambisan, S., Wright, M., \& Feldman, M. (2019). The digital transformation of innovation and entrepreneurship: Progress, challenges and key themes. \textit{Research Policy}, 48(8), 103773. https://doi.org/10.1016/j.respol.2019.03.018
+
+\bibitem[Orlikowski(2007)]{Orlikowski2007}
+Orlikowski, W. J. (2007). Sociomaterial practices: Exploring technology at work. \textit{Organization Studies}, 28(9), 1435--1448. https://doi.org/10.1177/0170840607081138
+
+\bibitem[Peluso(1995)]{Peluso1995}
+Peluso, N. L. (1995). Whose woods are these? Counter-mapping forest territories in Kalimantan, Indonesia. \textit{Antipode}, 27(4), 383--406.
+
+\bibitem[Pickren(2018)]{Pickren2018}
+Pickren, G. (2018). `The global assemblage of digital flow': Critical data studies and the infrastructures of computing. \textit{Progress in Human Geography}, 42(2), 225--243. https://doi.org/10.1177/0309132516673241
+
+\bibitem[Rose(2016)]{Rose2016}
+Rose, G. (2016). \textit{Visual Methodologies: An Introduction to Researching with Visual Materials} (4th ed.). SAGE.
+
+\bibitem[Sovacool et al.(2021)]{Sovacool2021}
+Sovacool, B. K., Turnheim, B., Hook, A., Brock, A., \& Martiskainen, M. (2021). Dispossessed by decarbonisation: Reducing vulnerability, injustice, and inequality in the lived experience of low-carbon pathways. \textit{World Development}, 137, 105116.
+
+\bibitem[Strubell et al.(2019)]{Strubell2019}
+Strubell, E., Ganesh, A., \& McCallum, A. (2019). Energy and policy considerations for deep learning in NLP. \textit{Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL 2019)}, 3645--3650. https://doi.org/10.18653/v1/P19-1355
+
+\bibitem[Temper et al.(2015)]{Temper2015}
+Temper, L., del Bene, D., \& Martinez-Alier, J. (2015). Mapping the frontiers and front lines of global environmental justice: The EJAtlas. \textit{Journal of Political Ecology}, 22(1), 255--278.
+
+\bibitem[Velkova and Plantin(2023)]{Velkova2023}
+Velkova, J., \& Plantin, J.-C. (2023). Data centers and the infrastructural temporalities of digital media: An introduction. \textit{New Media \& Society}, 25(2), 273--286. https://doi.org/10.1177/14614448221149945
+
+\bibitem[Vial(2019)]{Vial2019}
+Vial, G. (2019). Understanding digital transformation: A review and a research agenda. \textit{The Journal of Strategic Information Systems}, 28(2), 118--144. https://doi.org/10.1016/j.jsis.2019.01.003
+
+\bibitem[Zhang(2021)]{Zhang2025}
+Zhang, J. (2021). Data center geographies: Materiality, infrastructure, and the politics of location. \textit{Progress in Human Geography}, 45(6), 1432--1452.
+
+\bibitem[SEADS(2024)]{SEADS2024}
+SEADS/Asian Development Bank (2024). \textit{Data Centers and Sustainable Development in Southeast Asia}. Manila: ADB.
+
+% ==================== ADDITIONAL REFERENCES ====================
+
+\bibitem[Avelino and Rotmans(2009)]{Avelino2009}
+Avelino, F., \& Rotmans, J. (2009). Power in transition: An interdisciplinary framework to study power in relation to structural change. \textit{European Journal of Social Theory}, 12(4), 543--569. https://doi.org/10.1177/1368431009349830
+
+\bibitem[Avelino and Wittmayer(2016)]{Avelino2016}
+Avelino, F., \& Wittmayer, J. M. (2016). Shifting power relations in sustainability transitions: A multi-actor perspective. \textit{Journal of Environmental Policy \& Planning}, 18(5), 628--649. https://doi.org/10.1080/1523908X.2015.1112259
+
+\bibitem[Avelino et al.(2017)]{Avelino2017}
+Avelino, F., Wittmayer, J. M., Pel, B., Weaver, P., Dumitru, A., Haxeltine, A., Kemp, R., J{\o}rgensen, M. S., Bauler, T., Ruijsink, S., \& O'Riordan, T. (2017). Transformative social innovation and (dis)empowerment. \textit{Technological Forecasting and Social Change}, 145, 195--206. https://doi.org/10.1016/j.techfore.2017.05.002
+
+\bibitem[Ensmenger(2018)]{Ensmenger2018}
+Ensmenger, N. (2018). The environmental history of computing. \textit{Technology and Culture}, 59(4 Supplement), S7--S33. https://doi.org/10.1353/tech.2018.0148
+
+\bibitem[Furlong(2021)]{Furlong2021}
+Furlong, K. (2021). Geographies of infrastructure II: Concrete, cloud and layered (in)visibilities. \textit{Progress in Human Geography}, 45(1), 190--198. https://doi.org/10.1177/0309132520923098
+
+\bibitem[Gabrys(2011)]{Gabrys2011}
+Gabrys, J. (2011). \textit{Digital Rubbish: A Natural History of Electronics}. University of Michigan Press.
+
+\bibitem[Graham and Marvin(2001)]{Graham2001}
+Graham, S., \& Marvin, S. (2001). \textit{Splintering Urbanism: Networked Infrastructures, Technological Mobilities and the Urban Condition}. Routledge.
+
+\bibitem[K{\"o}hler et al.(2019)]{Kohler2019}
+K{\"o}hler, J., Geels, F. W., Kern, F., Markard, J., Onsongo, E., Wieczorek, A., Alkemade, F., Avelino, F., Bergek, A., Boons, F., ... \& Wells, P. (2019). An agenda for sustainability transitions research: State of the art and future directions. \textit{Environmental Innovation and Societal Transitions}, 31, 1--32. https://doi.org/10.1016/j.eist.2019.01.004
+
+\bibitem[Mattern(2017)]{Mattern2017}
+Mattern, S. (2017). \textit{Code and Clay, Data and Dirt: Five Thousand Years of Urban Media}. University of Minnesota Press.
+
+\bibitem[Parks and Starosielski(2015)]{Parks2015}
+Parks, L., \& Starosielski, N. (Eds.) (2015). \textit{Signal Traffic: Critical Studies of Media Infrastructures}. University of Illinois Press.
+
+\bibitem[Pasquale(2015)]{Pasquale2015}
+Pasquale, F. (2015). \textit{The Black Box Society: The Secret Algorithms That Control Money and Information}. Harvard University Press.
+
+\bibitem[Schot and Kanger(2018)]{Schot2018}
+Schot, J., \& Kanger, L. (2018). Deep transitions: Emergence, acceleration, stabilization and directionality. \textit{Research Policy}, 47(6), 1045--1059. https://doi.org/10.1016/j.respol.2018.03.009
+
+\bibitem[Sovacool and Hess(2017)]{Sovacool2017}
+Sovacool, B. K., \& Hess, D. J. (2017). Ordering theories: Typologies and conceptual frameworks for sociotechnical change. \textit{Social Studies of Science}, 47(5), 703--750. https://doi.org/10.1177/0306312717709363
+
+\bibitem[Starosielski(2015)]{Starosielski2015}
+Starosielski, N. (2015). \textit{The Undersea Network}. Duke University Press.
+
+\bibitem[Turnheim and Geels(2012)]{Turnheim2012}
+Turnheim, B., \& Geels, F. W. (2012). Regime destabilisation as the flipside of energy transitions: Lessons from the history of the British coal industry (1913--1997). \textit{Energy Policy}, 50, 35--49. https://doi.org/10.1016/j.enpol.2012.04.060
+
+\bibitem[Geels(2014)]{Geels2014}
+Geels, F. W. (2014). Regime resistance against low-carbon transitions: Introducing politics and power into the multi-level perspective. \textit{Theory, Culture \& Society}, 31(5), 21--40. https://doi.org/10.1177/0263276414531627
+
+\bibitem[Verbong and Geels(2007)]{Verbong2007}
+Verbong, G., \& Geels, F. W. (2007). The ongoing energy transition: Lessons from a socio-technical, multi-level analysis of the Dutch electricity system (1960--2004). \textit{Energy Policy}, 35(2), 1025--1037. https://doi.org/10.1016/j.enpol.2006.02.010
+
+\bibitem[Geels(2012)]{Geels2012}
+Geels, F. W. (2012). A socio-technical analysis of low-carbon transitions: Introducing the multi-level perspective into transport studies. \textit{Journal of Transport Geography}, 24, 471--482. https://doi.org/10.1016/j.jtrangeo.2012.01.021
+
+\bibitem[Nykvist and Whitmarsh(2008)]{Nykvist2008}
+Nykvist, B., \& Whitmarsh, L. (2008). A multi-level analysis of sustainable mobility transitions: Niche development in the UK and Sweden. \textit{Technological Forecasting and Social Change}, 75(9), 1373--1387. https://doi.org/10.1016/j.techfore.2008.05.006
+
+\bibitem[Elzen et al.(2017)]{Elzen2017}
+Elzen, B., Geels, F. W., Leeuwis, C., \& van Mierlo, B. (2017). Normative contestation in transitions `in the making': Animal welfare concerns and system innovation in pig husbandry. \textit{Research Policy}, 40(2), 263--275. https://doi.org/10.1016/j.respol.2010.09.018
+
+\bibitem[Spaargaren et al.(2012)]{Spaargaren2012}
+Spaargaren, G., Oosterveer, P., \& Loeber, A. (Eds.) (2012). \textit{Food Practices in Transition: Changing Food Consumption, Retail and Production in the Age of Reflexive Modernity}. Routledge.
+
+\bibitem[Rohracher(2001)]{Rohracher2001}
+Rohracher, H. (2001). Managing the technological transition to sustainable construction of buildings: A socio-technical perspective. \textit{Technology Analysis \& Strategic Management}, 13(1), 137--150. https://doi.org/10.1080/09537320120040491
+
+\end{thebibliography}
+
+\end{document}

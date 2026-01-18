@@ -4,3 +4,18 @@
 [submodule "dissertation/data/rolesim"]
 	path = dissertation/data/rolesim
 	url = https://github.com/babajideowoyele/rolesim.git
+[submodule "dissertation/data/rolebox-crunchbase"]
+	path = dissertation/data/rolebox-crunchbase
+	url = https://github.com/babajideowoyele/rolebox-crunchbase.git
+[submodule "dissertation/data/rolebox-news"]
+	path = dissertation/data/rolebox-news
+	url = https://github.com/babajideowoyele/rolebox-news.git
+[submodule "dissertation/data/rolebox-websites"]
+	path = dissertation/data/rolebox-websites
+	url = https://github.com/babajideowoyele/rolebox-websites.git
+[submodule "dissertation/data/rolebox-social/lib/TextMiningOnCommunities"]
+	path = dissertation/data/rolebox-social/lib/TextMiningOnCommunities
+	url = https://github.com/seinecle/TextMiningOnCommunities.git
+[submodule "dissertation/data/rolebox-social/lib/seed_expansion"]
+	path = dissertation/data/rolebox-social/lib/seed_expansion
+	url = https://github.com/MohamedBnbm/seed_expansion.git

@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoleBox NetCodes - Network Role Annotation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#f5f5f5;color:#000;line-height:1.5;font-size:13px}
+    .app{display:flex;flex-direction:column;height:100vh}
+    .header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:#fff;border-bottom:1px solid #e5e5e5;flex-shrink:0}
+    .logo{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .logo i{color:#000}
+    .nav{display:flex;gap:1px}
+    .nav a{padding:8px 14px;color:#666;text-decoration:none;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+    .nav a:hover{background:#f5f5f5;color:#000}
+    .nav a.active{background:#000;color:#fff}
+    .main{display:flex;flex:1;overflow:hidden}
+    .sidebar{width:320px;background:#fff;border-right:1px solid #e5e5e5;padding:16px;overflow-y:auto;flex-shrink:0}
+    .content{flex:1;padding:20px;overflow-y:auto;background:#fafafa}
+    .screen{display:none}
+    .screen.active{display:block}
+    .section{margin-bottom:20px}
+    .section-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .card{background:#fff;border:1px solid #e5e5e5;margin-bottom:12px}
+    .card-header{padding:12px 16px;border-bottom:1px solid #e5e5e5;font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:space-between}
+    .card-body{padding:16px}
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #e5e5e5;background:#fff;color:#000;transition:all .15s}
+    .btn:hover{background:#f5f5f5;border-color:#000}
+    .btn-primary{background:#000;color:#fff;border-color:#000}
+    .btn-primary:hover{background:#333}
+    .btn-sm{padding:5px 10px;font-size:10px}
+    .tag{display:inline-flex;padding:3px 8px;font-size:10px;font-weight:600;background:#000;color:#fff;border-radius:2px}
+    .tag-outline{background:transparent;color:#000;border:1px solid #e5e5e5}
+    /* Watch-complexity influence typologies - 19 roles */
+    /* High influence */
+    .tag-tophub{background:#c0392b}
+    .tag-hub{background:#e74c3c}
+    .tag-megamplifier{background:#8e44ad}
+    .tag-amplifier{background:#9b59b6}
+    .tag-vulcano{background:#d35400}
+    /* Bridging/connecting */
+    .tag-bridge{background:#2980b9}
+    .tag-connector{background:#3498db}
+    .tag-transceiver{background:#1abc9c}
+    .tag-channeler{background:#16a085}
+    .tag-chain{background:#27ae60}
+    /* Flow regulation */
+    .tag-dam{background:#f39c12}
+    .tag-reducer{background:#f1c40f}
+    /* Peripheral/receivers */
+    .tag-receiver{background:#7f8c8d}
+    .tag-receiver_branch{background:#95a5a6}
+    .tag-blackhole{background:#2c3e50}
+    .tag-idle{background:#bdc3c7}
+    /* Emitters */
+    .tag-emitter{background:#e67e22}
+    .tag-emitter_branch{background:#d68910}
+    .tag-low_emitter{background:#aab7b8}
+    .input,.select,.textarea{width:100%;padding:10px 12px;font-size:12px;border:1px solid #e5e5e5;font-family:inherit;background:#fff}
+    .input:focus,.select:focus,.textarea:focus{outline:none;border-color:#000}
+    .flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}
+    .gap-4{gap:4px}.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}.flex-1{flex:1}
+    .text-xs{font-size:10px}.text-sm{font-size:12px}.text-gray{color:#666}.text-center{text-align:center}
+    .mb-4{margin-bottom:4px}.mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mt-16{margin-top:16px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+    .stat-box{text-align:center;padding:16px;background:#fff;border:1px solid #e5e5e5}
+    .stat-val{font-size:24px;font-weight:300}
+    .stat-label{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.3px;margin-top:4px}
+    .progress-bar{height:6px;background:#e5e5e5;overflow:hidden;border-radius:3px}
+    .progress-fill{height:100%;background:#000;transition:width .3s}
+    .actor-card{background:#fff;border:1px solid #e5e5e5;padding:16px;margin-bottom:12px;cursor:pointer;transition:all .2s}
+    .actor-card:hover{border-color:#000;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+    .actor-card.selected{border-color:#1da1f2;border-width:2px}
+    .actor-card.coded{border-left:4px solid #2ecc71}
+    .actor-name{font-size:14px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+    .actor-handle{font-size:12px;color:#1da1f2}
+    .actor-meta{font-size:11px;color:#666}
+    .actor-bio{font-size:11px;color:#444;margin-top:8px;line-height:1.5}
+    .role-btn{padding:12px;border:2px solid #e5e5e5;background:#fff;cursor:pointer;transition:all .15s;text-align:center}
+    .role-btn:hover{border-color:#000;background:#fafafa}
+    .role-btn.selected{border-width:3px}
+    /* Role button styles for all 19 watch-complexity typologies */
+    .role-btn.tophub{border-color:#c0392b}.role-btn.tophub.selected{background:#fdeaea}
+    .role-btn.hub{border-color:#e74c3c}.role-btn.hub.selected{background:#fdeaea}
+    .role-btn.megamplifier{border-color:#8e44ad}.role-btn.megamplifier.selected{background:#f5eef8}
+    .role-btn.amplifier{border-color:#9b59b6}.role-btn.amplifier.selected{background:#f5eef8}
+    .role-btn.vulcano{border-color:#d35400}.role-btn.vulcano.selected{background:#fef5e7}
+    .role-btn.bridge{border-color:#2980b9}.role-btn.bridge.selected{background:#ebf5fb}
+    .role-btn.connector{border-color:#3498db}.role-btn.connector.selected{background:#ebf5fb}
+    .role-btn.transceiver{border-color:#1abc9c}.role-btn.transceiver.selected{background:#e8f8f5}
+    .role-btn.channeler{border-color:#16a085}.role-btn.channeler.selected{background:#e8f8f5}
+    .role-btn.chain{border-color:#27ae60}.role-btn.chain.selected{background:#e8f8f5}
+    .role-btn.dam{border-color:#f39c12}.role-btn.dam.selected{background:#fef9e7}
+    .role-btn.reducer{border-color:#f1c40f}.role-btn.reducer.selected{background:#fef9e7}
+    .role-btn.receiver{border-color:#7f8c8d}.role-btn.receiver.selected{background:#f4f6f6}
+    .role-btn.receiver_branch{border-color:#95a5a6}.role-btn.receiver_branch.selected{background:#f4f6f6}
+    .role-btn.blackhole{border-color:#2c3e50}.role-btn.blackhole.selected{background:#f4f6f6}
+    .role-btn.idle{border-color:#bdc3c7}.role-btn.idle.selected{background:#f4f6f6}
+    .role-btn.emitter{border-color:#e67e22}.role-btn.emitter.selected{background:#fef5e7}
+    .role-btn.emitter_branch{border-color:#d68910}.role-btn.emitter_branch.selected{background:#fef5e7}
+    .role-btn.low_emitter{border-color:#aab7b8}.role-btn.low_emitter.selected{background:#f4f6f6}
+    .role-icon{font-size:24px;margin-bottom:8px;height:40px;display:flex;align-items:center;justify-content:center}
+    .role-icon svg{width:40px;height:40px}
+    .role-name{font-weight:600;font-size:12px;display:block}
+    .role-desc{font-size:10px;color:#666;margin-top:4px}
+    /* Animated flow arrows */
+    @keyframes flowOut{0%{opacity:0;transform:scale(0.3)}50%{opacity:1}100%{opacity:0;transform:scale(1.2)}}
+    @keyframes flowIn{0%{opacity:0;transform:scale(1.2)}50%{opacity:1}100%{opacity:0;transform:scale(0.3)}}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+    @keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    .flow-arrow-out{animation:flowOut 1.5s ease-in-out infinite}
+    .flow-arrow-in{animation:flowIn 1.5s ease-in-out infinite}
+    .flow-pulse{animation:pulse 1s ease-in-out infinite}
+    .flow-rotate{animation:rotate 3s linear infinite}
+    .role-btn:hover .flow-arrow-out,.role-btn:hover .flow-arrow-in,.role-btn:hover .flow-pulse{animation-duration:0.8s}
+    .metric-bar{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .metric-label{font-size:10px;color:#666;width:80px}
+    .metric-track{flex:1;height:8px;background:#e5e5e5;border-radius:4px;overflow:hidden}
+    .metric-fill{height:100%;background:#1da1f2}
+    .metric-value{font-size:10px;font-weight:600;width:40px;text-align:right}
+    .legend-item{display:flex;align-items:center;gap:8px;padding:6px 0}
+    .legend-color{width:14px;height:14px;border-radius:2px}
+    .toast{position:fixed;bottom:20px;right:20px;padding:12px 20px;background:#000;color:#fff;font-size:12px;font-weight:500;z-index:200;transform:translateY(100px);opacity:0;transition:all .3s}
+    .toast.show{transform:translateY(0);opacity:1}
+    .help-section{padding:16px;background:#e8f5fe;border:1px solid #1da1f2;margin-bottom:16px}
+    .help-section h4{font-size:12px;margin-bottom:8px;color:#0c7abf}
+    .help-section p{font-size:11px;color:#0c7abf}
+    .tabs{display:flex;border-bottom:1px solid #e5e5e5;margin-bottom:16px}
+    .tab{padding:10px 16px;font-size:11px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:#666}
+    .tab:hover{color:#000}
+    .tab.active{color:#000;border-color:#000}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+    .network-container{height:500px;background:#fff;border:1px solid #e5e5e5}
+    table{width:100%;border-collapse:collapse;font-size:12px}
+    th,td{padding:10px;text-align:left;border-bottom:1px solid #e5e5e5}
+    th{background:#f5f5f5;font-weight:600}
+    .search-box{position:relative}
+    .search-box input{padding-left:32px}
+    .search-box i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#999}
+    .tweet-sample{background:#f9f9f9;border:1px solid #e5e5e5;padding:12px;margin-bottom:8px;font-size:12px;line-height:1.5}
+    .tweet-meta{font-size:10px;color:#666;margin-top:8px}
+    .btn-ai{background:#8b5cf6;color:#fff}
+    .btn-ai:hover{background:#7c3aed}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:flex;align-items:center;justify-content:center}
+    .modal{background:#fff;border-radius:8px;width:400px;max-width:90vw;box-shadow:0 20px 40px rgba(0,0,0,0.2)}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid #e5e5e5;font-weight:600}
+    .modal-body{padding:16px}
+    .ai-suggestion{background:#f3e8ff;border:1px solid #c4b5fd;border-radius:6px;padding:8px 12px;margin-bottom:8px}
+    .ai-badge{display:inline-flex;align-items:center;gap:4px;background:#8b5cf6;color:#fff;padding:2px 6px;border-radius:4px;font-size:9px}
+    .ai-queue-item{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid #e5e5e5;border-radius:6px;margin-bottom:6px;cursor:pointer}
+    .ai-queue-item:hover{background:#f5f5f5}
+    .ai-queue-item.high-priority{border-color:#f59e0b;background:#fffbeb}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="flex items-center gap-16">
+      <div class="logo"><i class="fab fa-twitter"></i> RoleBox NetCodes</div>
+      <nav class="nav">
+        <a class="active" data-screen="code"><i class="fas fa-tag"></i> Code Actors</a>
+        <a data-screen="browse"><i class="fas fa-users"></i> Browse</a>
+        <a data-screen="network"><i class="fas fa-project-diagram"></i> Network</a>
+        <a data-screen="communities"><i class="fas fa-th-large"></i> Communities</a>
+        <a data-screen="codebook"><i class="fas fa-book"></i> Codebook</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-12">
+      <button class="btn btn-sm" onclick="loadDemoData()"><i class="fas fa-flask"></i> Load Demo</button>
+      <button class="btn btn-sm" onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> Import</button>
+      <button class="btn btn-sm" onclick="exportData()"><i class="fas fa-download"></i> Export</button>
+      <button class="btn btn-sm btn-ai" onclick="showAISettings()"><i class="fas fa-robot"></i> Model Assist</button>
+      <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+    </div>
+  </header>
+
+  <!-- Model Settings Modal -->
+  <div class="modal-overlay" id="aiSettingsModal" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <span><i class="fas fa-robot"></i> Model Assist Settings</span>
+        <button type="button" class="btn btn-sm" onclick="hideAISettings()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-12">
+          <label class="text-xs text-gray">API Provider</label>
+          <select class="select" id="aiProvider" onchange="updateAPIFields()">
+            <option value="openai">OpenAI (GPT-4)</option>
+            <option value="anthropic">Anthropic (Claude)</option>
+            <option value="local">Ollama (Local)</option>
+          </select>
+        </div>
+        <div class="mb-12" id="apiKeyGroup">
+          <label class="text-xs text-gray">API Key</label>
+          <input type="password" class="input" id="aiApiKey" placeholder="sk-...">
+        </div>
+        <div class="mb-12 hidden" id="localEndpointGroup">
+          <label class="text-xs text-gray">Ollama Endpoint</label>
+          <input type="text" class="input" id="aiLocalEndpoint" value="http://localhost:11434/api/generate">
+          <div class="mt-4">
+            <label class="text-xs text-gray">Model</label>
+            <input type="text" class="input" id="aiLocalModel" value="phi3:mini" placeholder="phi3:mini">
+          </div>
+        </div>
+        <div class="mb-12">
+          <label class="text-xs text-gray">Active Learning Mode</label>
+          <select class="select" id="aiMode">
+            <option value="suggest">Suggest role classifications</option>
+            <option value="uncertainty">Prioritize uncertain actors</option>
+            <option value="bridging">Focus on bridging nodes</option>
+          </select>
+        </div>
+        <div class="flex gap-8">
+          <button type="button" class="btn btn-primary" onclick="saveAISettings()"><i class="fas fa-save"></i> Save</button>
+          <button type="button" class="btn" onclick="testAIConnection()"><i class="fas fa-plug"></i> Test</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <aside class="sidebar">
+      <div class="section">
+        <div class="section-title"><i class="fas fa-database"></i> Dataset</div>
+        <div class="stat-box mb-12">
+          <div class="stat-val" id="totalActors">0</div>
+          <div class="stat-label">Actors</div>
+        </div>
+        <div class="grid-2 mb-12">
+          <div class="stat-box">
+            <div class="stat-val text-sm" style="color:#2ecc71" id="codedCount">0</div>
+            <div class="stat-label">Coded</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val text-sm" style="color:#95a5a6" id="pendingCount">0</div>
+            <div class="stat-label">Pending</div>
+          </div>
+        </div>
+        <div class="progress-bar mb-8">
+          <div class="progress-fill" id="progressBar" style="width:0%"></div>
+        </div>
+        <div class="text-xs text-gray text-center" id="progressText">0% coded</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-filter"></i> Filters</div>
+        <div class="mb-8">
+          <label class="text-xs text-gray">Status</label>
+          <select class="select" id="filterStatus" onchange="applyFilters()">
+            <option value="all">All Actors</option>
+            <option value="pending">Pending Only</option>
+            <option value="coded">Coded</option>
+          </select>
+        </div>
+        <div class="mb-8">
+          <label class="text-xs text-gray">Community</label>
+          <select class="select" id="filterCommunity" onchange="applyFilters()">
+            <option value="all">All Communities</option>
+          </select>
+        </div>
+        <div class="mb-8">
+          <label class="text-xs text-gray">Network Role</label>
+          <select class="select" id="filterRole" onchange="applyFilters()">
+            <option value="all">All Roles</option>
+            <optgroup label="High Influence">
+              <option value="tophub">TopHub</option>
+              <option value="hub">Hub</option>
+              <option value="megamplifier">Megamplifier</option>
+              <option value="amplifier">Amplifier</option>
+              <option value="vulcano">Vulcano</option>
+            </optgroup>
+            <optgroup label="Bridging/Connecting">
+              <option value="bridge">Bridge</option>
+              <option value="connector">Connector</option>
+              <option value="transceiver">Transceiver</option>
+              <option value="channeler">Channeler</option>
+              <option value="chain">Chain</option>
+            </optgroup>
+            <optgroup label="Flow Regulation">
+              <option value="dam">Dam</option>
+              <option value="reducer">Reducer</option>
+            </optgroup>
+            <optgroup label="Receivers">
+              <option value="receiver">Receiver</option>
+              <option value="receiver_branch">Receiver Branch</option>
+              <option value="blackhole">Blackhole</option>
+              <option value="idle">Idle</option>
+            </optgroup>
+            <optgroup label="Emitters">
+              <option value="emitter">Emitter</option>
+              <option value="emitter_branch">Emitter Branch</option>
+              <option value="low_emitter">Low Emitter</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" class="input" placeholder="Search actors..." id="searchInput" oninput="applyFilters()">
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-palette"></i> Role Categories</div>
+        <div class="text-xs text-gray mb-4">Based on watch-complexity typology</div>
+        <div class="legend-item"><div class="legend-color tag-hub"></div><span class="text-sm">Hub/TopHub (central)</span></div>
+        <div class="legend-item"><div class="legend-color tag-amplifier"></div><span class="text-sm">Amplifier (broadcasts)</span></div>
+        <div class="legend-item"><div class="legend-color tag-bridge"></div><span class="text-sm">Bridge/Connector</span></div>
+        <div class="legend-item"><div class="legend-color tag-transceiver"></div><span class="text-sm">Transceiver (balanced)</span></div>
+        <div class="legend-item"><div class="legend-color tag-dam"></div><span class="text-sm">Dam/Reducer (filters)</span></div>
+        <div class="legend-item"><div class="legend-color tag-emitter"></div><span class="text-sm">Emitter (source)</span></div>
+        <div class="legend-item"><div class="legend-color tag-receiver"></div><span class="text-sm">Receiver (sink)</span></div>
+        <div class="legend-item"><div class="legend-color tag-idle"></div><span class="text-sm">Idle/Peripheral</span></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-info-circle"></i> Network Metrics</div>
+        <div class="text-xs text-gray">
+          <p><strong>Degree:</strong> Number of connections</p>
+          <p><strong>Betweenness:</strong> Bridge potential</p>
+          <p><strong>Clustering:</strong> Local cohesion</p>
+          <p><strong>Community:</strong> Detected cluster</p>
+        </div>
+      </div>
+
+      <div class="section" id="aiAssistSection">
+        <div class="section-title"><i class="fas fa-robot"></i> Model Assist</div>
+        <div id="aiStatus" class="text-xs text-gray mb-8">Not configured</div>
+        <button type="button" class="btn btn-sm btn-ai w-full mb-8" onclick="runAIAnalysis()" id="runAIBtn" disabled>
+          <i class="fas fa-magic"></i> Analyze Network Roles
+        </button>
+        <div id="aiQueueSection" class="hidden">
+          <div class="text-xs text-gray mb-4">Priority Queue</div>
+          <div id="aiQueue"></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <!-- Code Screen -->
+      <div class="screen active" id="screen-code">
+        <div class="help-section">
+          <h4><i class="fas fa-info-circle"></i> Network Role Coding</h4>
+          <p>Assign network roles to actors based on their structural position and behavior.
+             Review network metrics and sample tweets to inform your coding decision.
+             This data informs Chapter 6 (Rolefield) - field positioning analysis.</p>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <span><i class="fas fa-list"></i> Actor Queue</span>
+                <span class="text-sm text-gray" id="queueCount">0 pending</span>
+              </div>
+              <div class="card-body" style="max-height:calc(100vh - 320px);overflow-y:auto">
+                <div id="actorList">
+                  <div class="text-center text-gray" style="padding:40px">
+                    <i class="fab fa-twitter" style="font-size:48px;color:#e5e5e5;margin-bottom:12px;display:block"></i>
+                    <p>No actors loaded yet.</p>
+                    <p class="text-xs mt-16">Click "Load Demo" to begin coding.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card" id="codingCard" style="display:none">
+              <div class="card-header">
+                <span><i class="fas fa-user"></i> Code Actor</span>
+                <span class="tag tag-outline" id="currentActorId">-</span>
+              </div>
+              <div class="card-body">
+                <div class="mb-16">
+                  <h3 id="displayActorName" style="font-size:18px;margin-bottom:4px">-</h3>
+                  <p class="actor-handle" id="displayActorHandle">@handle</p>
+                  <p class="text-sm text-gray" id="displayActorBio" style="margin-top:8px">-</p>
+                </div>
+
+                <div class="mb-16">
+                  <label class="text-xs text-gray mb-8" style="display:block">Network Metrics</label>
+                  <div class="metric-bar">
+                    <span class="metric-label">Degree</span>
+                    <div class="metric-track"><div class="metric-fill" id="metricDegree" style="width:0%"></div></div>
+                    <span class="metric-value" id="metricDegreeVal">0</span>
+                  </div>
+                  <div class="metric-bar">
+                    <span class="metric-label">Betweenness</span>
+                    <div class="metric-track"><div class="metric-fill" id="metricBetweenness" style="width:0%"></div></div>
+                    <span class="metric-value" id="metricBetweennessVal">0</span>
+                  </div>
+                  <div class="metric-bar">
+                    <span class="metric-label">Clustering</span>
+                    <div class="metric-track"><div class="metric-fill" id="metricClustering" style="width:0%"></div></div>
+                    <span class="metric-value" id="metricClusteringVal">0</span>
+                  </div>
+                  <div class="metric-bar">
+                    <span class="metric-label">Retweets</span>
+                    <div class="metric-track"><div class="metric-fill" id="metricRetweets" style="width:0%"></div></div>
+                    <span class="metric-value" id="metricRetweetsVal">0</span>
+                  </div>
+                </div>
+
+                <div class="mb-16">
+                  <label class="text-xs text-gray mb-8" style="display:block">Sample Tweets</label>
+                  <div id="sampleTweets">
+                    <div class="tweet-sample">Loading sample tweets...</div>
+                  </div>
+                </div>
+
+                <div class="mb-16">
+                  <label class="text-xs text-gray mb-8" style="display:block">Network Role (watch-complexity typology)</label>
+
+                  <div class="text-xs text-gray mb-4 font-semibold">High Influence</div>
+                  <div class="grid-5 gap-8 mb-12" id="roleButtonsHigh">
+                    <button class="role-btn tophub" data-role="tophub">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="5" fill="#c0392b" class="flow-pulse"/>
+                        <g class="flow-arrow-out" style="transform-origin:20px 20px">
+                          <path d="M20 10 L20 2" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M28 12 L34 6" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M30 20 L38 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M28 28 L34 34" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M20 30 L20 38" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M12 28 L6 34" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M10 20 L2 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M12 12 L6 6" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g>
+                        <defs><marker id="arrow" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#999"/></marker></defs>
+                        </svg>
+                      </div>
+                      <span class="role-name">TopHub</span>
+                      <span class="role-desc">Main engine</span>
+                    </button>
+                    <button class="role-btn hub" data-role="hub">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="4" fill="#e74c3c" class="flow-pulse"/>
+                        <g class="flow-arrow-out" style="transform-origin:20px 20px;animation-delay:0.2s">
+                          <path d="M20 12 L20 4" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M28 20 L36 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M20 28 L20 36" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M12 20 L4 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M26 14 L32 8" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M26 26 L32 32" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g></svg>
+                      </div>
+                      <span class="role-name">Hub</span>
+                      <span class="role-desc">Key node</span>
+                    </button>
+                    <button class="role-btn megamplifier" data-role="megamplifier">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="4" fill="#8e44ad" class="flow-pulse"/>
+                        <g class="flow-arrow-out" style="transform-origin:20px 20px">
+                          <path d="M24 16 L32 8" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M26 20 L36 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M24 24 L32 32" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M20 26 L20 36" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M16 24 L8 32" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g>
+                        <path d="M8 12 L16 18" stroke="#999" stroke-width="1" marker-end="url(#arrow)" opacity="0.4"/></svg>
+                      </div>
+                      <span class="role-name">Megamplifier</span>
+                      <span class="role-desc">Megaphone</span>
+                    </button>
+                    <button class="role-btn amplifier" data-role="amplifier">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="4" fill="#9b59b6"/>
+                        <g class="flow-arrow-out" style="transform-origin:20px 20px">
+                          <path d="M24 18 L34 10" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M26 20 L36 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M24 22 L34 30" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g>
+                        <path d="M6 20 L14 20" stroke="#999" stroke-width="1" marker-end="url(#arrow)" opacity="0.5"/></svg>
+                      </div>
+                      <span class="role-name">Amplifier</span>
+                      <span class="role-desc">High output</span>
+                    </button>
+                    <button class="role-btn vulcano" data-role="vulcano">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="4" fill="#d35400" class="flow-pulse"/>
+                        <g class="flow-arrow-out" style="transform-origin:20px 20px">
+                          <path d="M20 14 L20 4" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M24 15 L30 6" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M26 18 L36 14" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M26 22 L36 26" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M24 25 L30 34" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M20 26 L20 36" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M16 25 L10 34" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M14 22 L4 26" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g></svg>
+                      </div>
+                      <span class="role-name">Vulcano</span>
+                      <span class="role-desc">Super emitter</span>
+                    </button>
+                  </div>
+
+                  <div class="text-xs text-gray mb-4 font-semibold">Bridging & Connecting</div>
+                  <div class="grid-5 gap-8 mb-12" id="roleButtonsBridge">
+                    <button class="role-btn bridge" data-role="bridge">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40">
+                        <circle cx="8" cy="20" r="3" fill="#999"/>
+                        <circle cx="20" cy="20" r="4" fill="#2980b9" class="flow-pulse"/>
+                        <circle cx="32" cy="20" r="3" fill="#999"/>
+                        <path d="M11 20 L16 20" stroke="#999" stroke-width="1.5" class="flow-arrow-in" style="animation-delay:0s"/>
+                        <path d="M24 20 L29 20" stroke="#999" stroke-width="1.5" class="flow-arrow-out" style="animation-delay:0.5s"/></svg>
+                      </div>
+                      <span class="role-name">Bridge</span>
+                      <span class="role-desc">Ties two hubs</span>
+                    </button>
+                    <button class="role-btn connector" data-role="connector">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40">
+                        <circle cx="10" cy="20" r="2" fill="#999"/>
+                        <circle cx="20" cy="20" r="3" fill="#3498db"/>
+                        <circle cx="30" cy="20" r="2" fill="#999"/>
+                        <path d="M12 20 L17 20" stroke="#999" stroke-width="1"/>
+                        <path d="M23 20 L28 20" stroke="#999" stroke-width="1"/></svg>
+                      </div>
+                      <span class="role-name">Connector</span>
+                      <span class="role-desc">Links nodes</span>
+                    </button>
+                    <button class="role-btn transceiver" data-role="transceiver">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="4" fill="#1abc9c"/>
+                        <g class="flow-arrow-in" style="transform-origin:20px 20px">
+                          <path d="M6 14 L14 18" stroke="#999" stroke-width="1" marker-end="url(#arrow)"/>
+                          <path d="M6 26 L14 22" stroke="#999" stroke-width="1" marker-end="url(#arrow)"/>
+                        </g>
+                        <g class="flow-arrow-out" style="transform-origin:20px 20px;animation-delay:0.5s">
+                          <path d="M26 18 L34 14" stroke="#999" stroke-width="1" marker-end="url(#arrow)"/>
+                          <path d="M26 22 L34 26" stroke="#999" stroke-width="1" marker-end="url(#arrow)"/>
+                        </g></svg>
+                      </div>
+                      <span class="role-name">Transceiver</span>
+                      <span class="role-desc">Balanced hub</span>
+                    </button>
+                    <button class="role-btn channeler" data-role="channeler">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40">
+                        <circle cx="8" cy="12" r="2" fill="#999"/>
+                        <circle cx="8" cy="28" r="2" fill="#999"/>
+                        <circle cx="20" cy="20" r="3" fill="#16a085"/>
+                        <circle cx="32" cy="20" r="2" fill="#999"/>
+                        <path d="M10 13 L17 18" stroke="#999" stroke-width="1" class="flow-arrow-in"/>
+                        <path d="M10 27 L17 22" stroke="#999" stroke-width="1" class="flow-arrow-in" style="animation-delay:0.3s"/>
+                        <path d="M23 20 L30 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)" class="flow-arrow-out"/></svg>
+                      </div>
+                      <span class="role-name">Channeler</span>
+                      <span class="role-desc">Directs flow</span>
+                    </button>
+                    <button class="role-btn chain" data-role="chain">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40">
+                        <circle cx="6" cy="20" r="2" fill="#999"/>
+                        <circle cx="20" cy="20" r="3" fill="#27ae60"/>
+                        <circle cx="34" cy="20" r="2" fill="#999"/>
+                        <path d="M8 20 L17 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)" class="flow-arrow-in"/>
+                        <path d="M23 20 L32 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)" class="flow-arrow-out" style="animation-delay:0.7s"/></svg>
+                      </div>
+                      <span class="role-name">Chain</span>
+                      <span class="role-desc">WoM link</span>
+                    </button>
+                  </div>
+
+                  <div class="text-xs text-gray mb-4 font-semibold">Flow Regulation</div>
+                  <div class="grid-5 gap-8 mb-12" id="roleButtonsFlow">
+                    <button class="role-btn dam" data-role="dam">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="5" fill="#f39c12"/>
+                        <g class="flow-arrow-in" style="transform-origin:20px 20px">
+                          <path d="M2 10 L13 17" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M2 20 L13 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M2 30 L13 23" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M10 6 L16 14" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M10 34 L16 26" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g>
+                        <path d="M27 20 L36 20" stroke="#999" stroke-width="1" marker-end="url(#arrow)" opacity="0.3"/></svg>
+                      </div>
+                      <span class="role-name">Dam</span>
+                      <span class="role-desc">Info selector</span>
+                    </button>
+                    <button class="role-btn reducer" data-role="reducer">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="4" fill="#f1c40f"/>
+                        <g class="flow-arrow-in" style="transform-origin:20px 20px">
+                          <path d="M4 14 L14 18" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M4 26 L14 22" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M8 8 L15 15" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g>
+                        <path d="M26 20 L34 20" stroke="#999" stroke-width="1" marker-end="url(#arrow)" opacity="0.4"/></svg>
+                      </div>
+                      <span class="role-name">Reducer</span>
+                      <span class="role-desc">Filters flow</span>
+                    </button>
+                  </div>
+
+                  <div class="text-xs text-gray mb-4 font-semibold">Receivers & Peripheral</div>
+                  <div class="grid-5 gap-8 mb-12" id="roleButtonsReceive">
+                    <button class="role-btn receiver" data-role="receiver">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="4" fill="#7f8c8d"/>
+                        <g class="flow-arrow-in" style="transform-origin:20px 20px">
+                          <path d="M4 12 L14 17" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M4 20 L14 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M4 28 L14 23" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g></svg>
+                      </div>
+                      <span class="role-name">Receiver</span>
+                      <span class="role-desc">Pure listener</span>
+                    </button>
+                    <button class="role-btn receiver_branch" data-role="receiver_branch">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40">
+                        <circle cx="8" cy="20" r="2" fill="#999"/>
+                        <circle cx="28" cy="20" r="3" fill="#95a5a6"/>
+                        <path d="M10 20 L25 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)" class="flow-arrow-in"/></svg>
+                      </div>
+                      <span class="role-name">Recv Branch</span>
+                      <span class="role-desc">Single source</span>
+                    </button>
+                    <button class="role-btn blackhole" data-role="blackhole">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="6" fill="#2c3e50" class="flow-pulse"/>
+                        <g class="flow-arrow-in" style="transform-origin:20px 20px">
+                          <path d="M2 8 L12 15" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M2 20 L12 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M2 32 L12 25" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M20 2 L20 12" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M38 20 L28 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M34 8 L26 14" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g></svg>
+                      </div>
+                      <span class="role-name">Blackhole</span>
+                      <span class="role-desc">Absorbs all</span>
+                    </button>
+                    <button class="role-btn idle" data-role="idle">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40">
+                        <circle cx="20" cy="20" r="3" fill="#bdc3c7"/>
+                        <path d="M8 16 L15 18" stroke="#999" stroke-width="1" opacity="0.4"/>
+                        <circle cx="6" cy="15" r="1.5" fill="#ddd"/></svg>
+                      </div>
+                      <span class="role-name">Idle</span>
+                      <span class="role-desc">Passive</span>
+                    </button>
+                  </div>
+
+                  <div class="text-xs text-gray mb-4 font-semibold">Emitters</div>
+                  <div class="grid-5 gap-8" id="roleButtonsEmit">
+                    <button class="role-btn emitter" data-role="emitter">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="4" fill="#e67e22"/>
+                        <g class="flow-arrow-out" style="transform-origin:20px 20px">
+                          <path d="M26 17 L36 12" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M26 20 L38 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                          <path d="M26 23 L36 28" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)"/>
+                        </g></svg>
+                      </div>
+                      <span class="role-name">Emitter</span>
+                      <span class="role-desc">Info source</span>
+                    </button>
+                    <button class="role-btn emitter_branch" data-role="emitter_branch">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40">
+                        <circle cx="12" cy="20" r="3" fill="#d68910"/>
+                        <circle cx="32" cy="20" r="2" fill="#999"/>
+                        <path d="M15 20 L30 20" stroke="#999" stroke-width="1.5" marker-end="url(#arrow)" class="flow-arrow-out"/></svg>
+                      </div>
+                      <span class="role-name">Emit Branch</span>
+                      <span class="role-desc">Single target</span>
+                    </button>
+                    <button class="role-btn low_emitter" data-role="low_emitter">
+                      <div class="role-icon">
+                        <svg viewBox="0 0 40 40">
+                        <circle cx="20" cy="20" r="3" fill="#aab7b8"/>
+                        <path d="M24 20 L34 20" stroke="#999" stroke-width="1" marker-end="url(#arrow)" opacity="0.5"/></svg>
+                      </div>
+                      <span class="role-name">Low Emitter</span>
+                      <span class="role-desc">Weak source</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="mb-16">
+                  <label class="text-xs text-gray mb-8" style="display:block">Actor Type</label>
+                  <div class="grid-4 gap-8">
+                    <button class="btn btn-sm actor-type-btn" data-type="organization">Organization</button>
+                    <button class="btn btn-sm actor-type-btn" data-type="individual">Individual</button>
+                    <button class="btn btn-sm actor-type-btn" data-type="project">Project/Event</button>
+                    <button class="btn btn-sm actor-type-btn" data-type="media">Media/News</button>
+                  </div>
+                </div>
+
+                <div class="mb-16">
+                  <label class="text-xs text-gray">Coding Notes</label>
+                  <textarea class="textarea" id="codingNotes" placeholder="Any notes about this actor..."></textarea>
+                </div>
+
+                <div class="grid-2">
+                  <button class="btn" onclick="skipActor()"><i class="fas fa-forward"></i> Skip</button>
+                  <button class="btn btn-primary" onclick="saveCoding()"><i class="fas fa-save"></i> Save & Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Browse Screen -->
+      <div class="screen" id="screen-browse">
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-table"></i> All Actors</span>
+            <span class="text-sm text-gray" id="browseCount">0 actors</span>
+          </div>
+          <div class="card-body">
+            <table id="actorTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Handle</th>
+                  <th>Community</th>
+                  <th>Role</th>
+                  <th>Type</th>
+                  <th>Degree</th>
+                </tr>
+              </thead>
+              <tbody id="actorTableBody">
+                <tr><td colspan="6" class="text-center text-gray">Load demo data to see actors.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Screen -->
+      <div class="screen" id="screen-network">
+        <div class="grid-4 mb-16">
+          <div class="stat-box">
+            <div class="stat-val" id="networkNodes">0</div>
+            <div class="stat-label">Nodes</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="networkEdges">0</div>
+            <div class="stat-label">Edges</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="networkDensity">0</div>
+            <div class="stat-label">Density</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="networkCommunities">0</div>
+            <div class="stat-label">Communities</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-project-diagram"></i> Mention Network</span>
+            <div class="flex gap-8">
+              <select class="select" style="width:150px" id="networkColor" onchange="renderNetwork()">
+                <option value="role">Color by Role</option>
+                <option value="community">Color by Community</option>
+                <option value="type">Color by Type</option>
+              </select>
+              <button class="btn btn-sm" onclick="exportNetworkImage()"><i class="fas fa-camera"></i> Export</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="networkPlot" class="network-container"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Communities Screen -->
+      <div class="screen" id="screen-communities">
+        <div class="grid-2 mb-16">
+          <div class="card">
+            <div class="card-header">
+              <span><i class="fas fa-chart-pie"></i> Role Distribution</span>
+            </div>
+            <div class="card-body">
+              <div id="roleDistChart" style="height:300px"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <span><i class="fas fa-chart-bar"></i> Community Sizes</span>
+            </div>
+            <div class="card-body">
+              <div id="communityChart" style="height:300px"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-th-large"></i> Role × Community Breakdown</span>
+          </div>
+          <div class="card-body">
+            <div id="roleCommunityChart" style="height:350px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Codebook Screen -->
+      <div class="screen" id="screen-codebook">
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-book"></i> Network Role Codebook</span>
+          </div>
+          <div class="card-body">
+            <div class="tabs">
+              <div class="tab active" data-tab="roles">Network Roles</div>
+              <div class="tab" data-tab="types">Actor Types</div>
+              <div class="tab" data-tab="guidelines">Guidelines</div>
+            </div>
+
+            <div class="tab-content active" id="tab-roles">
+              <h4 class="mb-12">Network Role Categories</h4>
+              <p class="text-sm text-gray mb-16">Based on <a href="https://github.com/davidemiceli/watch-complexity" target="_blank">watch-complexity</a> influence typology (Miceli, 2018)</p>
+
+              <h5 class="mb-8" style="color:#c0392b">High Influence Roles</h5>
+              <table class="mb-16">
+                <thead>
+                  <tr><th>Role</th><th>Description</th><th>Characteristics</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="tag tag-tophub">TopHub</span></td>
+                    <td>The most important hub of the entire network. Main engine of information exchange.</td>
+                    <td>Highest influence score, balanced in/out flow</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-hub">Hub</span></td>
+                    <td>Key node that manages flows and strives for information distribution.</td>
+                    <td>High influence, balanced in/out ratio</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-megamplifier">Megamplifier</span></td>
+                    <td>Listens little but talks too much. Acts as megaphone to connected nodes.</td>
+                    <td>Very high out-degree, low in-degree</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-amplifier">Amplifier</span></td>
+                    <td>Talks more than listens. Increases the flow of information.</td>
+                    <td>High out-degree ratio, moderate connections</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-vulcano">Vulcano</span></td>
+                    <td>Spreads huge flow of information without receiving. Super active producer, ignored by incoming flow.</td>
+                    <td>Extremely high out-degree, zero/near-zero in-degree</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h5 class="mb-8" style="color:#2980b9">Bridging & Connecting Roles</h5>
+              <table class="mb-16">
+                <thead>
+                  <tr><th>Role</th><th>Description</th><th>Characteristics</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="tag tag-bridge">Bridge</span></td>
+                    <td>Ties together two hubs allowing direct passage of information.</td>
+                    <td>High betweenness, connects distinct clusters</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-connector">Connector</span></td>
+                    <td>Only connects together two common nodes.</td>
+                    <td>Moderate betweenness, low clustering</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-transceiver">Transceiver</span></td>
+                    <td>Medium or small hub balanced between production and reception. Receives and emits similar amounts.</td>
+                    <td>Balanced in/out ratio, moderate degree</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-channeler">Channeler</span></td>
+                    <td>Directs information channeled by a reducer or dam into a chain.</td>
+                    <td>Moderate degree, specific flow direction</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-chain">Chain</span></td>
+                    <td>Link in a directed word-of-mouth chain. Receives and passes to next unique connected node.</td>
+                    <td>Exactly one in-link, one out-link</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h5 class="mb-8" style="color:#f39c12">Flow Regulation Roles</h5>
+              <table class="mb-16">
+                <thead>
+                  <tr><th>Role</th><th>Description</th><th>Characteristics</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="tag tag-dam">Dam</span></td>
+                    <td>Listens too much but talks very little. Acts as information selector or barrier to spread.</td>
+                    <td>Very high in-degree, very low out-degree</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-reducer">Reducer</span></td>
+                    <td>Negative regulator reducing the flow of information. Like a Dam but not as strong.</td>
+                    <td>High in-degree ratio, moderate activity</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h5 class="mb-8" style="color:#7f8c8d">Receiver & Peripheral Roles</h5>
+              <table class="mb-16">
+                <thead>
+                  <tr><th>Role</th><th>Description</th><th>Characteristics</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="tag tag-receiver">Receiver</span></td>
+                    <td>Holds only incoming connections. Pure listening role, what it receives does not return.</td>
+                    <td>Only in-degree, zero out-degree</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-receiver_branch">Receiver Branch</span></td>
+                    <td>Receives information only from single connected node.</td>
+                    <td>Exactly one incoming connection</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-blackhole">Blackhole</span></td>
+                    <td>Absorbs huge amount of information and emits nothing. Totally inactive in producing.</td>
+                    <td>Very high in-degree, zero out-degree</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-idle">Idle</span></td>
+                    <td>Passive role, listens a bit and is mute.</td>
+                    <td>Low in-degree, zero/near-zero out-degree</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h5 class="mb-8" style="color:#e67e22">Emitter Roles</h5>
+              <table>
+                <thead>
+                  <tr><th>Role</th><th>Description</th><th>Characteristics</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="tag tag-emitter">Emitter</span></td>
+                    <td>Does not listen, only a source of information.</td>
+                    <td>Only out-degree, zero in-degree</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-emitter_branch">Emitter Branch</span></td>
+                    <td>Source of information only for the single node to which connected.</td>
+                    <td>Exactly one outgoing connection</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-low_emitter">Low Emitter</span></td>
+                    <td>Speaks little and never listens. Very weak emitter.</td>
+                    <td>Low out-degree, zero in-degree</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-content" id="tab-types">
+              <h4 class="mb-12">Actor Type Categories</h4>
+
+              <table>
+                <thead>
+                  <tr><th>Type</th><th>Description</th><th>Examples</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="tag">Organization</span></td>
+                    <td>Official organizational accounts</td>
+                    <td>@EITClimate, @InnoEnergy, universities, companies</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag">Individual</span></td>
+                    <td>Personal accounts of professionals</td>
+                    <td>Researchers, entrepreneurs, executives, policymakers</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag">Project/Event</span></td>
+                    <td>Specific programs, events, or initiatives</td>
+                    <td>Conferences, accelerator cohorts, campaigns</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag">Media/News</span></td>
+                    <td>News outlets, journalists, publications</td>
+                    <td>Trade publications, climate journalists, tech news</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-content" id="tab-guidelines">
+              <h4 class="mb-12">Coding Guidelines</h4>
+
+              <div class="help-section mb-16">
+                <h4>Using Network Metrics</h4>
+                <p>Metrics provide structural hints but require human judgment. High degree alone doesn't mean Hub -
+                   consider the quality and diversity of connections. Low clustering with high betweenness suggests Bridge.</p>
+              </div>
+
+              <div class="help-section mb-16" style="background:#fef2f2;border-color:#fca5a5">
+                <h4 style="color:#991b1b">Common Mistakes</h4>
+                <p style="color:#7f1d1d">
+                  - Assigning "Hub" to any account with many followers<br>
+                  - Confusing "Amplifier" with anyone who retweets<br>
+                  - Labeling inactive accounts as "Peripheral" without checking history
+                </p>
+              </div>
+
+              <div class="help-section" style="background:#f0fdf4;border-color:#22c55e">
+                <h4 style="color:#166534">Best Practices</h4>
+                <p style="color:#166534">
+                  - Review sample tweets for context<br>
+                  - Consider the actor's apparent purpose/mission<br>
+                  - Check if cross-community mentions suggest Bridge role<br>
+                  - Note uncertainty in coding notes
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================================
+// STATE
+// ============================================================================
+const state = {
+  actors: [],
+  codings: {},
+  currentActorIndex: -1,
+  currentScreen: 'code',
+  filteredActors: [],
+  network: { nodes: [], edges: [] }
+};
+
+// Demo data
+const DEMO_ACTORS = [
+  { id: "a001", name: "EIT Climate-KIC", handle: "@EITClimate", bio: "Europe's largest public-private innovation partnership focused on climate innovation.", community: "Climate", degree: 245, betweenness: 0.85, clustering: 0.42, retweets: 890, tweets: ["Excited to announce our new accelerator cohort! 15 startups from 12 countries #ClimateInnovation", "Just published our 2024 impact report - over 500 startups supported since 2010", "Join us at #COP28 for our innovation showcase"] },
+  { id: "a002", name: "Hans Schulz", handle: "@hansschulz_vc", bio: "Climate tech investor. Partner at GreenTech Ventures. EIT alumnus.", community: "Climate", degree: 156, betweenness: 0.72, clustering: 0.38, retweets: 2340, tweets: ["Great pitch day at @EITClimate - the talent pool keeps getting stronger", "Thread on why carbon capture needs more funding 🧵", "Congratulations to @Climeworks on the new round!"] },
+  { id: "a003", name: "EIT Digital", handle: "@EIT_Digital", bio: "Leading digital innovation & entrepreneurship across Europe.", community: "Digital", degree: 198, betweenness: 0.78, clustering: 0.45, retweets: 650, tweets: ["Applications now open for our flagship Master programme", "AI for good - our latest report on responsible AI development", "Proud to support 200+ digital ventures across Europe"] },
+  { id: "a004", name: "Dr. Maria Santos", handle: "@mariasantos_ai", bio: "AI researcher at TU Munich. EIT Digital fellow. Interested in climate applications of ML.", community: "Digital", degree: 89, betweenness: 0.65, clustering: 0.28, retweets: 1200, tweets: ["New paper out on using ML for energy grid optimization", "Attending both #ClimateWeek and #NeurIPS this year - the fields are converging", "Bridging AI and sustainability - thread on my recent work"] },
+  { id: "a005", name: "InnoEnergy", handle: "@InnoEnergy", bio: "Supporting sustainable energy innovation since 2010.", community: "Energy", degree: 210, betweenness: 0.80, clustering: 0.48, retweets: 720, tweets: ["Northvolt just raised another €1B - proud to have supported them from day one", "Our Highway programme has accelerated 120+ energy startups", "Join our ecosystem - applications open for 2024"] },
+  { id: "a006", name: "CleanTech Weekly", handle: "@cleantechweekly", bio: "Your source for cleantech news and analysis.", community: "Media", degree: 134, betweenness: 0.55, clustering: 0.22, retweets: 3500, tweets: ["BREAKING: EU announces €2B green hydrogen fund", "Interview with @EITClimate CEO on the future of climate innovation", "Weekly roundup: Top 10 cleantech funding rounds"] },
+  { id: "a007", name: "EIT Food", handle: "@EITFood", bio: "Transforming the food system through innovation.", community: "Food", degree: 167, betweenness: 0.68, clustering: 0.52, retweets: 480, tweets: ["Alternative proteins are the future - our latest startups are proving it", "From farm to fork - how we're building a sustainable food system", "Applications open for FoodSparks accelerator"] },
+  { id: "a008", name: "Peter Van Berg", handle: "@petervanberg", bio: "Circular economy advocate. Advisor to @EIT_RawMaterials.", community: "RawMaterials", degree: 67, betweenness: 0.48, clustering: 0.55, retweets: 890, tweets: ["The future is circular - thread on battery recycling", "Great discussion at #EUGreenWeek on critical minerals", "Connecting mining tech with climate goals"] },
+  { id: "a009", name: "TechEU", handle: "@tech_eu", bio: "European tech news and startup coverage.", community: "Media", degree: 112, betweenness: 0.52, clustering: 0.25, retweets: 2800, tweets: ["EIT ecosystem startups raised €3.2B in 2023", "Profile: How Northvolt became Europe's battery champion", "Weekly funding roundup - climate tech dominates again"] },
+  { id: "a010", name: "EIT Health", handle: "@EITHealth", bio: "European health innovation initiative.", community: "Health", degree: 178, betweenness: 0.70, clustering: 0.50, retweets: 520, tweets: ["Digital health is transforming patient care", "Our accelerator has supported 150+ health startups", "Join us at #HIMSS2024 to meet our portfolio companies"] },
+  { id: "a011", name: "Dr. Anna Kowalski", handle: "@annakowalski", bio: "Health economist. Research lead @EITHealth. Passionate about equitable healthcare.", community: "Health", degree: 56, betweenness: 0.35, clustering: 0.62, retweets: 340, tweets: ["New research on the economics of digital health adoption", "Excited to present at #HealthInnovation summit", "Thread on why health tech needs better evaluation frameworks"] },
+  { id: "a012", name: "GreenBiz", handle: "@GreenBiz", bio: "Sustainability business news.", community: "Media", degree: 145, betweenness: 0.58, clustering: 0.20, retweets: 4200, tweets: ["How EIT is shaping Europe's green transition", "Interview series: Climate tech founders share lessons", "Corporate sustainability is evolving - here's how"] },
+  { id: "a013", name: "EIT Urban Mobility", handle: "@EIT_UrbanMob", bio: "Sustainable urban transport innovation.", community: "Mobility", degree: 142, betweenness: 0.62, clustering: 0.47, retweets: 380, tweets: ["Cities are the frontline of the mobility transition", "Our startups are reshaping how cities move", "Partnerships with 50+ European cities and counting"] },
+  { id: "a014", name: "Lisa Chen", handle: "@lisachen_mob", bio: "Urban mobility researcher at KTH. Interested in shared mobility and equity.", community: "Mobility", degree: 78, betweenness: 0.58, clustering: 0.32, retweets: 560, tweets: ["Shared mobility works - but only with the right policies", "Cross-posting between mobility and climate circles today", "New paper on micromobility adoption patterns"] },
+  { id: "a015", name: "EU Innovation Council", handle: "@EUeic", bio: "Official EU Innovation Council account.", community: "Policy", degree: 189, betweenness: 0.75, clustering: 0.35, retweets: 1100, tweets: ["€10B to support Europe's most innovative companies", "Congratulations to all EIC Accelerator winners", "Building Europe's innovation ecosystem together with @EITeu"] },
+  { id: "a016", name: "Climate Startup Guy", handle: "@climatestartup", bio: "Building in climate. Previously @Climeworks. Now stealth mode.", community: "Climate", degree: 98, betweenness: 0.42, clustering: 0.48, retweets: 1800, tweets: ["Left my job to build in climate - best decision ever", "The EIT network has been incredible for connections", "Hot take: hardware startups are undervalued in climate"] },
+  { id: "a017", name: "EIT RawMaterials", handle: "@EIT_RawMat", bio: "Sustainable raw materials innovation.", community: "RawMaterials", degree: 124, betweenness: 0.55, clustering: 0.53, retweets: 290, tweets: ["Critical minerals are critical - our approach to supply chain resilience", "Mining innovation doesn't get enough attention", "Circular economy starts with better materials management"] },
+  { id: "a018", name: "Nordic Climate Ventures", handle: "@nordicclimate", bio: "Early-stage climate fund. Stockholm based.", community: "Climate", degree: 87, betweenness: 0.48, clustering: 0.42, retweets: 680, tweets: ["Announcing our Fund II - €150M for Nordic climate tech", "Portfolio company @Northvolt crushing it", "The Nordics are punching above their weight in climate innovation"] },
+  { id: "a019", name: "EIT Manufacturing", handle: "@EIT_Manu", bio: "Making Europe the global leader in sustainable manufacturing.", community: "Manufacturing", degree: 108, betweenness: 0.52, clustering: 0.55, retweets: 220, tweets: ["Industry 4.0 meets sustainability", "Our network spans 80+ manufacturing partners", "Digitalizing European manufacturing one startup at a time"] },
+  { id: "a020", name: "Prof. James O'Brien", handle: "@jobrien_energy", bio: "Energy systems professor at Imperial. Advisor to InnoEnergy.", community: "Energy", degree: 72, betweenness: 0.45, clustering: 0.58, retweets: 420, tweets: ["The grid needs more than just renewables - we need storage", "Great collaboration between @InnoEnergy and @EITClimate on hydrogen", "Teaching the next generation of energy innovators"] }
+];
+
+// Demo edges (mentions network)
+const DEMO_EDGES = [
+  { source: "a001", target: "a002" }, { source: "a001", target: "a005" }, { source: "a001", target: "a016" },
+  { source: "a002", target: "a016" }, { source: "a002", target: "a018" }, { source: "a003", target: "a004" },
+  { source: "a003", target: "a015" }, { source: "a004", target: "a001" }, { source: "a005", target: "a020" },
+  { source: "a005", target: "a001" }, { source: "a006", target: "a001" }, { source: "a006", target: "a003" },
+  { source: "a006", target: "a005" }, { source: "a006", target: "a012" }, { source: "a007", target: "a001" },
+  { source: "a008", target: "a017" }, { source: "a008", target: "a001" }, { source: "a009", target: "a003" },
+  { source: "a009", target: "a006" }, { source: "a010", target: "a011" }, { source: "a010", target: "a015" },
+  { source: "a011", target: "a010" }, { source: "a012", target: "a001" }, { source: "a012", target: "a005" },
+  { source: "a013", target: "a014" }, { source: "a013", target: "a015" }, { source: "a014", target: "a004" },
+  { source: "a015", target: "a001" }, { source: "a015", target: "a003" }, { source: "a015", target: "a005" },
+  { source: "a016", target: "a001" }, { source: "a016", target: "a002" }, { source: "a017", target: "a008" },
+  { source: "a018", target: "a001" }, { source: "a018", target: "a002" }, { source: "a019", target: "a003" },
+  { source: "a020", target: "a005" }, { source: "a020", target: "a001" }
+];
+
+// ============================================================================
+// INITIALIZATION
+// ============================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  setupNavigation();
+  setupTabs();
+  setupRoleButtons();
+  setupTypeButtons();
+  updateStats();
+});
+
+function setupNavigation() {
+  document.querySelectorAll('.nav a').forEach(link => {
+    link.addEventListener('click', () => showScreen(link.dataset.screen));
+  });
+}
+
+function setupTabs() {
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabId = tab.dataset.tab;
+      const parent = tab.closest('.card-body');
+      parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+    });
+  });
+}
+
+function setupRoleButtons() {
+  document.querySelectorAll('.role-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+}
+
+function setupTypeButtons() {
+  document.querySelectorAll('.actor-type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.actor-type-btn').forEach(b => b.classList.remove('btn-primary'));
+      btn.classList.add('btn-primary');
+    });
+  });
+}
+
+// ============================================================================
+// NAVIGATION
+// ============================================================================
+function showScreen(screenId) {
+  state.currentScreen = screenId;
+  document.querySelectorAll('.nav a').forEach(link => {
+    link.classList.toggle('active', link.dataset.screen === screenId);
+  });
+  document.querySelectorAll('.screen').forEach(screen => {
+    screen.classList.toggle('active', screen.id === 'screen-' + screenId);
+  });
+
+  if (screenId === 'browse') renderBrowseTable();
+  if (screenId === 'network') renderNetwork();
+  if (screenId === 'communities') renderCommunities();
+}
+
+// ============================================================================
+// DATA LOADING
+// ============================================================================
+function loadDemoData() {
+  state.actors = [...DEMO_ACTORS];
+  state.network.nodes = state.actors;
+  state.network.edges = [...DEMO_EDGES];
+  state.codings = {};
+  state.filteredActors = [...state.actors];
+
+  // Update community filter
+  const communities = [...new Set(state.actors.map(a => a.community))];
+  const communitySelect = document.getElementById('filterCommunity');
+  communitySelect.innerHTML = '<option value="all">All Communities</option>' +
+    communities.map(c => `<option value="${c}">${c}</option>`).join('');
+
+  updateStats();
+  renderActorList();
+
+  if (state.actors.length > 0) {
+    selectActor(0);
+  }
+
+  toast('Demo data loaded: 20 network actors');
+}
+
+// ============================================================================
+// ACTOR LIST
+// ============================================================================
+function renderActorList() {
+  const container = document.getElementById('actorList');
+
+  if (state.filteredActors.length === 0) {
+    container.innerHTML = `<div class="text-center text-gray" style="padding:40px">No actors match filters.</div>`;
+    return;
+  }
+
+  container.innerHTML = state.filteredActors.map(actor => {
+    const coding = state.codings[actor.id];
+    const isSelected = state.currentActorIndex === state.actors.indexOf(actor);
+    const roleTag = coding ? `<span class="tag tag-${coding.role}">${coding.role}</span>` : '';
+
+    return `
+      <div class="actor-card ${coding ? 'coded' : ''} ${isSelected ? 'selected' : ''}"
+           onclick="selectActor(${state.actors.indexOf(actor)})">
+        <div class="actor-name">${actor.name} ${roleTag}</div>
+        <div class="actor-handle">${actor.handle}</div>
+        <div class="actor-meta flex justify-between">
+          <span>Community: ${actor.community}</span>
+          <span>Degree: ${actor.degree}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const pendingCount = state.filteredActors.filter(a => !state.codings[a.id]).length;
+  document.getElementById('queueCount').textContent = `${pendingCount} pending`;
+}
+
+function selectActor(index) {
+  if (index < 0 || index >= state.actors.length) return;
+
+  state.currentActorIndex = index;
+  const actor = state.actors[index];
+  const coding = state.codings[actor.id];
+
+  document.getElementById('codingCard').style.display = 'block';
+  document.getElementById('currentActorId').textContent = actor.id;
+  document.getElementById('displayActorName').textContent = actor.name;
+  document.getElementById('displayActorHandle').textContent = actor.handle;
+  document.getElementById('displayActorBio').textContent = actor.bio;
+
+  // Calculate metric percentages (normalized to max in dataset)
+  const maxDegree = Math.max(...state.actors.map(a => a.degree));
+  const maxBetweenness = Math.max(...state.actors.map(a => a.betweenness));
+  const maxRetweets = Math.max(...state.actors.map(a => a.retweets));
+
+  document.getElementById('metricDegree').style.width = (actor.degree / maxDegree * 100) + '%';
+  document.getElementById('metricDegreeVal').textContent = actor.degree;
+  document.getElementById('metricBetweenness').style.width = (actor.betweenness / maxBetweenness * 100) + '%';
+  document.getElementById('metricBetweennessVal').textContent = actor.betweenness.toFixed(2);
+  document.getElementById('metricClustering').style.width = (actor.clustering * 100) + '%';
+  document.getElementById('metricClusteringVal').textContent = actor.clustering.toFixed(2);
+  document.getElementById('metricRetweets').style.width = (actor.retweets / maxRetweets * 100) + '%';
+  document.getElementById('metricRetweetsVal').textContent = actor.retweets;
+
+  // Sample tweets
+  document.getElementById('sampleTweets').innerHTML = actor.tweets.map(t => `
+    <div class="tweet-sample">${t}</div>
+  `).join('');
+
+  // Reset role buttons
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.actor-type-btn').forEach(b => b.classList.remove('btn-primary'));
+
+  // Restore coding if exists
+  if (coding) {
+    const roleBtn = document.querySelector(`.role-btn[data-role="${coding.role}"]`);
+    if (roleBtn) roleBtn.classList.add('selected');
+
+    const typeBtn = document.querySelector(`.actor-type-btn[data-type="${coding.actorType}"]`);
+    if (typeBtn) typeBtn.classList.add('btn-primary');
+
+    document.getElementById('codingNotes').value = coding.notes || '';
+  } else {
+    document.getElementById('codingNotes').value = '';
+  }
+
+  renderActorList();
+}
+
+function saveCoding() {
+  if (state.currentActorIndex < 0) return;
+
+  const actor = state.actors[state.currentActorIndex];
+
+  const selectedRole = document.querySelector('.role-btn.selected');
+  const selectedType = document.querySelector('.actor-type-btn.btn-primary');
+
+  if (!selectedRole) {
+    toast('Please select a network role');
+    return;
+  }
+
+  state.codings[actor.id] = {
+    role: selectedRole.dataset.role,
+    actorType: selectedType ? selectedType.dataset.type : null,
+    notes: document.getElementById('codingNotes').value,
+    timestamp: new Date().toISOString()
+  };
+
+  updateStats();
+  renderActorList();
+  toast(`${actor.name} coded as ${selectedRole.dataset.role}`);
+
+  // Move to next uncoded
+  const nextUncoded = state.actors.findIndex((a, idx) =>
+    idx > state.currentActorIndex && !state.codings[a.id]
+  );
+
+  if (nextUncoded >= 0) {
+    setTimeout(() => selectActor(nextUncoded), 300);
+  }
+}
+
+function skipActor() {
+  const nextIndex = state.currentActorIndex + 1;
+  if (nextIndex < state.actors.length) {
+    selectActor(nextIndex);
+  }
+}
+
+// ============================================================================
+// FILTERS
+// ============================================================================
+function applyFilters() {
+  const status = document.getElementById('filterStatus').value;
+  const community = document.getElementById('filterCommunity').value;
+  const role = document.getElementById('filterRole').value;
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  state.filteredActors = state.actors.filter(a => {
+    if (status === 'pending' && state.codings[a.id]) return false;
+    if (status === 'coded' && !state.codings[a.id]) return false;
+
+    if (community !== 'all' && a.community !== community) return false;
+
+    if (role !== 'all') {
+      const coding = state.codings[a.id];
+      if (!coding || coding.role !== role) return false;
+    }
+
+    if (search && !`${a.name} ${a.handle} ${a.bio}`.toLowerCase().includes(search)) return false;
+
+    return true;
+  });
+
+  renderActorList();
+}
+
+// ============================================================================
+// BROWSE TABLE
+// ============================================================================
+function renderBrowseTable() {
+  const tbody = document.getElementById('actorTableBody');
+
+  if (state.actors.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-gray">Load demo data.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = state.actors.map(a => {
+    const coding = state.codings[a.id];
+    const roleTag = coding ? `<span class="tag tag-${coding.role}">${coding.role}</span>` : '-';
+    const typeTag = coding && coding.actorType ? `<span class="tag tag-outline">${coding.actorType}</span>` : '-';
+
+    return `
+      <tr onclick="selectActor(${state.actors.indexOf(a)}); showScreen('code')" style="cursor:pointer">
+        <td><strong>${a.name}</strong></td>
+        <td>${a.handle}</td>
+        <td>${a.community}</td>
+        <td>${roleTag}</td>
+        <td>${typeTag}</td>
+        <td>${a.degree}</td>
+      </tr>
+    `;
+  }).join('');
+
+  document.getElementById('browseCount').textContent = `${state.actors.length} actors`;
+}
+
+// ============================================================================
+// NETWORK
+// ============================================================================
+function renderNetwork() {
+  if (state.actors.length === 0) {
+    document.getElementById('networkPlot').innerHTML = '<p class="text-gray text-center" style="padding:40px">Load data to see network.</p>';
+    return;
+  }
+
+  const colorBy = document.getElementById('networkColor').value;
+  const roleColors = { hub: '#e74c3c', bridge: '#9b59b6', amplifier: '#3498db', coordinator: '#2ecc71', peripheral: '#95a5a6' };
+  const communityColors = { Climate: '#27ae60', Digital: '#3498db', Energy: '#f39c12', Food: '#2ecc71', Health: '#e74c3c', Media: '#9b59b6', Mobility: '#1abc9c', RawMaterials: '#95a5a6', Manufacturing: '#e67e22', Policy: '#34495e' };
+  const typeColors = { organization: '#3498db', individual: '#2ecc71', project: '#f39c12', media: '#9b59b6' };
+
+  // Position nodes
+  const nodes = state.actors.map((a, i) => ({
+    ...a,
+    x: Math.cos(2 * Math.PI * i / state.actors.length) * 0.8,
+    y: Math.sin(2 * Math.PI * i / state.actors.length) * 0.8,
+    coding: state.codings[a.id]
+  }));
+
+  const nodeMap = {};
+  nodes.forEach(n => nodeMap[n.id] = n);
+
+  // Edge trace
+  const edgeX = [], edgeY = [];
+  state.network.edges.forEach(e => {
+    const source = nodeMap[e.source];
+    const target = nodeMap[e.target];
+    if (source && target) {
+      edgeX.push(source.x, target.x, null);
+      edgeY.push(source.y, target.y, null);
+    }
+  });
+
+  const edgeTrace = {
+    x: edgeX, y: edgeY,
+    mode: 'lines',
+    type: 'scatter',
+    line: { width: 1, color: '#ddd' },
+    hoverinfo: 'none'
+  };
+
+  // Node colors
+  let nodeColors;
+  if (colorBy === 'role') {
+    nodeColors = nodes.map(n => n.coding ? roleColors[n.coding.role] || '#999' : '#999');
+  } else if (colorBy === 'community') {
+    nodeColors = nodes.map(n => communityColors[n.community] || '#999');
+  } else {
+    nodeColors = nodes.map(n => n.coding ? typeColors[n.coding.actorType] || '#999' : '#999');
+  }
+
+  const nodeTrace = {
+    x: nodes.map(n => n.x),
+    y: nodes.map(n => n.y),
+    mode: 'markers+text',
+    type: 'scatter',
+    text: nodes.map(n => n.name.split(' ')[0]),
+    textposition: 'top center',
+    textfont: { size: 9, family: 'Inter' },
+    marker: {
+      size: nodes.map(n => 10 + Math.sqrt(n.degree)),
+      color: nodeColors,
+      line: { width: 2, color: 'white' }
+    },
+    hovertemplate: '<b>%{customdata}</b><extra></extra>',
+    customdata: nodes.map(n => n.name)
+  };
+
+  Plotly.newPlot('networkPlot', [edgeTrace, nodeTrace], {
+    showlegend: false,
+    hovermode: 'closest',
+    xaxis: { showgrid: false, zeroline: false, showticklabels: false },
+    yaxis: { showgrid: false, zeroline: false, showticklabels: false },
+    margin: { l: 20, r: 20, t: 20, b: 20 },
+    paper_bgcolor: 'white'
+  }, { responsive: true });
+
+  document.getElementById('networkNodes').textContent = nodes.length;
+  document.getElementById('networkEdges').textContent = state.network.edges.length;
+  document.getElementById('networkDensity').textContent = (state.network.edges.length / (nodes.length * (nodes.length - 1) / 2)).toFixed(3);
+  document.getElementById('networkCommunities').textContent = [...new Set(nodes.map(n => n.community))].length;
+}
+
+// ============================================================================
+// COMMUNITIES
+// ============================================================================
+function renderCommunities() {
+  if (state.actors.length === 0) return;
+
+  // Role distribution
+  const roleCounts = { hub: 0, bridge: 0, amplifier: 0, coordinator: 0, peripheral: 0, uncoded: 0 };
+  state.actors.forEach(a => {
+    const coding = state.codings[a.id];
+    if (coding) {
+      roleCounts[coding.role] = (roleCounts[coding.role] || 0) + 1;
+    } else {
+      roleCounts.uncoded++;
+    }
+  });
+
+  Plotly.newPlot('roleDistChart', [{
+    values: Object.values(roleCounts),
+    labels: Object.keys(roleCounts),
+    type: 'pie',
+    marker: { colors: ['#e74c3c', '#9b59b6', '#3498db', '#2ecc71', '#95a5a6', '#bdc3c7'] }
+  }], {
+    margin: { l: 20, r: 20, t: 20, b: 20 },
+    font: { family: 'Inter' },
+    showlegend: true
+  }, { responsive: true });
+
+  // Community sizes
+  const communityCounts = {};
+  state.actors.forEach(a => {
+    communityCounts[a.community] = (communityCounts[a.community] || 0) + 1;
+  });
+
+  Plotly.newPlot('communityChart', [{
+    x: Object.keys(communityCounts),
+    y: Object.values(communityCounts),
+    type: 'bar',
+    marker: { color: '#1da1f2' }
+  }], {
+    margin: { l: 40, r: 20, t: 20, b: 60 },
+    font: { family: 'Inter' }
+  }, { responsive: true });
+
+  // Role × Community
+  const roles = ['hub', 'bridge', 'amplifier', 'coordinator', 'peripheral'];
+  const communities = Object.keys(communityCounts);
+  const heatmapData = roles.map(role => {
+    return communities.map(comm => {
+      return state.actors.filter(a => {
+        const coding = state.codings[a.id];
+        return coding && coding.role === role && a.community === comm;
+      }).length;
+    });
+  });
+
+  Plotly.newPlot('roleCommunityChart', [{
+    z: heatmapData,
+    x: communities,
+    y: roles,
+    type: 'heatmap',
+    colorscale: 'Blues'
+  }], {
+    margin: { l: 100, r: 20, t: 20, b: 80 },
+    font: { family: 'Inter' }
+  }, { responsive: true });
+}
+
+// ============================================================================
+// STATS & EXPORT
+// ============================================================================
+function updateStats() {
+  const total = state.actors.length;
+  const coded = Object.keys(state.codings).length;
+  const pct = total > 0 ? (coded / total * 100) : 0;
+
+  document.getElementById('totalActors').textContent = total;
+  document.getElementById('codedCount').textContent = coded;
+  document.getElementById('pendingCount').textContent = total - coded;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct.toFixed(0) + '% coded';
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+
+      // Handle exported format (with metadata) or raw array
+      if (data.actors && Array.isArray(data.actors)) {
+        state.actors = data.actors.map(a => {
+          if (a.coding) {
+            state.codings[a.id] = a.coding;
+          }
+          return { id: a.id, handle: a.handle, name: a.name, bio: a.bio, community: a.community, degree: a.degree, betweenness: a.betweenness, clustering: a.clustering };
+        });
+      } else if (Array.isArray(data)) {
+        state.actors = data;
+      }
+
+      if (data.codings) {
+        Object.assign(state.codings, data.codings);
+      }
+
+      if (data.network) {
+        state.network = data.network;
+      }
+
+      updateStats();
+      renderActorList();
+      renderBrowseList();
+      updateCommunityFilter();
+      toast(`Imported ${state.actors.length} actors`);
+    } catch (err) {
+      toast('Error parsing JSON: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function exportData() {
+  const data = {
+    metadata: {
+      export_date: new Date().toISOString(),
+      tool: 'RoleBox NetCodes',
+      version: '1.0.0',
+      total: state.actors.length,
+      coded: Object.keys(state.codings).length
+    },
+    actors: state.actors.map(a => ({
+      ...a,
+      coding: state.codings[a.id] || null
+    })),
+    network: state.network
+  };
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'rolebox_netcodes.json';
+  a.click();
+
+  toast('Data exported');
+}
+
+function exportNetworkImage() {
+  Plotly.downloadImage('networkPlot', { format: 'png', width: 1200, height: 800, filename: 'mention_network' });
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show';
+  setTimeout(() => t.className = 'toast', 2500);
+}
+
+// ============================================
+// MODEL ASSIST FUNCTIONS
+// ============================================
+
+let aiSettings = {
+  provider: localStorage.getItem('netcodes_ai_provider') || 'local',
+  apiKey: localStorage.getItem('netcodes_ai_key') || '',
+  localEndpoint: localStorage.getItem('netcodes_ai_endpoint') || 'http://localhost:11434/api/generate',
+  localModel: localStorage.getItem('netcodes_ai_model') || 'phi3:mini',
+  mode: localStorage.getItem('netcodes_ai_mode') || 'suggest'
+};
+
+let aiQueue = [];
+let aiProcessing = false;
+
+function showAISettings() {
+  document.getElementById('aiSettingsModal').style.display = 'flex';
+  document.getElementById('aiProvider').value = aiSettings.provider;
+  document.getElementById('aiMode').value = aiSettings.mode;
+  updateAPIFields();
+  if (aiSettings.provider === 'local') {
+    document.getElementById('aiLocalEndpoint').value = aiSettings.localEndpoint;
+  } else {
+    document.getElementById('aiApiKey').value = aiSettings.apiKey;
+  }
+}
+
+function hideAISettings() {
+  document.getElementById('aiSettingsModal').style.display = 'none';
+}
+
+function updateAPIFields() {
+  const provider = document.getElementById('aiProvider').value;
+  const keyGroup = document.getElementById('apiKeyGroup');
+  const endpointGroup = document.getElementById('localEndpointGroup');
+
+  if (provider === 'local') {
+    keyGroup.style.display = 'none';
+    endpointGroup.style.display = 'block';
+  } else {
+    keyGroup.style.display = 'block';
+    endpointGroup.style.display = 'none';
+  }
+}
+
+function saveAISettings() {
+  aiSettings.provider = document.getElementById('aiProvider').value;
+  aiSettings.mode = document.getElementById('aiMode').value;
+
+  if (aiSettings.provider === 'local') {
+    aiSettings.localEndpoint = document.getElementById('aiLocalEndpoint').value;
+    localStorage.setItem('netcodes_ai_endpoint', aiSettings.localEndpoint);
+  } else {
+    aiSettings.apiKey = document.getElementById('aiApiKey').value;
+    localStorage.setItem('netcodes_ai_key', aiSettings.apiKey);
+  }
+
+  localStorage.setItem('netcodes_ai_provider', aiSettings.provider);
+  localStorage.setItem('netcodes_ai_mode', aiSettings.mode);
+
+  hideAISettings();
+  updateAIStatus();
+  toast('Model settings saved');
+}
+
+function updateAIStatus() {
+  const statusEl = document.getElementById('aiStatus');
+  if (!statusEl) return;
+
+  const hasKey = aiSettings.provider === 'local' || aiSettings.apiKey;
+  if (hasKey) {
+    statusEl.innerHTML = `<span style="color:#27ae60">●</span> ${aiSettings.provider} ready`;
+  } else {
+    statusEl.innerHTML = `<span style="color:#e74c3c">●</span> No API key`;
+  }
+}
+
+async function testAIConnection() {
+  const btn = event.target;
+  btn.disabled = true;
+  btn.textContent = 'Testing...';
+
+  try {
+    const testPrompt = 'Reply with just "OK" to confirm connection.';
+    const response = await callAI(testPrompt);
+    if (response) {
+      toast('Model connection successful!');
+    }
+  } catch (err) {
+    toast('Connection failed: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Test Connection';
+  }
+}
+
+async function callAI(prompt) {
+  if (aiSettings.provider === 'openai') {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${aiSettings.apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 500,
+        temperature: 0.3
+      })
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.error.message);
+    return data.choices[0].message.content;
+  } else if (aiSettings.provider === 'anthropic') {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': aiSettings.apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.error.message);
+    return data.content[0].text;
+  } else if (aiSettings.provider === 'local') {
+    const response = await fetch(aiSettings.localEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: aiSettings.localModel || 'phi3:mini',
+        prompt: prompt,
+        stream: false
+      })
+    });
+    const data = await response.json();
+    return data.response;
+  }
+}
+
+async function runAIAnalysis() {
+  if (!aiSettings.apiKey && aiSettings.provider !== 'local') {
+    toast('Please configure Model settings first');
+    showAISettings();
+    return;
+  }
+
+  // Build priority queue based on mode
+  buildPriorityQueue();
+
+  if (aiQueue.length === 0) {
+    toast('No actors to analyze');
+    return;
+  }
+
+  toast(`Analyzing ${aiQueue.length} actors...`);
+  aiProcessing = true;
+
+  for (let i = 0; i < Math.min(aiQueue.length, 10); i++) {
+    const actor = aiQueue[i];
+    try {
+      const suggestion = await analyzeActor(actor);
+      actor.aiSuggestion = suggestion;
+      renderAIQueue();
+    } catch (err) {
+      console.error('Model analysis error:', err);
+      actor.aiError = err.message;
+    }
+  }
+
+  aiProcessing = false;
+  renderAIQueue();
+  toast('Model analysis complete');
+}
+
+function buildPriorityQueue() {
+  aiQueue = [];
+
+  // Get uncoded or uncertain actors
+  const candidates = actors.filter(a => !a.role_code || a.role_code === 'uncoded');
+
+  if (aiSettings.mode === 'suggest') {
+    // Simple queue of uncoded actors
+    aiQueue = candidates.slice(0, 20);
+  } else if (aiSettings.mode === 'uncertainty') {
+    // Prioritize actors with mixed signals (high degree but low betweenness, etc.)
+    aiQueue = candidates.sort((a, b) => {
+      const aUncertainty = calculateNetworkUncertainty(a);
+      const bUncertainty = calculateNetworkUncertainty(b);
+      return bUncertainty - aUncertainty;
+    }).slice(0, 20);
+  } else if (aiSettings.mode === 'bridging') {
+    // Focus on potential bridging actors (high betweenness)
+    aiQueue = candidates.sort((a, b) => {
+      const aBetweenness = a.network_metrics?.betweenness || 0;
+      const bBetweenness = b.network_metrics?.betweenness || 0;
+      return bBetweenness - aBetweenness;
+    }).slice(0, 20);
+  }
+}
+
+function calculateNetworkUncertainty(actor) {
+  const metrics = actor.network_metrics || {};
+  const degree = metrics.degree || 0;
+  const betweenness = metrics.betweenness || 0;
+  const clustering = metrics.clustering || 0;
+
+  // High uncertainty when metrics suggest conflicting roles
+  // e.g., high degree but low betweenness = unclear if hub or bridge
+  const degreeNorm = Math.min(degree / 50, 1);
+  const variance = Math.abs(degreeNorm - betweenness) + Math.abs(betweenness - clustering);
+  return variance;
+}
+
+async function analyzeActor(actor) {
+  // Heuristic-based network role classification using watch-complexity typologies
+  // Adapted from: https://github.com/davidemiceli/watch-complexity
+  const metrics = actor.network_metrics || {};
+  const inDegree = metrics.in_degree || metrics.degree || actor.degree || 0;
+  const outDegree = metrics.out_degree || metrics.degree || actor.degree || 0;
+  const degree = inDegree + outDegree;
+  const betweenness = metrics.betweenness || actor.betweenness || 0;
+  const clustering = metrics.clustering || actor.clustering || 0;
+
+  // Calculate influence score (0-100) based on weighted centrality
+  const maxDegree = 100; // normalized reference
+  const degreeNorm = Math.min(degree / maxDegree, 1);
+  const influenceScore = (degreeNorm * 40 + betweenness * 40 + (1 - clustering) * 20) * 100;
+
+  // In/out ratio for directionality (1 = balanced, >1 = receiver, <1 = emitter)
+  const ioRatio = outDegree > 0 ? inDegree / outDegree : (inDegree > 0 ? 999 : 1);
+
+  // Classification based on watch-complexity typologies mapped to 5 roles
+  let role = 'peripheral';
+  let subtype = '';
+  let confidence = 0.5;
+  let reasoning = '';
+
+  if (influenceScore > 70 && ioRatio > 0.5 && ioRatio < 2) {
+    // TopHub/Hub: High influence, balanced flow
+    role = 'hub';
+    subtype = influenceScore > 85 ? 'tophub' : 'hub';
+    confidence = Math.min(0.95, 0.6 + influenceScore / 200);
+    reasoning = `High influence score (${influenceScore.toFixed(0)}) with balanced in/out flow indicates central ${subtype} position`;
+  } else if (betweenness > 0.1 && clustering < 0.4) {
+    // Bridge/Connector/Transceiver: High betweenness, low clustering
+    role = 'bridge';
+    subtype = betweenness > 0.2 ? 'connector' : 'transceiver';
+    confidence = Math.min(0.9, 0.5 + betweenness * 3);
+    reasoning = `High betweenness (${betweenness.toFixed(3)}) with low clustering (${clustering.toFixed(2)}) indicates ${subtype} role`;
+  } else if (ioRatio < 0.5 && degreeNorm > 0.3) {
+    // Amplifier/Megamplifier: More out than in, broadcasts content
+    role = 'amplifier';
+    subtype = degreeNorm > 0.6 ? 'megamplifier' : 'amplifier';
+    confidence = Math.min(0.85, 0.5 + degreeNorm * 0.4);
+    reasoning = `High out-degree ratio (${(1/ioRatio).toFixed(1)}x) with ${degree} connections suggests ${subtype} role`;
+  } else if (clustering > 0.5 && degreeNorm > 0.2) {
+    // Coordinator: High clustering, embedded in tight group
+    role = 'coordinator';
+    subtype = ioRatio > 1.5 ? 'reducer' : 'coordinator';
+    confidence = Math.min(0.85, 0.5 + clustering * 0.4);
+    reasoning = `High clustering (${clustering.toFixed(2)}) indicates tight community ${subtype}`;
+  } else if (ioRatio > 3 && degreeNorm < 0.3) {
+    // Receiver/Dam: Mostly receives, limited output
+    role = 'peripheral';
+    subtype = 'receiver';
+    confidence = 0.7;
+    reasoning = `High in/out ratio (${ioRatio.toFixed(1)}) with low degree indicates receiver/sink position`;
+  } else if (ioRatio < 0.3 && degreeNorm < 0.3) {
+    // Emitter branch: Mostly emits, limited connections
+    role = 'peripheral';
+    subtype = 'emitter_branch';
+    confidence = 0.7;
+    reasoning = `Low in/out ratio with limited connections indicates emitter branch position`;
+  } else {
+    // Low influence: Peripheral/Branch
+    role = 'peripheral';
+    subtype = 'low_emitter';
+    confidence = Math.min(0.8, 0.6 + (1 - degreeNorm) * 0.3);
+    reasoning = `Low influence score (${influenceScore.toFixed(0)}) indicates peripheral position`;
+  }
+
+  return {
+    role,
+    subtype,
+    influenceScore: influenceScore.toFixed(0),
+    confidence,
+    uncertainty: 1 - confidence,
+    reasoning
+  };
+}
+
+function parseAIResponse(response) {
+  try {
+    // Extract JSON from response
+    const jsonMatch = response.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+  } catch (e) {
+    console.error('Failed to parse model response:', e);
+  }
+  return { role: 'unknown', confidence: 0, reasoning: 'Failed to parse response', uncertainty: 1 };
+}
+
+function renderAIQueue() {
+  const container = document.getElementById('aiQueue');
+  if (!container) return;
+
+  if (aiQueue.length === 0) {
+    container.innerHTML = '<div style="color:#7f8c8d;font-size:12px;">No actors in queue. Click "Analyze Uncoded" to start.</div>';
+    return;
+  }
+
+  container.innerHTML = aiQueue.map((actor, idx) => {
+    const suggestion = actor.aiSuggestion;
+    if (!suggestion) {
+      return `<div class="ai-queue-item" style="opacity:0.5">
+        <span>@${actor.handle}</span>
+        <span style="color:#7f8c8d">Pending...</span>
+      </div>`;
+    }
+
+    const confidenceColor = suggestion.confidence > 0.7 ? '#27ae60' :
+                           suggestion.confidence > 0.4 ? '#f39c12' : '#e74c3c';
+
+    return `<div class="ai-queue-item" onclick="openActorForReview('${actor.handle}')">
+      <div>
+        <strong>@${actor.handle}</strong>
+        <span class="ai-badge" style="background:${confidenceColor}">${suggestion.role}</span>
+        ${suggestion.subtype ? `<span class="text-xs text-gray">(${suggestion.subtype})</span>` : ''}
+      </div>
+      <div style="font-size:11px;color:#7f8c8d">${suggestion.reasoning?.substring(0, 60) || ''}...</div>
+      <div style="font-size:10px;color:#95a5a6">Influence: ${suggestion.influenceScore || '-'} | Confidence: ${(suggestion.confidence * 100).toFixed(0)}%</div>
+    </div>`;
+  }).join('');
+}
+
+function openActorForReview(handle) {
+  const actor = actors.find(a => a.handle === handle);
+  if (!actor) return;
+
+  selectedActor = actor;
+  showActorDetail(actor);
+
+  // If there's an Model suggestion, pre-fill the role code
+  if (actor.aiSuggestion && actor.aiSuggestion.role !== 'unknown') {
+    const roleSelect = document.getElementById('roleCode');
+    if (roleSelect) {
+      // Map Model role to existing role codes
+      const roleMapping = {
+        'hub': 'hub',
+        'bridge': 'bridge',
+        'amplifier': 'amplifier',
+        'coordinator': 'coordinator',
+        'peripheral': 'peripheral'
+      };
+      const mappedRole = roleMapping[actor.aiSuggestion.role] || 'uncoded';
+      roleSelect.value = mappedRole;
+    }
+  }
+}
+
+function acceptAISuggestion() {
+  if (!selectedActor || !selectedActor.aiSuggestion) {
+    toast('No Model suggestion to accept');
+    return;
+  }
+
+  const suggestion = selectedActor.aiSuggestion;
+  selectedActor.role_code = suggestion.role;
+  selectedActor.ai_assisted = true;
+  selectedActor.ai_confidence = suggestion.confidence;
+
+  saveActorCode();
+  updateStats();
+  renderAIQueue();
+  toast(`Applied Model suggestion: ${suggestion.role}`);
+}
+
+// Initialize Model status on load
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(updateAIStatus, 100);
+});
+</script>
+</body>
+</html>

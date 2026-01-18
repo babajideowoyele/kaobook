@@ -1,0 +1,67 @@
+# RoleBox-PyDNA Conda Environment
+# For Discourse Network Analysis web application
+#
+# Setup:
+#   conda env create -f environment.yml
+#   conda activate rolebox-pydna
+#
+# Run the web server:
+#   uvicorn roledna.main:app --reload
+
+name: rolebox-pydna
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.11
+  - pandas>=2.0
+  - numpy>=1.24
+  - networkx>=3.0
+  - matplotlib>=3.7
+  - seaborn>=0.12
+  - scikit-learn>=1.3
+  - scipy>=1.10
+  - jupyter
+  - jupyterlab
+  - ipywidgets
+
+  # Web framework
+  - fastapi>=0.109
+  - uvicorn>=0.27
+  - jinja2>=3.1
+  - python-multipart
+
+  # Database
+  - sqlalchemy>=2.0
+  - aiosqlite  # Async SQLite support
+  - alembic  # Database migrations
+
+  # Data processing
+  - tqdm
+  - openpyxl
+
+  - pip
+  - pip:
+    # NLP (optional, for LLM-assisted coding)
+    - sentence-transformers>=2.2
+    - spacy>=3.5
+
+    # Visualization
+    - plotly>=5.0
+    - pyvis
+    - sigmajs-networkx  # Sigma.js export
+
+    # API utilities
+    - python-dotenv
+    - httpx  # Async HTTP client
+    - pydantic>=2.0
+
+    # LLM integration (optional)
+    - openai>=1.0
+    - anthropic>=0.18
+
+    # Development
+    - pytest>=7.0
+    - pytest-asyncio
+    - pytest-cov>=4.0

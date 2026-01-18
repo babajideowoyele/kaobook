@@ -1,0 +1,36 @@
+{
+  "triad_type": "actor_types",
+  "name": "Actor Types",
+  "description": "Organizations positioned by field positioning: Conforming vs Interfacing vs Bridging",
+  "axis_a": {
+    "name": "Conforming",
+    "key": "conforming",
+    "color": "#3498db",
+    "description": "Concentrated within-region ties, anchored in single community",
+    "keywords": [],
+    "source_modality": "rolebox-social"
+  },
+  "axis_b": {
+    "name": "Interfacing",
+    "key": "interfacing",
+    "color": "#2ecc71",
+    "description": "Balanced within/cross-region ties, anchors region while connecting",
+    "keywords": [],
+    "source_modality": "rolebox-social"
+  },
+  "axis_c": {
+    "name": "Bridging",
+    "key": "bridging",
+    "color": "#e74c3c",
+    "description": "Primarily cross-region ties, connects different communities",
+    "keywords": [],
+    "source_modality": "rolebox-social"
+  },
+  "interstitial_threshold": 0.4,
+  "color_palette": {
+    "dominant_conforming": "#3498db",
+    "dominant_interfacing": "#2ecc71",
+    "dominant_bridging": "#e74c3c",
+    "interstitial": "#f1c40f"
+  }
+}

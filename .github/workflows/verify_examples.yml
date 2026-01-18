@@ -1,4 +1,5 @@
 name: Verify examples
+
 on: [push, pull_request]
 
 jobs:
@@ -13,6 +14,47 @@ jobs:
         run: |
           cd examples
           echo "matrix={\"dir\":[$(for dir in $(echo */); do echo -n \"${dir%?}\",; done)]}" >> $GITHUB_OUTPUT
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chktex
+        run: sudo apt-get update && sudo apt-get install -y chktex
+
+      - name: Run chktex on core files
+        continue-on-error: true  # Don't fail build, just report
+        run: |
+          echo "## ChkTeX Lint Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Running chktex on style files..." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Lint main style files (warnings only, no errors)
+          for file in kao.sty kaobiblio.sty kaotheorems.sty kaorefs.sty; do
+            if [ -f "$file" ]; then
+              echo "### $file" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              chktex -q -n1 -n2 -n3 -n6 -n8 -n24 -n36 "$file" 2>&1 | head -50 >> $GITHUB_STEP_SUMMARY || true
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+      - name: Lint example main files
+        continue-on-error: true
+        run: |
+          echo "### Example Files" >> $GITHUB_STEP_SUMMARY
+          for dir in examples/*/; do
+            if [ -f "${dir}main.tex" ]; then
+              echo "#### ${dir}main.tex" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              chktex -q -n1 -n2 -n3 -n6 -n8 -n24 -n36 "${dir}main.tex" 2>&1 | head -20 >> $GITHUB_STEP_SUMMARY || true
+              echo '```' >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
   build_latex:
     needs: find_examples
     runs-on: ubuntu-latest
@@ -21,6 +63,7 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
+
       - name: Check that LaTeX example compiles
         uses: xu-cheng/latex-action@v3
         with:
@@ -29,8 +72,68 @@ jobs:
             cp -r ../../* . || true
           root_file: main.tex
           latexmk_shell_escape: true
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PDF - ${{ matrix.dir }}
+          path: examples/${{ matrix.dir }}/main.pdf
+          if-no-files-found: warn
+
+      - name: Upload log artifact
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: Log - ${{ matrix.dir }}
           path: examples/${{ matrix.dir }}/main.log
+
+  # Visual regression testing (compares PDFs against baseline)
+  visual_regression:
+    needs: build_latex
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
+          path: baseline
+
+      - uses: actions/checkout@v4
+        with:
+          path: current
+
+      - name: Download current PDFs
+        uses: actions/download-artifact@v4
+        with:
+          path: current-pdfs
+          pattern: PDF - *
+
+      - name: Install diff-pdf
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y diff-pdf poppler-utils
+
+      - name: Compare PDFs
+        continue-on-error: true
+        run: |
+          echo "## Visual Regression Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          for pdf_dir in current-pdfs/PDF\ -\ */; do
+            example_name=$(basename "$pdf_dir" | sed 's/PDF - //')
+            pdf_file="$pdf_dir/main.pdf"
+
+            if [ -f "$pdf_file" ]; then
+              echo "### $example_name" >> $GITHUB_STEP_SUMMARY
+
+              # Get page count
+              pages=$(pdfinfo "$pdf_file" | grep Pages | awk '{print $2}')
+              echo "- Pages: $pages" >> $GITHUB_STEP_SUMMARY
+
+              # Note: baseline comparison would require storing baseline PDFs
+              # For now, just report metadata
+              size=$(du -h "$pdf_file" | cut -f1)
+              echo "- Size: $size" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+          done

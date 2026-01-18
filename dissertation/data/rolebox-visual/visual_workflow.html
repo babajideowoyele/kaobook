@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EIT Visual Register Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#f5f5f5;color:#000;line-height:1.5;font-size:13px}
+    .app{display:flex;flex-direction:column;height:100vh}
+    .header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:#fff;border-bottom:1px solid #e5e5e5;flex-shrink:0}
+    .logo{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .nav{display:flex;gap:1px}
+    .nav a{padding:6px 12px;color:#666;text-decoration:none;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+    .nav a:hover{background:#f5f5f5}
+    .nav a.active{background:#000;color:#fff}
+    .main{display:flex;flex:1;overflow:hidden}
+    .sidebar{width:280px;background:#fafafa;border-right:1px solid #e5e5e5;padding:16px;overflow-y:auto;flex-shrink:0}
+    .content{flex:1;padding:20px;overflow-y:auto}
+    .section{margin-bottom:20px}
+    .section-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .card{background:#fff;border:1px solid #e5e5e5;margin-bottom:12px}
+    .card-header{padding:10px 14px;border-bottom:1px solid #e5e5e5;font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer}
+    .card-header:hover{background:#fafafa}
+    .card-body{padding:14px}
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;border:2px solid #000;background:#fff;color:#000;transition:all .15s}
+    .btn:hover{background:#000;color:#fff}
+    .btn-primary{background:#000;color:#fff}
+    .btn-primary:hover{background:#333}
+    .btn-sm{padding:4px 8px;font-size:10px}
+    .btn-success{border-color:#16a34a;color:#16a34a}
+    .btn-success:hover{background:#16a34a;color:#fff}
+    .btn-block{width:100%}
+    .tag{display:inline-flex;padding:2px 6px;font-size:9px;font-weight:600;background:#000;color:#fff}
+    .input,.select,.textarea{width:100%;padding:8px 10px;font-size:12px;border:1px solid #e5e5e5;font-family:inherit;background:#fff}
+    .textarea{resize:vertical;min-height:80px}
+    .input:focus,.select:focus,.textarea:focus{outline:none;border-color:#000}
+    .flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap-4{gap:4px}.gap-8{gap:8px}.gap-12{gap:12px}.flex-1{flex:1}
+    .text-xs{font-size:10px}.text-sm{font-size:12px}.text-gray{color:#666}.text-center{text-align:center}
+    .mb-4{margin-bottom:4px}.mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .stat-box{text-align:center;padding:12px;background:#fff;border:1px solid #e5e5e5}
+    .stat-val{font-size:20px;font-weight:300}
+    .stat-label{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.3px}
+    .progress-bar{height:4px;background:#e5e5e5;overflow:hidden}
+    .progress-fill{height:100%;background:#000;transition:width .3s}
+    .option-btn{padding:8px 10px;font-size:11px;border:2px solid #e5e5e5;background:#fff;cursor:pointer;transition:all .15s;text-align:center}
+    .option-btn:hover{border-color:#000}
+    .option-btn.selected{background:#000;color:#fff;border-color:#000}
+    .image-frame{border:2px solid #e5e5e5;padding:8px;background:#fff;cursor:pointer;transition:all .2s}
+    .image-frame:hover{border-color:#000}
+    .image-frame img{width:100%;height:auto;display:block}
+    .meta-section{border-left:2px solid #000;padding-left:12px;margin-bottom:16px}
+    .meta-title{font-size:12px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .meta-desc{font-size:11px;color:#666;margin-bottom:10px}
+    .ai-suggestion{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:#fafafa;border:1px solid #e5e5e5;margin-bottom:6px}
+    .confidence-slider{width:100%;height:6px;-webkit-appearance:none;background:#e5e5e5;outline:none}
+    .confidence-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:#000;cursor:pointer;border-radius:0}
+    .toast{position:fixed;bottom:20px;right:20px;padding:12px 20px;background:#000;color:#fff;font-size:12px;font-weight:500;z-index:200;transform:translateY(100px);opacity:0;transition:all .3s}
+    .toast.show{transform:translateY(0);opacity:1}
+    .overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:99;display:none}
+    .overlay.show{display:flex;align-items:center;justify-content:center}
+    .modal{background:#fff;border:2px solid #000;padding:20px;max-width:800px;max-height:90vh;overflow-y:auto}
+    .collapse-icon{transition:transform .2s}
+    .collapsed .collapse-icon{transform:rotate(-90deg)}
+    .collapsed .card-body{display:none}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="flex items-center gap-12">
+      <div class="logo"><i class="fas fa-image"></i> EIT Visual</div>
+      <div class="nav">
+        <a class="active"><i class="fas fa-edit"></i> Coding</a>
+        <a onclick="showHelp()"><i class="fas fa-question-circle"></i> Help</a>
+        <a onclick="exportData()"><i class="fas fa-download"></i> Export</a>
+        <a onclick="generateReport()"><i class="fas fa-chart-bar"></i> Report</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-12">
+      <span class="text-xs text-gray">Multimodal Visual Analysis</span>
+      <div class="flex items-center gap-8">
+        <span class="text-xs"><strong id="progressText">1</strong> / <strong>150</strong></span>
+        <div class="progress-bar" style="width:100px"><div class="progress-fill" id="progressBar" style="width:1%"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="sidebar">
+      <div class="section">
+        <div class="section-title"><i class="fas fa-image"></i> Current Image</div>
+        <div class="image-frame" onclick="zoomImage()">
+          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkVJVCBQYXJ0bmVyc2hpcCBFdmVudDwvdGV4dD4KICA8Y2lyY2xlIGN4PSI4MCIgY3k9IjEwMCIgcj0iMjAiIGZpbGw9IiMyNTYzZWIiLz4KICA8Y2lyY2xlIGN4PSIzMjAiIGN5PSIxMDAiIHI9IjIwIiBmaWxsPSIjMTZhMzRhIi8+CiAgPHJlY3QgeD0iMTUwIiB5PSIxODAiIHdpZHRoPSIxMDAiIGhlaWdodD0iNDAiIGZpbGw9IiMwMDAiIHJ4PSI0Ii8+Cjwvc3ZnPg==" alt="Current Image" id="currentImage">
+        </div>
+        <div class="text-xs text-gray text-center mb-12">Click to zoom</div>
+      </div>
+      <div class="section">
+        <div class="section-title"><i class="fas fa-info-circle"></i> Image Info</div>
+        <div style="padding:10px;background:#fff;border:1px solid #e5e5e5">
+          <div class="flex justify-between mb-4 text-xs"><span class="text-gray">ID:</span><strong id="imageId">IMG_001</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span class="text-gray">KIC:</span><strong id="imageKic">Climate-KIC</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span class="text-gray">Source:</span><strong id="imageSource">Website</strong></div>
+          <div class="flex justify-between text-xs"><span class="text-gray">Date:</span><strong id="imageDate">2024-01-15</strong></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title"><i class="fas fa-robot"></i> Model Suggestions</div>
+        <div id="aiSuggestions">
+          <div class="ai-suggestion">
+            <span class="text-xs">Contact: <strong>Strong</strong> (85%)</span>
+            <button class="btn btn-sm btn-success" onclick="acceptSuggestion('contact','strong_contact')"><i class="fas fa-check"></i></button>
+          </div>
+          <div class="ai-suggestion">
+            <span class="text-xs">Setting: <strong>Conference</strong> (72%)</span>
+            <button class="btn btn-sm btn-success" onclick="acceptSuggestion('setting','conference_room')"><i class="fas fa-check"></i></button>
+          </div>
+          <div class="ai-suggestion">
+            <span class="text-xs">Activity: <strong>Collaboration</strong> (68%)</span>
+            <button class="btn btn-sm btn-success" onclick="acceptSuggestion('activity','collaborative_discussion')"><i class="fas fa-check"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="grid-2">
+          <button class="btn" onclick="navigateImage(-1)"><i class="fas fa-arrow-left"></i> Prev</button>
+          <button class="btn" onclick="navigateImage(1)">Next <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <button class="btn btn-primary btn-block" style="margin-top:8px" onclick="saveCoding()"><i class="fas fa-save"></i> Save Coding</button>
+      </div>
+    </div>
+    <div class="content">
+      <!-- Ideational -->
+      <div class="card" id="card-ideational">
+        <div class="card-header" onclick="toggleCard('ideational')">
+          <div class="flex items-center gap-8"><i class="fas fa-cubes"></i> Ideational Metafunction</div>
+          <i class="fas fa-chevron-down collapse-icon"></i>
+        </div>
+        <div class="card-body">
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-users"></i> Participants - People</div>
+            <div class="meta-desc">Who are the main human actors visible?</div>
+            <div class="grid-3">
+              <button class="option-btn" data-cat="people" data-val="academic_researcher">Academic/Researcher</button>
+              <button class="option-btn" data-cat="people" data-val="industry_representative">Industry Rep</button>
+              <button class="option-btn" data-cat="people" data-val="student">Student</button>
+              <button class="option-btn" data-cat="people" data-val="policymaker">Policymaker</button>
+              <button class="option-btn" data-cat="people" data-val="entrepreneur">Entrepreneur</button>
+              <button class="option-btn" data-cat="people" data-val="citizen_user">Citizen/User</button>
+            </div>
+          </div>
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-cogs"></i> Participants - Technologies</div>
+            <div class="meta-desc">What technological artifacts are prominent?</div>
+            <div class="grid-3">
+              <button class="option-btn" data-cat="technology" data-val="laboratory_equipment">Lab Equipment</button>
+              <button class="option-btn" data-cat="technology" data-val="digital_interface">Digital Interface</button>
+              <button class="option-btn" data-cat="technology" data-val="prototype">Prototype</button>
+              <button class="option-btn" data-cat="technology" data-val="commercial_product">Commercial Product</button>
+              <button class="option-btn" data-cat="technology" data-val="infrastructure">Infrastructure</button>
+            </div>
+          </div>
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-play"></i> Processes - Activities</div>
+            <div class="meta-desc">What main activities are depicted?</div>
+            <div class="grid-3">
+              <button class="option-btn" data-cat="activity" data-val="research_work">Research Work</button>
+              <button class="option-btn" data-cat="activity" data-val="collaborative_discussion">Collaboration</button>
+              <button class="option-btn" data-cat="activity" data-val="formal_presentation">Presentation</button>
+              <button class="option-btn" data-cat="activity" data-val="hands_on_experimentation">Experimentation</button>
+              <button class="option-btn" data-cat="activity" data-val="networking_socializing">Networking</button>
+              <button class="option-btn" data-cat="activity" data-val="demonstration_showcase">Demonstration</button>
+            </div>
+          </div>
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-map-marker-alt"></i> Settings - Spaces</div>
+            <div class="meta-desc">What type of environment is shown?</div>
+            <div class="grid-3">
+              <button class="option-btn" data-cat="setting" data-val="laboratory">Laboratory</button>
+              <button class="option-btn" data-cat="setting" data-val="office_space">Office</button>
+              <button class="option-btn" data-cat="setting" data-val="conference_room">Conference Room</button>
+              <button class="option-btn" data-cat="setting" data-val="factory_floor">Factory/Production</button>
+              <button class="option-btn" data-cat="setting" data-val="natural_environment">Natural Environment</button>
+              <button class="option-btn" data-cat="setting" data-val="event_venue">Event Venue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interpersonal -->
+      <div class="card" id="card-interpersonal">
+        <div class="card-header" onclick="toggleCard('interpersonal')">
+          <div class="flex items-center gap-8"><i class="fas fa-handshake"></i> Interpersonal Metafunction</div>
+          <i class="fas fa-chevron-down collapse-icon"></i>
+        </div>
+        <div class="card-body">
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-eye"></i> Contact Level</div>
+            <div class="meta-desc">How do participants engage with the viewer?</div>
+            <div class="grid-3">
+              <button class="option-btn" data-cat="contact" data-val="strong_contact">Strong Contact</button>
+              <button class="option-btn" data-cat="contact" data-val="weak_contact">Weak Contact</button>
+              <button class="option-btn" data-cat="contact" data-val="no_contact">No Contact</button>
+            </div>
+          </div>
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-arrows-alt-h"></i> Social Distance</div>
+            <div class="meta-desc">What is the implied closeness to participants?</div>
+            <div class="grid-3">
+              <button class="option-btn" data-cat="distance" data-val="intimate">Intimate</button>
+              <button class="option-btn" data-cat="distance" data-val="interpersonal">Interpersonal</button>
+              <button class="option-btn" data-cat="distance" data-val="impersonal">Impersonal</button>
+            </div>
+          </div>
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-arrows-alt-v"></i> Vertical Perspective</div>
+            <div class="meta-desc">What power relationship is suggested by viewing angle?</div>
+            <div class="grid-3">
+              <button class="option-btn" data-cat="vertical" data-val="high_angle">High Angle</button>
+              <button class="option-btn" data-cat="vertical" data-val="eye_level">Eye Level</button>
+              <button class="option-btn" data-cat="vertical" data-val="low_angle">Low Angle</button>
+            </div>
+          </div>
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-palette"></i> Coding Orientation</div>
+            <div class="meta-desc">What aesthetic/credibility code is used?</div>
+            <div class="grid-4">
+              <button class="option-btn" data-cat="coding" data-val="naturalistic">Naturalistic</button>
+              <button class="option-btn" data-cat="coding" data-val="technological">Technological</button>
+              <button class="option-btn" data-cat="coding" data-val="sensory">Sensory</button>
+              <button class="option-btn" data-cat="coding" data-val="abstract">Abstract</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Textual -->
+      <div class="card" id="card-textual">
+        <div class="card-header" onclick="toggleCard('textual')">
+          <div class="flex items-center gap-8"><i class="fas fa-layer-group"></i> Textual Metafunction</div>
+          <i class="fas fa-chevron-down collapse-icon"></i>
+        </div>
+        <div class="card-body">
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-star"></i> Visual Salience</div>
+            <div class="meta-desc">What elements are most prominent?</div>
+            <div class="grid-4">
+              <button class="option-btn" data-cat="salience" data-val="people_primary">People Primary</button>
+              <button class="option-btn" data-cat="salience" data-val="technology_primary">Technology Primary</button>
+              <button class="option-btn" data-cat="salience" data-val="setting_primary">Setting Primary</button>
+              <button class="option-btn" data-cat="salience" data-val="balanced_composition">Balanced</button>
+            </div>
+          </div>
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-crop"></i> Framing</div>
+            <div class="meta-desc">How are different zones separated?</div>
+            <div class="grid-3">
+              <button class="option-btn" data-cat="framing" data-val="strong_separation">Strong Separation</button>
+              <button class="option-btn" data-cat="framing" data-val="weak_separation">Weak Separation</button>
+              <button class="option-btn" data-cat="framing" data-val="no_framing">No Framing</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes & Confidence -->
+      <div class="card">
+        <div class="card-header">
+          <div class="flex items-center gap-8"><i class="fas fa-sticky-note"></i> Notes & Confidence</div>
+        </div>
+        <div class="card-body">
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-comment"></i> Additional Notes</div>
+            <textarea class="textarea" id="notes" placeholder="Enter any additional observations..."></textarea>
+          </div>
+          <div class="meta-section">
+            <div class="meta-title"><i class="fas fa-chart-line"></i> Coding Confidence</div>
+            <div class="flex items-center gap-12">
+              <span class="text-xs text-gray">Low</span>
+              <input type="range" min="0" max="100" value="80" class="confidence-slider flex-1" id="confidenceSlider" oninput="updateConfidence()">
+              <span class="text-xs text-gray">High</span>
+            </div>
+            <div class="text-center text-sm" style="margin-top:8px"><strong id="confidenceValue">80%</strong> Confident</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay" id="overlay" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <img id="modalImage" style="max-width:100%;max-height:80vh">
+    <button class="btn" style="margin-top:12px" onclick="closeModal()"><i class="fas fa-times"></i> Close</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+let currentCoding = {};
+let currentImageIndex = 0;
+const totalImages = 150;
+let allCodings = [];
+
+document.querySelectorAll('.option-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const cat = this.dataset.cat;
+    const val = this.dataset.val;
+    document.querySelectorAll(`[data-cat="${cat}"]`).forEach(b => b.classList.remove('selected'));
+    this.classList.add('selected');
+    currentCoding[cat] = val;
+    toast(`Selected: ${this.textContent}`);
+  });
+});
+
+function toggleCard(id) {
+  document.getElementById('card-' + id).classList.toggle('collapsed');
+}
+
+function updateConfidence() {
+  document.getElementById('confidenceValue').textContent = document.getElementById('confidenceSlider').value + '%';
+}
+
+function navigateImage(dir) {
+  const newIdx = currentImageIndex + dir;
+  if (newIdx >= 0 && newIdx < totalImages) {
+    currentImageIndex = newIdx;
+    updateProgress();
+    clearCoding();
+    loadImageData();
+  }
+}
+
+function updateProgress() {
+  const pct = ((currentImageIndex + 1) / totalImages * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = currentImageIndex + 1;
+}
+
+function clearCoding() {
+  currentCoding = {};
+  document.querySelectorAll('.option-btn.selected').forEach(b => b.classList.remove('selected'));
+  document.getElementById('notes').value = '';
+  document.getElementById('confidenceSlider').value = 80;
+  document.getElementById('confidenceValue').textContent = '80%';
+}
+
+function loadImageData() {
+  const kics = ['Climate-KIC', 'InnoEnergy', 'EIT Digital', 'EIT Health', 'EIT Food'];
+  const sources = ['Website', 'Social Media', 'Event Photo', 'Press Release'];
+  document.getElementById('imageId').textContent = 'IMG_' + String(currentImageIndex + 1).padStart(3, '0');
+  document.getElementById('imageKic').textContent = kics[currentImageIndex % kics.length];
+  document.getElementById('imageSource').textContent = sources[currentImageIndex % sources.length];
+}
+
+function acceptSuggestion(cat, val) {
+  const btn = document.querySelector(`[data-cat="${cat}"][data-val="${val}"]`);
+  if (btn) {
+    document.querySelectorAll(`[data-cat="${cat}"]`).forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    currentCoding[cat] = val;
+    toast('Model suggestion accepted');
+  }
+}
+
+function saveCoding() {
+  const required = ['people', 'activity', 'setting', 'contact', 'distance'];
+  const missing = required.filter(c => !currentCoding[c]);
+  if (missing.length > 0) {
+    if (!confirm(`Missing: ${missing.join(', ')}. Save anyway?`)) return;
+  }
+  currentCoding.notes = document.getElementById('notes').value;
+  currentCoding.confidence = document.getElementById('confidenceSlider').value;
+  currentCoding.imageId = document.getElementById('imageId').textContent;
+  currentCoding.timestamp = new Date().toISOString();
+  allCodings.push({ ...currentCoding });
+  toast('Coding saved!');
+  setTimeout(() => navigateImage(1), 800);
+}
+
+function zoomImage() {
+  document.getElementById('modalImage').src = document.getElementById('currentImage').src;
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('show');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show';
+  setTimeout(() => t.className = 'toast', 2500);
+}
+
+function exportData() {
+  const data = JSON.stringify(allCodings, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'eit_visual_coding.json';
+  a.click();
+  toast('Data exported');
+}
+
+function generateReport() {
+  toast('Report generated');
+  const w = window.open('', '_blank');
+  w.document.write(`<html><head><title>EIT Visual Report</title><style>body{font-family:Inter,sans-serif;padding:32px;max-width:800px;margin:0 auto}h1{font-weight:300}h1 span{font-weight:600}.stat{background:#f5f5f5;padding:16px;margin:12px 0;border-left:3px solid #000}</style></head><body>
+    <h1>EIT Visual <span>Progress Report</span></h1>
+    <div class="stat"><strong>Images Coded:</strong> ${currentImageIndex + 1} / ${totalImages} (${((currentImageIndex+1)/totalImages*100).toFixed(1)}%)</div>
+    <div class="stat"><strong>Total Saved:</strong> ${allCodings.length}</div>
+    <div class="stat"><strong>Average Confidence:</strong> 82%</div>
+  </body></html>`);
+}
+
+function showHelp() {
+  alert('Keyboard Shortcuts:\n← → Navigate images\nCtrl+S Save coding\n1,2,3 Toggle sections');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') navigateImage(-1);
+  if (e.key === 'ArrowRight') navigateImage(1);
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); saveCoding(); }
+  if (e.key === '1') toggleCard('ideational');
+  if (e.key === '2') toggleCard('interpersonal');
+  if (e.key === '3') toggleCard('textual');
+  if (e.key === 'Escape') closeModal();
+});
+
+loadImageData();
+</script>
+</body>
+</html>

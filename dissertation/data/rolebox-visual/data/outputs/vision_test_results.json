@@ -1,0 +1,37 @@
+[
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT\\EIT_Climate.png",
+    "kic": "EIT",
+    "name": "EIT_Climate",
+    "caption": "the website for the new website design",
+    "detailed_caption": "a screenshot of a website with a green background"
+  },
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT\\EIT_InnoEnergy.png",
+    "kic": "EIT",
+    "name": "EIT_InnoEnergy",
+    "caption": "the website design for a car dealer",
+    "detailed_caption": "a screenshot of a website design"
+  },
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT\\EIT_Manufacturing.png",
+    "kic": "EIT",
+    "name": "EIT_Manufacturing",
+    "caption": "the website design for the school",
+    "detailed_caption": "a screenshot of a website with a large screen"
+  },
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT_climate\\Redo_Sgr_Benefit_Corporation.png",
+    "kic": "EIT_climate",
+    "name": "Redo_Sgr_Benefit_Corporation",
+    "caption": "a cloud with a computer on top of it",
+    "detailed_caption": "a screenshot of a cloud with a computer on top"
+  },
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT_climate\\Technical_University_of_Madrid.png",
+    "kic": "EIT_climate",
+    "name": "Technical_University_of_Madrid",
+    "caption": "the website of the universidad de universidad de universidad",
+    "detailed_caption": "a screenshot of a website with a blue background"
+  }
+]

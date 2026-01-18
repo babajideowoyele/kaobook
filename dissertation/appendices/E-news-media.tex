@@ -1,116 +1,492 @@
 % !TEX root = ../main.tex
-%************************************************
-\chapter{News Media: Mapping Attributed Identity}
-\label{app:news-media}
-%************************************************
+\documentclass[../main.tex]{subfiles}
 
-\noindent\textit{This appendix examines how news media serve as both a mirror and shaper of sustainability transitions. We explore theoretical perspectives on media's role in transition discourse, methodological approaches from text mining to discourse analysis, empirical studies extracting actor roles from news, and the datasets and toolkits that enable large-scale media analysis for understanding multi-actor constellations and systemic dynamics.}
+\begin{document}
+
+\chapter{News Media: Mapping Attributed Sociotypes}
+\label{app:news-media}
+
+\noindent\textit{News media provide the second modality of multimodal cartography---the \textbf{attributed map} of how others see organizations. This appendix documents the methodological approach to news data collection and analysis within \RoleBox, focusing on the theoretical role of media in transitions, analytical techniques from named entity recognition to discourse network analysis, the RIVETER-X framework for verb connotation analysis, and opportunities for understanding power dynamics in transition discourse.}
 
 \bigskip
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Introduction}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Theoretical Grounding: Media in Sustainability Transitions}
+%===============================================================================
 
-Sustainability transitions are complex, multi-actor processes. News media are more than just observers; they actively shape and reflect the dialogue around change.
-
-%\sidenote{\textbf{Media as Actors:} How journalists report on environmental issues can influence public perceptions, political decisions, and social awareness---making media coverage itself a force in transitions.}
+Sustainability transitions---shifts to renewable energy, low-carbon mobility, or circular economies---are complex, multi-actor processes. News media are more than observers; they actively shape and reflect the dialogue around change. How journalists report on environmental issues and transition processes influences public perceptions, political decisions, and social awareness.\cite{laakso2024agents}
 
 \begin{insightbox}[News as Running Record]
-News archives offer a running record of events, debates, and viewpoints involving various organizations and institutions. By analyzing this media content, scholars can identify which actors are involved in a transition and discern the roles they play or are ascribed in public discourse.
+News archives offer a running record of events, debates, and viewpoints involving organizations and institutions. By analyzing this media content, we can identify which actors are involved in a transition and discern the roles they are \emph{attributed} in public discourse---distinct from the roles they \emph{claim} on their websites.
+\end{insightbox}
+
+Why news matters for role cartography:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
+\item[Third-party perspective.] Unlike websites (self-authored), news represents how \emph{others} describe organizations. Journalists, editors, and sources shape which actors appear and how they are framed.
+
+\item[Temporal depth.] News archives provide historical records of how actor portrayals evolve over time---capturing dynamics that website snapshots miss.
+
+\item[Legitimacy signal.] Media visibility itself signals legitimacy. Being covered by reputable outlets implies relevance; being ignored implies marginality.
+
+\item[Agenda-setting power.] Frequent coverage of certain actors indicates agenda-setting influence in the transition.
+\end{description}
+
+\subsection{Media's Dual Role: Mirror and Actor}
+
+Media are simultaneously a \emph{mirror} reflecting transition dynamics and an \emph{actor} shaping them. Positive media coverage and supportive statements from respected institutions indicate growing legitimacy for new technologies, whereas critical coverage signals contestation.\cite{fischernewig2016} This dual role means news analysis provides both descriptive insight (who is involved, what is happening) and performative insight (how discourse shapes outcomes).
+
+
+%===============================================================================
+\section{Data Anatomy: What News Contains}
+%===============================================================================
+
+Media coverage provides a window into the socio-political landscape of sustainability transitions. News articles chronicle who is doing what---which organizations advocate or oppose innovations, which agencies implement policies, which firms invest in new technologies, and how civil society groups respond.
+
+\subsection{Actor Framing Patterns}
+
+Researchers tracking media debates over technologies such as renewable energy, carbon capture, or electric vehicles reveal distinct framing patterns:\cite{fischernewig2016}
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3.5cm}p{5cm}p{4cm}@{}}
+\toprule
+\textbf{Actor Type} & \textbf{Typical Framing} & \textbf{Narrative Role} \\
+\midrule
+Incumbent firms & Defending regime, emphasizing reliability & Regime defenders or cautious reformers \\
+Innovative startups & Disrupting markets, pioneering solutions & Niche challengers or heroes \\
+Government officials & Regulating, enabling, or blocking & Enablers or gatekeepers \\
+NGOs/advocates & Watching, pressuring, demanding & Change agents or critics \\
+Research institutes & Advising, bridging, informing & Knowledge brokers \\
+Community groups & Responding, adapting, resisting & Affected parties or grassroots actors \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Actor types and typical media framing patterns}
+\end{center}
+
+\subsection{Verb Connotations as Power Signals}
+
+A key methodological insight: the \textbf{verbs} used to describe actor actions carry connotative meaning about power and agency. ``X \emph{leads}'' differs from ``X \emph{participates in}'' differs from ``X \emph{struggles with}.'' These verb choices, accumulated across many articles, reveal systematic patterns in how actors are positioned in transition discourse.
+
+\subsection{Narrative Roles: Heroes, Villains, Victims}
+
+The Narrative Policy Framework (NPF) identifies characters in policy narratives: heroes driving solutions, villains causing problems, and victims needing protection \cite{jones2014npf}. In media coverage of sustainability issues, corporations may be portrayed as ``villains'' (blamed for environmental damage) or ``heroes'' (offering green solutions), depending on the outlet's editorial stance. Activists similarly receive ambivalent treatment---appearing as ``heroes'' driving necessary change in some coverage, or as ``troublemakers'' blocking economic progress in others. Citizens and future generations are often cast as ``victims'' requiring protection from environmental harm, positioning them as passive recipients of others' actions rather than active agents. These narrative roles complement institutional roles by revealing the moral positioning of actors in discourse.
+
+
+%===============================================================================
+\section{Role Extraction Frameworks}
+%===============================================================================
+
+Systematically extracting roles from news text requires both theoretical frameworks and data-driven techniques.
+
+\subsection{Multi-Actor Perspective (MAP)}
+
+The Multi-Actor Perspective categorizes actors by societal position:\cite{fischernewig2016}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Niche actors] Innovators developing novel solutions outside the mainstream
+\item[Regime actors] Incumbents maintaining existing socio-technical configurations
+\item[Landscape actors] External forces (geopolitical, macroeconomic, cultural) shaping context
+\item[Intermediary actors] Organizations bridging between levels or connecting actors
+\end{description}
+
+For media analysis, this typology provides a coding scheme: each mentioned actor can be classified as niche, regime, or intermediary, enabling quantification of which voices dominate discourse.
+
+\begin{insightbox}[Dynamic Role Assignment]
+Actors can belong to multiple categories, and roles change over time. Yesterday's niche challenger may become today's regime insider. Media analysis captures these transitions by tracking how actor portrayals shift across time periods.
+\end{insightbox}
+
+\subsection{The RIVETER-X Framework}
+
+Building on Antoniak et al.'s RIVETER framework for verb connotation analysis, we developed \textbf{RIVETER-X} with six transition-specific dimensions:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Transformation Agency] Capacity to drive systemic change
+\item[Innovation Positioning] Orientation toward novelty and creation
+\item[Legitimacy Dynamics] Perceived rightfulness and acceptance
+\item[Resource Mobilization] Capacity to acquire and deploy resources
+\item[Collaboration Capacity] Ability to work with others
+\item[Systemic Influence] Impact on broader system structures
+\end{description}
+
+\begin{insightbox}[Design Implication: Verb-Based Role Extraction]
+By scoring verbs on these dimensions and tracking which actors appear as \emph{agents} vs. \emph{themes} of verb actions, we can systematically extract how news discourse positions actors along multiple role dimensions. An actor frequently appearing as the agent of ``accelerate,'' ``transform,'' and ``disrupt'' receives different portrayal scores than one appearing as agent of ``support,'' ``fund,'' and ``authorize.''
 \end{insightbox}
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Media Coverage and Actor Roles in Transitions}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Methodological Approaches to News Analysis}
+%===============================================================================
 
-Media coverage is a window into the socio-political landscape of a sustainability transition. News articles often chronicle who is doing what---which organizations advocate or oppose certain innovations, which government agencies implement policies, which firms invest in new technologies.
+Researchers employ a mix of quantitative text mining and qualitative content analysis, often combined for both breadth and depth.
 
-%\sidenote{\textbf{Role Indicators:} Frequent quotes from a government agency suggest a policymaking role; coverage of protests highlights activist roles; profiles of startups show entrepreneurial roles.}
+\subsection{Named Entity Recognition (NER) and Actor Extraction}
 
-Researchers tracking media debates over technologies such as nuclear power, carbon capture, or biofuels often reveal distinct actor roles:
+NER automatically identifies entities (persons, organizations, locations) in text. Applied to news corpora, NER extracts all organizations, institutions, and individuals mentioned, categorizes them into actor types (government, corporate, NGO, academic), and quantifies their presence across the corpus. Co-occurrence analysis reveals which actors frequently appear together in coverage, suggesting coalitions or conflict relationships. Standard toolkits include spaCy, NLTK, and transformer-based models (BERT-NER), combined with domain gazetteers for recognizing field-specific actors not in general training data.
 
-\begin{description}[leftmargin=0.5cm]
-\item[Incumbent firms] Portrayed as defending the regime or emphasizing reliability
-\item[Innovative startups] Cast as disruptors or pioneers
-\item[Government officials] Framed as regulators or enablers
-\item[NGOs/advocates] Acting as watchdogs or change agents
-\end{description}
+\subsection{Topic Modeling and Thematic Analysis}
+
+Topic modeling discovers latent themes by clustering co-occurring words. Hager et al. (2024) applied topic modeling to news about sustainability entrepreneurship in the MENA region, finding that sustainability was strongly associated with economic prosperity framing.\cite{hager2024media}
+
+For transitions research, topic models reveal which aspects of a transition receive media emphasis, how issues are framed (whether as ecological urgency or financial opportunity), and which discourse coalitions exist---inferred from actors and keywords co-occurring within the same topics.
+
+\subsection{Sentiment and Framing Analysis}
+
+Sentiment analysis gauges the tone of coverage toward technologies or actors---positive, negative, or neutral---as an indicator of legitimation. Frame analysis, usually qualitative or keyword-aided, codes for angles: problem definitions, causal attributions, moral evaluations, and advocated solutions.
+
+Laakso et al. (2024) performed frame analysis on Finnish household energy coverage, identifying roles such as ``active energy savers,'' ``victims of high prices,'' and ``duty-bound citizens.''\cite{laakso2024agents}
+
+\subsection{Discourse Network Analysis (DNA)}
+
+DNA combines content coding with network analysis: researchers code statements for \emph{who said it} and \emph{what position was expressed}, then build bipartite networks linking actors to positions.\cite{leifeld2013dna}
+
+\begin{insightbox}[Visualizing Discourse Coalitions]
+DNA yields ``discourse networks'' showing which actors share similar frames. A network might reveal renewable energy companies, environmental NGOs, and community groups clustered around ambitious climate targets, while incumbent utilities and conservative politicians cluster around slower transition narratives.
+\end{insightbox}
+
+\subsection{Event History Analysis}
+
+News archives enable compilation of transition event chronologies: policy announcements, project launches, firm investments, protests, technological breakthroughs. Researchers use news databases to search for articles over multi-year periods, extracting events and coding them to innovation system functions (knowledge development, resource mobilization, legitimation, etc.).
+
+This reveals which functions are well-developed, which are lagging, and which actors drive each function.
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Methodological Approaches to News Analysis}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Data Sources for News Analysis}
+%===============================================================================
 
-Researchers employ a mix of \textbf{quantitative text mining} and \textbf{qualitative content analysis}:
+Access to news data is critical. Several datasets and repositories enable large-volume retrieval:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3cm}p{5cm}p{4.5cm}@{}}
+\toprule
+\textbf{Source} & \textbf{Description} & \textbf{Strengths} \\
+\midrule
+LexisNexis / Factiva & Commercial aggregators of global news & Historical depth, broad coverage, full-text access \\
+NewsBank & Aggregator with strong local/regional coverage & Local newspapers often missing from global databases \\
+GDELT & Automated event database from global news & Real-time updates, structured event data, actor coding \\
+Media Cloud & MIT open-source platform & Free access, topic tracking tools \\
+Web APIs & NYT, Guardian, and others & Official access, structured metadata \\
+Custom scraping & Newspaper3k, BeautifulSoup & Targeted collection from specific outlets \\
+\bottomrule
+\end{tabular}
+\captionof{table}{News data sources for transition research}
+\end{center}
+
+\subsection{GDELT: Structured Event Data at Scale}
+
+GDELT is particularly powerful for transitions research. It continuously scans global news and extracts structured ``events'' with actors, actions, locations, and tone. GDELT's actor and thematic coding aligns with role extraction interests.
+
+Example query: retrieve all events involving ``renewable energy'' over five years to analyze which countries or organizations appear most frequently, and how event volume changes (perhaps spiking around international agreements or crises).
+
+Limitations: automated coding is imperfect, and big data tools (Google BigQuery) are required for analysis.
+
+
+%===============================================================================
+\section{Insights into Multi-Actor Constellations}
+%===============================================================================
+
+News analysis yields valuable insights into multi-actor dynamics in transitions.
+
+\subsection{Revealing Power Dynamics}
+
+Media visibility indicates influence. If certain actors (government ministries, incumbent utilities) consistently dominate coverage, they hold agenda-setting power. Increased presence of new voices (startups, grassroots organizations, youth activists) signals democratization of discourse or challenge to incumbents.
+
+\subsection{Mapping Actor Networks and Coalitions}
+
+News provides a forum where alliances become visible---joint press conferences, coordinated statements, co-mentions in stories. Conversely, media exposes conflicts through point-counterpoint coverage. Collating many instances reveals stable coalitions (advocacy coalitions or discourse coalitions) and conflict lines.
+
+\subsection{Identifying Intermediaries}
+
+Media data highlights intermediaries---actors who may not be publicly famous but facilitate change. Frequent mentions of a research institute or consultancy across different projects may indicate knowledge brokering. Seeing intermediaries appear in news across multiple events confirms their systemic role.
+
+\subsection{Temporal Dynamics: Narratives of Change}
+
+Longitudinal analysis shows how narratives and actor prominence shift as transitions progress. Early coverage may frame innovations as ``fringe ideas'' backed by marginal actors; later coverage presents them as ``mainstream solutions'' championed by powerful actors.
+
+\begin{insightbox}[Detecting Tipping Points]
+By coding articles year by year, researchers capture discursive tipping points: When did media stop presenting electric cars as curiosities? When did climate activism move from margins to front pages? Such shifts indicate underlying changes in transition momentum and social acceptance.
+\end{insightbox}
+
+
+%===============================================================================
+\section{Agent vs. Theme Position Analysis}
+%===============================================================================
+
+A methodologically important distinction: actors can appear as \textbf{agents} (performing actions) or \textbf{themes} (receiving actions) of verbs.
+
+\subsection{The Agent-Theme Ratio}
+
+The agent-to-theme ratio reveals whether an actor is portrayed as \emph{acting upon} the world or \emph{being acted upon}:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{High agent ratio}: Active, powerful positioning (``X launched,'' ``X transformed,'' ``X led'')
+\item \textbf{High theme ratio}: Passive, dependent positioning (``X was supported by,'' ``X received funding from,'' ``X was criticized'')
+\end{itemize}
+
+\subsection{Actor Portrayal Patterns}
+
+Combining RIVETER-X dimensions with agent/theme analysis reveals distinct portrayal patterns:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3.5cm}p{4.5cm}p{4cm}@{}}
+\toprule
+\textbf{Pattern} & \textbf{Dimension Profile} & \textbf{Typical Actors} \\
+\midrule
+Transformative Innovators & High transformation, high innovation, low legitimacy & Startups, entrepreneurs \\
+Institutional Enablers & High legitimacy, high resources, moderate transformation & Policy bodies, KICs \\
+Knowledge Producers & High collaboration, high legitimacy, moderate innovation & Universities, research institutes \\
+Resource Providers & High resource mobilization, moderate systemic influence & Investors, VCs, corporates \\
+Contested Challengers & High innovation, low legitimacy, high theme ratio & Disruptive entrants facing resistance \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Actor portrayal patterns from RIVETER-X analysis}
+\end{center}
+
+
+%===============================================================================
+\section{Cartographic Visualization}
+%===============================================================================
+
+Mapping actors onto two-dimensional spaces enables visual identification of positioning:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Q1: Transformative Innovators} --- High transformation, high innovation; driving systemic change through novel approaches
+\item \textbf{Q2: Innovative Niche Players} --- Low transformation, high innovation; creative but not system-changing
+\item \textbf{Q3: Traditional Actors} --- Low on both; maintaining status quo
+\item \textbf{Q4: Institutional Reformers} --- High transformation, low innovation; change through established means
+\end{itemize}
+
+\begin{criticalbox}[Design Opportunity: Triangulating Declared vs. Attributed]
+Comparing website-derived \emph{declared} roles with news-derived \emph{attributed} roles reveals alignment gaps. Organizations claiming ``disruptive innovation'' but portrayed in news as ``supporting'' or ``participating'' face sociotype-attribution mismatches that may signal legitimacy challenges or strategic positioning failures.
+\end{criticalbox}
+
+
+%===============================================================================
+\section{Methodological Challenges and Limitations}
+%===============================================================================
+
+\begin{criticalbox}[What News Analysis Cannot Tell Us]
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Selection bias}: News covers ``newsworthy'' actors; routine activities of peripheral actors go unreported
+\item \textbf{Source bias}: Journalists rely on accessible sources; well-resourced PR operations gain disproportionate coverage
+\item \textbf{Framing effects}: Editorial choices shape portrayal independent of actor actions
+\item \textbf{Language coverage}: English-language sources dominate; non-English discourse underrepresented
+\item \textbf{Lexicon gaps}: Verb connotation lexicons don't cover all verbs; domain adaptation needed
+\item \textbf{Entity resolution}: Matching organization names across articles requires robust entity linking
+\item \textbf{Temporal lag}: News reflects events after they occur; real-time dynamics captured better by social media
+\end{enumerate}
+\end{criticalbox}
+
+These limitations motivate triangulation with other modalities---particularly investment data (Chapter~\ref{app:crunchbase}) for enacted roles and social media (Chapter~\ref{app:social-media}) for real-time discourse.
+
+
+%===============================================================================
+\section{Implementation: The ROLEBOX-NEWS Pipeline}
+\label{sec:rolebox-news-pipeline}
+%===============================================================================
+
+Operationalizing RIVETER-X analysis required developing a complete NLP pipeline for entity extraction, relation detection, and verb connotation scoring.
+
+\subsection{Pipeline Architecture}
+
+The ROLEBOX-NEWS pipeline processes raw news text through multiple stages:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Stage} & \textbf{Task} & \textbf{Technology} \\
+\midrule
+1. Preprocessing & Text cleaning, sentence splitting & spaCy \\
+2. Named Entity Recognition & Actor identification & spaCy NER + domain gazetteer \\
+3. Coreference Resolution & Pronoun linking & fastcoref (transformer-based) \\
+4. Relation Extraction & Subject-verb-object triples & Dependency parsing \\
+5. Verb Scoring & Connotation dimensions & RIVETER-X lexicon \\
+6. Aggregation & Cross-document statistics & Custom pipeline \\
+\bottomrule
+\end{tabular}
+\captionof{table}{ROLEBOX-NEWS pipeline stages}
+\end{center}
+
+\subsection{Entity Recognition: Combining Models with Domain Knowledge}
+
+Off-the-shelf NER models provide baseline detection but miss domain-specific actors. We combine:
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Named Entity Recognition] Automatically identify entities (organizations, people, locations) in text using NLP tools like spaCy or NLTK.
-
-\item[Topic Modeling] Unsupervised machine learning to discover latent themes by clustering co-occurring words.
-
-\item[Sentiment Analysis] Gauge the tone of media coverage towards technologies or actors over time.
-
-\item[Discourse Network Analysis] Combines content coding with network analysis, linking actors to concepts they advocate.
-
-\item[Event History Analysis] Compile chronologies of events to analyze system change dynamics.
+\item[Transformer-based NER] General entity detection (ORG, PERSON, GPE, NORP)
+\item[Domain gazetteer] Known EIT organizations (InnoEnergy, Climate-KIC, EIT Digital, etc.)
+\item[Actor type patterns] Generic role references (``startups,'' ``entrepreneurs,'' ``investors'')
 \end{description}
 
+\begin{insightbox}[Filtering for Agents]
+Not all entities are \emph{actors} capable of action. Dates, monetary values, and cardinal numbers are entities but not agents. The pipeline filters to retain only actor types: organizations, persons, geo-political entities, and domain-specific actor categories.
+\end{insightbox}
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Data Sources for News in Transition Studies}
-%═══════════════════════════════════════════════════════════════════════════════
+\subsection{Coreference Resolution: Linking Pronouns to Antecedents}
 
-Several datasets and repositories enable large-volume news article retrieval:
+A critical capability for accurate relation extraction: linking pronouns to their referents. Consider:
 
-%\sidenote{\textbf{Data Access:} LexisNexis (Nexis Uni), Factiva, NewsBank, GDELT, Web scraping \& APIs.}
+\begin{quote}
+\textit{``EIT InnoEnergy launched a new accelerator. \textbf{They} invested 50 million euros in clean energy startups. \textbf{The organization} aims to accelerate the energy transition.''}
+\end{quote}
+
+Without coreference resolution, ``They'' and ``The organization'' would be missed or mis-attributed. The pipeline uses fastcoref (a 90M parameter transformer model) to identify coreference clusters:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Cluster 0}: [EIT InnoEnergy, They, The organization]
+\item Enables accurate verb-actor attribution across sentences
+\end{itemize}
+
+\subsection{Human-in-the-Loop Validation}
+
+\begin{criticalbox}[The Augmentation Principle]
+Large language models and NLP pipelines are powerful but imperfect. The most robust approach combines automated extraction with human validation---\emph{models and humans augmenting each other}. Models scale annotation; humans catch errors and edge cases; corrections improve future model performance.
+\end{criticalbox}
+
+The pipeline implements active learning infrastructure:
+
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Automated extraction} processes corpus at scale
+\item \textbf{Interactive UI} enables human review of entity/relation extraction
+\item \textbf{Correction tracking} logs human edits (add, delete, relabel, boundary adjustments)
+\item \textbf{Export for fine-tuning} generates training data from corrections
+\end{enumerate}
+
+\subsection{Corpus Statistics}
+
+The EIT news corpus processed through ROLEBOX-NEWS comprises:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Documents & 170 \\
+Time span & 2008--2025 \\
+Total words & 71,554 \\
+Entity mentions & 9,269 \\
+Unique actors (filtered) & 1,200+ \\
+Verb relations & 2,474 \\
+Unique verbs & 473 \\
+\bottomrule
+\end{tabular}
+\captionof{table}{EIT news corpus statistics}
+\end{center}
+
+Top extracted actors include EIT (1,457 mentions), Europe (266), Climate-KIC (128), EIT Health (114), and EIT Digital (111)---reflecting the corpus focus on EIT innovation communities.
+
+\subsection{Technical Reproducibility}
+
+The pipeline is implemented in Python with the following dependencies:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \texttt{spacy} (v3.8) --- NER and dependency parsing
+\item \texttt{fastcoref} (v2.1) --- Coreference resolution
+\item \texttt{transformers} --- Hugging Face model support
+\end{itemize}
+
+Processing commands:
+\begin{verbatim}
+# Without coreference (fast)
+python scripts/process_corpus.py
+
+# With coreference resolution
+python scripts/process_corpus.py --coref
+\end{verbatim}
+
+
+%===============================================================================
+\section{Knowledge Graph Extraction from News}
+\label{sec:news-kggen}
+%===============================================================================
+
+Complementing the NER and RIVETER-X analysis, we applied \textbf{kg-gen}---an LLM-based knowledge graph extraction library---to the EIT news corpus. This approach extracts structured subject-predicate-object triples directly from news text, capturing semantic relationships that entity co-occurrence analysis alone cannot reveal.
+
+\subsection{Extraction Results}
+
+Processing 30 EIT news articles (2008--2025) yielded:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Documents processed & 30 \\
+Unique entities extracted & 131 \\
+Unique relations & 178 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The news-derived knowledge graph captures actor relationships that emerge from journalistic framing: which organizations ``launched,'' ``funded,'' ``partnered with,'' or ``led'' initiatives. Unlike Wikipedia's encyclopedic coverage, news text emphasizes \emph{dynamic relationships}---actions, investments, and announcements.
+
+\subsection{Visualization}
+
+Figure~\ref{fig:kg-news} shows the aggregated knowledge graph from EIT news coverage. Central entities include ``EIT,'' ``Climate-KIC,'' ``Europe,'' and key startups featured in funding announcements. The graph topology differs from Wikipedia's static institutional relationships: news graphs are sparser but more action-oriented.
+
+\begin{center}
+\includegraphics[width=0.85\textwidth]{figures/kg_news_eit.png}
+\captionof{figure}{Knowledge graph from 30 EIT news articles using kg-gen with Llama 3.2. News graphs emphasize dynamic relationships (investments, launches, partnerships).}
+\label{fig:kg-news}
+\end{center}
+
+The interactive visualization is available at \texttt{rolebox-news/ui/rolebox\_news\_eit-kg.html}.
+
+
+%===============================================================================
+\section{Integration with Other Modalities}
+%===============================================================================
+
+News data connects to other cartographic modalities:
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[LexisNexis \& Factiva] Commercial databases aggregating news from thousands of outlets worldwide with historical depth.
+\item[With websites] Triangulate declared roles (what actors claim) against attributed roles (how media portrays them). Gaps reveal legitimacy challenges or successful positioning.
 
-\item[GDELT] Continuously updated event database parsed from global news using automated algorithms. Codes actors, locations, and tone.
+\item[With Crunchbase] Cross-reference media visibility with investment activity. Heavily funded actors may or may not receive proportionate coverage.
 
-\item[Media Cloud] MIT's open-source platform for online news analysis.
+\item[With social media] Compare professional news framing with real-time social discourse. Media may lag or lead social conversation.
 
-\item[Web Scraping] Custom collection using tools like Newspaper3k or official APIs (e.g., NYT API).
+\item[With visual materials] Visual elements in news coverage (photos, infographics) reinforce or complicate textual portrayals.
 \end{description}
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Insights into Multi-Actor Constellations}
-%═══════════════════════════════════════════════════════════════════════════════
-
-Analyzing news data yields insights into multi-actor constellations:
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Power Dynamics] Media visibility indicates agenda-setting power. Increased presence of new voices may signal power shifts.
-
-\item[Actor Networks] Co-occurrence analysis maps perceived relationships and coalitions.
-
-\item[Intermediary Identification] News may highlight actors who facilitate change across regions or sectors.
-
-\item[Temporal Dynamics] Longitudinal analysis captures tipping points and narrative shifts.
-\end{description}
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Chapter Summary}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Summary}
+%===============================================================================
 
 \begin{summarybox}
+News media analysis provides the second modality of multimodal cartography---the \textbf{attributed map} of how others portray actors. Key methodological insights:
+
 \begin{itemize}[leftmargin=*, itemsep=0.3em]
-\item \textbf{News media} actively shape public perceptions, political decisions, and societal values around sustainability transitions.
+\item \textbf{Theoretical role}: Media simultaneously mirrors and shapes transitions through agenda-setting, framing, and legitimation functions.
 
-\item \textbf{Media coverage} provides a window into the socio-political landscape, framing actors as heroes, villains, or victims.
+\item \textbf{Third-party perspective} complements self-authored website claims with external attributions from journalists and sources.
 
-\item \textbf{Methodological approaches} range from NER and topic modeling to discourse network analysis and event history analysis.
+\item \textbf{Multiple analytical methods} (NER, topic modeling, discourse network analysis, event history analysis) extract different facets of actor roles.
 
-\item \textbf{Data sources} include commercial databases (LexisNexis, Factiva), computational databases (GDELT), and specialized archives.
+\item \textbf{RIVETER-X framework} extends verb connotation analysis with six transition-specific dimensions for systematic role extraction.
 
-\item \textbf{Multi-actor constellations} can be mapped through actor co-occurrence, coalition formation, and intermediary identification.
+\item \textbf{Agent vs. theme positions} reveal whether actors are portrayed as acting upon or being acted upon.
 
-\item \textbf{Temporal dynamics} show how narratives shift, tipping points emerge, and external shocks reshape transition discourse.
+\item \textbf{Portrayal patterns} (Transformative Innovators, Institutional Enablers, etc.) emerge from combined dimension analysis.
+
+\item \textbf{Temporal dynamics} enable tracking narrative shifts, tipping points, and coalition evolution.
+
+\item \textbf{Declared-attributed gaps} surface when comparing website claims with news portrayals.
+
+\item \textbf{Inherent limitations} (selection bias, source bias, lexicon gaps) motivate multimodal complementarity.
+
+\item \textbf{ROLEBOX-NEWS pipeline} operationalizes these insights with NER, coreference resolution, and human-in-the-loop validation.
 \end{itemize}
+
+Attributed sociotypes show how others see actors. The next appendix examines \emph{enacted} sociotypes through investment and partnership data from Crunchbase.
 \end{summarybox}
+
+\clearpage
+\end{document}

@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triad Explorer - Multi-actor Perspective</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #000;
+    background: #f5f5f5;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo i { font-size: 18px; color: #3498db; }
+.logo h1 { font-size: 16px; font-weight: 600; }
+
+.nav {
+    display: flex;
+    gap: 4px;
+}
+
+.nav-item {
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all .15s;
+}
+
+.nav-item:hover { color: #000; background: #f5f5f5; }
+.nav-item.active { color: #fff; background: #000; }
+
+.main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background: #fff;
+    border-right: 1px solid #e5e5e5;
+    padding: 16px;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 12px;
+}
+
+.card-header {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: 600;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.card-header i { color: #666; }
+
+.card-body { padding: 14px; }
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    color: #000;
+    transition: all .15s;
+}
+
+.btn:hover { background: #f5f5f5; }
+.btn-sm { padding: 4px 8px; font-size: 10px; }
+
+.tag {
+    display: inline-flex;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    background: #000;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.tag-outline { background: #fff; color: #000; border: 1px solid #e5e5e5; }
+.tag-warning { background: #fef3c7; color: #92400e; }
+
+.select, .input {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 12px;
+    border: 1px solid #e5e5e5;
+    font-family: inherit;
+    background: #fff;
+}
+
+.select:focus, .input:focus {
+    outline: none;
+    border-color: #000;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.stat-label { color: #666; }
+.stat-value { font-weight: 600; }
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legend-label { font-size: 12px; }
+
+.search-results {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 8px;
+}
+
+.search-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.search-result:hover { background: #f5f5f5; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.metric { text-align: center; }
+.metric-value { font-size: 24px; font-weight: 600; }
+.metric-label { font-size: 11px; color: #666; }
+
+.pole-list h4 { margin-bottom: 8px; font-size: 12px; }
+.pole-list ul { list-style: none; }
+.pole-list li { padding: 4px 0; font-size: 12px; display: flex; justify-content: space-between; }
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 11px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+input[type="range"] {
+    width: 80px;
+    height: 4px;
+    -webkit-appearance: none;
+    background: #e5e5e5;
+    border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.info-panel {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    width: 320px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.info-panel.hidden { display: none; }
+
+.info-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: 600;
+}
+
+.info-panel-body { padding: 16px; }
+
+.info-section {
+    margin-bottom: 16px;
+}
+
+.info-section h4 {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.coord-bar {
+    display: grid;
+    grid-template-columns: 80px 1fr 40px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 11px;
+}
+
+.bar {
+    height: 8px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+}
+
+.confidence-meter {
+    height: 6px;
+    background: #f5f5f5;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.meter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 3px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.text-gray { color: #666; }
+.text-sm { font-size: 11px; }
+.text-center { text-align: center; }
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 200;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .3s;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+@media (max-width: 1024px) {
+    .sidebar { width: 240px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+    </style>
+</head>
+<body>
+<div class="app">
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-triangle"></i>
+            <h1>Triad Explorer - Multi-actor Perspective</h1>
+        </div>
+        <nav class="nav">
+            <a class="nav-item active" data-screen="overview">Overview</a>
+            <a class="nav-item" data-screen="positions">Positions</a>
+            <a class="nav-item" data-screen="network">Network</a>
+            <a class="nav-item" data-screen="animation">Animation</a>
+        </nav>
+        <div class="header-actions">
+            <button class="btn btn-sm" onclick="exportPNG()">
+                <i class="fas fa-download"></i> Export
+            </button>
+        </div>
+    </header>
+
+    <div class="main">
+        <aside class="sidebar">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie"></i> Statistics
+                </div>
+                <div class="card-body" id="stats-panel">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-filter"></i> Filters
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Classification</label>
+                        <select id="filter-classification" class="select" onchange="applyFilters()">
+                            <option value="all">All</option>
+                            <option value="dominant_state">State</option>
+                            <option value="dominant_market">Market</option>
+                            <option value="dominant_community">Community</option>
+                            <option value="interstitial">Interstitial</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Color By</label>
+                        <select id="color-by" class="select" onchange="updateVisualization()">
+                            <option value="classification">Classification</option>
+                            <option value="confidence">Confidence</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Size By</label>
+                        <select id="size-by" class="select" onchange="updateVisualization()">
+                            <option value="fixed">Fixed</option>
+                            <option value="confidence">Confidence</option>
+                            <option value="raw_total">Raw Total</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-search"></i> Search
+                </div>
+                <div class="card-body">
+                    <input type="text" id="search-input" class="input"
+                           placeholder="Search organizations..."
+                           oninput="searchOrganizations(this.value)">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-palette"></i> Legend
+                </div>
+                <div class="card-body" id="legend-panel">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div id="screen-overview" class="screen active">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">Distribution Overview</div>
+                        <div class="card-body">
+                            <div id="overview-chart" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Key Metrics</div>
+                        <div class="card-body" id="key-metrics">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Triad Visualization</div>
+                    <div class="card-body">
+                        <div id="overview-ternary" style="height: 500px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="screen-positions" class="screen">
+                <div class="card">
+                    <div class="card-header">
+                        Position Analysis
+                        <span class="tag" id="position-count">0 organizations</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="positions-ternary" style="height: 600px;"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Top Organizations by Pole</div>
+                    <div class="card-body">
+                        <div class="grid-3" id="top-by-pole">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="screen-network" class="screen">
+                <div class="card">
+                    <div class="card-header">
+                        Network View
+                        <div class="header-controls">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="show-edges" checked onchange="toggleEdges()">
+                                Show Edges
+                            </label>
+                            <label>
+                                Edge Opacity:
+                                <input type="range" id="edge-opacity" min="0" max="100" value="30"
+                                       oninput="updateEdgeOpacity(this.value)">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="network-ternary" style="height: 600px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="screen-animation" class="screen">
+                <div class="card">
+                    <div class="card-header">
+                        Temporal Animation
+                        <span class="tag tag-warning">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-gray">
+                            Animation view requires time-series data. Upload data with temporal
+                            information to enable this feature.
+                        </p>
+                        <div id="animation-ternary" style="height: 600px;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Info Panel (overlay) -->
+    <div id="info-panel" class="info-panel hidden">
+        <div class="info-panel-header">
+            <span id="info-panel-title">Organization</span>
+            <button class="btn btn-sm" onclick="closeInfoPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="info-panel-body" id="info-panel-body">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+</div>
+
+<script>
+// Data
+const TRIAD_CONFIG = {"triad_type": "multi_actor_perspective", "name": "Multi-actor Perspective", "description": "Actors positioned by sector: State vs Market vs Community (Avelino & Wittmayer 2015)", "axis_a": {"name": "State", "key": "state", "color": "#1a365d", "description": "Government actors, public agencies, regulatory bodies, policy institutions", "keywords": ["government", "ministry", "agency", "municipality", "public sector", "regulation", "policy", "legislation", "governance", "authority", "public administration", "city council", "national", "regional", "European Commission", "parliament", "department", "bureau", "licensing", "permit", "compliance", "oversight", "enforcement", "taxation", "subsidy", "grant", "public funding", "state-owned"], "source_modality": "rolebox-websites"}, "axis_b": {"name": "Market", "key": "market", "color": "#22543d", "description": "Business actors, corporations, SMEs, entrepreneurs, investors", "keywords": ["company", "corporation", "enterprise", "startup", "SME", "investor", "venture capital", "private equity", "profit", "revenue", "market share", "competition", "customer", "product", "service", "business model", "commercial", "trade", "industry", "shareholder", "dividend", "growth", "scale", "exit", "incubator", "accelerator", "corporate", "B2B", "B2C", "private sector", "entrepreneur", "founder", "CEO"], "source_modality": "rolebox-crunchbase"}, "axis_c": {"name": "Community", "key": "community", "color": "#9b2c2c", "description": "Civil society actors, grassroots initiatives, local communities, cooperatives", "keywords": ["community", "citizen", "grassroots", "cooperative", "collective", "neighborhood", "local", "volunteer", "participation", "activism", "social movement", "NGO", "association", "foundation", "charity", "mutual aid", "commons", "shared ownership", "bottom-up", "solidarity", "civil society", "public interest", "social enterprise", "cooperative", "crowdfunding", "peer-to-peer", "community energy", "transition initiative", "local food", "housing cooperative"], "source_modality": "rolebox-social"}, "interstitial_threshold": 0.4, "color_palette": {"dominant_state": "#1a365d", "dominant_market": "#22543d", "dominant_community": "#9b2c2c", "interstitial": "#d69e2e"}};
+const POSITIONS = [{"org_id": "org_000", "org_name": "VITO", "coordinates": {"a": 0.27928942890424036, "b": 0.36177579891905226, "c": 0.35893477217670733}, "raw_scores": {"a": 0.2906233031605288, "b": 0.3764570614000705, "c": 0.3735007426469151}, "classification": "interstitial", "confidence": 0.0824863700148119, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_001", "org_name": "EcoSolutions", "coordinates": {"a": 0.1093635044314649, "b": 0.6938451507301181, "c": 0.19679134483841704}, "raw_scores": {"a": 0.10714094847373945, "b": 0.6797443802627586, "c": 0.19279202369217924}, "classification": "dominant_market", "confidence": 0.5844816462986532, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_002", "org_name": "WWF", "coordinates": {"a": 0.22721656615180708, "b": 0.11887289410100847, "c": 0.6539105397471845}, "raw_scores": {"a": 0.273515023335499, "b": 0.14309485859526994, "c": 0.787153681474019}, "classification": "dominant_community", "confidence": 0.5350376456461761, "kic_sectors": [], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_003", "org_name": "EU Commission 71", "coordinates": {"a": 0.7106384130516425, "b": 0.15753676329748148, "c": 0.13182482365087597}, "raw_scores": {"a": 0.7528185338574275, "b": 0.16688739729811947, "c": 0.13964931904075742}, "classification": "dominant_state", "confidence": 0.5788135894007665, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_004", "org_name": "Cambridge 48", "coordinates": {"a": 0.4354784484202078, "b": 0.13515786299078442, "c": 0.4293636885890078}, "raw_scores": {"a": 0.40473316456123254, "b": 0.12561556100431642, "c": 0.39905011387068395}, "classification": "dominant_state", "confidence": 0.30032058542942336, "kic_sectors": [], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_005", "org_name": "CEA 65", "coordinates": {"a": 0.4857256939217402, "b": 0.2054924440397758, "c": 0.30878186203848407}, "raw_scores": {"a": 0.46719788851186383, "b": 0.19765401987565837, "c": 0.29700350580668444}, "classification": "dominant_state", "confidence": 0.2802332498819644, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_006", "org_name": "Agency for 91", "coordinates": {"a": 0.7086968993250317, "b": 0.13625717503618026, "c": 0.15504592563878802}, "raw_scores": {"a": 0.8937939793537995, "b": 0.17184475169439078, "c": 0.19554073820736262}, "classification": "dominant_state", "confidence": 0.5724397242888514, "kic_sectors": [], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_007", "org_name": "ETH Zurich 68", "coordinates": {"a": 0.413086125918511, "b": 0.17972414499375394, "c": 0.4071897290877351}, "raw_scores": {"a": 0.39899080082553373, "b": 0.17359159758584589, "c": 0.39329560085176235}, "classification": "dominant_state", "confidence": 0.23336198092475707, "kic_sectors": [], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_008", "org_name": "CSIC 92", "coordinates": {"a": 0.4707336206851621, "b": 0.1746671240716144, "c": 0.35459925524322355}, "raw_scores": {"a": 0.40572303095910145, "b": 0.15054474945744742, "c": 0.30562738307010323}, "classification": "dominant_state", "confidence": 0.2960664966135477, "kic_sectors": [], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_009", "org_name": "WWF 85", "coordinates": {"a": 0.22792464968518233, "b": 0.14083562298271196, "c": 0.6312397273321058}, "raw_scores": {"a": 0.2729963282200253, "b": 0.16868560732665544, "c": 0.7560662176131357}, "classification": "dominant_community", "confidence": 0.4904041043493938, "kic_sectors": [], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_010", "org_name": "Agency for", "coordinates": {"a": 0.3588979335743769, "b": 0.32412277542673346, "c": 0.3169792909988898}, "raw_scores": {"a": 0.3643605032689558, "b": 0.32905605334431715, "c": 0.3218038422343201}, "classification": "interstitial", "confidence": 0.04191864257548711, "kic_sectors": [], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_011", "org_name": "Earth First", "coordinates": {"a": 0.22738069159516022, "b": 0.10489933203196446, "c": 0.6677199763728753}, "raw_scores": {"a": 0.24739858004353704, "b": 0.11413434276305945, "c": 0.7265039650572932}, "classification": "dominant_community", "confidence": 0.5628206443409108, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_012", "org_name": "NetZero", "coordinates": {"a": 0.16628763931004772, "b": 0.6980807007090807, "c": 0.1356316599808716}, "raw_scores": {"a": 0.1885181900258081, "b": 0.7914052465694721, "c": 0.15376389463389759}, "classification": "dominant_market", "confidence": 0.5624490407282091, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_013", "org_name": "Sustainable Future 53", "coordinates": {"a": 0.24166571768563608, "b": 0.12359694998515178, "c": 0.6347373323292123}, "raw_scores": {"a": 0.20119602007850673, "b": 0.10289922240109618, "c": 0.5284432822449789}, "classification": "dominant_community", "confidence": 0.5111403823440605, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_014", "org_name": "GreenEnergy 90", "coordinates": {"a": 0.12524961890404065, "b": 0.7756575200646397, "c": 0.09909286103131965}, "raw_scores": {"a": 0.14082974012100424, "b": 0.8721435476565894, "c": 0.11141927607443863}, "classification": "dominant_market", "confidence": 0.6765646590333201, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_015", "org_name": "Department of 65", "coordinates": {"a": 0.6655506780736259, "b": 0.19836097878925826, "c": 0.1360883431371159}, "raw_scores": {"a": 0.8538326099441618, "b": 0.2544765978166051, "c": 0.17458725388134333}, "classification": "dominant_state", "confidence": 0.52946233493651, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_016", "org_name": "CEA", "coordinates": {"a": 0.47093763675896866, "b": 0.21896398336874337, "c": 0.310098379872288}, "raw_scores": {"a": 0.39477750228171654, "b": 0.18355308154784383, "c": 0.25994920412412204}, "classification": "dominant_state", "confidence": 0.25197365339022526, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_017", "org_name": "Department of 16", "coordinates": {"a": 0.35244100742771717, "b": 0.2946037893185407, "c": 0.3529552032537422}, "raw_scores": {"a": 0.3381045099478539, "b": 0.28261997814415674, "c": 0.3385977894587833}, "classification": "interstitial", "confidence": 0.05835141393520149, "kic_sectors": [], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_018", "org_name": "Oxford", "coordinates": {"a": 0.44796324401607884, "b": 0.2211250548131025, "c": 0.33091170117081864}, "raw_scores": {"a": 0.4544699712162175, "b": 0.22433692638516595, "c": 0.33571823875088636}, "classification": "dominant_state", "confidence": 0.22683818920297635, "kic_sectors": [], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_019", "org_name": "TNO", "coordinates": {"a": 0.3855651048807351, "b": 0.2547919470284308, "c": 0.3596429480908341}, "raw_scores": {"a": 0.3521459760097462, "b": 0.2327076743459556, "c": 0.3284706405410943}, "classification": "interstitial", "confidence": 0.1307731578523043, "kic_sectors": [], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_020", "org_name": "TU Delft", "coordinates": {"a": 0.38165017674864454, "b": 0.17506997165791435, "c": 0.44327985159344124}, "raw_scores": {"a": 0.4238041626485918, "b": 0.1944067820837413, "c": 0.4922409519733508}, "classification": "dominant_community", "confidence": 0.2682098799355269, "kic_sectors": [], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_021", "org_name": "GreenPeace", "coordinates": {"a": 0.12994004498260178, "b": 0.17703662960688937, "c": 0.6930233254105088}, "raw_scores": {"a": 0.14445122609881617, "b": 0.1968073676943951, "c": 0.770417380446734}, "classification": "dominant_community", "confidence": 0.563083280427907, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_022", "org_name": "WWF 42", "coordinates": {"a": 0.22166527539318953, "b": 0.1488596319834021, "c": 0.6294750926234083}, "raw_scores": {"a": 0.1989967395865433, "b": 0.1336365444168251, "c": 0.5651020028319881}, "classification": "dominant_community", "confidence": 0.48061546064000615, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_023", "org_name": "NetZero 82", "coordinates": {"a": 0.14407931128391782, "b": 0.6829354123546836, "c": 0.1729852763613985}, "raw_scores": {"a": 0.15518184733624826, "b": 0.7355613929310315, "c": 0.18631526281268124}, "classification": "dominant_market", "confidence": 0.5388561010707658, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_024", "org_name": "EcoSolutions", "coordinates": {"a": 0.10013155352376205, "b": 0.7313507222813382, "c": 0.1685177241948996}, "raw_scores": {"a": 0.10923366917670294, "b": 0.7978316528452176, "c": 0.18383625028596212}, "classification": "dominant_market", "confidence": 0.6312191687575762, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_025", "org_name": "Agency for", "coordinates": {"a": 0.6828133191088999, "b": 0.17348113118757355, "c": 0.14370554970352645}, "raw_scores": {"a": 0.6095593722204299, "b": 0.15486963487588631, "c": 0.12828845338897493}, "classification": "dominant_state", "confidence": 0.5391077694053734, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_026", "org_name": "GreenEnergy 72", "coordinates": {"a": 0.12754726494055782, "b": 0.706126738769124, "c": 0.16632599629031802}, "raw_scores": {"a": 0.14921746454662335, "b": 0.8260972248743206, "c": 0.19458467781491728}, "classification": "dominant_market", "confidence": 0.5785794738285662, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_027", "org_name": "Oxford", "coordinates": {"a": 0.35063902951875103, "b": 0.2381686739310254, "c": 0.4111922965502236}, "raw_scores": {"a": 0.36180596103204754, "b": 0.24575372022222322, "c": 0.424287690467648}, "classification": "dominant_community", "confidence": 0.1730236226191982, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_028", "org_name": "ETH Zurich", "coordinates": {"a": 0.38173682651040297, "b": 0.25325191170387407, "c": 0.36501126178572296}, "raw_scores": {"a": 0.35144606224468655, "b": 0.23315640761696352, "c": 0.3360476687623453}, "classification": "interstitial", "confidence": 0.1284849148065289, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_029", "org_name": "TU Delft 18", "coordinates": {"a": 0.37829800445882167, "b": 0.22141737158491892, "c": 0.4002846239562594}, "raw_scores": {"a": 0.351523202056781, "b": 0.20574611161872808, "c": 0.37195367432215787}, "classification": "dominant_community", "confidence": 0.1788672523713405, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_030", "org_name": "Climate Action", "coordinates": {"a": 0.09956389412485761, "b": 0.1670503881338353, "c": 0.733385717741307}, "raw_scores": {"a": 0.10703627620686916, "b": 0.1795877073905426, "c": 0.7884271395802418}, "classification": "dominant_community", "confidence": 0.6338218236164495, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_031", "org_name": "WWF 7", "coordinates": {"a": 0.11469618638301379, "b": 0.1365066278314022, "c": 0.7487971857855841}, "raw_scores": {"a": 0.12115231468795672, "b": 0.1441904430614188, "c": 0.7909461957767991}, "classification": "dominant_community", "confidence": 0.6341009994025703, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_032", "org_name": "Department of 35", "coordinates": {"a": 0.7245624700519292, "b": 0.1278549663062125, "c": 0.1475825636418583}, "raw_scores": {"a": 0.6994512569267375, "b": 0.12342388763359036, "c": 0.14246778422344972}, "classification": "dominant_state", "confidence": 0.5967075037457167, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_033", "org_name": "Fraunhofer 62", "coordinates": {"a": 0.37900030077330193, "b": 0.3023604742722523, "c": 0.31863922495444574}, "raw_scores": {"a": 0.3604968520838812, "b": 0.2875987141628534, "c": 0.30308270814601185}, "classification": "interstitial", "confidence": 0.07663982650104961, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_034", "org_name": "Earth First", "coordinates": {"a": 0.12337759318675595, "b": 0.21128324285272443, "c": 0.6653391639605195}, "raw_scores": {"a": 0.11104562356336725, "b": 0.19016483337907822, "c": 0.5988364696925889}, "classification": "dominant_community", "confidence": 0.5419615707737635, "kic_sectors": [], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_035", "org_name": "Oxford 33", "coordinates": {"a": 0.3619127247523936, "b": 0.21116770057983894, "c": 0.42691957466776737}, "raw_scores": {"a": 0.3430472346080893, "b": 0.2001601236099772, "c": 0.4046654606854098}, "classification": "dominant_community", "confidence": 0.21575187408792842, "kic_sectors": [], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_036", "org_name": "CSIC 68", "coordinates": {"a": 0.530199400604696, "b": 0.1942762991005849, "c": 0.27552430029471914}, "raw_scores": {"a": 0.4990638181326438, "b": 0.18286756169704854, "c": 0.2593443318430446}, "classification": "dominant_state", "confidence": 0.3359231015041111, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_037", "org_name": "CSIC 7", "coordinates": {"a": 0.5270514471625932, "b": 0.1673966471677331, "c": 0.3055519056696736}, "raw_scores": {"a": 0.4999245851818297, "b": 0.1587808929217139, "c": 0.28982542504300435}, "classification": "dominant_state", "confidence": 0.35965479999486016, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_038", "org_name": "Cambridge", "coordinates": {"a": 0.4180529759505899, "b": 0.14455227497546902, "c": 0.43739474907394105}, "raw_scores": {"a": 0.4243019955921883, "b": 0.14671302984990914, "c": 0.44393288786336116}, "classification": "dominant_community", "confidence": 0.292842474098472, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_039", "org_name": "Climate Action", "coordinates": {"a": 0.20697210174461908, "b": 0.1652795799614246, "c": 0.6277483182939563}, "raw_scores": {"a": 0.1679538027895101, "b": 0.13412113876210308, "c": 0.5094054530222735}, "classification": "dominant_community", "confidence": 0.46246873833253166, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_040", "org_name": "EcoSolutions 39", "coordinates": {"a": 0.34284333954112917, "b": 0.3481200576154487, "c": 0.3090366028434222}, "raw_scores": {"a": 0.33847228673953117, "b": 0.3436817297331889, "c": 0.3050965662352646}, "classification": "interstitial", "confidence": 0.03908345477202646, "kic_sectors": [], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_041", "org_name": "SustainCorp", "coordinates": {"a": 0.12368500468659907, "b": 0.7467016549550073, "c": 0.12961334035839361}, "raw_scores": {"a": 0.14335620316183845, "b": 0.8654591105869843, "c": 0.15022739741154392}, "classification": "dominant_market", "confidence": 0.6230166502684082, "kic_sectors": [], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_042", "org_name": "TU Delft", "coordinates": {"a": 0.37165227466220724, "b": 0.12047083835359829, "c": 0.5078768869841945}, "raw_scores": {"a": 0.3316471824798475, "b": 0.10750321425388779, "c": 0.45320841576453297}, "classification": "dominant_community", "confidence": 0.38740604863059624, "kic_sectors": [], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_043", "org_name": "VITO 65", "coordinates": {"a": 0.5310043538819954, "b": 0.1605689749013866, "c": 0.30842667121661793}, "raw_scores": {"a": 0.49840323555719945, "b": 0.15071081062875505, "c": 0.289490754158035}, "classification": "dominant_state", "confidence": 0.3704353789806088, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_044", "org_name": "ETH Zurich", "coordinates": {"a": 0.5052627813073987, "b": 0.17423244809594976, "c": 0.3205047705966516}, "raw_scores": {"a": 0.4778594276621591, "b": 0.1647828041318828, "c": 0.303121923692868}, "classification": "dominant_state", "confidence": 0.3310303332114489, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_045", "org_name": "Department of", "coordinates": {"a": 0.3466710181587558, "b": 0.302803984033679, "c": 0.3505249978075653}, "raw_scores": {"a": 0.35276634473156093, "b": 0.30812802058001215, "c": 0.35668808679295744}, "classification": "interstitial", "confidence": 0.04772101377388632, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_046", "org_name": "NetZero 6", "coordinates": {"a": 0.15014312511254363, "b": 0.742838591433506, "c": 0.10701828345395051}, "raw_scores": {"a": 0.15255752668841766, "b": 0.7547839313512192, "c": 0.10873920881783161}, "classification": "dominant_market", "confidence": 0.6358203079795555, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_047", "org_name": "Climate Action 72", "coordinates": {"a": 0.2858308289073879, "b": 0.3642244575579924, "c": 0.34994471353461976}, "raw_scores": {"a": 0.2936095748952722, "b": 0.374136647746674, "c": 0.35946828748496756}, "classification": "interstitial", "confidence": 0.07839362865060445, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_048", "org_name": "CarbonFree", "coordinates": {"a": 0.16474330977662685, "b": 0.722619329901118, "c": 0.11263736032225524}, "raw_scores": {"a": 0.17672586207055496, "b": 0.7751788172689742, "c": 0.12083000293785805}, "classification": "dominant_market", "confidence": 0.6099819695788627, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_049", "org_name": "GreenEnergy 92", "coordinates": {"a": 0.09264085765325389, "b": 0.7656833872813299, "c": 0.1416757550654161}, "raw_scores": {"a": 0.10345084397146004, "b": 0.8550287058617025, "c": 0.158207477813612}, "classification": "dominant_market", "confidence": 0.673042529628076, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_050", "org_name": "SustainCorp", "coordinates": {"a": 0.12686039752646994, "b": 0.7661259513668062, "c": 0.10701365110672392}, "raw_scores": {"a": 0.12297740950903704, "b": 0.7426760966682114, "c": 0.10373813933905465}, "classification": "dominant_market", "confidence": 0.6591123002600823, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_051", "org_name": "SustainCorp 2", "coordinates": {"a": 0.1401238567250341, "b": 0.7476061949153158, "c": 0.11226994835965008}, "raw_scores": {"a": 0.14848398837445295, "b": 0.7922102070906137, "c": 0.11896824778200994}, "classification": "dominant_market", "confidence": 0.6353362465556657, "kic_sectors": [], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_052", "org_name": "KU Leuven 47", "coordinates": {"a": 0.35779429750762376, "b": 0.18139937316631263, "c": 0.4608063293260637}, "raw_scores": {"a": 0.32135967642594043, "b": 0.1629272581219731, "c": 0.41388186988668774}, "classification": "dominant_community", "confidence": 0.2794069561597511, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_053", "org_name": "Sustainable Future 26", "coordinates": {"a": 0.11351335867361141, "b": 0.12715847513551287, "c": 0.7593281661908756}, "raw_scores": {"a": 0.11485519004265253, "b": 0.12866160421890888, "c": 0.7683041172568734}, "classification": "dominant_community", "confidence": 0.6458148075172642, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_054", "org_name": "SustainCorp", "coordinates": {"a": 0.10120127955730872, "b": 0.7506581418279393, "c": 0.148140578614752}, "raw_scores": {"a": 0.10521220341000831, "b": 0.7804090763956771, "c": 0.15401185398713652}, "classification": "dominant_market", "confidence": 0.6494568622706306, "kic_sectors": [], "metadata": {"org_type": "Company"}, "time_series": []}];
+const EDGES = [{"source_id": "org_000", "target_id": "org_025", "weight": 0.7693385855306878, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_000", "target_id": "org_031", "weight": 0.5312547120850055, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_000", "target_id": "org_034", "weight": 0.8168056009054605, "edge_type": "mention", "metadata": {}}, {"source_id": "org_001", "target_id": "org_019", "weight": 0.4802741157393988, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_001", "target_id": "org_028", "weight": 0.5064882387756428, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_002", "target_id": "org_016", "weight": 0.7731668573668822, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_002", "target_id": "org_022", "weight": 0.5118020904628181, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_002", "target_id": "org_033", "weight": 0.3064865222092816, "edge_type": "mention", "metadata": {}}, {"source_id": "org_002", "target_id": "org_034", "weight": 0.6121629990395623, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_002", "target_id": "org_052", "weight": 0.3983105903270562, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_003", "target_id": "org_028", "weight": 0.7420880054871204, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_004", "target_id": "org_021", "weight": 0.8420672118119641, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_004", "target_id": "org_033", "weight": 0.596893644770616, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_005", "target_id": "org_053", "weight": 0.43749894970792647, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_006", "target_id": "org_007", "weight": 0.948040664554503, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_006", "target_id": "org_009", "weight": 0.36161062846204506, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_006", "target_id": "org_032", "weight": 0.861386136930619, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_007", "target_id": "org_013", "weight": 0.3796302469562523, "edge_type": "mention", "metadata": {}}, {"source_id": "org_007", "target_id": "org_028", "weight": 0.811146368973896, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_007", "target_id": "org_030", "weight": 0.864271026072446, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_008", "target_id": "org_019", "weight": 0.7526502355089912, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_008", "target_id": "org_045", "weight": 0.9060638806123376, "edge_type": "mention", "metadata": {}}, {"source_id": "org_008", "target_id": "org_047", "weight": 0.3959483620018205, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_009", "target_id": "org_033", "weight": 0.9088272756783007, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_009", "target_id": "org_034", "weight": 0.6467902372799661, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_009", "target_id": "org_040", "weight": 0.406178769067523, "edge_type": "mention", "metadata": {}}, {"source_id": "org_009", "target_id": "org_045", "weight": 0.8531560363092026, "edge_type": "mention", "metadata": {}}, {"source_id": "org_009", "target_id": "org_050", "weight": 0.35999092106818875, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_010", "target_id": "org_020", "weight": 0.7064394974750259, "edge_type": "mention", "metadata": {}}, {"source_id": "org_010", "target_id": "org_022", "weight": 0.5267413424685612, "edge_type": "mention", "metadata": {}}, {"source_id": "org_010", "target_id": "org_051", "weight": 0.6733567640551021, "edge_type": "mention", "metadata": {}}, {"source_id": "org_011", "target_id": "org_026", "weight": 0.9004168815899991, "edge_type": "mention", "metadata": {}}, {"source_id": "org_011", "target_id": "org_049", "weight": 0.9314506583798412, "edge_type": "mention", "metadata": {}}, {"source_id": "org_013", "target_id": "org_033", "weight": 0.901012819433439, "edge_type": "mention", "metadata": {}}, {"source_id": "org_013", "target_id": "org_039", "weight": 0.4445048294661942, "edge_type": "mention", "metadata": {}}, {"source_id": "org_014", "target_id": "org_042", "weight": 0.8905992706093118, "edge_type": "mention", "metadata": {}}, {"source_id": "org_014", "target_id": "org_045", "weight": 0.5743665337141728, "edge_type": "mention", "metadata": {}}, {"source_id": "org_014", "target_id": "org_052", "weight": 0.6193812743828924, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_015", "target_id": "org_043", "weight": 0.3930403760657654, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_016", "target_id": "org_045", "weight": 0.39843911962206074, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_017", "target_id": "org_020", "weight": 0.3391971365730758, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_017", "target_id": "org_021", "weight": 0.9568677175476872, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_017", "target_id": "org_025", "weight": 0.45604768937943874, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_017", "target_id": "org_039", "weight": 0.7686403642453588, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_018", "target_id": "org_021", "weight": 0.5246660205913364, "edge_type": "mention", "metadata": {}}, {"source_id": "org_018", "target_id": "org_029", "weight": 0.885595832306149, "edge_type": "mention", "metadata": {}}, {"source_id": "org_020", "target_id": "org_049", "weight": 0.5455843732489438, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_020", "target_id": "org_053", "weight": 0.7636364570365146, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_021", "target_id": "org_022", "weight": 0.597577235047668, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_021", "target_id": "org_035", "weight": 0.9205230206892128, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_021", "target_id": "org_042", "weight": 0.9880126854743916, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_021", "target_id": "org_054", "weight": 0.9800937212054135, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_022", "target_id": "org_029", "weight": 0.6299483470375006, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_022", "target_id": "org_051", "weight": 0.9982753082777873, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_023", "target_id": "org_033", "weight": 0.43169471106741075, "edge_type": "mention", "metadata": {}}, {"source_id": "org_023", "target_id": "org_041", "weight": 0.65646522984838, "edge_type": "mention", "metadata": {}}, {"source_id": "org_024", "target_id": "org_032", "weight": 0.5164914196979342, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_024", "target_id": "org_045", "weight": 0.37252905123124, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_025", "target_id": "org_028", "weight": 0.9540728442415589, "edge_type": "mention", "metadata": {}}, {"source_id": "org_025", "target_id": "org_029", "weight": 0.9407036471122825, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_026", "target_id": "org_028", "weight": 0.745481298884948, "edge_type": "mention", "metadata": {}}, {"source_id": "org_026", "target_id": "org_043", "weight": 0.32659158633041735, "edge_type": "mention", "metadata": {}}, {"source_id": "org_027", "target_id": "org_052", "weight": 0.6930497829565334, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_028", "target_id": "org_041", "weight": 0.7771192350758038, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_029", "target_id": "org_045", "weight": 0.3843103318148355, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_029", "target_id": "org_052", "weight": 0.6623949410356194, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_031", "target_id": "org_047", "weight": 0.5306740938227595, "edge_type": "mention", "metadata": {}}, {"source_id": "org_032", "target_id": "org_045", "weight": 0.3088449541562758, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_033", "target_id": "org_035", "weight": 0.8313734706074352, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_033", "target_id": "org_049", "weight": 0.5772066469503558, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_034", "target_id": "org_042", "weight": 0.5858421915363458, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_034", "target_id": "org_050", "weight": 0.3230727858507353, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_037", "target_id": "org_038", "weight": 0.3758681589250848, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_040", "target_id": "org_050", "weight": 0.9137628176487171, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_045", "target_id": "org_047", "weight": 0.3486005608283343, "edge_type": "mention", "metadata": {}}, {"source_id": "org_049", "target_id": "org_052", "weight": 0.90265524674614, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_050", "target_id": "org_051", "weight": 0.34896004014864174, "edge_type": "mention", "metadata": {}}];
+const STATS = {"total": 55, "by_classification": {"interstitial": 9, "dominant_market": 13, "dominant_community": 18, "dominant_state": 15}, "avg_confidence": 0.40728937518809566, "centroid": {"a": 0.3208718655927931, "b": 0.3250001139905682, "c": 0.3541280204166387}, "dispersion": 0.313421959156379};
+
+// State
+const state = {
+    screen: 'overview',
+    filteredPositions: POSITIONS,
+    selectedOrg: null,
+    showEdges: true,
+    edgeOpacity: 0.3
+};
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    renderStats();
+    renderLegend();
+    renderOverview();
+    setupNavigation();
+});
+
+function setupNavigation() {
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const screen = item.dataset.screen;
+            showScreen(screen);
+        });
+    });
+}
+
+function showScreen(screenId) {
+    state.screen = screenId;
+
+    // Update nav
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.screen === screenId);
+    });
+
+    // Update screens
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.toggle('active', screen.id === 'screen-' + screenId);
+    });
+
+    // Render screen content
+    if (screenId === 'overview') renderOverview();
+    else if (screenId === 'positions') renderPositions();
+    else if (screenId === 'network') renderNetwork();
+    else if (screenId === 'animation') renderAnimation();
+}
+
+function renderStats() {
+    const panel = document.getElementById('stats-panel');
+    panel.innerHTML = `
+        <div class="stat-row">
+            <span class="stat-label">Total Organizations</span>
+            <span class="stat-value">${STATS.total}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">${TRIAD_CONFIG.axis_a.name}</span>
+            <span class="stat-value">${STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_a.key] || 0}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">${TRIAD_CONFIG.axis_b.name}</span>
+            <span class="stat-value">${STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_b.key] || 0}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">${TRIAD_CONFIG.axis_c.name}</span>
+            <span class="stat-value">${STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_c.key] || 0}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Interstitial</span>
+            <span class="stat-value">${STATS.by_classification.interstitial || 0}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Avg Confidence</span>
+            <span class="stat-value">${(STATS.avg_confidence * 100).toFixed(1)}%</span>
+        </div>
+    `;
+}
+
+function renderLegend() {
+    const panel = document.getElementById('legend-panel');
+    const items = [
+        { name: TRIAD_CONFIG.axis_a.name, color: TRIAD_CONFIG.axis_a.color, key: 'dominant_' + TRIAD_CONFIG.axis_a.key },
+        { name: TRIAD_CONFIG.axis_b.name, color: TRIAD_CONFIG.axis_b.color, key: 'dominant_' + TRIAD_CONFIG.axis_b.key },
+        { name: TRIAD_CONFIG.axis_c.name, color: TRIAD_CONFIG.axis_c.color, key: 'dominant_' + TRIAD_CONFIG.axis_c.key },
+        { name: 'Interstitial', color: TRIAD_CONFIG.color_palette.interstitial || '#f1c40f', key: 'interstitial' }
+    ];
+
+    panel.innerHTML = items.map(item => `
+        <div class="legend-item">
+            <span class="legend-color" style="background: ${item.color}"></span>
+            <span class="legend-label">${item.name}</span>
+        </div>
+    `).join('');
+}
+
+function renderOverview() {
+    // Render pie chart
+    const pieData = [{
+        type: 'pie',
+        values: [
+            STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_a.key] || 0,
+            STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_b.key] || 0,
+            STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_c.key] || 0,
+            STATS.by_classification.interstitial || 0
+        ],
+        labels: [TRIAD_CONFIG.axis_a.name, TRIAD_CONFIG.axis_b.name, TRIAD_CONFIG.axis_c.name, 'Interstitial'],
+        marker: {
+            colors: [TRIAD_CONFIG.axis_a.color, TRIAD_CONFIG.axis_b.color, TRIAD_CONFIG.axis_c.color, '#f1c40f']
+        },
+        hole: 0.4,
+        textinfo: 'label+percent'
+    }];
+
+    Plotly.newPlot('overview-chart', pieData, {
+        margin: { t: 20, b: 20, l: 20, r: 20 },
+        showlegend: false,
+        font: { family: 'Inter, sans-serif' }
+    }, { responsive: true });
+
+    // Render key metrics
+    document.getElementById('key-metrics').innerHTML = `
+        <div class="metric-grid">
+            <div class="metric">
+                <div class="metric-value">${STATS.centroid.a.toFixed(2)}</div>
+                <div class="metric-label">Centroid ${TRIAD_CONFIG.axis_a.name}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">${STATS.centroid.b.toFixed(2)}</div>
+                <div class="metric-label">Centroid ${TRIAD_CONFIG.axis_b.name}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">${STATS.centroid.c.toFixed(2)}</div>
+                <div class="metric-label">Centroid ${TRIAD_CONFIG.axis_c.name}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">${STATS.dispersion.toFixed(3)}</div>
+                <div class="metric-label">Dispersion</div>
+            </div>
+        </div>
+    `;
+
+    // Render ternary
+    renderTernary('overview-ternary', state.filteredPositions);
+}
+
+function renderPositions() {
+    document.getElementById('position-count').textContent = `${state.filteredPositions.length} organizations`;
+    renderTernary('positions-ternary', state.filteredPositions);
+    renderTopByPole();
+}
+
+function renderNetwork() {
+    if (EDGES.length === 0) {
+        document.getElementById('network-ternary').innerHTML = '<p class="text-gray text-center">No network edges available.</p>';
+        return;
+    }
+    renderTernaryWithEdges('network-ternary', state.filteredPositions, EDGES);
+}
+
+function renderAnimation() {
+    // Check if time series data exists
+    const hasTimeSeries = POSITIONS.some(p => p.time_series && p.time_series.length > 0);
+    if (!hasTimeSeries) {
+        document.getElementById('animation-ternary').innerHTML = '<p class="text-gray text-center">No time-series data available.</p>';
+    }
+}
+
+function renderTernary(containerId, positions) {
+    const colorBy = document.getElementById('color-by').value;
+    const sizeBy = document.getElementById('size-by').value;
+
+    // Group by classification
+    const groups = {};
+    positions.forEach(p => {
+        const cls = p.classification;
+        if (!groups[cls]) groups[cls] = [];
+        groups[cls].push(p);
+    });
+
+    const traces = Object.entries(groups).map(([cls, grpPositions]) => ({
+        type: 'scatterternary',
+        mode: 'markers',
+        name: cls.replace('dominant_', '').replace('_', ' '),
+        a: grpPositions.map(p => p.coordinates.a),
+        b: grpPositions.map(p => p.coordinates.b),
+        c: grpPositions.map(p => p.coordinates.c),
+        text: grpPositions.map(p => p.org_name),
+        customdata: grpPositions,
+        hovertemplate: '<b>%{text}</b><br>' +
+            `${TRIAD_CONFIG.axis_a.name}: %{a:.2f}<br>` +
+            `${TRIAD_CONFIG.axis_b.name}: %{b:.2f}<br>` +
+            `${TRIAD_CONFIG.axis_c.name}: %{c:.2f}<extra></extra>`,
+        marker: {
+            size: sizeBy === 'fixed' ? 10 : grpPositions.map(p => 6 + p.confidence * 14),
+            color: TRIAD_CONFIG.color_palette[cls] || '#999',
+            opacity: 0.8,
+            line: { color: 'white', width: 1 }
+        }
+    }));
+
+    const layout = {
+        ternary: {
+            sum: 1,
+            aaxis: { title: { text: TRIAD_CONFIG.axis_a.name }, min: 0, linecolor: TRIAD_CONFIG.axis_a.color },
+            baxis: { title: { text: TRIAD_CONFIG.axis_b.name }, min: 0, linecolor: TRIAD_CONFIG.axis_b.color },
+            caxis: { title: { text: TRIAD_CONFIG.axis_c.name }, min: 0, linecolor: TRIAD_CONFIG.axis_c.color },
+            bgcolor: '#fafafa'
+        },
+        showlegend: true,
+        legend: { x: 1.02, y: 0.5 },
+        margin: { l: 50, r: 120, t: 50, b: 50 },
+        font: { family: 'Inter, sans-serif' },
+        paper_bgcolor: 'white'
+    };
+
+    Plotly.newPlot(containerId, traces, layout, { responsive: true });
+
+    // Add click handler
+    document.getElementById(containerId).on('plotly_click', data => {
+        if (data.points.length > 0) {
+            const point = data.points[0];
+            showInfoPanel(point.customdata);
+        }
+    });
+}
+
+function renderTernaryWithEdges(containerId, positions, edges) {
+    // Create position lookup
+    const posLookup = {};
+    positions.forEach(p => posLookup[p.org_id] = p);
+
+    // Create edge traces
+    const edgeA = [], edgeB = [], edgeC = [];
+    edges.forEach(e => {
+        const src = posLookup[e.source_id];
+        const tgt = posLookup[e.target_id];
+        if (src && tgt) {
+            edgeA.push(src.coordinates.a, tgt.coordinates.a, null);
+            edgeB.push(src.coordinates.b, tgt.coordinates.b, null);
+            edgeC.push(src.coordinates.c, tgt.coordinates.c, null);
+        }
+    });
+
+    const edgeTrace = {
+        type: 'scatterternary',
+        mode: 'lines',
+        a: edgeA,
+        b: edgeB,
+        c: edgeC,
+        line: { color: '#999', width: 0.5 },
+        opacity: state.showEdges ? state.edgeOpacity : 0,
+        hoverinfo: 'skip',
+        showlegend: false
+    };
+
+    // Node traces
+    const groups = {};
+    positions.forEach(p => {
+        const cls = p.classification;
+        if (!groups[cls]) groups[cls] = [];
+        groups[cls].push(p);
+    });
+
+    const nodeTraces = Object.entries(groups).map(([cls, grpPositions]) => ({
+        type: 'scatterternary',
+        mode: 'markers',
+        name: cls.replace('dominant_', '').replace('_', ' '),
+        a: grpPositions.map(p => p.coordinates.a),
+        b: grpPositions.map(p => p.coordinates.b),
+        c: grpPositions.map(p => p.coordinates.c),
+        text: grpPositions.map(p => p.org_name),
+        customdata: grpPositions,
+        hovertemplate: '<b>%{text}</b><extra></extra>',
+        marker: {
+            size: 10,
+            color: TRIAD_CONFIG.color_palette[cls] || '#999',
+            opacity: 0.9,
+            line: { color: 'white', width: 1 }
+        }
+    }));
+
+    const layout = {
+        ternary: {
+            sum: 1,
+            aaxis: { title: { text: TRIAD_CONFIG.axis_a.name }, min: 0 },
+            baxis: { title: { text: TRIAD_CONFIG.axis_b.name }, min: 0 },
+            caxis: { title: { text: TRIAD_CONFIG.axis_c.name }, min: 0 },
+            bgcolor: '#fafafa'
+        },
+        showlegend: true,
+        margin: { l: 50, r: 120, t: 50, b: 50 },
+        font: { family: 'Inter, sans-serif' }
+    };
+
+    Plotly.newPlot(containerId, [edgeTrace, ...nodeTraces], layout, { responsive: true });
+}
+
+function renderTopByPole() {
+    const container = document.getElementById('top-by-pole');
+    const poles = [
+        { key: 'dominant_' + TRIAD_CONFIG.axis_a.key, name: TRIAD_CONFIG.axis_a.name, color: TRIAD_CONFIG.axis_a.color },
+        { key: 'dominant_' + TRIAD_CONFIG.axis_b.key, name: TRIAD_CONFIG.axis_b.name, color: TRIAD_CONFIG.axis_b.color },
+        { key: 'dominant_' + TRIAD_CONFIG.axis_c.key, name: TRIAD_CONFIG.axis_c.name, color: TRIAD_CONFIG.axis_c.color }
+    ];
+
+    container.innerHTML = poles.map(pole => {
+        const polePositions = state.filteredPositions
+            .filter(p => p.classification === pole.key)
+            .sort((a, b) => b.confidence - a.confidence)
+            .slice(0, 5);
+
+        return `
+            <div class="pole-list">
+                <h4 style="color: ${pole.color}">${pole.name}</h4>
+                <ul>
+                    ${polePositions.map(p => `<li>${p.org_name} <span class="text-gray">${(p.confidence * 100).toFixed(0)}%</span></li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }).join('');
+}
+
+function applyFilters() {
+    const classification = document.getElementById('filter-classification').value;
+
+    if (classification === 'all') {
+        state.filteredPositions = POSITIONS;
+    } else {
+        state.filteredPositions = POSITIONS.filter(p => p.classification === classification);
+    }
+
+    updateVisualization();
+}
+
+function updateVisualization() {
+    if (state.screen === 'overview') renderOverview();
+    else if (state.screen === 'positions') renderPositions();
+    else if (state.screen === 'network') renderNetwork();
+}
+
+function searchOrganizations(query) {
+    const results = document.getElementById('search-results');
+    if (!query || query.length < 2) {
+        results.innerHTML = '';
+        return;
+    }
+
+    const matches = POSITIONS
+        .filter(p => p.org_name.toLowerCase().includes(query.toLowerCase()))
+        .slice(0, 10);
+
+    results.innerHTML = matches.map(p => `
+        <div class="search-result" onclick="highlightOrg('${p.org_id}')">
+            ${p.org_name}
+            <span class="tag" style="background: ${TRIAD_CONFIG.color_palette[p.classification] || '#999'}; color: white;">
+                ${p.classification.replace('dominant_', '')}
+            </span>
+        </div>
+    `).join('');
+}
+
+function highlightOrg(orgId) {
+    const pos = POSITIONS.find(p => p.org_id === orgId);
+    if (pos) {
+        showInfoPanel(pos);
+        toast(`Selected: ${pos.org_name}`);
+    }
+}
+
+function showInfoPanel(position) {
+    state.selectedOrg = position;
+    const panel = document.getElementById('info-panel');
+    document.getElementById('info-panel-title').textContent = position.org_name;
+
+    document.getElementById('info-panel-body').innerHTML = `
+        <div class="info-section">
+            <h4>Classification</h4>
+            <span class="tag" style="background: ${TRIAD_CONFIG.color_palette[position.classification] || '#999'}; color: white;">
+                ${position.classification.replace('dominant_', '').replace('_', ' ')}
+            </span>
+        </div>
+        <div class="info-section">
+            <h4>Coordinates</h4>
+            <div class="coord-bar">
+                <span>${TRIAD_CONFIG.axis_a.name}</span>
+                <div class="bar"><div class="bar-fill" style="width: ${position.coordinates.a * 100}%; background: ${TRIAD_CONFIG.axis_a.color}"></div></div>
+                <span>${position.coordinates.a.toFixed(2)}</span>
+            </div>
+            <div class="coord-bar">
+                <span>${TRIAD_CONFIG.axis_b.name}</span>
+                <div class="bar"><div class="bar-fill" style="width: ${position.coordinates.b * 100}%; background: ${TRIAD_CONFIG.axis_b.color}"></div></div>
+                <span>${position.coordinates.b.toFixed(2)}</span>
+            </div>
+            <div class="coord-bar">
+                <span>${TRIAD_CONFIG.axis_c.name}</span>
+                <div class="bar"><div class="bar-fill" style="width: ${position.coordinates.c * 100}%; background: ${TRIAD_CONFIG.axis_c.color}"></div></div>
+                <span>${position.coordinates.c.toFixed(2)}</span>
+            </div>
+        </div>
+        <div class="info-section">
+            <h4>Confidence</h4>
+            <div class="confidence-meter">
+                <div class="meter-fill" style="width: ${position.confidence * 100}%"></div>
+            </div>
+            <span class="text-sm text-gray">${(position.confidence * 100).toFixed(1)}%</span>
+        </div>
+        ${position.kic_sectors.length > 0 ? `
+        <div class="info-section">
+            <h4>KIC Sectors</h4>
+            <div class="tags">
+                ${position.kic_sectors.map(s => `<span class="tag tag-outline">${s}</span>`).join('')}
+            </div>
+        </div>` : ''}
+    `;
+
+    panel.classList.remove('hidden');
+}
+
+function closeInfoPanel() {
+    document.getElementById('info-panel').classList.add('hidden');
+    state.selectedOrg = null;
+}
+
+function toggleEdges() {
+    state.showEdges = document.getElementById('show-edges').checked;
+    renderNetwork();
+}
+
+function updateEdgeOpacity(value) {
+    state.edgeOpacity = value / 100;
+    renderNetwork();
+}
+
+function exportPNG() {
+    const containerId = state.screen === 'network' ? 'network-ternary' :
+                       state.screen === 'positions' ? 'positions-ternary' : 'overview-ternary';
+    Plotly.downloadImage(containerId, {
+        format: 'png',
+        width: 1200,
+        height: 800,
+        filename: 'triad-visualization'
+    });
+    toast('Image exported!');
+}
+
+function toast(message) {
+    const t = document.getElementById('toast');
+    t.textContent = message;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>

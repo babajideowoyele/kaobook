@@ -1,61 +1,94 @@
 % !TEX root = ../main.tex
-%************************************************
-\chapter{Websites: Mapping Claimed Identity}
-\label{app:websites}
-%************************************************
+\documentclass[../main.tex]{subfiles}
 
-\noindent\textit{Websites are shop windows. Organizations curate them to project who they want to be seen as---their claimed identity. This appendix establishes why website data matters for role constellation cartography, how we collect and analyze it, and what this modality of \RoleBox reveals about the EIT ecosystem. What actors say they are is only the beginning of understanding what they do.}
+\begin{document}
+
+\chapter{Websites: Mapping Claimed Sociotypes}
+\label{app:websites}
+
+\noindent\textit{Websites are shop windows. Organizations curate them to project who they want to be seen as---their claimed sociotype. This appendix documents the methodological approach to website data collection and analysis within \RoleBox, highlighting design decisions, challenges encountered, and opportunities for role cartography research.}
 
 \bigskip
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Why Websites? The First Layer of Cartography}
+\section{Theoretical Grounding}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Understanding socio-technical transitions requires mapping how diverse actors connect and co-evolve. Traditional innovation theories---from the Multi-Level Perspective on sustainability transitions to innovation systems frameworks---emphasize networks of actors (firms, government, academia, NGOs) and their interactions in driving change. \textbf{Hyperlink network analysis} offers a digital lens on these interactions: hyperlinks between organizational websites can serve as proxies for inter-organizational relationships, revealing patterns of collaboration, influence, or alignment.
+
+This aligns with actor-network theory's notion that technological and social actors form networks of associations. Websites, as socio-technical artifacts, both reflect and shape these associations by publicly linking actors and ideas. Research has found that hyperlink networks exhibit emergent properties and scaling laws analogous to innovation systems---the structure of web links between organizations can mirror real-world innovation clusters and knowledge flows. Park's introduction of \textbf{Hyperlink Network Analysis} as a method to uncover the ``social structure on the web'' posits that online link patterns correspond to offline organizational ties.
+
+\begin{insightbox}[Connecting to CAS Theory]
+Chapter~\ref{ch:cas} argued that roles \emph{emerge} from interactions, not from self-declaration. Websites give us one input to emergence---actors' \textbf{role claims}. But emergence requires testing these claims against responses: Do others recognize the claimed role? Do network positions support it? Do resources flow accordingly? Websites are necessary but not sufficient for role cartography.
+\end{insightbox}
+
+Innovation system frameworks (national, regional, sectoral, technological) have long faced challenges in delineating system boundaries and interactions. By leveraging web connectivity, researchers can situate digital networks within established systems-of-innovation frameworks, identifying which actors form the core of a technological innovation system or a transition arena. In sustainability transitions, niche innovators, regime incumbents, and intermediaries each have distinct web presence and linking behavior, allowing analysts to map multi-level constellations.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Rationale and Research Potential}
 %═══════════════════════════════════════════════════════════════════════════════
 
 In the Intermezzo on Multimodal Cartography, we distinguished five maps of role constellations: declared, attributed, enacted, relational, and aesthetic. \textbf{Websites are the primary source for the declared map}---how organizations present themselves to the world.
-
-% Sidenote commented out for appendix placement
-%\sidenote{\textbf{Recall from Intermezzo:} \textcolor{Azure}{\textbf{Declared}} $\leftarrow$ Websites, \textcolor{PandaBamboo}{Attributed} $\leftarrow$ News, \textcolor{Marigold}{Enacted} $\leftarrow$ Activities, \textcolor{AccentPurple}{Relational} $\leftarrow$ Networks, \textcolor{AccentCoral}{Aesthetic} $\leftarrow$ Visuals.}
 
 Why start here? Three reasons:
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.4em]
 \item[Ubiquity.] Over 95\% of organizations in innovation ecosystems maintain websites. Unlike patents (only some actors file), funding records (only recipients appear), or news coverage (only ``newsworthy'' actors), websites provide \textbf{near-universal coverage}.
 
-\item[Self-authorship.] Organizations write their own websites. This gives us direct access to \emph{how they want to be seen}---their identity claims, vocabulary choices, and relationship assertions. No intermediary filters the message.
+\item[Self-authorship.] Organizations write their own websites. This gives us direct access to \emph{how they want to be seen}---their role claims, vocabulary choices, and relationship assertions. No intermediary filters the message.
 
 \item[Relationality.] Websites are inherently networked. Hyperlinks connect organizations; partner pages list collaborators; logos signal affiliations. The web is already a \emph{graph}---we simply need to extract it.
 \end{description}
 
 But websites have a fundamental limitation: \textbf{they show what actors \emph{want} us to see, not necessarily what \emph{is}}. A startup may claim ``global partnerships'' while having three employees. A university may emphasize ``entrepreneurial culture'' while publishing zero patents. This is not a flaw in website data---it \emph{is} the data. The gap between claim and reality is itself informative.
 
-\begin{insightbox}[Connecting to CAS Theory]
-Chapter~\ref{ch:cas} argued that roles \emph{emerge} from interactions, not from self-declaration. Websites give us one input to emergence---actors' \textbf{identity bids}. But emergence requires testing these bids against responses: Do others recognize the claimed role? Do network positions support it? Do resources flow accordingly? Websites are necessary but not sufficient for role cartography.
-\end{insightbox}
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Website Data Properties}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Organizational websites provide a rich, publicly accessible repository of data on innovation activities. A website typically consists of a homepage and numerous subordinate pages (products, services, news, partners), all under a unique domain. Key properties distinguish website data from traditional innovation indicators:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{2.5cm}p{8.5cm}@{}}
+\toprule
+\textbf{Property} & \textbf{Description} \\
+\midrule
+\textbf{Vastness} & The volume of web data is enormous. Large-scale crawls can retrieve millions of pages, capturing fine-grained detail on organizations. Studies have analyzed textual data from over 1.1 million company websites---far exceeding what surveys or interviews typically cover. \\
+\addlinespace
+\textbf{Comprehensiveness} & Websites encompass a wide range of information about an organization's activities, from strategic vision to operational details. This holistic content can include R\&D announcements, product descriptions, job postings, and collaboration notes, providing a 360° view. \\
+\addlinespace
+\textbf{Timeliness} & Websites are updated continually, reflecting near real-time changes. New partnerships, product launches, or strategy shifts often appear on websites quickly. Web data thus captures emerging trends with much shorter lag than official statistics. \\
+\addlinespace
+\textbf{Liveliness} & Beyond being up-to-date, web content is entangled with evolving discourse. Companies use their sites to respond to current issues (sustainability commitments, crisis responses), making web data sensitive to socio-economic context. \\
+\addlinespace
+\textbf{Relationality} & Web data isn't just about isolated organizations; it is inherently networked. Hyperlinks explicitly connect organizations. These links serve as observable relational data, effectively mapping a network of actors in the innovation system. \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Key properties of website data for innovation studies}
+\end{center}
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{What Websites Contain: A Data Anatomy}
+\section{Data Anatomy: What Websites Contain}
 %═══════════════════════════════════════════════════════════════════════════════
 
 Before collecting website data, we need to understand what websites \emph{are} as data sources. A website is not a single document but a structured collection of pages, each serving different communicative functions.
 
-%\sidenote{\textbf{Website as \textit{signum}:} Recall from the Cartography Intermezzo: websites are deliberate \emph{signals} (signa), not accidental footprints. But their structure, links, and metadata are often \emph{vestigia}---traces left unconsidered.}
+\subsection{Page Types and Their Signals}
 
-\subsection*{Page Types and Their Signals}
+Different pages reveal different aspects of the claimed sociotype:
 
-Different pages reveal different aspects of claimed identity:
-
-% Using captionof to avoid kaobook caption recursion issue
-\tablestriped
-\scriptsize
+\tableminimal
 \begin{center}
 \begin{tabular}{@{}p{2cm}p{4cm}p{4.5cm}@{}}
 \toprule
-\stripedhead{Page Type} & \stripedhead{Typical Content} & \stripedhead{Role Signal} \\
+\textbf{Page Type} & \textbf{Typical Content} & \textbf{Role Signal} \\
 \midrule
-\textbf{Homepage} & Mission statement, value proposition, hero imagery & Core identity claim; primary vocabulary \\
+\textbf{Homepage} & Mission statement, value proposition, hero imagery & Core role claim; primary vocabulary \\
 \textbf{About/Who We Are} & History, team, organizational structure & Self-categorization; legitimacy markers \\
 \textbf{Partners/Network} & Logos, named collaborators, consortium memberships & Claimed relational position \\
 \textbf{Services/What We Do} & Offerings, capabilities, target audiences & Functional role claims \\
@@ -66,9 +99,8 @@ Different pages reveal different aspects of claimed identity:
 \end{tabular}
 \captionof{table}{Website page types and the role signals they contain}
 \end{center}
-\normalsize
 
-\subsection*{Textual Signals: Vocabulary as Identity}
+\subsection{Textual Signals: Vocabulary as Role Positioning}
 
 The words organizations choose reveal how they position themselves. Consider these vocabulary contrasts:
 
@@ -79,18 +111,59 @@ The words organizations choose reveal how they position themselves. Consider the
 \item ``\textbf{Sustainable}'' vs. ``\textbf{Green}'' vs. ``\textbf{Clean}'' --- signals discourse alignment
 \end{itemize}
 
-These aren't just stylistic choices---they're \textbf{identity claims} that position actors within the transition landscape.
+These aren't just stylistic choices---they're \textbf{role claims} that position actors within the transition landscape.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Data Collection: Building the Declared Map}
+\section{Data Access Methods}
 %═══════════════════════════════════════════════════════════════════════════════
 
-\subsection*{Scope and Coverage}
+Accessing website data can be achieved via several routes, each with distinct advantages:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{2.5cm}p{4cm}p{4.5cm}@{}}
+\toprule
+\textbf{Method} & \textbf{Description} & \textbf{Tools \& Examples} \\
+\midrule
+\textbf{Live Crawling} & Directly scraping current websites using automated crawlers. Yields current HTML content. Must respect robots.txt and avoid overloading servers. & Scrapy, Heritrix, Selenium. Sayles et al. scraped environmental NGOs' sites up to 3 clicks deep. \\
+\addlinespace
+\textbf{Web Archives} & Retrieving historical website versions from archives (e.g., Wayback Machine). Useful for longitudinal analysis and reproducibility. CDX API provides archived URL indexes. & Wayback CDX, Memento protocol. Bogers et al. compared pre/post-SDG hyperlink networks. \\
+\addlinespace
+\textbf{Common Crawl} & Open corpus of web crawl data covering billions of pages. Provides periodic snapshots in bulk. & WARC (raw content), WAT (metadata with links), WET (plaintext). Used for large-scale text analysis. \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Website data access methods and formats}
+\end{center}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Data Collection Pipeline}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The pipeline follows a multi-stage process: seed URLs from EIT partner lists feed into web crawlers, which extract page content for processing into structured features.
+
+\begin{center}
+\textbf{Pipeline Overview}
+
+\smallskip
+\fbox{EIT Partner Lists} $\rightarrow$ \fbox{Domain Resolution} $\rightarrow$ \fbox{Web Crawler}
+
+$\downarrow$
+
+\fbox{Page Content} $\rightarrow$ \fbox{Text Extraction} $\rightarrow$ \fbox{Role Vocabulary}
+
+\fbox{Page Content} $\rightarrow$ \fbox{Link Extraction} $\rightarrow$ \fbox{Hyperlink Network}
+
+$\downarrow$
+
+\fbox{Feature Integration} $\rightarrow$ \fbox{Claimed Sociotype Map}
+\end{center}
+
+\subsection{Scope and Coverage}
 
 We collected website data for \textbf{6,487 organizations} connected to the EIT Knowledge and Innovation Communities.
 
-% Using captionof to avoid kaobook caption recursion issue
 \tableminimal
 \begin{center}
 \begin{tabular}{@{}lr@{}}
@@ -110,105 +183,251 @@ Primary language (English) & 78\% of content \\
 \captionof{table}{Website data collection summary}
 \end{center}
 
-%\sidenote{\faGlobe\ \textbf{Coverage note:} 5.3\% of organizations lacked accessible websites (defunct, redirected to social media, or access-blocked). These are \emph{not} randomly missing---they skew toward smaller, newer, or failed organizations.}
-
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Findings: What Claimed Identity Reveals}
+\section{Analytical Techniques}
 %═══════════════════════════════════════════════════════════════════════════════
 
-\subsection*{Finding 1: Vocabulary Convergence Creates a ``Legitimacy Language''}
+\subsection{Hyperlink Network Analysis (HNA)}
 
-Across 6,142 organizational websites, we find striking \textbf{vocabulary convergence}. Certain terms appear nearly universally: ``innovation'' (94\%), ``sustainable'' (89\%), ``solutions'' (85\%), ``partners'' (82\%).
+Hyperlink Network Analysis leverages the web's link structure to map inter-organizational networks. In an HNA, organizations (or their websites) are represented as nodes, and hyperlinks between websites form directed edges. The basic workflow:
 
-\begin{insightbox}[The Legitimacy Language Trap]
-Vocabulary convergence creates a double bind. Organizations \emph{must} use innovation/sustainability vocabulary to be recognized as legitimate players. But universal usage means the vocabulary carries little distinctive information. Result: claimed identity becomes partly \textbf{performative conformity}---saying what must be said to gain entry, not what uniquely describes oneself.
+\begin{enumerate}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Crawl or parse} each target website to extract all outgoing hyperlinks (HTML \texttt{<a>} tags)
+\item \textbf{Filter links} to retain only those pointing to other relevant organizational websites (excluding navigation, ads, irrelevant external sites)
+\item \textbf{Resolve redirects} to avoid counting outdated or duplicate nodes
+\item \textbf{Construct network} with organizations as nodes and hyperlinks as directed edges
+\end{enumerate}
+
+\begin{insightbox}[Link Semantics]
+The text surrounding a hyperlink (anchor text or sentence context) can hint at relationship type. For example, ``our partner BioEnergy Inc'' versus ``study by BioEnergy Inc'' suggest different relations (active partnership vs. citation). NLP classification of link context improves network interpretation fidelity.
 \end{insightbox}
 
-\subsection*{Finding 2: The Knowledge Triangle Is Imbalanced}
+\textbf{Key network metrics} for role inference:
 
-EIT's founding mission emphasizes equal integration of \textbf{Education}, \textbf{Research}, and \textbf{Business}---the ``knowledge triangle.'' Website vocabulary tells a different story: Business vocabulary dominates (41\%), followed by research (38\%). Education vocabulary is substantially underrepresented (21\%)---despite EIT's explicit education mission.
-
-%\sidenote{\faExclamationTriangle\ \textbf{Gap identified:} Education vocabulary is systematically underweighted. Organizations \emph{claim} less educational identity than EIT's model would suggest.}
-
-\subsection*{Finding 3: Five Claimed Role Clusters Emerge}
-
-Combining vocabulary, network position, and self-classification, we identify \textbf{five distinct clusters} of claimed identity:
-
-% Using captionof to avoid kaobook caption recursion issue
-\tablestriped
-\scriptsize
+\tableminimal
 \begin{center}
-\begin{tabular}{@{}p{2.3cm}rp{3.5cm}p{3.5cm}@{}}
+\begin{tabular}{@{}p{3cm}p{4cm}p{4cm}@{}}
 \toprule
-\stripedhead{Cluster} & \stripedhead{N} & \stripedhead{Vocabulary Signature} & \stripedhead{Network Position} \\
+\textbf{Metric} & \textbf{Interpretation} & \textbf{Role Signal} \\
 \midrule
-Core Coordinators & 89 & ``ecosystem,'' ``platform,'' ``orchestrate,'' ``coordinate'' & High in-degree, high out-degree, high betweenness \\
-Research Anchors & 847 & ``research,'' ``scientific,'' ``knowledge,'' ``excellence'' & High in-degree, moderate out-degree \\
-Innovation Engines & 1,203 & ``solution,'' ``develop,'' ``market,'' ``scale'' & Moderate out-degree, low in-degree \\
-Boundary Spanners & 412 & ``bridge,'' ``connect,'' ``facilitate,'' ``network'' & High betweenness, moderate degree \\
-Specialized Contributors & 3,591 & Domain-specific terms; narrow focus & Low centrality; peripheral positions \\
+High in-degree & Many others link to this actor & Authority or knowledge hub \\
+High out-degree & Links to many others & Intermediary or orchestrator \\
+High betweenness & Bridges between clusters & Broker connecting communities \\
+Reciprocal links & Mutual linkages & Formal partnership or alliance \\
+Peripheral position & Few/distant connections & Niche or isolated actor \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Characteristics of five claimed role clusters}
+\captionof{table}{Network metrics and role signals in hyperlink analysis}
 \end{center}
-\normalsize
 
-\subsection*{Finding 4: The ``Intermediary Inflation'' Problem}
+\subsection{Socio-Semantic Analysis}
 
-A striking finding: \textbf{34\% of organizations} use language associated with intermediary or connector roles. They claim to ``bridge,'' ``facilitate,'' ``connect,'' or ``orchestrate.''
+While hyperlink analysis focuses on connections, \textbf{socio-semantic analysis} examines the content of websites to understand themes and knowledge flows. This approach recognizes that what actors say (and how they frame issues) is as important as who links to whom.
 
-This is far higher than network positions support. If one-third of actors are connectors, \emph{who is being connected?} Only 13\% occupy high-betweenness bridging positions in the hyperlink network---a 21-percentage-point gap.
+\textbf{Topic modeling}: By extracting text from each website, techniques like LDA or BERTopic identify key topics across the corpus. For example, analyzing 1 million firm websites across 15 countries, researchers derived metrics of sustainability engagement by detecting references to concepts like solar energy, recycling, and energy efficiency---finding about one-third of SMEs ``talk the talk'' on sustainability.
 
-\begin{criticalbox}[Interpreting the Gap]
-The gap between claimed intermediary roles and network bridging positions could indicate:
-\begin{itemize}[leftmargin=*, itemsep=0.1em]
-\item \textbf{Aspirational claiming}: Organizations want to \emph{become} connectors
-\item \textbf{Legitimacy performance}: ``Intermediary'' language confers status regardless of function
-\item \textbf{Invisible bridging}: Some intermediation happens through channels websites don't capture
-\item \textbf{Website lag}: Network positions evolved but websites weren't updated
+\textbf{Keyword thesaurus}: Using predefined keyword sets to search content is effective for targeted concepts. Studies have developed thesauri of $\sim$950 sustainability-related terms (grounded in SDGs) to flag whether a startup's website claimed to be working on environmental sustainability, achieving $\sim$97\% accuracy in identification.
+
+\textbf{Actor-concept networks}: Constructing bipartite networks linking actors to key concepts they are associated with enables identification of discourse coalitions---groups of actors that speak the same language or emphasize similar issues.
+
+\subsection{Technology Stack Profiling}
+
+Beyond text and links, websites carry \textbf{technological signatures} that can be informative about an organization's capabilities. Services like Wappalyzer or BuiltWith scan websites to identify technologies---content management systems, analytics tools, programming frameworks.
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item A startup using a modern tech stack (machine learning libraries, cutting-edge frameworks) might be more innovative
+\item Technology adoption patterns can indicate digital maturity across sectors
+\item Shared platforms or widgets can signal ecosystem choices or partnerships
 \end{itemize}
-Resolving which interpretation holds requires other modalities---news coverage, investment flows, observed activities. This is precisely why multimodal cartography matters.
+
+Studies have used website technology detection to predict firm innovativeness, finding that everything from product descriptions to the presence of advanced web tech correlates with innovation capacity.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Methodological Insights}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Insight 1: The Vocabulary Convergence Challenge}
+
+Across organizational websites, we observe striking \textbf{vocabulary convergence}. Certain terms appear nearly universally: ``innovation,'' ``sustainable,'' ``solutions,'' ``partners.''
+
+\begin{insightbox}[Design Implication: The Legitimacy Language Trap]
+Vocabulary convergence creates a methodological challenge. Organizations \emph{must} use innovation/sustainability vocabulary to be recognized as legitimate players. But universal usage means the vocabulary carries little distinctive information. \textbf{Design response}: Focus analytical attention on \emph{distinctive} vocabulary (terms that differentiate actors) rather than \emph{common} vocabulary (terms everyone uses). Use TF-IDF or similar weighting to surface differentiating language.
+\end{insightbox}
+
+\subsection{Insight 2: Measuring Knowledge Triangle Balance}
+
+EIT's founding mission emphasizes equal integration of \textbf{Education}, \textbf{Research}, and \textbf{Business}---the ``knowledge triangle.'' Website vocabulary analysis provides a method to assess this balance across the ecosystem.
+
+\textbf{Methodological opportunity}: Constructing domain-specific dictionaries for each triangle dimension enables systematic measurement of how organizations position themselves relative to EIT's integrative mission.
+
+\subsection{Insight 3: Clustering for Role Discovery}
+
+Combining vocabulary features, network position metrics, and self-classification labels enables unsupervised discovery of claimed role clusters. This bottom-up approach complements top-down role taxonomies from the literature.
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{2.3cm}p{3.5cm}p{4cm}@{}}
+\toprule
+\textbf{Cluster Type} & \textbf{Vocabulary Signature} & \textbf{Network Signature} \\
+\midrule
+Core Coordinators & ``ecosystem,'' ``platform,'' ``orchestrate'' & High centrality across metrics \\
+Research Anchors & ``research,'' ``scientific,'' ``knowledge'' & High in-degree, moderate out-degree \\
+Innovation Engines & ``solution,'' ``develop,'' ``market,'' ``scale'' & Moderate out-degree, low in-degree \\
+Boundary Spanners & ``bridge,'' ``connect,'' ``facilitate'' & High betweenness, moderate degree \\
+Specialized Contributors & Domain-specific terms & Low centrality; peripheral positions \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Exemplar cluster signatures from combined analysis}
+\end{center}
+
+\subsection{Insight 4: The Claim-Position Gap as Signal}
+
+A methodologically important observation: many organizations use language associated with intermediary or connector roles (``bridge,'' ``facilitate,'' ``connect''), but fewer occupy high-betweenness bridging positions in the hyperlink network.
+
+\begin{criticalbox}[Design Opportunity: Triangulating Claims Against Structure]
+The gap between claimed roles and structural positions is not noise---it is signal. This gap can indicate:
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item \textbf{Aspirational claiming}: Organizations positioning for roles they seek
+\item \textbf{Legitimacy performance}: Strategic use of valued vocabulary
+\item \textbf{Invisible bridging}: Intermediation through non-web channels
+\item \textbf{Temporal lag}: Network positions evolved but websites weren't updated
+\end{itemize}
+\textbf{Multimodal triangulation} resolves these ambiguities by testing website claims against evidence from other modalities.
 \end{criticalbox}
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Limitations of Website Analysis}
+\section{Longitudinal Analysis via Web Archives}
 %═══════════════════════════════════════════════════════════════════════════════
 
-\begin{criticalbox}[What Websites Cannot Tell Us]
+One of the most exciting aspects of web data is the ability to explore \textbf{longitudinal changes}---essentially, to observe innovation networks and content over time. Using web archives or periodic crawls, researchers can construct time-series data: snapshots of websites at different dates.
+
+\textbf{Building longitudinal datasets}: Using the Wayback Machine's CDX API or Memento protocol, one can retrieve the state of all websites in a sample at yearly intervals. For example, collecting the hyperlink network among climate-tech organizations in 2015, 2018, 2021, and 2024 to see how connectivity evolved around the Paris Agreement.
+
+\textbf{Network evolution analysis}: With timestamped networks, analysts can compute:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Are new nodes appearing (organizations launching websites)?
+\item Is network density increasing (strengthening community) or decreasing (fragmentation)?
+\item Are there temporal patterns of link formation following conferences or funding calls?
+\end{itemize}
+
+\textbf{Content change trajectories}: Longitudinal web data allows tracking how an organization's priorities shift. For example, tracing how a major energy company's website moved from hardly mentioning ``renewables'' in 2010 to featuring it prominently in 2020, reflecting strategic transition.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Inferring Roles from Web Networks}
+%═══════════════════════════════════════════════════════════════════════════════
+
+A key promise of mapping innovation systems via web data is identifying actor roles and role constellations. How can these be inferred from website data? The answer lies in combining network position, linking patterns, and content cues.
+
+\textbf{Network position as role indicator}:
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Authority/Knowledge Hub] Exceptionally high in-degree (many others link to it)---likely a standards body or top research institute
+\item[Intermediary/Orchestrator] High out-degree linking to diverse types (firms, NGOs, government)---sector association or collaborative platform
+\item[Broker] High betweenness centrality---removing this node greatly increases network distance between others
+\item[Niche Cluster] Tightly interconnected clique---community of practice or consortium working together
+\end{description}
+
+\textbf{Content-based role inference}: Website text can directly reveal how actors perceive their role. Many organizations self-describe in mission statements (``we act as an independent platform for...'', ``the national authority on...'', ``leading manufacturer of...''). Keywords signal role types:
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item Intermediaries emphasize: partnership, network, facilitate, collaborate
+\item Orchestrators highlight: members, initiatives, platform
+\item Authorities use: certified, standard, official, leading
+\end{itemize}
+
+\textbf{Role constellations} refer to how roles interact together. In a sustainability transition, one might expect a constellation of an innovation champion (entrepreneur), an intermediary (support organization), a regulator enabling, and a user advocacy group---all connected. Website networks allow visualization of these constellations by mapping different colored nodes to see structural patterns.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Empirical Applications}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Website data has been applied to a wide array of innovation studies:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
+\item[AI Diffusion] Dahlke et al. (2024) studied AI technology diffusion by scanning over 1.1 million company websites for AI-related terms and building a hyperlink network of $\sim$380,000 firms. Companies embedded in dense online networks and near knowledge centers were more likely to embrace AI early.
+
+\item[Circular Economy Policy] Humalisto et al. (2021) used hyperlink analysis to study how a government funding call on nutrient recycling was picked up by various actors online. The hyperlink clusters corresponded to different coalitions with different visions---revealing that online networks solidified existing divides rather than creating cross-cutting links.
+
+\item[Sustainable Startups] In ``Greening Pastures'' (2025), researchers gathered website data for 93\% of 46,741 startups (founded 2017--2021), extracting text to identify which explicitly claimed to work on environmental sustainability via SDG-related terms. They found $\sim$6.2\% qualified as ``sustainable'' and could correlate prevalence with regional ecosystem factors.
+
+\item[Global SDG Networks] Bogers et al. (2022) examined the network of sustainability organizations before and after the SDGs were introduced. Using HNA on archived websites, they discovered the network became more fragmented over time---counter to the SDGs' goal of fostering collaboration.
+\end{description}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Methodological Challenges and Limitations}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{criticalbox}[What Website Analysis Cannot Tell Us]
 \begin{enumerate}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Snapshot bias}: Websites captured at one time; no temporal dynamics without archives
-\item \textbf{Curation bias}: Organizations control content; strategic self-presentation, not ground truth
-\item \textbf{English bias}: 78\% English content; non-English actors underrepresented in text analysis
-\item \textbf{Hyperlink decay}: Some claimed partnerships may be outdated; websites lag reality
-\item \textbf{Absence ≠ evidence}: Not mentioning something doesn't mean it doesn't exist
-\item \textbf{Small actor invisibility}: Organizations with minimal web presence are underweighted
+\item \textbf{Coverage bias}: Not all actors have equal web presence; digitally savvy, resource-rich firms are over-represented. Grassroots initiatives or regions with low internet penetration may be under-represented.
+
+\item \textbf{Link interpretation}: Not all hyperlinks equate to meaningful relationships. Links can be informational, critical, or purely navigational. Without context, there's risk of misinterpretation.
+
+\item \textbf{Curation bias}: Organizations control content; strategic self-presentation, not ground truth. Claims may involve greenwashing or hype.
+
+\item \textbf{Crawl depth effects}: Relevant information may be buried several clicks deep. Shallow crawls miss connections; deep crawls may include irrelevant content.
+
+\item \textbf{Temporal stability}: Web content is ephemeral. A network snapshot today might differ tomorrow, raising reproducibility challenges.
+
+\item \textbf{English bias}: Non-English actors underrepresented in text analysis. Multilingual handling requires translation infrastructure.
+
+\item \textbf{Absence $\neq$ evidence}: Not mentioning something doesn't mean it doesn't exist. Two firms might have a strategic alliance without publicizing it online.
 \end{enumerate}
 \end{criticalbox}
 
-These limitations are not reasons to dismiss website data---they are reasons to \textbf{complement it with other modalities}.
+These limitations are not reasons to dismiss website data---they are reasons to \textbf{complement it with other modalities} and to design analysis methods that account for these biases.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Chapter Summary}
+\section{Integration with Other Sources}
+%═══════════════════════════════════════════════════════════════════════════════
+
+To fully leverage website data, it is often integrated with other data sources:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Business Registries] Official registers or commercial datasets (Crunchbase, ORBIS) provide structured information on organizations. Website data can then be attached by matching each firm to its website URL.
+
+\item[Social Media] Comparing social media networks to hyperlink networks reveals differences in engagement. Twitter networks may be influenced by informal information flow; hyperlink networks reflect more institutionalized ties.
+
+\item[Patent/Publication Data] Patents and publications are traditional measures of innovation output. Integrating these with web networks tests whether web-connected clusters correspond to collaborative R\&D output.
+
+\item[Funding Data] Combining with grants data shows if funded projects translate into web-visible networks. If two firms got a joint grant, do they mention each other or link on their websites?
+\end{description}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Summary}
 %═══════════════════════════════════════════════════════════════════════════════
 
 \begin{summarybox}
-Website analysis provides the first modality of multimodal cartography---the \textbf{declared map} of claimed identity. Key findings:
+Website analysis provides the first modality of multimodal cartography---the \textbf{declared map} of claimed sociotypes. Key methodological insights:
 
 \begin{itemize}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Near-universal coverage}: 94.7\% of EIT ecosystem organizations have accessible websites.
+\item \textbf{Near-universal coverage} (94.7\%) makes websites the most comprehensive single data source for ecosystem mapping.
 
-\item \textbf{Vocabulary convergence}: A shared ``legitimacy language'' creates performative conformity that limits differentiation.
+\item \textbf{Five key properties}---vastness, comprehensiveness, timeliness, liveliness, and relationality---distinguish web data from traditional innovation indicators.
 
-\item \textbf{Knowledge triangle imbalance}: Business vocabulary (41\%) dominates over research (38\%) and education (21\%).
+\item \textbf{Hyperlink Network Analysis} maps inter-organizational networks, identifying hubs, brokers, and communities.
 
-\item \textbf{Five claimed role clusters}: Core Coordinators, Research Anchors, Innovation Engines, Boundary Spanners, and Specialized Contributors emerge through self-organization.
+\item \textbf{Socio-semantic analysis} reveals discourse coalitions and thematic positioning through topic modeling and keyword analysis.
 
-\item \textbf{Intermediary inflation}: 34\% claim connector roles, but only 13\% occupy bridging network positions.
+\item \textbf{Vocabulary convergence} requires analytical designs that surface \emph{distinctive} rather than common language.
+
+\item \textbf{Longitudinal tracking} via web archives enables observation of network evolution and content change trajectories.
+
+\item \textbf{Role inference} combines network position, linking patterns, and content cues to identify authorities, intermediaries, orchestrators, and niche actors.
+
+\item \textbf{Claim-position gaps} provide valuable signals when triangulated against other modalities.
+
+\item \textbf{Inherent limitations} (coverage bias, link interpretation, curation bias) motivate multimodal complementarity.
 \end{itemize}
 
-Claims are starting points, not conclusions. The next chapter examines how \emph{others} see these actors---the attributed identity revealed through news media coverage.
+Claims are starting points, not conclusions. The next appendix examines how \emph{others} see these actors---the attributed sociotype revealed through news media coverage.
 \end{summarybox}
 
+\clearpage
+\end{document}

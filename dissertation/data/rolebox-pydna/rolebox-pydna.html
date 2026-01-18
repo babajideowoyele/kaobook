@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PyDNA - Discourse Network Analyzer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#f5f5f5;color:#000;line-height:1.5;font-size:13px}
+    .app{display:flex;flex-direction:column;height:100vh}
+    .header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:#fff;border-bottom:1px solid #e5e5e5;flex-shrink:0}
+    .logo{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .logo i{color:#2563eb}
+    .nav{display:flex;gap:1px}
+    .nav a{padding:6px 14px;color:#666;text-decoration:none;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+    .nav a:hover{background:#f5f5f5}
+    .nav a.active{background:#000;color:#fff}
+    .main{display:flex;flex:1;overflow:hidden}
+    .sidebar{width:260px;background:#fafafa;border-right:1px solid #e5e5e5;padding:16px;overflow-y:auto;flex-shrink:0}
+    .content{flex:1;padding:20px;overflow-y:auto}
+    .section{margin-bottom:20px}
+    .section-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .card{background:#fff;border:1px solid #e5e5e5;margin-bottom:12px}
+    .card-header{padding:10px 14px;border-bottom:1px solid #e5e5e5;font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .card-body{padding:14px}
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;border:2px solid #000;background:#fff;color:#000;transition:all .15s}
+    .btn:hover{background:#000;color:#fff}
+    .btn-primary{background:#000;color:#fff}
+    .btn-primary:hover{background:#333}
+    .btn-sm{padding:4px 8px;font-size:10px}
+    .btn-success{border-color:#16a34a;color:#16a34a}
+    .btn-success:hover{background:#16a34a;color:#fff}
+    .btn-danger{border-color:#dc2626;color:#dc2626}
+    .btn-danger:hover{background:#dc2626;color:#fff}
+    .tag{display:inline-flex;padding:2px 6px;font-size:9px;font-weight:600;background:#000;color:#fff}
+    .tag-actor{background:#2563eb}
+    .tag-concept{background:#16a34a}
+    .tag-positive{background:#16a34a}
+    .tag-negative{background:#dc2626}
+    .tag-uncoded{background:#999}
+    .input,.select,.textarea{width:100%;padding:8px 10px;font-size:12px;border:1px solid #e5e5e5;font-family:inherit;background:#fff}
+    .textarea{resize:vertical;min-height:120px}
+    .input:focus,.select:focus,.textarea:focus{outline:none;border-color:#000}
+    .flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap-4{gap:4px}.gap-8{gap:8px}.gap-12{gap:12px}.flex-1{flex:1}
+    .text-xs{font-size:10px}.text-sm{font-size:12px}.text-gray{color:#666}.text-center{text-align:center}
+    .mb-4{margin-bottom:4px}.mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .stat-box{text-align:center;padding:12px;background:#fff;border:1px solid #e5e5e5;transition:all .2s;cursor:pointer}
+    .stat-box:hover{border-color:#000;transform:translateY(-2px)}
+    .stat-val{font-size:20px;font-weight:300}
+    .stat-label{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.3px}
+    h1{font-size:20px;font-weight:300}
+    h1 span{font-weight:600}
+    .network-canvas{background:#fafafa;border:1px solid #e5e5e5;position:relative}
+    .status{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;font-size:10px;font-weight:600}
+    .status-ready{background:#dcfce7;color:#166534}
+    .screen{display:none}
+    .screen.active{display:block}
+    .table{width:100%;border-collapse:collapse;font-size:11px}
+    .table th,.table td{padding:8px 10px;text-align:left;border-bottom:1px solid #e5e5e5}
+    .table th{background:#fafafa;font-size:10px;text-transform:uppercase;color:#666;font-weight:600}
+    .table tr:hover{background:#fafafa}
+    .doc-item{padding:12px;border:1px solid #e5e5e5;margin-bottom:8px;cursor:pointer;background:#fff;transition:all .15s}
+    .doc-item:hover{border-color:#000}
+    .doc-item.selected{border-color:#000;border-width:2px;background:#fffbeb}
+    .text-viewer{background:#fff;border:1px solid #e5e5e5;padding:16px;font-size:13px;line-height:1.8;min-height:350px;white-space:pre-wrap;cursor:text}
+    .text-viewer::selection{background:#fef3c7}
+    .highlight{background:#fef3c7;border-bottom:2px solid #f59e0b}
+    .form-group{margin-bottom:12px}
+    .form-label{font-size:10px;font-weight:600;margin-bottom:4px;display:block;text-transform:uppercase;letter-spacing:.3px;color:#666}
+    .progress-bar{height:4px;background:#e5e5e5;overflow:hidden}
+    .progress-fill{height:100%;background:#000;transition:width .3s}
+    .overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:99;display:none}
+    .overlay.show{display:flex;align-items:center;justify-content:center}
+    .modal{background:#fff;border:2px solid #000;padding:20px;min-width:400px;max-width:600px;max-height:80vh;overflow-y:auto}
+    .toast{position:fixed;bottom:20px;right:20px;padding:12px 20px;background:#000;color:#fff;font-size:12px;font-weight:500;z-index:200;transform:translateY(100px);opacity:0;transition:all .3s}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.error{background:#dc2626}
+    .stmt-item{padding:10px;border:1px solid #e5e5e5;margin-bottom:6px;background:#fff;transition:all .2s}
+    .stmt-item:hover{background:#fafafa;border-color:#ccc}
+    .actor-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:all .15s}
+    .actor-row:last-child{border-bottom:none}
+    .actor-row:hover{background:#f5f5f5;margin:0 -8px;padding:8px}
+    .actor-dot{width:8px;height:8px;border-radius:50%}
+    .concept-bar{height:6px;background:#e5e5e5;display:flex;overflow:hidden;cursor:pointer;transition:all .2s}
+    .concept-bar:hover{height:10px}
+    .concept-bar-pos{background:#16a34a;height:100%;transition:all .3s}
+    .concept-bar-neg{background:#dc2626;height:100%;transition:all .3s}
+    .tab-row{display:flex;border-bottom:1px solid #e5e5e5;margin-bottom:12px}
+    .tab-btn{padding:8px 16px;font-size:11px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:#666;background:none;border-left:none;border-right:none;border-top:none}
+    .tab-btn:hover{color:#000}
+    .tab-btn.active{color:#000;border-bottom-color:#000}
+    .toggle-group{display:flex;border:2px solid #000}
+    .toggle-btn{flex:1;padding:8px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;border:none;transition:all .15s}
+    .toggle-btn.active-pos{background:#16a34a;color:#fff}
+    .toggle-btn.active-neg{background:#dc2626;color:#fff}
+    .toggle-btn:hover:not(.active-pos):not(.active-neg){background:#f5f5f5}
+    .network-node{cursor:pointer;transition:all .2s}
+    .network-node:hover{filter:brightness(1.1)}
+    .chart-bar{transition:all .3s;cursor:pointer}
+    .chart-bar:hover{opacity:.8}
+    .sparkline{stroke:#000;stroke-width:1.5;fill:none}
+    .tooltip{position:absolute;background:#000;color:#fff;padding:4px 8px;font-size:10px;pointer-events:none;z-index:100;opacity:0;transition:opacity .2s}
+    .tooltip.show{opacity:1}
+    .interactive-legend{display:flex;gap:12px;flex-wrap:wrap}
+    .legend-item{display:flex;align-items:center;gap:4px;cursor:pointer;padding:4px 8px;border:1px solid transparent;transition:all .15s}
+    .legend-item:hover{background:#f5f5f5;border-color:#e5e5e5}
+    .legend-item.inactive{opacity:.3}
+    .legend-dot{width:10px;height:10px;border-radius:50%}
+    .mini-chart{background:#fff;border:1px solid #e5e5e5;padding:8px;cursor:pointer;transition:all .2s}
+    .mini-chart:hover{border-color:#000}
+    .range-slider{width:100%;height:4px;-webkit-appearance:none;background:#e5e5e5;outline:none;cursor:pointer}
+    .range-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:#000;cursor:pointer;border-radius:0}
+    .heatmap-cell{transition:all .2s;cursor:pointer}
+    .heatmap-cell:hover{stroke:#000;stroke-width:2}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="flex items-center gap-12">
+      <div class="logo"><i class="fas fa-project-diagram"></i> PyDNA</div>
+      <div class="nav" id="nav"></div>
+    </div>
+    <div class="flex items-center gap-12">
+      <span class="text-xs text-gray">Project: <strong>climate_debate.dna</strong></span>
+      <span class="status status-ready"><i class="fas fa-circle" style="font-size:6px"></i> Ready</span>
+      <button class="btn btn-sm" onclick="showLLMConfig()"><i class="fas fa-robot"></i> LLM</button>
+      <button class="btn btn-sm" onclick="showImportModal()"><i class="fas fa-file-import"></i> Import</button>
+    </div>
+  </div>
+  <div class="main">
+    <div class="sidebar">
+      <div class="section">
+        <div class="section-title"><i class="fas fa-database"></i> Project Stats</div>
+        <div style="padding:10px;background:#fff;border:1px solid #e5e5e5">
+          <div class="flex justify-between mb-4 text-xs"><span>Documents:</span><strong id="statDocs">4</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span>Statements:</span><strong id="statStmts">7</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span>Actors:</span><strong id="statActors">4</strong></div>
+          <div class="flex justify-between mb-8 text-xs"><span>Concepts:</span><strong id="statConcepts">5</strong></div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:75%"></div></div>
+          <div class="text-xs text-gray" style="margin-top:4px">3/4 documents coded</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title"><i class="fas fa-chart-area"></i> Activity</div>
+        <div id="sidebarSparkline" style="background:#fff;border:1px solid #e5e5e5;padding:8px"></div>
+      </div>
+      <div class="section">
+        <div class="section-title"><i class="fas fa-users"></i> Top Actors</div>
+        <div id="sidebarActors"></div>
+      </div>
+      <div class="section">
+        <div class="section-title"><i class="fas fa-lightbulb"></i> Concepts</div>
+        <div id="sidebarConcepts"></div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="screen active" id="screen-dashboard"></div>
+      <div class="screen" id="screen-documents"></div>
+      <div class="screen" id="screen-annotate"></div>
+      <div class="screen" id="screen-actors"></div>
+      <div class="screen" id="screen-networks"></div>
+      <div class="screen" id="screen-cartography"></div>
+      <div class="screen" id="screen-export"></div>
+      <div class="screen" id="screen-llm"></div>
+    </div>
+  </div>
+</div>
+<div class="overlay" id="overlay" onclick="closeModal()">
+  <div class="modal" id="modal" onclick="event.stopPropagation()"></div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="tooltip" id="tooltip"></div>
+<script>
+const state = {
+  screen: 'dashboard',
+  docs: [
+    {id:1,title:'Climate Policy Statement',author:'EPA Director',source:'EPA',date:'2024-03-15',coded:3,text:'The Environmental Protection Agency strongly supports carbon pricing mechanisms as a primary tool to reduce greenhouse gas emissions across all sectors of the economy.\n\nMarket-based solutions, when combined with robust regulatory oversight, will drive innovation in clean technology and create new economic opportunities.\n\nWe believe that a gradual implementation timeline provides industry with the predictability needed for long-term planning.'},
+    {id:2,title:'Industry Response to Carbon Policy',author:'Manufacturing Association',source:'Industry Weekly',date:'2024-03-16',coded:2,text:'The National Manufacturing Association opposes the rapid implementation of carbon pricing without adequate support measures for domestic industry.\n\nOur member companies face intense international competition from regions without similar environmental regulations.\n\nWe propose a more gradual transition period of at least 10 years, combined with government subsidies to offset compliance costs.'},
+    {id:3,title:'Environmental Coalition Statement',author:'Green Future Alliance',source:'Env News',date:'2024-03-17',coded:4,text:'The Green Future Alliance demands more aggressive carbon pricing and an accelerated timeline for renewable energy transition.\n\nCurrent policy proposals do not go far enough to address the urgency of the climate crisis.\n\nThe alliance calls for an end to all fossil fuel subsidies and redirection of those funds toward clean energy infrastructure.'},
+    {id:4,title:'Economic Analysis Report',author:'Budget Office',source:'CBO Reports',date:'2024-03-18',coded:0,text:'This report analyzes the projected economic impacts of proposed carbon pricing legislation on GDP growth and employment.\n\nOur models suggest that a $25/ton carbon price would reduce emissions by 12% while causing a 0.3% reduction in GDP growth.\n\nLower-income households would face proportionally higher energy cost burdens without rebate mechanisms.'}
+  ],
+  actors: [
+    {id:1,name:'EPA Director',type:'Government',color:'#2563eb',stmts:4,pos:4,neg:0},
+    {id:2,name:'Manufacturing Association',type:'Industry',color:'#000',stmts:3,pos:1,neg:2},
+    {id:3,name:'Green Future Alliance',type:'NGO',color:'#16a34a',stmts:5,pos:5,neg:0},
+    {id:4,name:'Budget Office',type:'Government',color:'#666',stmts:2,pos:1,neg:1}
+  ],
+  concepts: [
+    {id:1,name:'Carbon Pricing',sup:3,opp:1},
+    {id:2,name:'Renewable Energy',sup:4,opp:0},
+    {id:3,name:'Economic Competitiveness',sup:1,opp:2},
+    {id:4,name:'Environmental Justice',sup:2,opp:0},
+    {id:5,name:'Fossil Fuel Subsidies',sup:0,opp:2}
+  ],
+  statements: [
+    {id:1,docId:1,actor:'EPA Director',concept:'Carbon Pricing',agree:true,text:'strongly supports carbon pricing mechanisms'},
+    {id:2,docId:1,actor:'EPA Director',concept:'Renewable Energy',agree:true,text:'drive innovation in clean technology'},
+    {id:3,docId:2,actor:'Manufacturing Association',concept:'Carbon Pricing',agree:false,text:'opposes the rapid implementation'},
+    {id:4,docId:2,actor:'Manufacturing Association',concept:'Economic Competitiveness',agree:false,text:'intense international competition'},
+    {id:5,docId:3,actor:'Green Future Alliance',concept:'Carbon Pricing',agree:true,text:'demands more aggressive carbon pricing'},
+    {id:6,docId:3,actor:'Green Future Alliance',concept:'Fossil Fuel Subsidies',agree:false,text:'end to all fossil fuel subsidies'},
+    {id:7,docId:3,actor:'Green Future Alliance',concept:'Environmental Justice',agree:true,text:'redirection toward clean energy'}
+  ],
+  selectedDoc: null,
+  codingDoc: null,
+  selection: '',
+  networkType: 'congruence',
+  llmSuggestions: {},
+  annotateMode: 'manual',
+  timeRange: [0, 100],
+  activeActors: new Set(),
+  hoveredNode: null
+};
+state.actors.forEach(a => state.activeActors.add(a.name));
+
+function toast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+function showTooltip(e, text) {
+  const tip = document.getElementById('tooltip');
+  tip.textContent = text;
+  tip.style.left = e.pageX + 10 + 'px';
+  tip.style.top = e.pageY - 20 + 'px';
+  tip.classList.add('show');
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip').classList.remove('show');
+}
+
+function showScreen(s) {
+  state.screen = s;
+  document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+  document.getElementById('screen-' + s).classList.add('active');
+  document.querySelectorAll('.nav a').forEach(a => a.classList.toggle('active', a.dataset.screen === s));
+  render();
+}
+
+function renderNav() {
+  const screens = ['dashboard','documents','annotate','actors','networks','cartography','export','llm'];
+  document.getElementById('nav').innerHTML = screens.map(s => 
+    `<a data-screen="${s}" class="${state.screen===s?'active':''}" onclick="showScreen('${s}')">${s.charAt(0).toUpperCase()+s.slice(1)}</a>`
+  ).join('');
+}
+
+function renderSparkline(id, data, w=220, h=40) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const max = Math.max(...data);
+  const points = data.map((v, i) => `${i * w / (data.length - 1)},${h - (v / max) * h * 0.8 - 4}`).join(' ');
+  const area = data.map((v, i) => `${i * w / (data.length - 1)},${h - (v / max) * h * 0.8 - 4}`).join(' ') + ` ${w},${h} 0,${h}`;
+  el.innerHTML = `<svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}">
+    <polygon points="${area}" fill="#f5f5f5"/>
+    <polyline points="${points}" class="sparkline"/>
+    ${data.map((v, i) => `<circle cx="${i * w / (data.length - 1)}" cy="${h - (v / max) * h * 0.8 - 4}" r="3" fill="#fff" stroke="#000" stroke-width="1.5" 
+      onmouseover="showTooltip(event, '${v} statements')" onmouseout="hideTooltip()" style="cursor:pointer"/>`).join('')}
+  </svg>`;
+}
+
+function renderSidebar() {
+  document.getElementById('statDocs').textContent = state.docs.length;
+  document.getElementById('statStmts').textContent = state.statements.length;
+  document.getElementById('statActors').textContent = state.actors.length;
+  document.getElementById('statConcepts').textContent = state.concepts.length;
+  const coded = state.docs.filter(d=>d.coded>0).length;
+  document.getElementById('progressFill').style.width = (coded/state.docs.length*100)+'%';
+  renderSparkline('sidebarSparkline', [2, 3, 5, 4, 7, 6, 8]);
+  document.getElementById('sidebarActors').innerHTML = state.actors.slice(0,4).map(a => `
+    <div class="actor-row" onclick="filterByActor('${a.name}')" onmouseover="showTooltip(event, '${a.stmts} statements')" onmouseout="hideTooltip()">
+      <div class="actor-dot" style="background:${a.color}"></div>
+      <span class="flex-1 text-xs" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.name}</span>
+      <span class="tag">${a.stmts}</span>
+    </div>
+  `).join('');
+  document.getElementById('sidebarConcepts').innerHTML = state.concepts.slice(0,4).map(c => {
+    const total = c.sup + c.opp || 1;
+    return `
+    <div style="margin-bottom:10px" onclick="filterByConcept('${c.name}')" style="cursor:pointer">
+      <div class="flex justify-between text-xs mb-4">
+        <span>${c.name}</span>
+        <span class="text-gray">${c.sup > 0 && c.opp > 0 ? 'Contested' : 'Consensus'}</span>
+      </div>
+      <div class="concept-bar" onmouseover="showTooltip(event, 'Support: ${c.sup}, Oppose: ${c.opp}')" onmouseout="hideTooltip()">
+        <div class="concept-bar-pos" style="width:${c.sup/total*100}%"></div>
+        <div class="concept-bar-neg" style="width:${c.opp/total*100}%"></div>
+      </div>
+    </div>
+  `}).join('');
+}
+
+function filterByActor(name) { toast(`Filtering by: ${name}`); }
+function filterByConcept(name) { toast(`Filtering by: ${name}`); }
+
+function initNetworkSimulation(canvasId, type, w=380, h=280) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  
+  const activeActors = state.actors.filter(a => state.activeActors.has(a.name));
+  const nodes = activeActors.map((a, i) => ({
+    ...a,
+    x: w/2 + (Math.random() - 0.5) * w * 0.5,
+    y: h/2 + (Math.random() - 0.5) * h * 0.5,
+    vx: 0, vy: 0,
+    radius: 12 + a.stmts * 3
+  }));
+  
+  let edges = [];
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      let weight = 0;
+      let isConflict = false;
+      state.concepts.forEach(c => {
+        const s1 = state.statements.find(s => s.actor === nodes[i].name && s.concept === c.name);
+        const s2 = state.statements.find(s => s.actor === nodes[j].name && s.concept === c.name);
+        if (s1 && s2) {
+          if (type === 'congruence' && s1.agree === s2.agree) weight++;
+          else if (type === 'conflict' && s1.agree !== s2.agree) { weight++; isConflict = true; }
+        }
+      });
+      if (weight > 0) {
+        edges.push({ source: nodes[i], target: nodes[j], weight, isConflict });
+      }
+    }
+  }
+  
+  const simulation = { nodes, edges, w, h, type, canvasId, running: true, iterations: 0 };
+  
+  function simulate() {
+    if (!simulation.running || simulation.iterations > 300) {
+      renderNetworkFinal(simulation);
+      return;
+    }
+    simulation.iterations++;
+    const alpha = Math.max(0.1, 1 - simulation.iterations / 200);
+    
+    // Repulsion between all nodes
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[j].x - nodes[i].x;
+        const dy = nodes[j].y - nodes[i].y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        const force = (150 * alpha) / (dist * dist);
+        const fx = (dx / dist) * force;
+        const fy = (dy / dist) * force;
+        nodes[i].vx -= fx; nodes[i].vy -= fy;
+        nodes[j].vx += fx; nodes[j].vy += fy;
+      }
+    }
+    
+    // Attraction along edges
+    edges.forEach(e => {
+      const dx = e.target.x - e.source.x;
+      const dy = e.target.y - e.source.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const force = (dist - 80) * 0.05 * alpha * e.weight;
+      const fx = (dx / dist) * force;
+      const fy = (dy / dist) * force;
+      e.source.vx += fx; e.source.vy += fy;
+      e.target.vx -= fx; e.target.vy -= fy;
+    });
+    
+    // Center gravity
+    nodes.forEach(n => {
+      n.vx += (w/2 - n.x) * 0.01 * alpha;
+      n.vy += (h/2 - n.y) * 0.01 * alpha;
+    });
+    
+    // Apply velocities with damping
+    nodes.forEach(n => {
+      n.vx *= 0.6; n.vy *= 0.6;
+      n.x += n.vx; n.y += n.vy;
+      // Boundary constraints
+      n.x = Math.max(n.radius + 5, Math.min(w - n.radius - 5, n.x));
+      n.y = Math.max(n.radius + 5, Math.min(h - n.radius - 40, n.y));
+    });
+    
+    if (simulation.iterations % 5 === 0) renderNetworkFrame(simulation);
+    requestAnimationFrame(simulate);
+  }
+  
+  simulate();
+}
+
+function renderNetworkFrame(sim) {
+  const { nodes, edges, w, h, type, canvasId } = sim;
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  
+  let svg = `<svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}">
+    <defs>
+      <filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#999"/></marker>
+    </defs>`;
+  
+  // Draw edges with curves
+  edges.forEach(e => {
+    const color = e.isConflict ? '#dc2626' : '#16a34a';
+    const opacity = 0.3 + e.weight * 0.15;
+    const strokeW = 1 + e.weight * 1.5;
+    // Curved edges
+    const mx = (e.source.x + e.target.x) / 2;
+    const my = (e.source.y + e.target.y) / 2;
+    const dx = e.target.x - e.source.x;
+    const dy = e.target.y - e.source.y;
+    const cx = mx - dy * 0.1;
+    const cy = my + dx * 0.1;
+    svg += `<path d="M${e.source.x},${e.source.y} Q${cx},${cy} ${e.target.x},${e.target.y}" 
+      stroke="${color}" stroke-width="${strokeW}" fill="none" opacity="${opacity}" stroke-linecap="round"/>`;
+  });
+  
+  // Draw nodes
+  nodes.forEach(n => {
+    svg += `<circle cx="${n.x}" cy="${n.y}" r="${n.radius}" fill="${n.color}" stroke="#fff" stroke-width="2" filter="url(#glow)" style="cursor:pointer"/>`;
+    svg += `<text x="${n.x}" y="${n.y + n.radius + 14}" text-anchor="middle" font-size="9" fill="#333" font-weight="500">${n.name.length > 18 ? n.name.slice(0,16) + '...' : n.name}</text>`;
+  });
+  
+  svg += '</svg>';
+  canvas.innerHTML = svg;
+}
+
+function renderNetworkFinal(sim) {
+  const { nodes, edges, w, h, type, canvasId } = sim;
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  
+  let svg = `<svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}">
+    <defs>
+      <filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="2" flood-opacity="0.2"/></filter>
+    </defs>
+    <rect width="${w}" height="${h}" fill="#fafafa"/>`;
+  
+  // Grid pattern
+  for (let i = 0; i < w; i += 40) svg += `<line x1="${i}" y1="0" x2="${i}" y2="${h}" stroke="#eee" stroke-width="0.5"/>`;
+  for (let i = 0; i < h; i += 40) svg += `<line x1="0" y1="${i}" x2="${w}" y2="${i}" stroke="#eee" stroke-width="0.5"/>`;
+  
+  // Draw edges with interaction
+  edges.forEach((e, idx) => {
+    const color = e.isConflict ? '#dc2626' : '#16a34a';
+    const opacity = 0.35 + e.weight * 0.15;
+    const strokeW = 1.5 + e.weight * 1.5;
+    const mx = (e.source.x + e.target.x) / 2;
+    const my = (e.source.y + e.target.y) / 2;
+    const dx = e.target.x - e.source.x;
+    const dy = e.target.y - e.source.y;
+    const cx = mx - dy * 0.12;
+    const cy = my + dx * 0.12;
+    svg += `<path d="M${e.source.x},${e.source.y} Q${cx},${cy} ${e.target.x},${e.target.y}" 
+      stroke="${color}" stroke-width="${strokeW}" fill="none" opacity="${opacity}" stroke-linecap="round"
+      onmouseover="highlightEdge(event, '${e.source.name}', '${e.target.name}', ${e.weight}, ${e.isConflict})" 
+      onmouseout="hideTooltip()" style="cursor:pointer;transition:all 0.2s"/>`;
+    // Edge weight label
+    svg += `<text x="${cx}" y="${cy}" text-anchor="middle" font-size="8" fill="#666" opacity="0.7">${e.weight}</text>`;
+  });
+  
+  // Draw nodes with full interaction
+  nodes.forEach(n => {
+    const degree = edges.filter(e => e.source.name === n.name || e.target.name === n.name).length;
+    svg += `<circle cx="${n.x}" cy="${n.y}" r="${n.radius + 4}" fill="none" stroke="${n.color}" stroke-width="1" opacity="0.3" stroke-dasharray="3,3">
+      <animate attributeName="stroke-dashoffset" from="0" to="12" dur="2s" repeatCount="indefinite"/>
+    </circle>`;
+    svg += `<circle cx="${n.x}" cy="${n.y}" r="${n.radius}" fill="${n.color}" stroke="#fff" stroke-width="2.5" filter="url(#shadow)"
+      onmouseover="highlightNode(event, '${n.name}', ${n.stmts}, ${n.pos}, ${n.neg}, ${degree})" 
+      onmouseout="hideTooltip();unhighlightNode()" 
+      onclick="toggleActorFilter('${n.name}')" style="cursor:pointer;transition:all 0.2s"/>`;
+    svg += `<text x="${n.x}" y="${n.y + 3}" text-anchor="middle" font-size="9" fill="#fff" font-weight="600" style="pointer-events:none">${n.stmts}</text>`;
+    svg += `<text x="${n.x}" y="${n.y + n.radius + 14}" text-anchor="middle" font-size="9" fill="#333" font-weight="500">${n.name.length > 18 ? n.name.slice(0,16) + '...' : n.name}</text>`;
+  });
+  
+  // Legend
+  const legendY = h - 20;
+  svg += `<rect x="5" y="${legendY - 12}" width="120" height="18" fill="#fff" stroke="#e5e5e5" rx="2"/>`;
+  svg += `<circle cx="15" cy="${legendY - 3}" r="4" fill="#16a34a"/>`;
+  svg += `<text x="22" y="${legendY}" font-size="8" fill="#666">Agreement</text>`;
+  svg += `<circle cx="70" cy="${legendY - 3}" r="4" fill="#dc2626"/>`;
+  svg += `<text x="77" y="${legendY}" font-size="8" fill="#666">Conflict</text>`;
+  
+  svg += '</svg>';
+  canvas.innerHTML = svg;
+}
+
+function highlightEdge(e, n1, n2, weight, isConflict) {
+  const rel = isConflict ? 'conflict' : 'agree';
+  showTooltip(e, `${n1} ↔ ${n2}: ${weight} ${rel}ing position${weight > 1 ? 's' : ''}`);
+}
+
+function highlightNode(e, name, stmts, pos, neg, degree) {
+  showTooltip(e, `${name}\n${stmts} statements (+${pos}/-${neg})\n${degree} connections`);
+}
+
+function unhighlightNode() {}
+
+function renderNetwork(canvasId, type, w=380, h=280) {
+  initNetworkSimulation(canvasId, type, w, h);
+}
+
+function toggleActorFilter(name) {
+  if (state.activeActors.has(name) && state.activeActors.size > 1) {
+    state.activeActors.delete(name);
+  } else {
+    state.activeActors.add(name);
+  }
+  render();
+}
+
+function renderBarChart(id, data, w=340, h=150) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const max = Math.max(...data.map(d => d.value));
+  const barW = (w - 40) / data.length - 8;
+  let svg = `<svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}">`;
+  svg += `<line x1="30" y1="${h-25}" x2="${w}" y2="${h-25}" stroke="#e5e5e5" stroke-width="1"/>`;
+  data.forEach((d, i) => {
+    const barH = (d.value / max) * (h - 50);
+    const x = 35 + i * (barW + 8);
+    svg += `<rect x="${x}" y="${h - 25 - barH}" width="${barW}" height="${barH}" fill="${d.color || '#000'}" class="chart-bar"
+      onmouseover="showTooltip(event, '${d.label}: ${d.value}')" onmouseout="hideTooltip()"/>`;
+    svg += `<text x="${x + barW/2}" y="${h - 8}" text-anchor="middle" font-size="8" fill="#666">${d.label.slice(0,8)}</text>`;
+  });
+  svg += '</svg>';
+  el.innerHTML = svg;
+}
+
+function renderHeatmap(id, w=340, h=180) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const actors = state.actors.slice(0, 4);
+  const concepts = state.concepts.slice(0, 4);
+  const cellW = (w - 80) / concepts.length;
+  const cellH = (h - 40) / actors.length;
+  let svg = `<svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}">`;
+  concepts.forEach((c, ci) => {
+    svg += `<text x="${85 + ci * cellW + cellW/2}" y="12" text-anchor="middle" font-size="8" fill="#666">${c.name.slice(0,10)}</text>`;
+  });
+  actors.forEach((a, ai) => {
+    svg += `<text x="75" y="${30 + ai * cellH + cellH/2 + 3}" text-anchor="end" font-size="8" fill="#666">${a.name.slice(0,12)}</text>`;
+    concepts.forEach((c, ci) => {
+      const stmt = state.statements.find(s => s.actor === a.name && s.concept === c.name);
+      const fill = stmt ? (stmt.agree ? '#16a34a' : '#dc2626') : '#f5f5f5';
+      const opacity = stmt ? 0.7 : 0.3;
+      svg += `<rect x="${80 + ci * cellW}" y="${20 + ai * cellH}" width="${cellW - 2}" height="${cellH - 2}" fill="${fill}" opacity="${opacity}" class="heatmap-cell"
+        onmouseover="showTooltip(event, '${a.name} ${stmt ? (stmt.agree ? 'supports' : 'opposes') : 'no position on'} ${c.name}')" onmouseout="hideTooltip()"/>`;
+    });
+  });
+  svg += '</svg>';
+  el.innerHTML = svg;
+}
+
+function render() {
+  renderNav();
+  renderSidebar();
+  const s = state.screen;
+  if (s === 'dashboard') renderDashboard();
+  else if (s === 'documents') renderDocuments();
+  else if (s === 'annotate') renderAnnotate();
+  else if (s === 'actors') renderActors();
+  else if (s === 'networks') renderNetworks();
+  else if (s === 'cartography') renderCartography();
+  else if (s === 'export') renderExport();
+  else if (s === 'llm') renderLLM();
+}
+
+function renderDashboard() {
+  const posStmts = state.statements.filter(s=>s.agree).length;
+  const negStmts = state.statements.length - posStmts;
+  document.getElementById('screen-dashboard').innerHTML = `
+    <h1 class="mb-16">Discourse Network <span>Dashboard</span></h1>
+    <div class="grid-4 mb-16">
+      <div class="stat-box" onclick="showScreen('documents')"><div class="stat-val">${state.docs.length}</div><div class="stat-label">Documents</div></div>
+      <div class="stat-box" onclick="showScreen('annotate')"><div class="stat-val">${state.statements.length}</div><div class="stat-label">Statements</div></div>
+      <div class="stat-box" onclick="showScreen('actors')"><div class="stat-val">${state.actors.length}</div><div class="stat-label">Actors</div></div>
+      <div class="stat-box" onclick="showScreen('actors')"><div class="stat-val">${state.concepts.length}</div><div class="stat-label">Concepts</div></div>
+    </div>
+    <div class="grid-2 mb-16">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-project-diagram"></i> Actor Congruence Network
+          <div class="interactive-legend">
+            ${state.actors.map(a => `<div class="legend-item ${state.activeActors.has(a.name)?'':'inactive'}" onclick="toggleActorFilter('${a.name}')">
+              <div class="legend-dot" style="background:${a.color}"></div><span class="text-xs">${a.name.slice(0,10)}</span>
+            </div>`).join('')}
+          </div>
+        </div>
+        <div class="card-body" style="padding:0"><div class="network-canvas" id="dashNet" style="height:280px"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-chart-bar"></i> Statement Distribution</div>
+        <div class="card-body">
+          <div class="grid-2 mb-12">
+            <div class="stat-box" style="border-left:3px solid #16a34a"><div class="stat-val">${posStmts}</div><div class="stat-label">Positive</div></div>
+            <div class="stat-box" style="border-left:3px solid #dc2626"><div class="stat-val">${negStmts}</div><div class="stat-label">Negative</div></div>
+          </div>
+          <div id="stmtBarChart" style="margin-bottom:12px"></div>
+          <div class="section-title"><i class="fas fa-clock"></i> Recent Statements</div>
+          ${state.statements.slice(-3).reverse().map(st => `
+            <div class="flex items-center gap-8 mb-8 text-xs stmt-item" style="padding:6px;margin:0 0 4px 0">
+              <span class="tag ${st.agree?'tag-positive':'tag-negative'}" style="width:8px;height:8px;padding:0"></span>
+              <strong>${st.actor}</strong>
+              <span class="text-gray">${st.agree?'supports':'opposes'}</span>
+              <span style="color:#2563eb">${st.concept}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-th"></i> Actor-Concept Matrix</div>
+        <div class="card-body" style="padding:8px"><div id="heatmapChart"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-chart-line"></i> Coding Progress</div>
+        <div class="card-body">
+          <div class="mb-12">
+            <div class="flex justify-between text-xs mb-4"><span>Overall Progress</span><span>${Math.round(state.docs.filter(d=>d.coded>0).length/state.docs.length*100)}%</span></div>
+            <div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:${state.docs.filter(d=>d.coded>0).length/state.docs.length*100}%"></div></div>
+          </div>
+          ${state.docs.map(d => `
+            <div class="flex items-center gap-8 mb-8">
+              <span class="text-xs flex-1" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.title}</span>
+              <div class="progress-bar" style="width:80px;height:4px"><div class="progress-fill" style="width:${d.coded > 0 ? 100 : 0}%;background:${d.coded>0?'#16a34a':'#e5e5e5'}"></div></div>
+              <span class="text-xs text-gray">${d.coded}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+  renderNetwork('dashNet', 'congruence');
+  renderBarChart('stmtBarChart', state.actors.map(a => ({label: a.name, value: a.stmts, color: a.color})));
+  renderHeatmap('heatmapChart');
+}
+
+function renderDocuments() {
+  document.getElementById('screen-documents').innerHTML = `
+    <div class="flex justify-between items-center mb-16">
+      <h1>Document <span>Library</span></h1>
+      <button class="btn" onclick="showImportModal()"><i class="fas fa-folder-open"></i> Import</button>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><span><i class="fas fa-file-alt"></i> Documents</span><span class="text-xs text-gray">${state.docs.length} total</span></div>
+        <div class="card-body" style="padding:8px;max-height:450px;overflow-y:auto">
+          ${state.docs.map(d => `
+            <div class="doc-item ${state.selectedDoc?.id===d.id?'selected':''}" onclick="selectDoc(${d.id})">
+              <div class="flex justify-between items-center mb-4">
+                <strong class="text-sm">${d.title}</strong>
+                <span class="tag ${d.coded>0?'tag-positive':'tag-uncoded'}">${d.coded>0?d.coded+' coded':'Uncoded'}</span>
+              </div>
+              <div class="text-xs text-gray">${d.author} · ${d.source} · ${d.date}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span><i class="fas fa-eye"></i> Preview</span>
+          ${state.selectedDoc ? `<button class="btn btn-sm" onclick="openInAnnotator(${state.selectedDoc.id})">Open in Annotator →</button>` : ''}
+        </div>
+        <div class="card-body">
+          ${state.selectedDoc ? `
+            <h3 style="font-size:14px;font-weight:600;margin-bottom:8px">${state.selectedDoc.title}</h3>
+            <div class="text-xs text-gray mb-12">${state.selectedDoc.author} · ${state.selectedDoc.date}</div>
+            <div class="text-sm" style="line-height:1.7;white-space:pre-wrap">${state.selectedDoc.text}</div>
+          ` : '<div class="text-gray text-center" style="padding:40px">Select a document to preview</div>'}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function selectDoc(id) { state.selectedDoc = state.docs.find(d => d.id === id); render(); }
+function openInAnnotator(id) { state.codingDoc = state.docs.find(d => d.id === id); showScreen('annotate'); }
+
+function renderAnnotate() {
+  const docStmts = state.codingDoc ? state.statements.filter(s => s.docId === state.codingDoc.id) : [];
+  document.getElementById('screen-annotate').innerHTML = `
+    <div class="flex justify-between items-center mb-16">
+      <h1>Statement <span>Annotation</span></h1>
+      <div class="flex gap-8 items-center">
+        <select class="select" style="width:200px" onchange="selectCodingDoc(this.value)">
+          <option value="">Select document...</option>
+          ${state.docs.map(d => `<option value="${d.id}" ${state.codingDoc?.id===d.id?'selected':''}>${d.title}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><span><i class="fas fa-align-left"></i> Document Text</span></div>
+        <div class="card-body" style="padding:0">
+          <div class="text-viewer" id="textViewer" onmouseup="handleTextSelect()">
+            ${state.codingDoc ? state.codingDoc.text : 'Select a document to begin coding.'}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-edit"></i> Code Statement</div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Selected Text</label>
+            <div id="selectionBox" style="padding:10px;background:#fffbeb;border:1px solid #f59e0b;min-height:50px;font-size:12px;font-style:italic">
+              ${state.selection || '<span class="text-gray">Highlight text in document...</span>'}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Actor</label>
+            <select class="select" id="actorSelect">
+              <option value="">Select actor...</option>
+              ${state.actors.map(a => `<option value="${a.name}">${a.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Concept</label>
+            <select class="select" id="conceptSelect">
+              <option value="">Select concept...</option>
+              ${state.concepts.map(c => `<option value="${c.name}">${c.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Position</label>
+            <div class="toggle-group">
+              <button class="toggle-btn active-pos" id="togglePos" onclick="setPosition(true)">Supports</button>
+              <button class="toggle-btn" id="toggleNeg" onclick="setPosition(false)">Opposes</button>
+            </div>
+          </div>
+          <button class="btn btn-success" style="width:100%" onclick="saveStatement()"><i class="fas fa-save"></i> Save Statement</button>
+          <div style="margin-top:20px">
+            <div class="flex justify-between items-center mb-8">
+              <span class="section-title" style="margin:0"><i class="fas fa-list"></i> Statements (${docStmts.length})</span>
+            </div>
+            <div style="max-height:150px;overflow-y:auto">
+              ${docStmts.map(s => `
+                <div class="stmt-item">
+                  <div class="flex items-center gap-8 mb-4">
+                    <span class="tag ${s.agree?'tag-positive':'tag-negative'}">${s.agree?'+':'-'}</span>
+                    <strong class="text-xs">${s.actor}</strong>
+                    <span class="text-xs text-gray">→</span>
+                    <span class="text-xs" style="color:#2563eb">${s.concept}</span>
+                  </div>
+                  <div class="text-xs text-gray" style="font-style:italic">"${s.text}"</div>
+                </div>
+              `).join('') || '<div class="text-xs text-gray text-center">No statements yet</div>'}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+let currentPosition = true;
+function setPosition(pos) {
+  currentPosition = pos;
+  document.getElementById('togglePos').className = 'toggle-btn' + (pos ? ' active-pos' : '');
+  document.getElementById('toggleNeg').className = 'toggle-btn' + (!pos ? ' active-neg' : '');
+}
+
+function selectCodingDoc(id) { state.codingDoc = state.docs.find(d => d.id === parseInt(id)) || null; state.selection = ''; render(); }
+function handleTextSelect() {
+  const sel = window.getSelection().toString().trim();
+  if (sel.length > 3) { state.selection = sel; document.getElementById('selectionBox').innerHTML = sel; }
+}
+
+function saveStatement() {
+  if (!state.codingDoc) return toast('Select a document first', true);
+  if (!state.selection) return toast('Select text first', true);
+  const actor = document.getElementById('actorSelect').value;
+  const concept = document.getElementById('conceptSelect').value;
+  if (!actor || !concept) return toast('Select actor and concept', true);
+  state.statements.push({ id: state.statements.length + 1, docId: state.codingDoc.id, actor, concept, agree: currentPosition, text: state.selection.slice(0, 60) });
+  const doc = state.docs.find(d => d.id === state.codingDoc.id);
+  if (doc) doc.coded++;
+  const actorObj = state.actors.find(a => a.name === actor);
+  if (actorObj) { actorObj.stmts++; currentPosition ? actorObj.pos++ : actorObj.neg++; }
+  const conceptObj = state.concepts.find(c => c.name === concept);
+  if (conceptObj) { currentPosition ? conceptObj.sup++ : conceptObj.opp++; }
+  state.selection = '';
+  toast('Statement saved!');
+  render();
+}
+
+function renderActors() {
+  document.getElementById('screen-actors').innerHTML = `
+    <h1 class="mb-16">Actors & <span>Concepts</span></h1>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-users"></i> Actors</div>
+        <div class="card-body" style="padding:0;max-height:400px;overflow-y:auto">
+          <table class="table">
+            <thead><tr><th>Name</th><th>Type</th><th>Stmts</th><th>+/-</th></tr></thead>
+            <tbody>
+              ${state.actors.map(a => `
+                <tr style="cursor:pointer" onclick="filterByActor('${a.name}')">
+                  <td><strong>${a.name}</strong></td>
+                  <td><span class="tag" style="background:${a.color}">${a.type}</span></td>
+                  <td>${a.stmts}</td>
+                  <td><span style="color:#16a34a">+${a.pos}</span> / <span style="color:#dc2626">-${a.neg}</span></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-lightbulb"></i> Concepts</div>
+        <div class="card-body" style="padding:0;max-height:400px;overflow-y:auto">
+          <table class="table">
+            <thead><tr><th>Name</th><th>Support</th><th>Oppose</th><th>Status</th></tr></thead>
+            <tbody>
+              ${state.concepts.map(c => `
+                <tr style="cursor:pointer" onclick="filterByConcept('${c.name}')">
+                  <td><strong>${c.name}</strong></td>
+                  <td style="color:#16a34a">${c.sup}</td>
+                  <td style="color:#dc2626">${c.opp}</td>
+                  <td><span class="tag ${c.sup>0&&c.opp>0?'':'tag-positive'}">${c.sup>0&&c.opp>0?'Contested':'Consensus'}</span></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function calcNetworkMetrics() {
+  const n = state.actors.length;
+  let edges = 0, agreeEdges = 0, conflictEdges = 0;
+  const degrees = {};
+  state.actors.forEach(a => degrees[a.name] = 0);
+  
+  for (let i = 0; i < state.actors.length; i++) {
+    for (let j = i + 1; j < state.actors.length; j++) {
+      let hasAgree = false, hasConflict = false;
+      state.concepts.forEach(c => {
+        const s1 = state.statements.find(s => s.actor === state.actors[i].name && s.concept === c.name);
+        const s2 = state.statements.find(s => s.actor === state.actors[j].name && s.concept === c.name);
+        if (s1 && s2) {
+          if (s1.agree === s2.agree) hasAgree = true;
+          else hasConflict = true;
+        }
+      });
+      if (hasAgree) { agreeEdges++; edges++; degrees[state.actors[i].name]++; degrees[state.actors[j].name]++; }
+      if (hasConflict) { conflictEdges++; if (!hasAgree) edges++; }
+    }
+  }
+  
+  const maxEdges = (n * (n - 1)) / 2;
+  const density = maxEdges > 0 ? (edges / maxEdges).toFixed(2) : 0;
+  const avgDegree = n > 0 ? (Object.values(degrees).reduce((a, b) => a + b, 0) / n).toFixed(1) : 0;
+  const maxDegree = Math.max(...Object.values(degrees));
+  const centralActor = Object.entries(degrees).sort((a, b) => b[1] - a[1])[0];
+  
+  return { edges, agreeEdges, conflictEdges, density, avgDegree, maxDegree, centralActor, degrees };
+}
+
+function renderNetworks() {
+  const metrics = calcNetworkMetrics();
+  const polarization = metrics.conflictEdges / (metrics.agreeEdges + metrics.conflictEdges || 1);
+  
+  document.getElementById('screen-networks').innerHTML = `
+    <div class="flex justify-between items-center mb-16">
+      <h1>Network <span>Analysis</span></h1>
+      <div class="flex gap-8">
+        <select class="select" style="width:180px" id="netTypeSelect" onchange="changeNetworkType(this.value)">
+          <option value="congruence" ${state.networkType==='congruence'?'selected':''}>Actor Congruence</option>
+          <option value="conflict" ${state.networkType==='conflict'?'selected':''}>Actor Conflict</option>
+        </select>
+        <button class="btn" onclick="render()"><i class="fas fa-sync"></i> Refresh Layout</button>
+        <button class="btn" onclick="exportNetwork()"><i class="fas fa-download"></i> Export</button>
+      </div>
+    </div>
+    
+    <div class="card mb-16">
+      <div class="card-header"><i class="fas fa-project-diagram"></i> Force-Directed Network Graph
+        <div class="interactive-legend">
+          ${state.actors.map(a => `<div class="legend-item ${state.activeActors.has(a.name)?'':'inactive'}" onclick="toggleActorFilter('${a.name}')">
+            <div class="legend-dot" style="background:${a.color}"></div><span class="text-xs">${a.name.slice(0,12)}</span>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div class="card-body" style="padding:0"><div class="network-canvas" id="mainNet" style="height:400px"></div></div>
+    </div>
+    
+    <div class="grid-4 mb-16">
+      <div class="stat-box"><div class="stat-val">${state.actors.length}</div><div class="stat-label">Nodes</div></div>
+      <div class="stat-box"><div class="stat-val">${metrics.edges}</div><div class="stat-label">Total Edges</div></div>
+      <div class="stat-box"><div class="stat-val">${metrics.density}</div><div class="stat-label">Density</div></div>
+      <div class="stat-box"><div class="stat-val">${metrics.avgDegree}</div><div class="stat-label">Avg Degree</div></div>
+    </div>
+    
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-balance-scale"></i> Network Composition</div>
+        <div class="card-body">
+          <div class="mb-12">
+            <div class="flex justify-between text-xs mb-4"><span>Agreement Edges</span><span style="color:#16a34a">${metrics.agreeEdges}</span></div>
+            <div class="progress-bar" style="height:12px;background:#fafafa">
+              <div class="progress-fill" style="width:${metrics.agreeEdges/(metrics.agreeEdges+metrics.conflictEdges||1)*100}%;background:#16a34a"></div>
+            </div>
+          </div>
+          <div class="mb-12">
+            <div class="flex justify-between text-xs mb-4"><span>Conflict Edges</span><span style="color:#dc2626">${metrics.conflictEdges}</span></div>
+            <div class="progress-bar" style="height:12px;background:#fafafa">
+              <div class="progress-fill" style="width:${metrics.conflictEdges/(metrics.agreeEdges+metrics.conflictEdges||1)*100}%;background:#dc2626"></div>
+            </div>
+          </div>
+          <div style="padding:12px;background:#fafafa;border:1px solid #e5e5e5">
+            <div class="flex justify-between items-center">
+              <span class="text-xs">Polarization Index</span>
+              <span class="text-sm" style="font-weight:600">${(polarization * 100).toFixed(0)}%</span>
+            </div>
+            <div class="text-xs text-gray" style="margin-top:4px">${polarization < 0.3 ? 'Low polarization - actors mostly agree' : polarization < 0.6 ? 'Moderate polarization' : 'High polarization - significant conflict'}</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-crown"></i> Centrality Rankings</div>
+        <div class="card-body" style="padding:0">
+          <table class="table">
+            <thead><tr><th>Actor</th><th>Degree</th><th>Centrality</th></tr></thead>
+            <tbody>
+              ${Object.entries(metrics.degrees).sort((a,b) => b[1] - a[1]).map(([name, deg], i) => {
+                const actor = state.actors.find(a => a.name === name);
+                const centrality = (deg / (state.actors.length - 1)).toFixed(2);
+                return `<tr>
+                  <td><div class="flex items-center gap-8">
+                    <span style="font-size:10px;color:#999">${i+1}</span>
+                    <div class="actor-dot" style="background:${actor?.color || '#000'}"></div>
+                    <strong class="text-xs">${name}</strong>
+                  </div></td>
+                  <td>${deg}</td>
+                  <td><div class="flex items-center gap-4">
+                    <div class="progress-bar" style="width:50px;height:4px"><div class="progress-fill" style="width:${centrality*100}%"></div></div>
+                    <span class="text-xs">${centrality}</span>
+                  </div></td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+  renderNetwork('mainNet', state.networkType, 760, 400);
+}
+
+function changeNetworkType(type) { state.networkType = type; renderNetwork('mainNet', type, 760, 400); }
+
+function renderCartography() {
+  document.getElementById('screen-cartography').innerHTML = `
+    <h1 class="mb-16">Actor <span>Cartography</span></h1>
+    <p class="text-gray mb-16">Map discourse actors on ideological and activity dimensions</p>
+    <div class="flex gap-12 mb-16">
+      <div class="flex items-center gap-8">
+        <span class="text-xs text-gray">X-Axis:</span>
+        <select class="select" style="width:160px" id="cartoXDim" onchange="drawActorCartography()">
+          <option value="statements">Statement Count</option>
+          <option value="positive">Positive Statements</option>
+          <option value="negative">Negative Statements</option>
+          <option value="concepts">Concept Coverage</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-8">
+        <span class="text-xs text-gray">Y-Axis:</span>
+        <select class="select" style="width:160px" id="cartoYDim" onchange="drawActorCartography()">
+          <option value="positivity">Positivity Ratio</option>
+          <option value="statements">Statement Count</option>
+          <option value="concepts">Concept Coverage</option>
+          <option value="centrality">Network Centrality</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-8">
+        <span class="text-xs text-gray">Size by:</span>
+        <select class="select" style="width:120px" id="cartoSizeBy" onchange="drawActorCartography()">
+          <option value="statements">Statements</option>
+          <option value="concepts">Concepts</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-map"></i> Actor Position Map</div>
+        <div class="card-body" style="padding:0">
+          <div id="cartoCanvas" style="height:400px;background:#fafafa;position:relative"></div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <div class="card-header"><i class="fas fa-th-large"></i> Quadrant Analysis</div>
+          <div class="card-body" style="padding:8px">
+            <div class="grid-2" style="gap:8px">
+              <div style="padding:12px;background:#dcfce7;border:1px solid #16a34a">
+                <div class="text-xs" style="font-weight:600;color:#166534;margin-bottom:4px">Q1: High Activity + Positive</div>
+                <div class="text-xs" style="color:#166534;font-weight:500">Advocates</div>
+                <div class="text-xs text-gray" id="cartoQ1">Active supporters of concepts</div>
+              </div>
+              <div style="padding:12px;background:#fef2f2;border:1px solid #dc2626">
+                <div class="text-xs" style="font-weight:600;color:#991b1b;margin-bottom:4px">Q2: Low Activity + Positive</div>
+                <div class="text-xs" style="color:#991b1b;font-weight:500">Quiet Supporters</div>
+                <div class="text-xs text-gray" id="cartoQ2">Occasional positive engagement</div>
+              </div>
+              <div style="padding:12px;background:#fef3c7;border:1px solid #f59e0b">
+                <div class="text-xs" style="font-weight:600;color:#92400e;margin-bottom:4px">Q3: Low Activity + Negative</div>
+                <div class="text-xs" style="color:#92400e;font-weight:500">Passive Critics</div>
+                <div class="text-xs text-gray" id="cartoQ3">Limited negative engagement</div>
+              </div>
+              <div style="padding:12px;background:#eff6ff;border:1px solid #2563eb">
+                <div class="text-xs" style="font-weight:600;color:#1d4ed8;margin-bottom:4px">Q4: High Activity + Negative</div>
+                <div class="text-xs" style="color:#1d4ed8;font-weight:500">Active Opponents</div>
+                <div class="text-xs text-gray" id="cartoQ4">Frequent critical engagement</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <div class="card-header"><i class="fas fa-info-circle"></i> Actor Legend</div>
+          <div class="card-body">
+            ${state.actors.map(a => `
+              <div class="flex items-center gap-8 mb-4">
+                <div style="width:12px;height:12px;border-radius:50%;background:${a.color}"></div>
+                <span class="text-xs">${a.name}</span>
+                <span class="tag tag-actor" style="font-size:8px;padding:1px 4px">${a.type}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <div class="card-header"><i class="fas fa-crosshairs"></i> Selected Actor</div>
+          <div class="card-body" id="cartoSelected">
+            <div class="text-center text-gray text-xs" style="padding:16px">Click an actor to view details</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  drawActorCartography();
+}
+
+function drawActorCartography() {
+  const container = document.getElementById('cartoCanvas');
+  if (!container) return;
+
+  const w = container.clientWidth || 500;
+  const h = 400;
+  const margin = { top: 30, right: 30, bottom: 50, left: 60 };
+  const plotW = w - margin.left - margin.right;
+  const plotH = h - margin.top - margin.bottom;
+
+  const xDim = document.getElementById('cartoXDim')?.value || 'statements';
+  const yDim = document.getElementById('cartoYDim')?.value || 'positivity';
+  const sizeBy = document.getElementById('cartoSizeBy')?.value || 'statements';
+
+  // Calculate metrics for actors
+  const actors = state.actors.map(a => {
+    const actorStmts = state.statements.filter(s => s.actor === a.name);
+    const posStmts = actorStmts.filter(s => s.agree).length;
+    const negStmts = actorStmts.length - posStmts;
+    const conceptsUsed = new Set(actorStmts.map(s => s.concept)).size;
+    return {
+      ...a,
+      statements: actorStmts.length,
+      positive: posStmts,
+      negative: negStmts,
+      positivity: actorStmts.length > 0 ? posStmts / actorStmts.length : 0.5,
+      concepts: conceptsUsed,
+      centrality: a.stmts / Math.max(...state.actors.map(x => x.stmts))
+    };
+  });
+
+  // Get values for axes
+  const getVal = (a, dim) => {
+    switch(dim) {
+      case 'statements': return a.statements;
+      case 'positive': return a.positive;
+      case 'negative': return a.negative;
+      case 'positivity': return a.positivity;
+      case 'concepts': return a.concepts;
+      case 'centrality': return a.centrality;
+      default: return 0;
+    }
+  };
+
+  const maxX = Math.max(...actors.map(a => getVal(a, xDim))) || 1;
+  const maxY = Math.max(...actors.map(a => getVal(a, yDim))) || 1;
+
+  const scaleX = (v) => margin.left + (v / maxX) * plotW;
+  const scaleY = (v) => margin.top + (1 - v / maxY) * plotH;
+
+  // Quadrant counts
+  const midX = maxX / 2, midY = maxY / 2;
+  const q1 = actors.filter(a => getVal(a, xDim) >= midX && getVal(a, yDim) >= midY).map(a => a.name);
+  const q2 = actors.filter(a => getVal(a, xDim) < midX && getVal(a, yDim) >= midY).map(a => a.name);
+  const q3 = actors.filter(a => getVal(a, xDim) < midX && getVal(a, yDim) < midY).map(a => a.name);
+  const q4 = actors.filter(a => getVal(a, xDim) >= midX && getVal(a, yDim) < midY).map(a => a.name);
+
+  document.getElementById('cartoQ1').textContent = q1.join(', ') || '—';
+  document.getElementById('cartoQ2').textContent = q2.join(', ') || '—';
+  document.getElementById('cartoQ3').textContent = q3.join(', ') || '—';
+  document.getElementById('cartoQ4').textContent = q4.join(', ') || '—';
+
+  // Build SVG
+  let svg = `<svg width="${w}" height="${h}" style="font-family:Inter,sans-serif">`;
+
+  // Background quadrants
+  const midPx = scaleX(midX);
+  const midPy = scaleY(midY);
+  svg += `<rect x="${margin.left}" y="${margin.top}" width="${midPx - margin.left}" height="${midPy - margin.top}" fill="#dcfce7" opacity="0.4"/>`;
+  svg += `<rect x="${midPx}" y="${margin.top}" width="${w - margin.right - midPx}" height="${midPy - margin.top}" fill="#fef2f2" opacity="0.4"/>`;
+  svg += `<rect x="${margin.left}" y="${midPy}" width="${midPx - margin.left}" height="${h - margin.bottom - midPy}" fill="#fef3c7" opacity="0.4"/>`;
+  svg += `<rect x="${midPx}" y="${midPy}" width="${w - margin.right - midPx}" height="${h - margin.bottom - midPy}" fill="#eff6ff" opacity="0.4"/>`;
+
+  // Axes
+  svg += `<line x1="${margin.left}" y1="${h - margin.bottom}" x2="${w - margin.right}" y2="${h - margin.bottom}" stroke="#999"/>`;
+  svg += `<line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${h - margin.bottom}" stroke="#999"/>`;
+  svg += `<line x1="${midPx}" y1="${margin.top}" x2="${midPx}" y2="${h - margin.bottom}" stroke="#ddd" stroke-dasharray="4"/>`;
+  svg += `<line x1="${margin.left}" y1="${midPy}" x2="${w - margin.right}" y2="${midPy}" stroke="#ddd" stroke-dasharray="4"/>`;
+
+  // Axis labels
+  const labels = { statements: 'Statements', positive: 'Positive', negative: 'Negative', positivity: 'Positivity', concepts: 'Concepts', centrality: 'Centrality' };
+  svg += `<text x="${w/2}" y="${h - 10}" text-anchor="middle" font-size="11" fill="#666">${labels[xDim]} →</text>`;
+  svg += `<text x="14" y="${h/2}" text-anchor="middle" font-size="11" fill="#666" transform="rotate(-90,14,${h/2})">${labels[yDim]} →</text>`;
+
+  // Points
+  actors.forEach((a, i) => {
+    const cx = scaleX(getVal(a, xDim));
+    const cy = scaleY(getVal(a, yDim));
+    const r = 10 + getVal(a, sizeBy) * 3;
+    svg += `<circle cx="${cx}" cy="${cy}" r="${Math.min(r, 25)}" fill="${a.color}" opacity="0.8" style="cursor:pointer" onclick="selectCartoActor(${i})"/>`;
+    svg += `<text x="${cx}" y="${cy + r + 12}" text-anchor="middle" font-size="9" fill="#333">${a.name.slice(0,15)}</text>`;
+  });
+
+  svg += '</svg>';
+  container.innerHTML = svg;
+}
+
+function selectCartoActor(idx) {
+  const a = state.actors[idx];
+  if (!a) return;
+  const actorStmts = state.statements.filter(s => s.actor === a.name);
+  const posStmts = actorStmts.filter(s => s.agree).length;
+
+  document.getElementById('cartoSelected').innerHTML = `
+    <div class="mb-8"><strong>${a.name}</strong> <span class="tag tag-actor">${a.type}</span></div>
+    <div class="grid-2 text-xs">
+      <div class="flex justify-between"><span class="text-gray">Statements:</span><span>${actorStmts.length}</span></div>
+      <div class="flex justify-between"><span class="text-gray">Positive:</span><span style="color:#16a34a">${posStmts}</span></div>
+      <div class="flex justify-between"><span class="text-gray">Negative:</span><span style="color:#dc2626">${actorStmts.length - posStmts}</span></div>
+      <div class="flex justify-between"><span class="text-gray">Positivity:</span><span>${(posStmts / Math.max(actorStmts.length, 1) * 100).toFixed(0)}%</span></div>
+    </div>
+  `;
+  toast('Selected: ' + a.name);
+}
+
+function renderExport() {
+  document.getElementById('screen-export').innerHTML = `
+    <h1 class="mb-16">Export <span>Data</span></h1>
+    <div class="grid-3">
+      <div class="card" style="cursor:pointer" onclick="exportData('graphml')">
+        <div class="card-body text-center" style="padding:30px">
+          <i class="fas fa-project-diagram" style="font-size:32px;margin-bottom:12px;color:#2563eb"></i>
+          <h3 style="font-size:14px;font-weight:600;margin-bottom:4px">GraphML</h3>
+          <p class="text-xs text-gray">Network visualization</p>
+        </div>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="exportData('csv')">
+        <div class="card-body text-center" style="padding:30px">
+          <i class="fas fa-table" style="font-size:32px;margin-bottom:12px;color:#16a34a"></i>
+          <h3 style="font-size:14px;font-weight:600;margin-bottom:4px">CSV</h3>
+          <p class="text-xs text-gray">Spreadsheet data</p>
+        </div>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="exportData('json')">
+        <div class="card-body text-center" style="padding:30px">
+          <i class="fas fa-code" style="font-size:32px;margin-bottom:12px"></i>
+          <h3 style="font-size:14px;font-weight:600;margin-bottom:4px">JSON</h3>
+          <p class="text-xs text-gray">Complete database</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function exportData(format) {
+  const data = { docs: state.docs, actors: state.actors, concepts: state.concepts, statements: state.statements };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `pydna-export.${format}`;
+  a.click();
+  toast('Exported as ' + format.toUpperCase());
+}
+
+function exportNetwork() { toast('GraphML exported'); }
+
+function showImportModal() {
+  document.getElementById('modal').innerHTML = `
+    <div class="flex justify-between items-center mb-12">
+      <h3 style="font-size:14px;font-weight:600">Import Documents</h3>
+      <button class="btn btn-sm" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Source</label>
+      <select class="select">
+        <option>Local Files (.txt, .pdf)</option>
+        <option>Folder</option>
+        <option>From URL</option>
+      </select>
+    </div>
+    <div style="border:2px dashed #e5e5e5;padding:40px;text-align:center;margin-bottom:12px">
+      <i class="fas fa-cloud-upload-alt" style="font-size:24px;color:#999;margin-bottom:8px"></i>
+      <div class="text-xs text-gray">Drag files here or click to browse</div>
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="closeModal();toast('Import functionality would connect to backend')">Import</button>
+  `;
+  document.getElementById('overlay').classList.add('show');
+}
+
+function showLLMConfig() { showScreen('llm'); }
+
+function renderLLM() {
+  document.getElementById('screen-llm').innerHTML = `
+    <h1 class="mb-16">LLM <span>Assisted Annotation</span></h1>
+    <div class="grid-2 mb-16">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-cog"></i> spaCy-LLM Configuration</div>
+        <div class="card-body">
+          <div class="form-group">
+            <label class="form-label">Model Backend</label>
+            <select class="select" id="llmBackend">
+              <option value="openai">OpenAI (GPT-4)</option>
+              <option value="anthropic">Anthropic (Claude)</option>
+              <option value="ollama">Ollama (Local)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Task Type</label>
+            <select class="select" id="llmTask">
+              <option value="custom_dna">DNA Statement Extraction</option>
+              <option value="ner">Named Entity Recognition</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" style="width:100%" onclick="runLLMExtraction()">
+            <i class="fas fa-play"></i> Run Extraction Pipeline
+          </button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-chart-bar"></i> Human vs LLM Agreement</div>
+        <div class="card-body">
+          <div class="grid-3 mb-12">
+            <div class="stat-box"><div class="stat-val" style="color:#16a34a">87%</div><div class="stat-label">Agreement</div></div>
+            <div class="stat-box"><div class="stat-val">42</div><div class="stat-label">Compared</div></div>
+            <div class="stat-box"><div class="stat-val">0.82</div><div class="stat-label">Cohen's κ</div></div>
+          </div>
+          <div class="mb-8">
+            <div class="flex justify-between text-xs mb-4"><span>Actor Detection</span><span>94%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:94%;background:#16a34a"></div></div>
+          </div>
+          <div class="mb-8">
+            <div class="flex justify-between text-xs mb-4"><span>Concept Detection</span><span>89%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:89%;background:#16a34a"></div></div>
+          </div>
+          <div class="mb-8">
+            <div class="flex justify-between text-xs mb-4"><span>Position Classification</span><span>78%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function runLLMExtraction() { toast('Running spaCy-LLM pipeline...'); setTimeout(() => toast('Extraction complete!'), 1500); }
+function closeModal() { document.getElementById('overlay').classList.remove('show'); }
+render();
+</script>
+</body>
+</html>

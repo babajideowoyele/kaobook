@@ -1,0 +1,70 @@
+# RoleBox-Xray Conda Environment
+# For scientific literature and bibliometric analysis
+#
+# Setup:
+#   conda env create -f environment.yml
+#   conda activate rolebox-xray
+#
+# For GPU acceleration (optional, requires NVIDIA GPU + CUDA):
+#   pip install cudf-cu12 cuml-cu12 --extra-index-url=https://pypi.nvidia.com
+
+name: rolebox-xray
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pandas>=2.0
+  - numpy>=1.24
+  - openpyxl
+  - xlrd
+  - networkx>=3.0
+  - matplotlib>=3.7
+  - seaborn>=0.12
+  - scikit-learn>=1.3
+  - scipy>=1.10
+  - jupyter
+  - jupyterlab
+  - ipywidgets
+
+  # NLP and text analysis
+  - nltk
+  - spacy>=3.5
+
+  # PyTorch (for embeddings)
+  - pytorch>=2.0
+  - torchvision
+  - cpuonly  # Remove this line if using GPU
+
+  # Data processing
+  - tqdm
+  - pyarrow
+  - fastparquet
+
+  - pip
+  - pip:
+    # BERTopic and dependencies
+    - bertopic>=0.15
+    - sentence-transformers>=2.2
+    - umap-learn>=0.5
+    - hdbscan>=0.8
+
+    # Visualization
+    - plotly>=5.18
+    - pyvis
+
+    # Bibliometric APIs
+    - pyalex  # OpenAlex API
+    - semanticscholar>=0.6  # Semantic Scholar API
+    - scholarly>=1.7  # Google Scholar (use cautiously)
+
+    # Utilities
+    - python-dotenv
+    - requests
+    - bibtexparser>=1.4
+
+    # Development
+    - pytest>=7.0
+    - pytest-cov>=4.0

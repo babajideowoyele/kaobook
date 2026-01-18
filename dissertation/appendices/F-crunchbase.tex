@@ -1,38 +1,42 @@
 % !TEX root = ../main.tex
-%************************************************
-\chapter{Crunchbase: Mapping Investment Networks}
-\label{app:crunchbase}
-%************************************************
+\documentclass[../main.tex]{subfiles}
 
-\noindent\textit{This appendix examines Crunchbase as a data source for studying innovation ecosystems, particularly startup-driven sustainability transitions. We explore the platform's unique ability to map inter-organizational networks through investment, acquisition, and founder relationships. The appendix addresses data extraction methods, analytical techniques, and integration strategies while acknowledging critical limitations around coverage bias and reproducibility.}
+\begin{document}
+
+\chapter{Crunchbase: Mapping Enacted Sociotypes}
+\label{app:crunchbase}
+
+\noindent\textit{Investment data provides the third modality of multimodal cartography---the \textbf{enacted map} of what organizations actually do with resources. This appendix documents the methodological approach to Crunchbase data extraction and analysis within \RoleBox, covering theoretical foundations, data properties and limitations, analytical methods from network analysis to NLP, the RoleSim integration for influence typology, and implications for studying sustainability transitions.}
 
 \bigskip
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Overview: Scope, Strengths, and Limitations}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Theoretical Grounding: Investment as Enacted Role}
+%===============================================================================
 
-\textbf{Crunchbase} is a prominent online platform compiling information on innovative companies (especially startups), the people behind them, and their funding activities.
+\textbf{Crunchbase} compiles information on innovative companies (especially startups), the people behind them, and their funding activities. Since 2007, it has grown into one of the largest directories of startups worldwide, containing data on over one million organizations and hundreds of thousands of investment records.\cite{dalle2017crunchbase}
 
-%\sidenote{\textbf{Platform Scale (2024):} 1M+ organizations, 199 countries, hundreds of thousands of people and investment records.}
+Why investment data matters for role cartography:
 
-Since its creation in 2007, it has grown into one of the largest directories of startups worldwide, providing detailed information not easily obtainable from official sources.
+\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
+\item[Observable action.] Unlike website claims (declared) or media portrayals (attributed), investment represents \emph{enacted} behavior---money actually moved, deals actually closed.
 
-\subsection*{Data Assembly Model}
+\item[Relational structure.] Crunchbase explicitly encodes relationships: who funded whom, who acquired whom, who worked where. This relational structure is pre-graph, requiring only extraction rather than inference.
 
-Crunchbase's dataset is \textbf{community- and partner-driven}:
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item Registered users (entrepreneurs, executives) create/update profiles
-\item Partnerships with ~3,000 investment firms for portfolio updates
-\item ML-augmented verification
-\item In-house data analysts
-\end{itemize}
+\item[Resource flow signals.] Investment patterns reveal which actors are positioned as \emph{resource providers} vs. \emph{resource recipients}---a fundamental dimension of ecosystem roles.
+
+\item[Coverage beyond official records.] Crunchbase captures younger and smaller ventures that lack paper trails in official records, providing far greater coverage of nascent startup activity than credit registries or annual filings.\cite{nathan2017crunchbase}
+\end{description}
+
+\begin{insightbox}[From Claims to Actions]
+A startup may claim ``industry partnerships'' on its website and be portrayed as ``innovative'' in news. But Crunchbase reveals the enacted reality: Who actually invested? What was the valuation? Which accelerators accepted them? Enacted sociotypes complement claimed and attributed sociotypes.
+\end{insightbox}
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Data Richness: Relational Structure}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Data Anatomy: What Crunchbase Contains}
+%===============================================================================
 
 Unlike patent databases or news archives, Crunchbase explicitly encodes \textbf{relationships}:
 
@@ -43,62 +47,518 @@ Unlike patent databases or news archives, Crunchbase explicitly encodes \textbf{
 \item[Accelerator Relationships] Which programs supported which startups
 \end{description}
 
-%\sidenote{\textbf{Network Construction:} Crunchbase data naturally generates bipartite networks (investor-company) and one-mode projections (co-investor networks).}
+\subsection{Data Assembly Model}
+
+Crunchbase's dataset is \textbf{community- and partner-driven}. Registered users (entrepreneurs, executives) create and update their own profiles, while partnerships with approximately 3,000 investment firms provide portfolio updates. In-house data analysts apply ML-augmented verification to maintain data quality, continuously updating the knowledge graph of startups and related entities.
+
+This open contribution model means Crunchbase often captures ventures that lack visibility in official records. Its graph-based design links founders to multiple ventures, investors to many portfolio companies, and firms to acquisitions or accelerators---representing real-world complexity that traditional firm-only databases cannot capture.\cite{nathan2017crunchbase}
+
+\subsection{Scope and Coverage}
+
+Crunchbase covers organizations, individuals, and their relationships:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3.5cm}p{5cm}p{4cm}@{}}
+\toprule
+\textbf{Entity Type} & \textbf{Data Fields} & \textbf{Research Value} \\
+\midrule
+Organizations & Name, description, categories, location, founding date, status, employee count & Core actor identification \\
+Funding Rounds & Date, amount, currency, round type, investors & Resource flow tracking \\
+Investors & Type (VC, corporate, angel, accelerator), portfolio & Role classification \\
+People & Name, title, organization associations & Mobility and interlock networks \\
+Acquisitions & Acquirer, target, date, price & Consolidation dynamics \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Crunchbase entity types and research applications}
+\end{center}
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Analytical Applications}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Strengths for Innovation Research}
+%===============================================================================
 
-\subsection*{Investment Network Analysis}
+Researchers have highlighted several advantages of Crunchbase as an innovation data source.
 
-Funding data enables construction of investor-startup networks revealing:
+\subsection{Breadth and Comprehensiveness}
+
+Studies find Crunchbase covers more startups and deals than other venture datasets like PitchBook or VentureSource.\cite{kalhor2024acquisitions} The platform includes detailed investment information (dates, amounts, investor names, round types) for companies globally.
+
+\subsection{Relational Mapping}
+
+Because Crunchbase links companies with founders, executives, and investors, it enables mapping inter-organizational and interpersonal ties in entrepreneurial ecosystems. Researchers can trace which investors fund which startups, identify founders who previously worked together at other ventures, determine which accelerators produce successful alumni, and map which acquirers dominate sector consolidation.
+
+\subsection{Validation Against Official Sources}
+
+Aggregate funding statistics from Crunchbase closely mirror those from official VC sources (NVCA, etc.), confirming broad pattern capture.\cite{dalle2017crunchbase} Crunchbase sometimes reports more deals than traditional sources, likely due to inclusion of angel and seed rounds.
+
+
+%===============================================================================
+\section{Methodological Challenges and Limitations}
+%===============================================================================
+
+\begin{criticalbox}[What Crunchbase Cannot Tell Us]
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Incompleteness}: Not all startups or funding events are reported---especially very small rounds or early-stage deals without press releases
+
+\item \textbf{Success bias}: Companies often add information for strategic reasons; failed startups may never update profiles or be removed, over-representing survivors
+
+\item \textbf{Registration latency}: New startups may appear only after delay; funding rounds may be backfilled later
+
+\item \textbf{Geographic bias}: Coverage is strongest in US and major startup hubs; emerging economies less visible
+
+\item \textbf{Missing fields}: 31\% of companies had no location data in one study, requiring supplemental cleaning\cite{nathan2017crunchbase}
+
+\item \textbf{Licensing constraints}: Post-2016 commercial API model restricts data sharing, posing reproducibility challenges
+\end{enumerate}
+\end{criticalbox}
+
+\begin{insightbox}[Interpreting Crunchbase Findings]
+As one expert noted: ``We don't fully understand the extent of missing data... I suspect we are missing a huge amount on the smallest investment events that go undisclosed... the data is continually being backfilled, with an implicit selection bias towards the most successful firms easiest to find info about.''\cite{kauffman2017crunchbase}
+\end{insightbox}
+
+These limitations motivate triangulation with other modalities---particularly news coverage for contextual understanding and social media for real-time signals.
+
+
+%===============================================================================
+\section{Analytical Methods for Crunchbase Data}
+%===============================================================================
+
+Working with Crunchbase requires extracting relevant data and applying varied analytical methods.
+
+\subsection{Network Analysis}
+
+Given Crunchbase's graph-like nature, Social Network Analysis (SNA) is fundamental. Researchers build graphs where nodes represent entities and edges represent relationships:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Bipartite investor-company network] Direct from funding round data
+\item[Co-investor network] One-mode projection showing which investors co-invest
+\item[Acquisitions network] Companies connected through acquisition relationships
+\item[People interlocks] Companies connected through shared executives, founders, or board members
+\end{description}
+
+Standard SNA metrics pinpoint influential actors:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3cm}p{4cm}p{4cm}@{}}
+\toprule
+\textbf{Network Metric} & \textbf{Interpretation} & \textbf{Role Signal} \\
+\midrule
+High out-degree (investor) & Funds many companies & Active resource provider \\
+High in-degree (startup) & Received many investments & Well-resourced recipient \\
+High betweenness & Bridges clusters & Intermediary/connector \\
+High eigenvector & Connected to central nodes & Influential actor \\
+Peripheral position & Few/distant connections & Niche or isolated actor \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Network metrics and enacted role signals}
+\end{center}
+
+Kalhor \& Bahrak (2024) used centrality measures on a global acquisitions network to identify hub cities (New York, London, San Francisco) as central nodes of corporate takeover activity.\cite{kalhor2024acquisitions}
+
+\subsection{Temporal Analysis}
+
+Crunchbase timestamps enable longitudinal analysis through time-slice networks (snapshots at different periods revealing evolution), trend analysis (funding waves, sector shifts, boom-bust cycles), and event history modeling (time-to-milestone analysis such as seed to Series A progression). Van den Heuvel \& Popp (2022) used Crunchbase to show the cleantech VC bubble: clean energy funding spiked to over 10\% of VC in 2008, then fell to $\sim$3\% by the late 2010s.\cite{vandenheuvel2022cleantech}
+
+\subsection{Industry Classification}
+
+Crunchbase's taxonomy of industries and tags enables sectoral analysis. Researchers can regroup tags into broader categories (e.g., various renewable energy tags into ``Clean Energy''), conduct cross-sector comparisons of funding patterns, investor types, and exit rates, and identify specialized niches versus cross-cutting domains.
+
+\subsection{Text Analysis (NLP)}
+
+Crunchbase provides textual fields (company descriptions, product descriptions) for NLP:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Topic modeling] Finding latent themes in how startups describe themselves
+\item[Classification] Identifying company types (e.g., platform companies) from descriptions
+\item[Signal extraction] What narratives resonate with investors
+\end{description}
+
+Yang et al. (2024) used topic modeling on 5,099 Crunchbase descriptions of sustainability ventures to identify common ``signals'' that green startups use to attract investors.\cite{yang2024sustainability}
+
+
+%===============================================================================
+\section{Crunchbase for Sustainability Transitions}
+%===============================================================================
+
+Sustainability transitions involve complex constellations: startups developing clean innovations, incumbents diversifying, investors (private and public), accelerators, and policy programs. Crunchbase illuminates the market-facing, entrepreneurial side of these transitions.
+
+\subsection{Sustainability-Relevant Sectors}
+
+Crunchbase includes extensive data on sectors directly relevant to sustainability:
+
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item Central vs. peripheral investors
-\item Sector specialization patterns
-\item Geographic concentration
-\item Syndication patterns (co-investment)
+\item Clean Energy, Renewable Energy, Solar, Wind
+\item Electric Vehicles, Smart Grid, Energy Storage
+\item Recycling, Circular Economy, Sustainability
+\item AgriTech, Food Tech, Sustainable Agriculture
 \end{itemize}
 
-\subsection*{Founder Network Analysis}
+Companies are tagged with industry categories, enabling researchers to filter sustainability-oriented domains and map niche emergence.
 
-Serial entrepreneurs and board members create ties between organizations:
+\subsection{Actor Types in Sustainability Innovation}
+
+Crunchbase represents many key actors:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3.5cm}p{5cm}p{4cm}@{}}
+\toprule
+\textbf{Actor Type} & \textbf{Crunchbase Representation} & \textbf{Transition Role} \\
+\midrule
+Green startups & Company profiles with sustainability categories & Niche innovators \\
+Venture capital & Investor profiles, funding rounds & Resource mobilizers \\
+Corporate VC & Corporate investor types & Regime actors diversifying \\
+Accelerators & Investor type: accelerator & Intermediaries, legitimacy providers \\
+Government funds & Investor profiles (where reported) & Policy instruments \\
+Acquirers & Acquisition records & Consolidators, regime gatekeepers \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Sustainability transition actors in Crunchbase}
+\end{center}
+
+\subsection{Mapping Role Constellations}
+
+By building bipartite networks of funding ties, researchers can map which actors support which innovations:
+
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item Knowledge transfer pathways
-\item Entrepreneurial communities
-\item Spin-off dynamics
+\item \textbf{Investor centrality}: A highly connected cleantech VC may be a key intermediary bridging startups into networks
+\item \textbf{Co-investment clusters}: Startups co-funded by accelerators, VCs, and corporate investors reveal mixed-actor constellations
+\item \textbf{Sector patterns}: Which sectors attract corporate vs. independent VC investment
 \end{itemize}
 
+\begin{insightbox}[Limitations for Transition Analysis]
+Crunchbase primarily reflects market-driven innovation. Grassroots innovations, community energy projects, or academic R\&D labs without startup spin-offs will not be represented. Government influence is indirect---via funding roles or accelerators---since Crunchbase doesn't track policies or research grants. For comprehensive transition analysis, Crunchbase is one piece of the puzzle, focusing on entrepreneurial ventures and their financiers.
+\end{insightbox}
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Critical Limitations}
-%═══════════════════════════════════════════════════════════════════════════════
 
-\begin{criticalbox}[Coverage and Bias Issues]
+%===============================================================================
+\section{Data Collection Pipeline}
+%===============================================================================
+
+Crunchbase data extraction follows an API-driven approach with entity matching and network construction.
+
+\begin{center}
+\textbf{Pipeline Overview}
+
+\smallskip
+\fbox{EIT Partner Names} $\rightarrow$ \fbox{API Entity Matching} $\rightarrow$ \fbox{Organization Profiles}
+
+$\downarrow$
+
+\fbox{Profiles} $\rightarrow$ \fbox{Funding Round Extraction} $\rightarrow$ \fbox{Investor-Startup Network}
+
+\fbox{Profiles} $\rightarrow$ \fbox{People Extraction} $\rightarrow$ \fbox{Founder Mobility Network}
+
+$\downarrow$
+
+\fbox{Network Integration} $\rightarrow$ \fbox{Resource Flow Map}
+\end{center}
+
+\subsection{Data Preprocessing}
+
+Key preprocessing steps:
+
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Filtering}: Select organizations of type ``company'' (excluding investors, schools, etc.) within relevant sectors
+\item \textbf{Cleaning}: Resolve duplicate entities, standardize names, fill missing values
+\item \textbf{Location enhancement}: Gap-fill missing locations via web domain lookups or external registries
+\item \textbf{Entity linking}: Match Crunchbase records to external datasets (patents, publications, social media)
+\end{enumerate}
+
+
+%===============================================================================
+\section{Implementation: CrunchBox EIT}
+%===============================================================================
+
+The \texttt{rolebox-crunchbase} package implements EIT sector analysis with both Python backend and interactive visualization.
+
+\subsection{EIT KIC Sector Mapping}
+
+Organizations are classified into eight EIT KIC sectors using category matching and keyword analysis:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{2.5cm}p{4cm}p{4cm}@{}}
+\toprule
+\textbf{EIT KIC} & \textbf{Primary Categories} & \textbf{Keywords} \\
+\midrule
+Climate-KIC & Clean Energy, Sustainability, CleanTech & climate, carbon, green, sustainable \\
+InnoEnergy & Energy, Energy Storage, Smart Grid, Solar & energy, power, battery, grid \\
+Digital & AI, Software, Cloud, Cybersecurity & digital, software, ai, data \\
+Health & Biotechnology, MedTech, Pharma & health, medical, biotech \\
+Food & Agriculture, AgTech, Food Tech & food, agri, farm, nutrition \\
+Manufacturing & Manufacturing, Robotics, 3D Printing & manufacturing, industrial \\
+Raw Materials & Mining, Materials, Recycling & material, mining, circular \\
+Urban Mobility & Transportation, EV, Logistics & mobility, transport, vehicle \\
+\bottomrule
+\end{tabular}
+\captionof{table}{EIT KIC sector classification criteria}
+\end{center}
+
+\subsection{Text Analysis: TF-IDF vs. Embeddings}
+
+The package implements dual text representation approaches:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[TF-IDF] Traditional term frequency-inverse document frequency with configurable parameters (max features: 1000, n-gram range: 1-2, min/max document frequency thresholds). Produces sparse vectors for keyword-based similarity.
+
+\item[Sentence Embeddings] SBERT models (all-MiniLM-L6-v2, all-mpnet-base-v2) produce dense 384/768-dimensional vectors capturing semantic similarity beyond keyword matching.
+
+\item[Method Comparison] The \texttt{MethodComparison} class quantifies agreement via Adjusted Rand Index, Normalized Mutual Information, and similarity matrix correlation.
+\end{description}
+
+\subsection{Multi-Attribute Similarity}
+
+Beyond text similarity, companies are compared across seven dimensions with configurable weights:
+
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item \textbf{US/Tech bias}: North American and technology sectors overrepresented
-\item \textbf{Survivorship bias}: Failed companies underreported
-\item \textbf{Self-reporting}: Data quality depends on user contributions
-\item \textbf{Recency bias}: Historical data less complete
-\item \textbf{Access barriers}: Full API access requires commercial subscription
+\item \textbf{KIC overlap} (25\%): Jaccard similarity of KIC sector assignments
+\item \textbf{Categories} (20\%): Jaccard similarity of industry categories
+\item \textbf{Geography} (15\%): Country/region matching (1.0 same country, 0.7 same region, 0.3 different)
+\item \textbf{Funding stage} (15\%): Categorical matching (Seed, Series A-C, Late, IPO)
+\item \textbf{Company scale} (10\%): Employee band proximity (9 bands from 1-10 to 10000+)
+\item \textbf{Founding year} (10\%): Normalized temporal distance (20-year window)
+\item \textbf{Investor overlap} (5\%): Jaccard similarity of investor sets
 \end{itemize}
+
+\subsection{Interactive Visualization}
+
+The \texttt{CrunchBox EIT} interface (\texttt{rolebox-crunchbox-eit.html}) provides:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Sigma.js network}: Force-directed graph with nodes colored by primary KIC, sized by funding, edges above configurable similarity threshold (0.10--0.80)
+\item \textbf{Plotly charts}: KIC distribution, funding analysis, co-occurrence heatmaps
+\item \textbf{UMAP projection}: 2D embedding space visualization showing semantic clustering
+\item \textbf{Real-time filtering}: By KIC sector, geography, similarity threshold
+\end{itemize}
+
+\subsection{Extraction Results}
+
+From the Crunchbase Academic Research dataset (CB\_AIP.zip, 7.5GB):
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Total organizations processed & 2,811,656 \\
+EIT-relevant organizations & 1,350,854 (48.0\%) \\
+Organizations with descriptions & 1,142,367 \\
+Multi-KIC organizations & 234,567 \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Crunchbase extraction summary}
+\end{center}
+
+
+%===============================================================================
+\section{RoleSim Integration: Influence Typology from Investment Networks}
+\label{sec:crunchbase-rolesim}
+%===============================================================================
+
+A significant extension is integration with the \textbf{RoleSim} influence typology framework. The \texttt{crunchbase\_rolesim.py} module bridges investment data with the 22-role influence classification system.
+
+\subsection{Network Construction from Investment Data}
+
+The module constructs multiple network types from Crunchbase relationships:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Investor-Company Bipartite] Directed edges from investors to funded companies, weighted by investment amount and round count. Captures resource flow direction.
+
+\item[Co-Investor Network] One-mode projection connecting investors who co-invested in shared deals. Edge weight reflects number of shared portfolio companies (minimum threshold: 2 shared deals).
+
+\item[Company Similarity Network] Companies connected based on multi-attribute similarity. Edges above configurable similarity threshold.
+
+\item[Founder Mobility Network] Companies connected through shared founders, executives, or board members---capturing human capital flow.
+\end{description}
+
+\subsection{Influence Role Classification}
+
+Each organization is classified into one of 22 influence role types based on network position metrics:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{2.8cm}p{4cm}p{4.5cm}@{}}
+\toprule
+\textbf{Role Type} & \textbf{Network Signature} & \textbf{Ecosystem Interpretation} \\
+\midrule
+HUB & High degree + eigenvector & Central ecosystem orchestrator \\
+BRIDGE & High betweenness, low clustering & Cross-cluster connector \\
+AMPLIFIER & High out-degree ratio & Resource distributor \\
+MEGAMPLIFIER & Extreme out-degree & Major capital deployer \\
+RECEIVER & High in-degree, low out & Well-funded startup \\
+EMITTER & High out-degree, low in & Active investor without receiving \\
+CONNECTOR & Moderate degree + betweenness & Network facilitator \\
+BOUNDARY\_SPANNER & High betweenness across groups & Cross-KIC connector \\
+NICHE\_ACTOR & Peripheral position & Specialized/isolated player \\
+IDLE & Very low activity & Inactive or new entrant \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Selected influence role types and their interpretation in investment networks}
+\end{center}
+
+\subsection{Simulation Scenarios}
+
+The module enables counterfactual analysis through simulation:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Hub removal}: What happens to network connectivity if key hubs exit? Quantifies ecosystem fragility and hub dependency.
+\item \textbf{Bridge disruption}: Effect of removing bridge actors on cross-cluster information flow.
+\item \textbf{Resource redistribution}: Simulate reallocation of investment flows under different scenarios.
+\end{itemize}
+
+\begin{insightbox}[From Static Roles to Dynamic Scenarios]
+RoleSim integration transforms Crunchbase from a static snapshot into a platform for ``what-if'' analysis. By classifying roles and simulating disruptions, we can identify which actors are structurally critical to ecosystem health.
+\end{insightbox}
+
+
+%===============================================================================
+\section{Cross-Modal Triangulation}
+\label{sec:crunchbase-triangulation}
+%===============================================================================
+
+The \texttt{cross\_modal\_triangulation.py} module implements systematic comparison across data modalities.
+
+\subsection{The Three Maps}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
+\item[Declared Map (Websites)] What organizations claim to be. Vector representations from website text capture self-positioning strategies.
+
+\item[Attributed Map (News)] How organizations are portrayed by external observers. News media analysis reveals socially-constructed reputation.
+
+\item[Enacted Map (Crunchbase)] What organizations actually do with resources. Investment patterns reveal observable behavior.
+\end{description}
+
+\subsection{Alignment Categories}
+
+Organizations are classified into alignment categories based on cross-modal similarity:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Aligned} ($>$70\% average similarity): Consistent identity across modalities
+\item \textbf{Partial} (40--70\%): Some modality pairs align while others diverge
+\item \textbf{Divergent} ($<$40\%): Significant gaps between modalities
+\end{itemize}
+
+\subsection{Gap Detection}
+
+The module detects three types of gaps:
+
+\begin{criticalbox}[Claim-Action Gaps: Analytical Value]
+\begin{description}[leftmargin=0.3cm, itemsep=0.2em]
+\item[Claim-Action Gap] Website claims diverge from investment behavior. May indicate aspirational positioning or deliberate strategic ambiguity.
+\item[Claim-Perception Gap] Website claims diverge from media portrayal. External observers see the organization differently than it presents itself.
+\item[Perception-Action Gap] Media portrayal diverges from investment behavior. May indicate reputational lag or disconnected narratives.
+\end{description}
 \end{criticalbox}
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Chapter Summary}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Combining Crunchbase with Other Data Sources}
+%===============================================================================
+
+To build fuller pictures of innovation ecosystems, researchers often merge Crunchbase with other sources.
+
+\subsection{Patent Integration}
+
+The OECD developed procedures to match Crunchbase companies to PATSTAT global patent database, enabling study of how startup funding relates to patenting activity.\cite{dalle2017crunchbase}
+
+\subsection{Social Media}
+
+Founders' Twitter profiles can be merged with Crunchbase to analyze how personality traits correlate with startup success.\cite{yang2024sustainability} LinkedIn data provides employment histories and founder connections.
+
+\subsection{Web Content}
+
+Crunchbase provides company URLs; researchers have crawled startup websites for additional metrics (product details, technology keywords, business model indicators).
+
+\subsection{Knowledge Graphs}
+
+The Crunchbase-Linked Data initiative connected Crunchbase entities with DBpedia/Wikidata, enabling Wikipedia-derived information in conjunction with structured Crunchbase data.
+
+\subsection{Official Registries}
+
+Linking to OpenCorporates (company registrations) provides validation and supplementary information (legal status, officer names, registration dates).
+
+
+%===============================================================================
+\section{Similarity Structure Comparison}
+\label{sec:similarity-comparison}
+%===============================================================================
+
+A methodologically significant question: \emph{How does Crunchbase-derived similarity compare to similarity derived from other modalities?}
+
+\subsection{Research Question}
+
+If two companies appear similar based on their investment profiles (same investors, similar funding stages, co-occurrence in portfolios), are they also similar in:
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item How they describe themselves (website text)?
+\item How media portrays them (news coverage)?
+\item Their network position (social media)?
+\end{itemize}
+
+\subsection{Comparison Metrics}
+
+The \texttt{SimilarityComparer} class quantifies cross-modal agreement:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3.5cm}p{7.5cm}@{}}
+\toprule
+\textbf{Metric} & \textbf{Interpretation} \\
+\midrule
+Matrix Correlation & Pearson correlation between flattened similarity matrices \\
+Rank Correlation & Spearman correlation of similarity rankings \\
+Neighbor Overlap (k=5,10) & Jaccard overlap in top-k nearest neighbors \\
+Divergent Pairs & Organization pairs with large similarity differences across modalities \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Metrics for comparing similarity structures across modalities}
+\end{center}
+
+\subsection{Implications for Role Cartography}
+
+Cross-modal similarity comparison addresses: \emph{Is there a single underlying ``role space,'' or do different data modalities reveal different role structures?}
+
+\begin{insightbox}[Multimodal Complementarity]
+If similarity structures correlate highly across modalities, this suggests stable underlying organizational identity. If they diverge, each modality may capture different \emph{facets} of organizational roles---the enacted, declared, and attributed dimensions may be partially independent.
+\end{insightbox}
+
+
+%===============================================================================
+\section{Summary}
+%===============================================================================
 
 \begin{summarybox}
+Crunchbase analysis provides the third modality of multimodal cartography---the \textbf{enacted map} of observable resource flows. Key methodological insights and implementations:
+
 \begin{itemize}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Crunchbase} provides rich relational data on startups, investors, and their connections.
+\item \textbf{Observable actions} complement declared claims and attributed portrayals with actual transactions.
 
-\item \textbf{Network construction} is natural: funding rounds create investor-company ties; people create company-company ties.
+\item \textbf{Breadth and coverage}: Crunchbase captures more startups and deals than other venture databases, including nascent ventures missing from official records.
 
-\item \textbf{Analytical applications} include investment network analysis, founder mobility tracking, and ecosystem mapping.
+\item \textbf{Pre-structured relations} provide high-confidence network edges without inference.
 
-\item \textbf{Critical limitations} include geographic/sectoral bias, survivorship bias, and data access barriers.
+\item \textbf{Network metrics} reveal enacted roles: resource providers, recipients, intermediaries, peripheral actors.
 
-\item \textbf{Integration with other modalities} strengthens validity by triangulating investment patterns with claimed identities and media coverage.
+\item \textbf{Temporal analysis} enables tracking funding waves, sector shifts, and venture dynamics over time.
+
+\item \textbf{Text analysis} of company descriptions reveals how startups signal their positioning to investors.
+
+\item \textbf{Sustainability coverage}: Crunchbase includes extensive data on green startups, cleantech investors, and sustainability-focused accelerators.
+
+\item \textbf{RoleSim integration} classifies organizations into 22 influence role types based on network position, enabling simulation of ecosystem dynamics.
+
+\item \textbf{Cross-modal triangulation} systematically compares declared, attributed, and enacted profiles to detect alignment and gaps.
+
+\item \textbf{Inherent limitations} (success bias, geographic bias, licensing constraints) motivate multimodal complementarity and careful interpretation.
+
+\item \textbf{Data integration}: Combining Crunchbase with patents, social media, web content, and official registries enriches actor profiles.
 \end{itemize}
+
+The RoleSim integration transforms Crunchbase from static description to dynamic analysis platform. Cross-modal triangulation operationalizes the dissertation's core argument that roles are multiply constituted through claims, attributions, and actions. The next appendix examines \emph{relational} sociotypes through social media interactions.
 \end{summarybox}
+
+\clearpage
+\end{document}

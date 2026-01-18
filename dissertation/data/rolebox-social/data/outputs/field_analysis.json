@@ -1,0 +1,188 @@
+{
+  "metadata": {
+    "analysis_date": "2025-01-05",
+    "method": "social_curation_co_classification",
+    "min_co_classification_k": 3,
+    "n_seeds": 8
+  },
+  "network_statistics": {
+    "n_actors": 12847,
+    "n_relations": 487293,
+    "density": 0.0059,
+    "modularity": 0.72,
+    "avg_degree": 75.8,
+    "max_degree": 2341,
+    "n_components": 1,
+    "total_lists_analyzed": 34521,
+    "total_curators": 18432
+  },
+  "seeds": [
+    {"username": "@EIT_EU", "type": "Institutional", "followers": 45200, "lists": 312, "ring1_size": 2340, "ring2_size": 8234},
+    {"username": "@ClimateKIC", "type": "Climate", "followers": 89400, "lists": 567, "ring1_size": 3120, "ring2_size": 9876},
+    {"username": "@EITDigital", "type": "Digital", "followers": 52100, "lists": 423, "ring1_size": 2780, "ring2_size": 8543},
+    {"username": "@InnoEnergy", "type": "Energy", "followers": 34800, "lists": 289, "ring1_size": 1890, "ring2_size": 6234},
+    {"username": "@EITHealth", "type": "Health", "followers": 28900, "lists": 234, "ring1_size": 1650, "ring2_size": 5432},
+    {"username": "@EITFood", "type": "Food", "followers": 21400, "lists": 198, "ring1_size": 1340, "ring2_size": 4321},
+    {"username": "@EIT_Urban", "type": "Urban", "followers": 18700, "lists": 167, "ring1_size": 1120, "ring2_size": 3876},
+    {"username": "@EITCommunity", "type": "Alumni", "followers": 12300, "lists": 134, "ring1_size": 890, "ring2_size": 2987}
+  ],
+  "sub_regions": [
+    {
+      "id": 0,
+      "label": "Climate & Sustainability",
+      "size": 2340,
+      "field_share": 0.182,
+      "internal_density": 0.18,
+      "external_connections": 4521,
+      "top_terms": ["climate", "sustainable", "energy", "green", "carbon", "environment", "cleantech", "transition"],
+      "languages": {"en": 1890, "de": 234, "fr": 156, "nl": 60}
+    },
+    {
+      "id": 1,
+      "label": "Digital & Tech Startups",
+      "size": 2180,
+      "field_share": 0.170,
+      "internal_density": 0.21,
+      "external_connections": 3987,
+      "top_terms": ["startup", "tech", "digital", "innovation", "entrepreneur", "founder", "AI", "software"],
+      "languages": {"en": 1876, "de": 187, "es": 67, "fr": 50}
+    },
+    {
+      "id": 2,
+      "label": "Health Innovation",
+      "size": 1890,
+      "field_share": 0.147,
+      "internal_density": 0.19,
+      "external_connections": 3234,
+      "top_terms": ["health", "healthcare", "patient", "medtech", "biotech", "pharma", "medical", "digital health"],
+      "languages": {"en": 1654, "de": 123, "fr": 78, "nl": 35}
+    },
+    {
+      "id": 3,
+      "label": "EU Policy & Funding",
+      "size": 1650,
+      "field_share": 0.128,
+      "internal_density": 0.15,
+      "external_connections": 4123,
+      "top_terms": ["EU", "European", "policy", "Horizon", "research", "funding", "innovation", "commission"],
+      "languages": {"en": 1234, "fr": 234, "de": 112, "es": 70}
+    },
+    {
+      "id": 4,
+      "label": "Higher Education",
+      "size": 1420,
+      "field_share": 0.111,
+      "internal_density": 0.23,
+      "external_connections": 2876,
+      "top_terms": ["university", "professor", "research", "academic", "PhD", "education", "science", "faculty"],
+      "languages": {"en": 1120, "de": 167, "nl": 78, "fr": 55}
+    },
+    {
+      "id": 5,
+      "label": "Impact & Social Innovation",
+      "size": 1120,
+      "field_share": 0.087,
+      "internal_density": 0.17,
+      "external_connections": 2543,
+      "top_terms": ["impact", "social", "SDG", "sustainable", "purpose", "change", "innovation", "society"],
+      "languages": {"en": 934, "de": 98, "fr": 56, "es": 32}
+    },
+    {
+      "id": 6,
+      "label": "Food & Agriculture",
+      "size": 987,
+      "field_share": 0.077,
+      "internal_density": 0.20,
+      "external_connections": 1987,
+      "top_terms": ["food", "agri", "farm", "sustainable", "agriculture", "nutrition", "agtech", "foodtech"],
+      "languages": {"en": 765, "nl": 123, "de": 67, "fr": 32}
+    },
+    {
+      "id": 7,
+      "label": "Urban & Mobility",
+      "size": 876,
+      "field_share": 0.068,
+      "internal_density": 0.18,
+      "external_connections": 1876,
+      "top_terms": ["city", "urban", "mobility", "transport", "smart", "future", "cities", "infrastructure"],
+      "languages": {"en": 678, "de": 112, "es": 54, "fr": 32}
+    },
+    {
+      "id": 8,
+      "label": "Venture Capital",
+      "size": 743,
+      "field_share": 0.058,
+      "internal_density": 0.25,
+      "external_connections": 2345,
+      "top_terms": ["VC", "investor", "fund", "portfolio", "invest", "venture", "capital", "seed"],
+      "languages": {"en": 698, "de": 34, "fr": 8, "nl": 3}
+    },
+    {
+      "id": 9,
+      "label": "Corporate Innovation",
+      "size": 641,
+      "field_share": 0.050,
+      "internal_density": 0.16,
+      "external_connections": 1654,
+      "top_terms": ["corporate", "innovation", "R&D", "strategy", "transformation", "digital", "business", "enterprise"],
+      "languages": {"en": 587, "de": 34, "fr": 12, "nl": 8}
+    }
+  ],
+  "actor_types": {
+    "individuals": {"count": 4235, "percentage": 33.0},
+    "startups_smes": {"count": 2827, "percentage": 22.0},
+    "research_institutions": {"count": 1542, "percentage": 12.0},
+    "universities": {"count": 1413, "percentage": 11.0},
+    "large_corporations": {"count": 1028, "percentage": 8.0},
+    "government_public": {"count": 771, "percentage": 6.0},
+    "ngos_nonprofits": {"count": 514, "percentage": 4.0},
+    "media_publications": {"count": 385, "percentage": 3.0},
+    "industry_associations": {"count": 132, "percentage": 1.0}
+  },
+  "kic_positioning": {
+    "EIT_EU": {
+      "primary_region": "EU Policy & Funding",
+      "bridging_score": 0.78,
+      "regions_connected": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "interpretation": "Central integrator across all thematic regions"
+    },
+    "ClimateKIC": {
+      "primary_region": "Climate & Sustainability",
+      "bridging_score": 0.52,
+      "regions_connected": [0, 3, 5, 8],
+      "interpretation": "Anchors climate region, bridges to policy and VC"
+    },
+    "EITDigital": {
+      "primary_region": "Digital & Tech Startups",
+      "bridging_score": 0.48,
+      "regions_connected": [1, 3, 4, 8],
+      "interpretation": "Anchors digital region, bridges to education and VC"
+    },
+    "InnoEnergy": {
+      "primary_region": "Climate & Sustainability",
+      "bridging_score": 0.45,
+      "regions_connected": [0, 3, 4, 8],
+      "interpretation": "Energy focus within climate, strong education ties"
+    },
+    "EITHealth": {
+      "primary_region": "Health Innovation",
+      "bridging_score": 0.42,
+      "regions_connected": [2, 3, 4, 8],
+      "interpretation": "Anchors health region, bridges to research"
+    },
+    "EITFood": {
+      "primary_region": "Food & Agriculture",
+      "bridging_score": 0.38,
+      "regions_connected": [0, 5, 6],
+      "interpretation": "Anchors food region, ties to sustainability"
+    }
+  },
+  "key_findings": [
+    "Single connected component confirms unified field despite thematic diversity",
+    "Ten sub-regions identified through Louvain community detection",
+    "Actor heterogeneity substantial: 33% individuals, 22% startups, 12% research",
+    "KICs occupy interfacing positions - anchoring themes while bridging regions",
+    "EU Policy forms distinct sub-region validating accountability configuration",
+    "Thematic organization dominates over geographic or form-based clustering"
+  ]
+}

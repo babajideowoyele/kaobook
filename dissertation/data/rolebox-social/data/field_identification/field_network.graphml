@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><graph edgedefault="undirected"><node id="@EITHealth"/>
+<node id="@InnoEnergy"/>
+<node id="@eitrawmaterials"/>
+<node id="@innoenergy"/>
+<node id="@eit_urban"/>
+<node id="@eitmanufacturing"/>
+<node id="@EITDigital"/>
+<node id="@EITClimatekic"/>
+<node id="@eithealth"/>
+<node id="@eitclimatekic"/>
+<node id="@EITeu"/>
+<node id="@EITRawMaterials"/>
+<node id="@eiteu"/>
+<node id="@EITManufacturing"/>
+<node id="@eitdigital"/>
+<node id="@EIT_Urban"/>
+<node id="@EITFood"/>
+<node id="@eitfood"/>
+</graph></graphml>

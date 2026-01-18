@@ -1,0 +1,82 @@
+[
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT\\EIT_Climate.png",
+    "kic": "EIT",
+    "name": "EIT_Climate",
+    "classifications": {
+      "website homepage with navigation menu": 0.43518730998039246,
+      "team photo with people": 4.110560257686302e-05,
+      "technology or product showcase": 0.0025028649251908064,
+      "abstract graphic design": 0.42003101110458374,
+      "infographic or diagram": 0.03889802470803261,
+      "event or conference photo": 0.0016544598620384932,
+      "logo and branding": 0.0535198412835598,
+      "text-heavy document": 0.048165399581193924
+    },
+    "top_category": "website homepage with navigation menu"
+  },
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT\\EIT_InnoEnergy.png",
+    "kic": "EIT",
+    "name": "EIT_InnoEnergy",
+    "classifications": {
+      "website homepage with navigation menu": 0.22307102382183075,
+      "team photo with people": 3.218296478735283e-05,
+      "technology or product showcase": 0.016723498702049255,
+      "abstract graphic design": 0.025239041075110435,
+      "infographic or diagram": 0.42668741941452026,
+      "event or conference photo": 0.012863554060459137,
+      "logo and branding": 0.030369743704795837,
+      "text-heavy document": 0.26501357555389404
+    },
+    "top_category": "infographic or diagram"
+  },
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT\\EIT_Manufacturing.png",
+    "kic": "EIT",
+    "name": "EIT_Manufacturing",
+    "classifications": {
+      "website homepage with navigation menu": 0.6067606806755066,
+      "team photo with people": 1.1792895747930743e-05,
+      "technology or product showcase": 0.004684289451688528,
+      "abstract graphic design": 0.14336243271827698,
+      "infographic or diagram": 0.03882651403546333,
+      "event or conference photo": 0.0002827761636581272,
+      "logo and branding": 0.0016431770054623485,
+      "text-heavy document": 0.2044282704591751
+    },
+    "top_category": "website homepage with navigation menu"
+  },
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT_climate\\Redo_Sgr_Benefit_Corporation.png",
+    "kic": "EIT_climate",
+    "name": "Redo_Sgr_Benefit_Corporation",
+    "classifications": {
+      "website homepage with navigation menu": 0.9149717092514038,
+      "team photo with people": 1.0308333003195003e-05,
+      "technology or product showcase": 0.004444538615643978,
+      "abstract graphic design": 0.007754703052341938,
+      "infographic or diagram": 0.03184620290994644,
+      "event or conference photo": 0.0009894489776343107,
+      "logo and branding": 0.023448752239346504,
+      "text-heavy document": 0.01653432846069336
+    },
+    "top_category": "website homepage with navigation menu"
+  },
+  {
+    "image": "C:\\Users\\babaj\\Documents\\GitHub\\kaobook\\dissertation\\data\\rolebox-visual\\data\\samples\\EIT_climate\\Technical_University_of_Madrid.png",
+    "kic": "EIT_climate",
+    "name": "Technical_University_of_Madrid",
+    "classifications": {
+      "website homepage with navigation menu": 0.9839938879013062,
+      "team photo with people": 7.284342018465395e-07,
+      "technology or product showcase": 0.010002437978982925,
+      "abstract graphic design": 0.0019363999599590898,
+      "infographic or diagram": 0.0005225575296208262,
+      "event or conference photo": 0.0011242819018661976,
+      "logo and branding": 0.0016204860294237733,
+      "text-heavy document": 0.0007991505553945899
+    },
+    "top_category": "website homepage with navigation menu"
+  }
+]

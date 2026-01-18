@@ -310,23 +310,69 @@
 \fi
 
 %----------------------------------------------------------------------------------------
-%	IBM PLEX CONFIGURATION
+%	IBM PLEX CONFIGURATION (from local fonts folder)
 %----------------------------------------------------------------------------------------
 
 \if@ibmplex
   \ifxetex
     \RequirePackage{fontspec}
     \RequirePackage{unicode-math}
-    \setsansfont[Scale=\kaofont@sanscale]{IBM Plex Sans}
-    \setmainfont[Scale=\kaofont@serifscale]{IBM Plex Serif}
-    \setmonofont[Scale=\kaofont@monoscale]{IBM Plex Mono}
+    % IBM Plex Sans from local fonts folder, TeX Gyre for serif/mono
+    \setsansfont[
+      Path=\kaofontpath IBM_Plex_Sans/static/,
+      Scale=\kaofont@sanscale,
+      Extension=.ttf,
+      UprightFont=IBMPlexSans-Regular,
+      BoldFont=IBMPlexSans-Bold,
+      ItalicFont=IBMPlexSans-Italic,
+      BoldItalicFont=IBMPlexSans-BoldItalic,
+    ]{IBMPlexSans}
+    \setmainfont[
+      Path=\kaofontpath IBM_Plex_Sans/static/,
+      Scale=\kaofont@serifscale,
+      Extension=.ttf,
+      UprightFont=IBMPlexSans-Regular,
+      BoldFont=IBMPlexSans-Bold,
+      ItalicFont=IBMPlexSans-Italic,
+      BoldItalicFont=IBMPlexSans-BoldItalic,
+    ]{IBMPlexSans}
+    \setmonofont[
+      Path=\kaofontpath,
+      Scale=\kaofont@monoscale,
+      Extension=.ttf,
+      UprightFont=FiraMono-Regular,
+      BoldFont=FiraMono-Bold,
+    ]{FiraMono}
     \setmathfont{Latin Modern Math}
   \else\ifluatex
     \RequirePackage{fontspec}
     \RequirePackage{unicode-math}
-    \setsansfont[Scale=\kaofont@sanscale]{IBM Plex Sans}
-    \setmainfont[Scale=\kaofont@serifscale]{IBM Plex Serif}
-    \setmonofont[Scale=\kaofont@monoscale]{IBM Plex Mono}
+    % IBM Plex Sans from local fonts folder, Fira Mono for mono
+    \setsansfont[
+      Path=\kaofontpath IBM_Plex_Sans/static/,
+      Scale=\kaofont@sanscale,
+      Extension=.ttf,
+      UprightFont=IBMPlexSans-Regular,
+      BoldFont=IBMPlexSans-Bold,
+      ItalicFont=IBMPlexSans-Italic,
+      BoldItalicFont=IBMPlexSans-BoldItalic,
+    ]{IBMPlexSans}
+    \setmainfont[
+      Path=\kaofontpath IBM_Plex_Sans/static/,
+      Scale=\kaofont@serifscale,
+      Extension=.ttf,
+      UprightFont=IBMPlexSans-Regular,
+      BoldFont=IBMPlexSans-Bold,
+      ItalicFont=IBMPlexSans-Italic,
+      BoldItalicFont=IBMPlexSans-BoldItalic,
+    ]{IBMPlexSans}
+    \setmonofont[
+      Path=\kaofontpath,
+      Scale=\kaofont@monoscale,
+      Extension=.ttf,
+      UprightFont=FiraMono-Regular,
+      BoldFont=FiraMono-Bold,
+    ]{FiraMono}
     \setmathfont{Latin Modern Math}
   \else
     % pdfLaTeX

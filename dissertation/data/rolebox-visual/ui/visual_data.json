@@ -1,0 +1,744 @@
+{
+  "images": [
+    {
+      "id": 0,
+      "filename": "EIT_Climate.png",
+      "name": "EIT Climate",
+      "kic": "EIT",
+      "path": "../data/samples/EIT/EIT_Climate.png",
+      "width": 1920,
+      "height": 13818,
+      "caption": "the website for the new website design",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.43518730998039246,
+        "team photo with people": 4.110560257686302e-05,
+        "technology or product showcase": 0.0025028649251908064,
+        "abstract graphic design": 0.42003101110458374,
+        "infographic or diagram": 0.03889802470803261,
+        "event or conference photo": 0.0016544598620384932,
+        "logo and branding": 0.0535198412835598,
+        "text-heavy document": 0.048165399581193924
+      },
+      "coding_orientation": "abstract geometric design",
+      "orientation_scores": {
+        "naturalistic photograph": 0.018947426229715347,
+        "technological interface": 0.19792763888835907,
+        "sensory artistic image": 0.02117842435836792,
+        "abstract geometric design": 0.7619464993476868
+      }
+    },
+    {
+      "id": 1,
+      "filename": "EIT_InnoEnergy.png",
+      "name": "EIT InnoEnergy",
+      "kic": "EIT",
+      "path": "../data/samples/EIT/EIT_InnoEnergy.png",
+      "width": 1920,
+      "height": 10045,
+      "caption": "the website design for a car dealer",
+      "category": "infographic or diagram",
+      "category_scores": {
+        "website homepage with navigation menu": 0.22307102382183075,
+        "team photo with people": 3.218296478735283e-05,
+        "technology or product showcase": 0.016723498702049255,
+        "abstract graphic design": 0.025239041075110435,
+        "infographic or diagram": 0.42668741941452026,
+        "event or conference photo": 0.012863554060459137,
+        "logo and branding": 0.030369743704795837,
+        "text-heavy document": 0.26501357555389404
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.060100656002759933,
+        "technological interface": 0.9185294508934021,
+        "sensory artistic image": 0.009429293684661388,
+        "abstract geometric design": 0.011940564960241318
+      }
+    },
+    {
+      "id": 2,
+      "filename": "EIT_Manufacturing.png",
+      "name": "EIT Manufacturing",
+      "kic": "EIT",
+      "path": "../data/samples/EIT/EIT_Manufacturing.png",
+      "width": 1920,
+      "height": 8394,
+      "caption": "the website design for the school",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.6067606806755066,
+        "team photo with people": 1.1792895747930743e-05,
+        "technology or product showcase": 0.004684289451688528,
+        "abstract graphic design": 0.14336243271827698,
+        "infographic or diagram": 0.03882651403546333,
+        "event or conference photo": 0.0002827761636581272,
+        "logo and branding": 0.0016431770054623485,
+        "text-heavy document": 0.2044282704591751
+      },
+      "coding_orientation": "abstract geometric design",
+      "orientation_scores": {
+        "naturalistic photograph": 0.0035522514954209328,
+        "technological interface": 0.4346921145915985,
+        "sensory artistic image": 0.02257424034178257,
+        "abstract geometric design": 0.5391814112663269
+      }
+    },
+    {
+      "id": 3,
+      "filename": "Redo_Sgr_Benefit_Corporation.png",
+      "name": "Redo Sgr Benefit Corporation",
+      "kic": "EIT climate",
+      "path": "../data/samples/EIT_climate/Redo_Sgr_Benefit_Corporation.png",
+      "width": 1920,
+      "height": 1080,
+      "caption": "a cloud with a computer on top of it",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9149717092514038,
+        "team photo with people": 1.0308333003195003e-05,
+        "technology or product showcase": 0.004444538615643978,
+        "abstract graphic design": 0.007754703052341938,
+        "infographic or diagram": 0.03184620290994644,
+        "event or conference photo": 0.0009894489776343107,
+        "logo and branding": 0.023448752239346504,
+        "text-heavy document": 0.01653432846069336
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.00508425198495388,
+        "technological interface": 0.9674280285835266,
+        "sensory artistic image": 0.0012888808269053698,
+        "abstract geometric design": 0.026198819279670715
+      }
+    },
+    {
+      "id": 4,
+      "filename": "Technical_University_of_Madrid.png",
+      "name": "Technical University of Madrid",
+      "kic": "EIT climate",
+      "path": "../data/samples/EIT_climate/Technical_University_of_Madrid.png",
+      "width": 1920,
+      "height": 1153,
+      "caption": "the website of the universidad de universidad de universidad",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9839938879013062,
+        "team photo with people": 7.284342018465395e-07,
+        "technology or product showcase": 0.010002437978982925,
+        "abstract graphic design": 0.0019363999599590898,
+        "infographic or diagram": 0.0005225575296208262,
+        "event or conference photo": 0.0011242819018661976,
+        "logo and branding": 0.0016204860294237733,
+        "text-heavy document": 0.0007991505553945899
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.012796561233699322,
+        "technological interface": 0.7280609011650085,
+        "sensory artistic image": 0.16268646717071533,
+        "abstract geometric design": 0.09645603597164154
+      }
+    },
+    {
+      "id": 5,
+      "filename": "Trinity_College_Dublin.png",
+      "name": "Trinity College Dublin",
+      "kic": "EIT climate",
+      "path": "../data/samples/EIT_climate/Trinity_College_Dublin.png",
+      "width": 1920,
+      "height": 4356,
+      "caption": "the website design for the new website",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9818536639213562,
+        "team photo with people": 3.0809899271844188e-06,
+        "technology or product showcase": 0.007745775394141674,
+        "abstract graphic design": 0.006773261819034815,
+        "infographic or diagram": 0.0009951574029400945,
+        "event or conference photo": 0.0006408719928003848,
+        "logo and branding": 0.0005498192622326314,
+        "text-heavy document": 0.001438322477042675
+      },
+      "coding_orientation": "abstract geometric design",
+      "orientation_scores": {
+        "naturalistic photograph": 0.025596609339118004,
+        "technological interface": 0.29119959473609924,
+        "sensory artistic image": 0.17683754861354828,
+        "abstract geometric design": 0.5063662528991699
+      }
+    },
+    {
+      "id": 6,
+      "filename": "8seneca.png",
+      "name": "8seneca",
+      "kic": "EIT digital",
+      "path": "../data/samples/EIT_digital/8seneca.png",
+      "width": 1920,
+      "height": 6471,
+      "caption": "the website for the national bank",
+      "category": "infographic or diagram",
+      "category_scores": {
+        "website homepage with navigation menu": 0.1297011822462082,
+        "team photo with people": 0.0034632624592632055,
+        "technology or product showcase": 0.016207057982683182,
+        "abstract graphic design": 0.05321574956178665,
+        "infographic or diagram": 0.41370171308517456,
+        "event or conference photo": 0.03122854046523571,
+        "logo and branding": 0.035279691219329834,
+        "text-heavy document": 0.31720277667045593
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.024034257978200912,
+        "technological interface": 0.5826289057731628,
+        "sensory artistic image": 0.02534077689051628,
+        "abstract geometric design": 0.3679960072040558
+      }
+    },
+    {
+      "id": 7,
+      "filename": "Babeș_Bolyai_University.png",
+      "name": "Babeș Bolyai University",
+      "kic": "EIT digital",
+      "path": "../data/samples/EIT_digital/Babeș_Bolyai_University.png",
+      "width": 1920,
+      "height": 2471,
+      "caption": "the website for watermagice",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.8997984528541565,
+        "team photo with people": 8.37763423078286e-07,
+        "technology or product showcase": 0.06163713335990906,
+        "abstract graphic design": 0.01994362287223339,
+        "infographic or diagram": 0.0015929940855130553,
+        "event or conference photo": 0.00196260679513216,
+        "logo and branding": 0.01265268586575985,
+        "text-heavy document": 0.002411723369732499
+      },
+      "coding_orientation": "sensory artistic image",
+      "orientation_scores": {
+        "naturalistic photograph": 0.009700928814709187,
+        "technological interface": 0.4601711630821228,
+        "sensory artistic image": 0.4755244553089142,
+        "abstract geometric design": 0.05460341274738312
+      }
+    },
+    {
+      "id": 8,
+      "filename": "Ideas_Forward.png",
+      "name": "Ideas Forward",
+      "kic": "EIT digital",
+      "path": "../data/samples/EIT_digital/Ideas_Forward.png",
+      "width": 1920,
+      "height": 4186,
+      "caption": "the website design for a company that sells products",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.38443905115127563,
+        "team photo with people": 8.079583494691178e-05,
+        "technology or product showcase": 0.007116763852536678,
+        "abstract graphic design": 0.22689931094646454,
+        "infographic or diagram": 0.33721861243247986,
+        "event or conference photo": 0.0013217198429629207,
+        "logo and branding": 0.0028602913953363895,
+        "text-heavy document": 0.04006347805261612
+      },
+      "coding_orientation": "abstract geometric design",
+      "orientation_scores": {
+        "naturalistic photograph": 0.02437710575759411,
+        "technological interface": 0.2957174479961395,
+        "sensory artistic image": 0.05327191948890686,
+        "abstract geometric design": 0.6266335248947144
+      }
+    },
+    {
+      "id": 9,
+      "filename": "MOST_Foundation.png",
+      "name": "MOST Foundation",
+      "kic": "EIT digital",
+      "path": "../data/samples/EIT_digital/MOST_Foundation.png",
+      "width": 1920,
+      "height": 7310,
+      "caption": "the website design for the company",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.4537853002548218,
+        "team photo with people": 1.7820839275373146e-05,
+        "technology or product showcase": 0.18630027770996094,
+        "abstract graphic design": 0.17422190308570862,
+        "infographic or diagram": 0.03156675398349762,
+        "event or conference photo": 0.009123465046286583,
+        "logo and branding": 0.06544158607721329,
+        "text-heavy document": 0.07954293489456177
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.006470135413110256,
+        "technological interface": 0.5859864354133606,
+        "sensory artistic image": 0.19603092968463898,
+        "abstract geometric design": 0.2115125209093094
+      }
+    },
+    {
+      "id": 10,
+      "filename": "Salus_Optima.png",
+      "name": "Salus Optima",
+      "kic": "EIT food",
+      "path": "../data/samples/EIT_food/Salus_Optima.png",
+      "width": 1920,
+      "height": 9047,
+      "caption": "the website design for the company",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.794046938419342,
+        "team photo with people": 1.2576807421282865e-05,
+        "technology or product showcase": 0.029533077031373978,
+        "abstract graphic design": 0.09526868909597397,
+        "infographic or diagram": 0.02365019917488098,
+        "event or conference photo": 0.002845051931217313,
+        "logo and branding": 0.04095064103603363,
+        "text-heavy document": 0.013692855834960938
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.012598245404660702,
+        "technological interface": 0.6021431088447571,
+        "sensory artistic image": 0.09685038775205612,
+        "abstract geometric design": 0.28840819001197815
+      }
+    },
+    {
+      "id": 11,
+      "filename": "SGS_Portugal.png",
+      "name": "SGS Portugal",
+      "kic": "EIT food",
+      "path": "../data/samples/EIT_food/SGS_Portugal.png",
+      "width": 1920,
+      "height": 1080,
+      "caption": "a letterhead with the words'''and'' '",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.8849978446960449,
+        "team photo with people": 0.0009714298648759723,
+        "technology or product showcase": 0.008813499473035336,
+        "abstract graphic design": 0.02156047336757183,
+        "infographic or diagram": 0.009808924049139023,
+        "event or conference photo": 0.0016881638439372182,
+        "logo and branding": 0.0018292996101081371,
+        "text-heavy document": 0.07033026963472366
+      },
+      "coding_orientation": "abstract geometric design",
+      "orientation_scores": {
+        "naturalistic photograph": 0.07834399491548538,
+        "technological interface": 0.29512909054756165,
+        "sensory artistic image": 0.08925654739141464,
+        "abstract geometric design": 0.5372704267501831
+      }
+    },
+    {
+      "id": 12,
+      "filename": "Sigma_Campofrio.png",
+      "name": "Sigma Campofrio",
+      "kic": "EIT food",
+      "path": "../data/samples/EIT_food/Sigma_Campofrio.png",
+      "width": 1920,
+      "height": 6005,
+      "caption": "the website design for a company that sells products",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9103485345840454,
+        "team photo with people": 1.0583975381450728e-05,
+        "technology or product showcase": 0.010132038034498692,
+        "abstract graphic design": 0.05887365713715553,
+        "infographic or diagram": 0.006270878948271275,
+        "event or conference photo": 0.0005639519076794386,
+        "logo and branding": 0.004216095898300409,
+        "text-heavy document": 0.009584298357367516
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.0030668473336845636,
+        "technological interface": 0.5406515002250671,
+        "sensory artistic image": 0.010518612340092659,
+        "abstract geometric design": 0.4457630515098572
+      }
+    },
+    {
+      "id": 13,
+      "filename": "Health_Proof_Helsinki.png",
+      "name": "Health Proof Helsinki",
+      "kic": "EIT health",
+      "path": "../data/samples/EIT_health/Health_Proof_Helsinki.png",
+      "width": 1920,
+      "height": 3103,
+      "caption": "health wordpress theme plug plug",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9426088333129883,
+        "team photo with people": 1.1644387996057048e-05,
+        "technology or product showcase": 0.029051927849650383,
+        "abstract graphic design": 0.012671045027673244,
+        "infographic or diagram": 0.0024027894251048565,
+        "event or conference photo": 0.001097388449124992,
+        "logo and branding": 0.000605615961831063,
+        "text-heavy document": 0.01155077014118433
+      },
+      "coding_orientation": "abstract geometric design",
+      "orientation_scores": {
+        "naturalistic photograph": 0.0026708943769335747,
+        "technological interface": 0.3341682255268097,
+        "sensory artistic image": 0.010474151000380516,
+        "abstract geometric design": 0.6526867151260376
+      }
+    },
+    {
+      "id": 14,
+      "filename": "University_for_Continuing_Education_Krems.png",
+      "name": "University for Continuing Education Krems",
+      "kic": "EIT health",
+      "path": "../data/samples/EIT_health/University_for_Continuing_Education_Krems.png",
+      "width": 1920,
+      "height": 6759,
+      "caption": "the website design for the company",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.8526198863983154,
+        "team photo with people": 0.0001973368925973773,
+        "technology or product showcase": 0.06682923436164856,
+        "abstract graphic design": 0.016844946891069412,
+        "infographic or diagram": 0.009420637041330338,
+        "event or conference photo": 0.022459575906395912,
+        "logo and branding": 0.008043893612921238,
+        "text-heavy document": 0.023584486916661263
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.008251246064901352,
+        "technological interface": 0.8328684568405151,
+        "sensory artistic image": 0.050393398851156235,
+        "abstract geometric design": 0.10848690569400787
+      }
+    },
+    {
+      "id": 15,
+      "filename": "Óbuda_University.png",
+      "name": "Óbuda University",
+      "kic": "EIT health",
+      "path": "../data/samples/EIT_health/Óbuda_University.png",
+      "width": 1920,
+      "height": 4150,
+      "caption": "the website design for the company",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9853728413581848,
+        "team photo with people": 1.6409844647569116e-06,
+        "technology or product showcase": 0.0041931807063519955,
+        "abstract graphic design": 0.004684054292738438,
+        "infographic or diagram": 0.001440076157450676,
+        "event or conference photo": 0.00014201497833710164,
+        "logo and branding": 0.00047316975542344153,
+        "text-heavy document": 0.0036930234637111425
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.008706237189471722,
+        "technological interface": 0.7036828994750977,
+        "sensory artistic image": 0.008756548166275024,
+        "abstract geometric design": 0.2788543701171875
+      }
+    },
+    {
+      "id": 16,
+      "filename": "Capgemini.png",
+      "name": "Capgemini",
+      "kic": "EIT Innoenergy",
+      "path": "../data/samples/EIT_Innoenergy/Capgemini.png",
+      "width": 1920,
+      "height": 6531,
+      "caption": "the website design for the new bmw dealers",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.6195907592773438,
+        "team photo with people": 8.18115131551167e-06,
+        "technology or product showcase": 0.05900895968079567,
+        "abstract graphic design": 0.03879272937774658,
+        "infographic or diagram": 0.02084309607744217,
+        "event or conference photo": 0.0022148152347654104,
+        "logo and branding": 0.0023018796928226948,
+        "text-heavy document": 0.25723960995674133
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.0011932308552786708,
+        "technological interface": 0.9602828025817871,
+        "sensory artistic image": 0.004291231743991375,
+        "abstract geometric design": 0.0342327356338501
+      }
+    },
+    {
+      "id": 17,
+      "filename": "ING.png",
+      "name": "ING",
+      "kic": "EIT Innoenergy",
+      "path": "../data/samples/EIT_Innoenergy/ING.png",
+      "width": 1920,
+      "height": 5556,
+      "caption": "the website design for the company",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9789865612983704,
+        "team photo with people": 3.049235374419368e-06,
+        "technology or product showcase": 0.0064480178989470005,
+        "abstract graphic design": 0.008387005887925625,
+        "infographic or diagram": 0.0007844475912861526,
+        "event or conference photo": 0.00031885545467957854,
+        "logo and branding": 0.0005727538373321295,
+        "text-heavy document": 0.004499176051467657
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.08403320610523224,
+        "technological interface": 0.35883569717407227,
+        "sensory artistic image": 0.21268139779567719,
+        "abstract geometric design": 0.3444497287273407
+      }
+    },
+    {
+      "id": 18,
+      "filename": "Universitat_Politècnica_de_Catalunya_UPC.png",
+      "name": "Universitat Politècnica de Catalunya UPC",
+      "kic": "EIT Innoenergy",
+      "path": "../data/samples/EIT_Innoenergy/Universitat_Politècnica_de_Catalunya_UPC.png",
+      "width": 1920,
+      "height": 6469,
+      "caption": "the website design for the company",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9824553728103638,
+        "team photo with people": 3.8081466300354805e-06,
+        "technology or product showcase": 0.01165868155658245,
+        "abstract graphic design": 0.0016525279497727752,
+        "infographic or diagram": 0.0008803922683000565,
+        "event or conference photo": 0.0002338705671718344,
+        "logo and branding": 0.0009076340356841683,
+        "text-heavy document": 0.0022077951580286026
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.00493162265047431,
+        "technological interface": 0.9464350938796997,
+        "sensory artistic image": 0.008859186433255672,
+        "abstract geometric design": 0.039774078875780106
+      }
+    },
+    {
+      "id": 19,
+      "filename": "Agro_Innovation_Lab.png",
+      "name": "Agro Innovation Lab",
+      "kic": "EIT Manufacturing",
+      "path": "../data/samples/EIT_Manufacturing/Agro_Innovation_Lab.png",
+      "width": 1920,
+      "height": 4580,
+      "caption": "the website for the new website design",
+      "category": "abstract graphic design",
+      "category_scores": {
+        "website homepage with navigation menu": 0.14789873361587524,
+        "team photo with people": 1.019320393425005e-06,
+        "technology or product showcase": 0.012838047929108143,
+        "abstract graphic design": 0.56728595495224,
+        "infographic or diagram": 0.04696311801671982,
+        "event or conference photo": 0.005296018440276384,
+        "logo and branding": 0.0709080696105957,
+        "text-heavy document": 0.1488090306520462
+      },
+      "coding_orientation": "abstract geometric design",
+      "orientation_scores": {
+        "naturalistic photograph": 0.002587544498965144,
+        "technological interface": 0.18329884111881256,
+        "sensory artistic image": 0.010256391018629074,
+        "abstract geometric design": 0.8038572669029236
+      }
+    },
+    {
+      "id": 20,
+      "filename": "CarbonCompete.png",
+      "name": "CarbonCompete",
+      "kic": "EIT Manufacturing",
+      "path": "../data/samples/EIT_Manufacturing/CarbonCompete.png",
+      "width": 1920,
+      "height": 1478,
+      "caption": "a truck driving down a road with mountains in the background",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.8891907930374146,
+        "team photo with people": 3.195632598362863e-05,
+        "technology or product showcase": 0.048468250781297684,
+        "abstract graphic design": 0.01796562410891056,
+        "infographic or diagram": 0.006620829459279776,
+        "event or conference photo": 0.002270815195515752,
+        "logo and branding": 0.03199818730354309,
+        "text-heavy document": 0.0034534777514636517
+      },
+      "coding_orientation": "naturalistic photograph",
+      "orientation_scores": {
+        "naturalistic photograph": 0.4350176155567169,
+        "technological interface": 0.3493345379829407,
+        "sensory artistic image": 0.016874253749847412,
+        "abstract geometric design": 0.1987735629081726
+      }
+    },
+    {
+      "id": 21,
+      "filename": "CIRKO.png",
+      "name": "CIRKO",
+      "kic": "EIT Manufacturing",
+      "path": "../data/samples/EIT_Manufacturing/CIRKO.png",
+      "width": 1920,
+      "height": 3145,
+      "caption": "the website design for the company",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9277912378311157,
+        "team photo with people": 5.27191241417313e-06,
+        "technology or product showcase": 0.026699790731072426,
+        "abstract graphic design": 0.021731924265623093,
+        "infographic or diagram": 0.014718668535351753,
+        "event or conference photo": 0.0009015185059979558,
+        "logo and branding": 0.002704373560845852,
+        "text-heavy document": 0.005447180476039648
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.003149092895910144,
+        "technological interface": 0.6686872243881226,
+        "sensory artistic image": 0.014607991091907024,
+        "abstract geometric design": 0.31355568766593933
+      }
+    },
+    {
+      "id": 22,
+      "filename": "Bodø_Municipality.png",
+      "name": "Bodø Municipality",
+      "kic": "EIT Urban Mobility",
+      "path": "../data/samples/EIT_Urban_Mobility/Bodø_Municipality.png",
+      "width": 1920,
+      "height": 4155,
+      "caption": "the website design for the new website",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.9961110949516296,
+        "team photo with people": 1.56954556018718e-07,
+        "technology or product showcase": 0.0013959096977487206,
+        "abstract graphic design": 0.0010606019059196115,
+        "infographic or diagram": 0.0007301926962099969,
+        "event or conference photo": 0.00016073128790594637,
+        "logo and branding": 5.249456444289535e-05,
+        "text-heavy document": 0.0004888192634098232
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.011195858009159565,
+        "technological interface": 0.5414186120033264,
+        "sensory artistic image": 0.07682830840349197,
+        "abstract geometric design": 0.3705572485923767
+      }
+    },
+    {
+      "id": 23,
+      "filename": "Hydros_Power_S_L.png",
+      "name": "Hydros Power S L",
+      "kic": "EIT Urban Mobility",
+      "path": "../data/samples/EIT_Urban_Mobility/Hydros_Power_S_L.png",
+      "width": 1920,
+      "height": 8588,
+      "caption": "the website design for the company",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.6121759414672852,
+        "team photo with people": 0.0003972019476350397,
+        "technology or product showcase": 0.12521106004714966,
+        "abstract graphic design": 0.022801890969276428,
+        "infographic or diagram": 0.06339713931083679,
+        "event or conference photo": 0.011628707870841026,
+        "logo and branding": 0.11765924096107483,
+        "text-heavy document": 0.04672882333397865
+      },
+      "coding_orientation": "technological interface",
+      "orientation_scores": {
+        "naturalistic photograph": 0.052303019911050797,
+        "technological interface": 0.9188123345375061,
+        "sensory artistic image": 0.0161212757229805,
+        "abstract geometric design": 0.01276332139968872
+      }
+    },
+    {
+      "id": 24,
+      "filename": "Major_Development_Agency_Thessaloniki.png",
+      "name": "Major Development Agency Thessaloniki",
+      "kic": "EIT Urban Mobility",
+      "path": "../data/samples/EIT_Urban_Mobility/Major_Development_Agency_Thessaloniki.png",
+      "width": 1920,
+      "height": 3259,
+      "caption": "the website design for the company",
+      "category": "website homepage with navigation menu",
+      "category_scores": {
+        "website homepage with navigation menu": 0.5788673758506775,
+        "team photo with people": 1.3621004200103926e-06,
+        "technology or product showcase": 0.00908513180911541,
+        "abstract graphic design": 0.31645289063453674,
+        "infographic or diagram": 0.0325133353471756,
+        "event or conference photo": 0.0007484076777473092,
+        "logo and branding": 0.005990993697196245,
+        "text-heavy document": 0.056340575218200684
+      },
+      "coding_orientation": "abstract geometric design",
+      "orientation_scores": {
+        "naturalistic photograph": 0.004296131897717714,
+        "technological interface": 0.041362274438142776,
+        "sensory artistic image": 0.01940571516752243,
+        "abstract geometric design": 0.9349359273910522
+      }
+    }
+  ],
+  "statistics": {
+    "total_images": 25,
+    "by_kic": {
+      "EIT": 3,
+      "EIT climate": 3,
+      "EIT digital": 4,
+      "EIT food": 3,
+      "EIT health": 3,
+      "EIT Innoenergy": 3,
+      "EIT Manufacturing": 3,
+      "EIT Urban Mobility": 3
+    },
+    "by_category": {
+      "website homepage with navigation menu": 22,
+      "infographic or diagram": 2,
+      "abstract graphic design": 1
+    },
+    "by_orientation": {
+      "abstract geometric design": 8,
+      "technological interface": 15,
+      "sensory artistic image": 1,
+      "naturalistic photograph": 1
+    }
+  },
+  "categories": [
+    "website homepage with navigation menu",
+    "team photo with people",
+    "technology or product showcase",
+    "abstract graphic design",
+    "infographic or diagram",
+    "event or conference photo",
+    "logo and branding",
+    "text-heavy document"
+  ],
+  "coding_orientations": [
+    "naturalistic photograph",
+    "technological interface",
+    "sensory artistic image",
+    "abstract geometric design"
+  ]
+}

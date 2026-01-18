@@ -89,6 +89,95 @@ EIT KIC Partners (orgs) & 132 & 107 & 81\% \\
 \end{tabular}
 \end{center}
 
+\section{Information Extraction Pipeline}
+\label{sec:wikipedia-pipeline}
+
+Beyond collection, the \texttt{rolebox-wikipedia} module implements a full NLP pipeline for extracting structured information from Wikipedia articles. The pipeline combines multiple extraction techniques:
+
+\begin{description}
+    \item[Named Entity Recognition (NER)] Using spaCy's \texttt{en\_core\_web\_sm} model to identify organizations, people, locations, and other named entities mentioned in articles.
+    \item[Topic Modeling] BERTopic with sentence transformers discovers latent thematic clusters across the corpus.
+    \item[Structured Extraction] NuExtract 1.5, a small language model fine-tuned for template-based extraction, identifies organizational attributes, partnerships, and relationships.
+    \item[Entity Linking] Fuzzy matching against known registries plus Wikidata API queries resolve entity mentions to canonical identifiers.
+    \item[Powell Triangle Scoring] Keyword-based classification positions each entity on the knowledge triangle (associational, scientific, managerial).
+\end{description}
+
+\subsection{Pipeline Results}
+
+Processing results for the dissertation's focal entities:
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Metric} & \textbf{Organizations} & \textbf{Cities} \\
+\midrule
+Documents processed & 108 & 111 \\
+NER entity mentions & 53,835 & 118,939 \\
+Topics discovered & 5 & 7 \\
+Triangle scores computed & 108 & 111 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Topic Modeling Results}
+
+BERTopic identified distinct thematic clusters within each corpus. For organizations, the dominant topics reflect institutional types (universities, companies) and sectoral focus areas:
+
+\begin{center}
+\small
+\begin{tabular}{clr}
+\toprule
+\textbf{Topic} & \textbf{Representative Keywords} & \textbf{Documents} \\
+\midrule
+1 & university, research, students & 42 \\
+2 & university, college, institute & 28 \\
+3 & company, industry, technology & 19 \\
+4 & software, digital, innovation & 11 \\
+0 & (outlier topic) & 8 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For cities, topics capture geographic clustering and urban characteristics:
+
+\begin{center}
+\small
+\begin{tabular}{clr}
+\toprule
+\textbf{Topic} & \textbf{Representative Keywords} & \textbf{Documents} \\
+\midrule
+0 & city, amsterdam, munich & 35 \\
+2 & city, italy, milan & 22 \\
+3 & city, helsinki, stockholm & 18 \\
+4 & city, warsaw, vilnius & 16 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Powell Triangle Classifications}
+
+The keyword-based scoring positions entities on the knowledge triangle. Results show clear differentiation:
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Classification} & \textbf{Organizations} & \textbf{Cities} \\
+\midrule
+Dominant Scientific & 61 (56\%) & 24 (22\%) \\
+Dominant Managerial & 25 (23\%) & 6 (5\%) \\
+Dominant Associational & 5 (5\%) & 10 (9\%) \\
+Balanced & 10 (9\%) & 31 (28\%) \\
+Mixed & 7 (6\%) & 40 (36\%) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Organizations---predominantly universities and research institutes---cluster heavily in the scientific pole (56\%). Cities show more balanced distributions, with the majority classified as ``mixed'' or ``balanced,'' reflecting the multifaceted nature of urban governance that spans community engagement (associational), technical expertise (scientific), and administrative capacity (managerial).
+
+\subsection{Multilingual Capabilities}
+
+The NuExtract 1.5 model supports six European languages (English, French, German, Spanish, Portuguese, Italian), enabling future extension to non-English Wikipedia articles. This multilingual capability is particularly relevant for the EIT ecosystem, which spans organizations across Europe with varying linguistic contexts.
+
 \section{Analytical Possibilities}
 
 The collected Wikipedia data enables several analytical approaches relevant to understanding organizational roles in climate governance. We outline three promising directions below.
@@ -97,7 +186,7 @@ The collected Wikipedia data enables several analytical approaches relevant to u
 
 Wikipedia article content reveals how external observers characterize organizations. By analyzing the vocabulary, themes, and framings used to describe cities and KIC partners, researchers can assess:
 
-\begin{kaobox}[frametitle=Content Analysis Opportunities]
+\begin{kaobox}[title=Content Analysis Opportunities]
 \begin{itemize}[leftmargin=*]
     \item \textbf{Role vocabulary:} Which role-related terms (innovator, leader, pioneer, partner) appear in organizational descriptions?
     \item \textbf{Domain positioning:} How are organizations situated within thematic fields (climate, energy, urban, technology)?
@@ -153,11 +242,11 @@ Helsinki & 89,234 & 31 & 54 & 756 \\
 
 Excerpts from EIT KIC partner articles reveal characteristic patterns in how organizations are described. The following examples illustrate different role framings:
 
-\begin{kaobox}[frametitle=Example: Research Institution Role]
+\begin{kaobox}[title=Example: Research Institution Role]
 ``\textit{ETH Zurich is a public research university in the city of Zurich, Switzerland. Founded in 1854, it is one of the world's leading universities for technology and natural sciences, particularly in the fields of engineering, mathematics, and physics.}''
 \end{kaobox}
 
-\begin{kaobox}[frametitle=Example: Industry Partner Role]
+\begin{kaobox}[title=Example: Industry Partner Role]
 ``\textit{Siemens AG is a German multinational conglomerate corporation and the largest industrial manufacturing company in Europe. The principal divisions of the company are Industry, Energy, Healthcare, and Infrastructure \& Cities.}''
 \end{kaobox}
 
@@ -191,6 +280,65 @@ print(page.text)     # Full article text
 print(page.sections) # Section structure
 \end{lstlisting}
 
+\begin{lstlisting}[language=Python, caption={Running the full NLP extraction pipeline}, label={lst:pipeline}]
+from rolebox_wikipedia import WikipediaPipeline, PipelineConfig
+
+config = PipelineConfig(
+    enable_nuextract=True,          # Structured extraction
+    nuextract_model="sroecker/nuextract-tiny-v1.5",
+    enable_topic_modeling=True,     # BERTopic
+    enable_triangle_scoring=True,   # Powell framework
+    enable_entity_linking=True,     # Wikidata linking
+)
+
+pipeline = WikipediaPipeline(config=config)
+results = pipeline.run(
+    corpus_path="data/orgs_text_corpus.json",
+    orgs_registry_path="data/orgs_wikidata.csv",
+)
+
+# Access results
+print(f"Entities: {results.processing_stats['ner_entities']}")
+print(f"Topics: {results.processing_stats['num_topics']}")
+results.save("pipeline_results.json")
+\end{lstlisting}
+
+\section{Knowledge Graph Extraction}
+\label{sec:wikipedia-kggen}
+
+Beyond topic modeling and structured extraction, we employed \textbf{kg-gen}, an LLM-based knowledge graph extraction library, to identify entities and relations directly from Wikipedia article text. Using Llama 3.2 via Ollama, the pipeline processes each article and extracts subject-predicate-object triples.
+
+\subsection{Extraction Results}
+
+Processing the 108 EIT partner organization Wikipedia articles yielded:
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Documents processed & 106 \\
+Unique entities extracted & 1,311 \\
+Unique relations & 1,330 \\
+Edge types (predicates) & 734 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The extracted knowledge graph captures institutional relationships, geographic associations, founding dates, organizational types, and research domains. Entity types include organizations (universities, companies), locations (cities, countries), persons (founders, notable alumni), and concepts (research fields, technologies).
+
+\subsection{Visualization}
+
+Figure~\ref{fig:kg-wikipedia} shows a network visualization of the aggregated knowledge graph. Organizations cluster around shared predicates such as ``located in,'' ``founded in,'' and ``member of.'' Central hub entities like ``Europe,'' ``university,'' and ``research'' connect disparate organizational nodes.
+
+\begin{center}
+\includegraphics[width=0.85\textwidth]{figures/kg_wikipedia_orgs.png}
+\captionof{figure}{Knowledge graph extracted from 106 EIT partner Wikipedia articles using kg-gen with Llama 3.2. Node colors: blue (organization), green (location), purple (person), gray (concept).}
+\label{fig:kg-wikipedia}
+\end{center}
+
+The interactive version of this visualization is available in the \texttt{rolebox-wikipedia} repository at \texttt{ui/rolebox\_wikipedia\_eit-kg.html}.
+
 \section{Limitations and Future Work}
 
 This preliminary analysis has several limitations that future research should address:
@@ -207,7 +355,7 @@ This preliminary analysis has several limitations that future research should ad
 
 Future work could extend this foundation in several directions:
 
-\begin{kaobox}[frametitle=Research Extensions]
+\begin{kaobox}[title=Research Extensions]
 \begin{description}[leftmargin=*]
     \item[Revision history analysis] Track how organizational representations evolve over time in response to policy developments.
     \item[Editor network analysis] Map the community of contributors editing climate governance articles.

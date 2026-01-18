@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROLEFIELD - Field Mapping Through Social Curation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#f5f5f5;color:#000;line-height:1.5;font-size:13px}
+    .app{display:flex;flex-direction:column;height:100vh}
+    .header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:#fff;border-bottom:1px solid #e5e5e5;flex-shrink:0}
+    .logo{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .nav{display:flex;gap:1px}
+    .nav a{padding:6px 12px;color:#666;text-decoration:none;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+    .nav a:hover{background:#f5f5f5}
+    .nav a.active{background:#000;color:#fff}
+    .main{display:flex;flex:1;overflow:hidden}
+    .sidebar{width:260px;background:#fafafa;border-right:1px solid #e5e5e5;padding:16px;overflow-y:auto;flex-shrink:0}
+    .content{flex:1;padding:20px;overflow-y:auto}
+    .section{margin-bottom:20px}
+    .section-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .card{background:#fff;border:1px solid #e5e5e5;margin-bottom:12px}
+    .card-header{padding:10px 14px;border-bottom:1px solid #e5e5e5;font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .card-body{padding:14px}
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;border:2px solid #000;background:#fff;color:#000;transition:all .15s}
+    .btn:hover{background:#000;color:#fff}
+    .btn-primary{background:#000;color:#fff}
+    .btn-primary:hover{background:#333}
+    .btn-sm{padding:4px 8px;font-size:10px}
+    .btn-success{border-color:#16a34a;color:#16a34a}
+    .btn-success:hover{background:#16a34a;color:#fff}
+    .btn-block{width:100%}
+    .tag{display:inline-flex;padding:2px 6px;font-size:9px;font-weight:600;background:#000;color:#fff}
+    .tag-success{background:#dcfce7;color:#166534}
+    .tag-warning{background:#fef3c7;color:#92400e}
+    .tag-outline{background:#fff;color:#000;border:1px solid #e5e5e5}
+    .input,.select{width:100%;padding:8px 10px;font-size:12px;border:1px solid #e5e5e5;font-family:inherit;background:#fff}
+    .input:focus,.select:focus{outline:none;border-color:#000}
+    .flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap-4{gap:4px}.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}.flex-1{flex:1}.flex-col{flex-direction:column}
+    .text-xs{font-size:10px}.text-sm{font-size:12px}.text-gray{color:#666}.text-center{text-align:center}
+    .mb-4{margin-bottom:4px}.mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .stat-box{text-align:center;padding:12px;background:#fff;border:1px solid #e5e5e5}
+    .stat-val{font-size:20px;font-weight:300}
+    .stat-label{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.3px}
+    h1{font-size:20px;font-weight:300}h1 span{font-weight:600}
+    .progress-bar{height:4px;background:#e5e5e5;overflow:hidden}
+    .progress-fill{height:100%;background:#000;transition:width .3s}
+    .screen{display:none}.screen.active{display:block}
+    .step-badge{width:24px;height:24px;background:#e5e5e5;color:#666;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;border-radius:50%}
+    .step-badge.active{background:#000;color:#fff}
+    .step-badge.complete{background:#16a34a;color:#fff}
+    .seed-card{padding:12px;border:2px solid #e5e5e5;cursor:pointer;transition:all .2s;background:#fff}
+    .seed-card:hover{border-color:#000}
+    .seed-card.selected{border-color:#000;background:#fafafa}
+    .region-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0}
+    .region-row:last-child{border-bottom:none}
+    .color-dot{width:10px;height:10px;border-radius:50%}
+    .ranking-bar{height:6px;background:#e5e5e5;flex:1;overflow:hidden}
+    .ranking-bar-fill{height:100%;background:#000}
+    .network-canvas{background:#fafafa;border:1px solid #e5e5e5;min-height:350px;display:flex;align-items:center;justify-content:center}
+    .cli-panel{background:#1a1a1a;color:#0f0;padding:12px;font-family:'Courier New',monospace;font-size:11px;margin-top:16px}
+    .cli-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:#888}
+    .matrix-cell{padding:6px;text-align:center;font-size:10px;font-weight:500}
+    .toast{position:fixed;bottom:20px;right:20px;padding:12px 20px;background:#000;color:#fff;font-size:12px;font-weight:500;z-index:200;transform:translateY(100px);opacity:0;transition:all .3s}
+    .toast.show{transform:translateY(0);opacity:1}
+    .sociotype-tag{padding:3px 8px;font-size:9px;font-weight:600;border:1px solid #000;background:#fff}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="flex items-center gap-12">
+      <div class="logo"><i class="fas fa-broadcast-tower"></i> ROLEFIELD</div>
+      <div class="nav" id="nav"></div>
+    </div>
+    <div class="flex items-center gap-12">
+      <span class="text-xs text-gray">Field: <strong>EIT Innovation</strong></span>
+      <button class="btn btn-sm"><i class="fas fa-cog"></i></button>
+    </div>
+  </div>
+  <div class="main">
+    <div class="sidebar" id="sidebar"></div>
+    <div class="content">
+      <div class="screen active" id="screen-dashboard"></div>
+      <div class="screen" id="screen-seeds"></div>
+      <div class="screen" id="screen-discovery"></div>
+      <div class="screen" id="screen-network"></div>
+      <div class="screen" id="screen-regions"></div>
+      <div class="screen" id="screen-triangulation"></div>
+      <div class="screen" id="screen-bridging"></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/graphology/0.25.4/graphology.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/2.4.0/sigma.min.js"></script>
+<script>
+// Inline ForceAtlas2 implementation (simplified)
+function forceAtlas2(graph, iterations, settings) {
+  const { gravity = 1, scalingRatio = 10, strongGravityMode = false, linLogMode = false } = settings || {};
+  const nodes = graph.nodes();
+  const nodeData = {};
+
+  // Initialize node positions and velocities
+  nodes.forEach(n => {
+    nodeData[n] = {
+      x: graph.getNodeAttribute(n, 'x') || Math.random() * 100,
+      y: graph.getNodeAttribute(n, 'y') || Math.random() * 100,
+      dx: 0, dy: 0,
+      mass: 1 + graph.degree(n)
+    };
+  });
+
+  for (let iter = 0; iter < iterations; iter++) {
+    // Reset forces
+    nodes.forEach(n => { nodeData[n].dx = 0; nodeData[n].dy = 0; });
+
+    // Repulsion (all pairs - simplified)
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const n1 = nodeData[nodes[i]], n2 = nodeData[nodes[j]];
+        const dx = n1.x - n2.x, dy = n1.y - n2.y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+        const force = scalingRatio * n1.mass * n2.mass / dist;
+        const fx = (dx / dist) * force, fy = (dy / dist) * force;
+        n1.dx += fx; n1.dy += fy;
+        n2.dx -= fx; n2.dy -= fy;
+      }
+    }
+
+    // Attraction (edges)
+    graph.forEachEdge((e, attr, source, target) => {
+      const n1 = nodeData[source], n2 = nodeData[target];
+      if (!n1 || !n2) return;
+      const dx = n1.x - n2.x, dy = n1.y - n2.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+      let force = linLogMode ? Math.log(1 + dist) : dist;
+      const fx = (dx / dist) * force, fy = (dy / dist) * force;
+      n1.dx -= fx; n1.dy -= fy;
+      n2.dx += fx; n2.dy += fy;
+    });
+
+    // Gravity
+    nodes.forEach(n => {
+      const node = nodeData[n];
+      const dist = Math.sqrt(node.x * node.x + node.y * node.y) || 0.01;
+      const gForce = strongGravityMode ? gravity * node.mass : gravity * node.mass / dist;
+      node.dx -= (node.x / dist) * gForce;
+      node.dy -= (node.y / dist) * gForce;
+    });
+
+    // Apply forces with speed limit
+    const speed = 1 / (1 + Math.sqrt(nodes.length));
+    nodes.forEach(n => {
+      const node = nodeData[n];
+      const force = Math.sqrt(node.dx * node.dx + node.dy * node.dy);
+      if (force > 10) { node.dx = (node.dx / force) * 10; node.dy = (node.dy / force) * 10; }
+      node.x += node.dx * speed;
+      node.y += node.dy * speed;
+    });
+  }
+
+  // Apply positions back to graph
+  nodes.forEach(n => {
+    graph.setNodeAttribute(n, 'x', nodeData[n].x);
+    graph.setNodeAttribute(n, 'y', nodeData[n].y);
+  });
+}
+</script>
+<script>
+const state = { screen: 'dashboard', networkData: null, communityData: null, statsData: null };
+const screens = ['dashboard','seeds','discovery','network','regions','triangulation','bridging'];
+const screenLabels = ['Dashboard','Seeds','Discovery','Network','Regions','Triangulation','Bridging'];
+
+// ColorBrewer Set1 + Dark2 - colorblind-friendly categorical palette
+const categoryPalette = [
+  '#e41a1c', // red
+  '#377eb8', // blue
+  '#4daf4a', // green
+  '#984ea3', // purple
+  '#ff7f00', // orange
+  '#a65628', // brown
+  '#f781bf', // pink
+  '#999999', // gray
+  '#66c2a5', // teal
+  '#fc8d62', // salmon
+  '#8da0cb', // periwinkle
+  '#e78ac3'  // rose
+];
+
+const communityColors = {
+  'Climate-KIC': '#4daf4a',      // green
+  'EIT Digital': '#377eb8',       // blue
+  'InnoEnergy': '#ff7f00',        // orange
+  'EIT Health': '#e41a1c',        // red
+  'EIT RawMaterials': '#a65628',  // brown
+  'EIT Food': '#66c2a5',          // teal
+  'EIT Urban Mobility': '#984ea3' // purple
+};
+
+function getTopCommunities() {
+  const comm = state.communityData;
+  if (!comm) return [];
+
+  const sizes = comm.community_sizes || [];
+  const labels = comm.community_labels || {};
+
+  const communities = sizes.map((size, idx) => {
+    const label = labels[idx] || `Community ${idx}`;
+    // Use named color if available, otherwise assign from palette based on index
+    const color = communityColors[label] || categoryPalette[idx % categoryPalette.length];
+    return { id: idx, size, label, color };
+  });
+
+  return communities.sort((a, b) => b.size - a.size);
+}
+
+// Load real data
+async function loadData() {
+  try {
+    const [networkRes, communityRes, statsRes] = await Promise.all([
+      fetch('network_data.json'),
+      fetch('community_data.json'),
+      fetch('network_stats.json')
+    ]);
+    state.networkData = await networkRes.json();
+    state.communityData = await communityRes.json();
+    state.statsData = await statsRes.json();
+    console.log('Data loaded:', state.statsData.n_nodes, 'nodes');
+    render();
+  } catch(e) {
+    console.log('Using mock data - JSON files not found');
+  }
+}
+loadData();
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show';
+  setTimeout(() => t.className = 'toast', 2500);
+}
+
+function showScreen(s) {
+  state.screen = s;
+  document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+  document.getElementById('screen-' + s).classList.add('active');
+  render();
+}
+
+function renderNav() {
+  document.getElementById('nav').innerHTML = screens.map((s, i) => 
+    `<a class="${state.screen === s ? 'active' : ''}" onclick="showScreen('${s}')">${screenLabels[i]}</a>`
+  ).join('');
+}
+
+function renderSidebar() {
+  const s = state.screen;
+  let html = '';
+  
+  const stats = state.statsData || {};
+  const comm = state.communityData || {};
+  const nNodes = stats.n_nodes ? stats.n_nodes.toLocaleString() : '65,046';
+  const nEdges = stats.n_edges ? stats.n_edges.toLocaleString() : '73,879';
+  const nComm = comm.n_communities || 96;
+  const mod = comm.modularity ? comm.modularity.toFixed(2) : '0.64';
+
+  if (s === 'dashboard') {
+    html = `
+      <div class="section">
+        <div class="section-title"><i class="fas fa-database"></i> Field Stats</div>
+        <div style="padding:10px;background:#fff;border:1px solid #e5e5e5">
+          <div class="flex justify-between mb-4 text-xs"><span>Seeds:</span><strong>9</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span>Actors:</span><strong>${nNodes}</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span>Relations:</span><strong>${nEdges}</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span>Regions:</span><strong>${nComm}</strong></div>
+          <div class="flex justify-between text-xs"><span>Modularity:</span><strong>${mod}</strong></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-title"><i class="fas fa-tasks"></i> Pipeline</div>
+        <div class="flex flex-col gap-4">
+          ${['Seeds','Discovery','Denoise','Merge','Network','Regions'].map((step, i) => `
+            <div class="flex items-center gap-8"><div class="step-badge complete"><i class="fas fa-check" style="font-size:8px"></i></div><span class="text-xs">${step}</span></div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } else if (s === 'seeds') {
+    html = `
+      <div class="section">
+        <div class="section-title"><i class="fas fa-seedling"></i> Step 1: Seeds</div>
+        <p class="text-xs text-gray mb-12">Select core participants with high field relevance</p>
+        <div class="card"><div class="card-body">
+          <div class="flex justify-between mb-4 text-xs"><span>Total Lists:</span><strong>2,303</strong></div>
+          <div class="flex justify-between text-xs"><span>Avg/Seed:</span><strong>288</strong></div>
+        </div></div>
+      </div>
+      <div class="section">
+        <div class="section-title"><i class="fas fa-check-circle"></i> Guidelines</div>
+        <div class="flex flex-col gap-8 text-xs">
+          <div class="flex items-center gap-8"><i class="fas fa-check" style="color:#16a34a"></i> Expert consensus</div>
+          <div class="flex items-center gap-8"><i class="fas fa-check" style="color:#16a34a"></i> Min 30+ list memberships</div>
+          <div class="flex items-center gap-8"><i class="fas fa-check" style="color:#16a34a"></i> Spread for diversity</div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="showScreen('discovery')"><i class="fas fa-arrow-right"></i> Next</button>
+    `;
+  } else if (s === 'discovery') {
+    html = `
+      <div class="section">
+        <div class="section-title"><i class="fas fa-search"></i> Steps 2-4</div>
+        <p class="text-xs text-gray mb-12">Co-classification network via list memberships</p>
+      </div>
+      <div class="section">
+        <div class="section-title"><i class="fas fa-sliders-h"></i> Parameters</div>
+        <div class="mb-12"><label class="text-xs text-gray mb-4" style="display:block">Min Lists (k)</label><input class="input" type="number" value="3"></div>
+        <div class="mb-12"><label class="text-xs text-gray mb-4" style="display:block">Max List Size</label><input class="input" type="number" value="500"></div>
+      </div>
+      <button class="btn btn-primary btn-block mb-8"><i class="fas fa-play"></i> Run Discovery</button>
+      <button class="btn btn-block" onclick="showScreen('network')"><i class="fas fa-arrow-right"></i> View Network</button>
+    `;
+  } else if (s === 'network') {
+    const density = stats.density ? stats.density.toExponential(2) : '1.75e-5';
+    const recip = stats.reciprocity ? (stats.reciprocity * 100).toFixed(2) + '%' : '0.15%';
+    const lcc = stats.largest_component_pct ? stats.largest_component_pct.toFixed(1) + '%' : '40.5%';
+    const topComms = getTopCommunities().filter(r => !r.label.startsWith('Community')).slice(0, 7);
+
+    html = `
+      <div class="section">
+        <div class="section-title"><i class="fas fa-project-diagram"></i> Network Stats</div>
+        <div class="card"><div class="card-body">
+          <div class="flex justify-between mb-4 text-xs"><span>Nodes:</span><strong>${nNodes}</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span>Edges:</span><strong>${nEdges}</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span>Density:</span><strong>${density}</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span>Modularity:</span><strong>${mod}</strong></div>
+          <div class="flex justify-between mb-4 text-xs"><span>Reciprocity:</span><strong>${recip}</strong></div>
+          <div class="flex justify-between text-xs"><span>Giant Component:</span><strong style="color:#16a34a">${lcc}</strong></div>
+        </div></div>
+      </div>
+      <div class="section">
+        <div class="section-title"><i class="fas fa-palette"></i> Community Legend</div>
+        <div class="flex flex-col gap-4">
+          ${topComms.map(r => `
+            <div class="flex items-center gap-8 text-xs"><div class="color-dot" style="background:${r.color}"></div>${r.label}</div>
+          `).join('')}
+          <div class="flex items-center gap-8 text-xs text-gray"><div class="color-dot" style="background:#999"></div>Other (${nComm - topComms.length} communities)</div>
+        </div>
+      </div>
+      <div class="section">
+        <button class="btn btn-block mb-8" onclick="exportGEXF()"><i class="fas fa-download"></i> Export GEXF</button>
+        <button class="btn btn-block" onclick="exportCSV()"><i class="fas fa-download"></i> Export CSV</button>
+      </div>
+    `;
+  } else if (s === 'regions') {
+    const topRegions = getTopCommunities();
+    html = `
+      <div class="section">
+        <div class="section-title"><i class="fas fa-layer-group"></i> Regions (${nComm})</div>
+        <div class="flex flex-col gap-4">
+          ${topRegions.slice(0, 8).map(r => `
+            <div class="flex items-center gap-8 text-xs" style="padding:6px;cursor:pointer;background:#fff;border:1px solid #e5e5e5">
+              <div class="color-dot" style="background:${r.color}"></div><span class="flex-1">${r.label}</span><span class="text-gray">${r.size.toLocaleString()}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <button class="btn btn-block" onclick="toast('Re-running Louvain...')"><i class="fas fa-redo"></i> Re-run Louvain</button>
+    `;
+  } else if (s === 'triangulation' || s === 'bridging') {
+    html = `
+      <div class="section">
+        <div class="section-title"><i class="fas fa-info-circle"></i> About</div>
+        <p class="text-xs text-gray">${s === 'triangulation' ? 'Mapping internal sociotypes to external sub-regions' : 'Identifying actors connecting sub-regions'}</p>
+      </div>
+    `;
+  }
+  
+  document.getElementById('sidebar').innerHTML = html;
+}
+
+function render() {
+  renderNav();
+  renderSidebar();
+  const s = state.screen;
+  
+  if (s === 'dashboard') renderDashboard();
+  else if (s === 'seeds') renderSeeds();
+  else if (s === 'discovery') renderDiscovery();
+  else if (s === 'network') renderNetwork();
+  else if (s === 'regions') renderRegions();
+  else if (s === 'triangulation') renderTriangulation();
+  else if (s === 'bridging') renderBridging();
+}
+
+function renderDashboard() {
+  const stats = state.statsData || {};
+  const comm = state.communityData || {};
+  const nNodes = stats.n_nodes ? stats.n_nodes.toLocaleString() : '65,046';
+  const nEdges = stats.n_edges ? stats.n_edges.toLocaleString() : '73,879';
+  const nComm = comm.n_communities || 96;
+
+  document.getElementById('screen-dashboard').innerHTML = `
+    <h1 class="mb-16">Field Mapping <span>Dashboard</span></h1>
+    <p class="text-gray mb-24">European Innovation Intermediaries · Social Curation Analysis</p>
+    
+    <div class="card mb-16">
+      <div class="card-body flex items-center justify-between" style="flex-wrap:wrap;gap:12px">
+        <div class="flex items-center gap-12" style="flex-wrap:wrap">
+          ${['Seeds','Discovery','Denoise','Merge','Network','Regions'].map((step, i) => `
+            <div class="flex items-center gap-8">
+              <div class="step-badge complete"><i class="fas fa-check" style="font-size:8px"></i></div>
+              <span class="text-xs">${step}</span>
+            </div>
+            ${i < 5 ? '<div style="width:30px;height:2px;background:#16a34a"></div>' : ''}
+          `).join('')}
+        </div>
+        <span class="tag tag-success"><i class="fas fa-check"></i> Pipeline Complete</span>
+      </div>
+    </div>
+    
+    <div class="grid-4 mb-24">
+      <div class="card" style="cursor:pointer" onclick="showScreen('seeds')">
+        <div class="card-body text-center">
+          <i class="fas fa-seedling" style="font-size:24px;margin-bottom:8px"></i>
+          <div class="text-sm" style="font-weight:600">Select Seeds</div>
+          <div class="text-xs text-gray">Core participants</div>
+        </div>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="showScreen('discovery')">
+        <div class="card-body text-center">
+          <i class="fas fa-search" style="font-size:24px;margin-bottom:8px"></i>
+          <div class="text-sm" style="font-weight:600">Run Discovery</div>
+          <div class="text-xs text-gray">Co-classification</div>
+        </div>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="showScreen('regions')">
+        <div class="card-body text-center">
+          <i class="fas fa-layer-group" style="font-size:24px;margin-bottom:8px"></i>
+          <div class="text-sm" style="font-weight:600">Analyze Regions</div>
+          <div class="text-xs text-gray">Louvain detection</div>
+        </div>
+      </div>
+      <div class="card" style="cursor:pointer" onclick="showScreen('triangulation')">
+        <div class="card-body text-center">
+          <i class="fas fa-compress-arrows-alt" style="font-size:24px;margin-bottom:8px"></i>
+          <div class="text-sm" style="font-weight:600">Triangulate</div>
+          <div class="text-xs text-gray">Internal ↔ External</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="grid-4 mb-24">
+      <div class="stat-box"><div class="stat-val">9</div><div class="stat-label">Seed KICs</div></div>
+      <div class="stat-box"><div class="stat-val">${nNodes}</div><div class="stat-label">Actors</div></div>
+      <div class="stat-box"><div class="stat-val">${nEdges}</div><div class="stat-label">Relations</div></div>
+      <div class="stat-box"><div class="stat-val">${nComm}</div><div class="stat-label">Sub-Regions</div></div>
+    </div>
+    
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-layer-group"></i> Top Sub-Regions</div>
+        <div class="card-body">
+          ${getTopCommunities().slice(0, 5).map(r => {
+            const w = Math.min(100, (r.size / 75));
+            return `
+            <div class="region-row">
+              <div class="color-dot" style="background:${r.color}"></div>
+              <span class="text-xs flex-1">${r.label}</span>
+              <div class="ranking-bar"><div class="ranking-bar-fill" style="width:${w}%;background:${r.color}"></div></div>
+              <span class="text-xs" style="width:50px;text-align:right">${r.size.toLocaleString()}</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-chart-pie"></i> Actor Types</div>
+        <div class="card-body">
+          <div class="grid-2 gap-8">
+            ${[['fa-user','Individuals','33%','4,235'],['fa-rocket','Startups','22%','2,827'],['fa-flask','Research','12%','1,542'],['fa-university','Universities','11%','1,413']].map(([icon, name, pct, n]) => `
+              <div class="flex items-center gap-8" style="padding:10px;background:#fafafa">
+                <i class="fas ${icon}"></i>
+                <div><div class="text-xs" style="font-weight:500">${name}</div><div class="text-xs text-gray">${pct} · ${n}</div></div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderSeeds() {
+  const seeds = [
+    ['fa-building','@EIT_EU','Institutional','45.2K','312'],
+    ['fa-leaf','@ClimateKIC','Climate','89.4K','567'],
+    ['fa-microchip','@EITDigital','Digital','52.1K','423'],
+    ['fa-bolt','@InnoEnergy','Energy','34.8K','289'],
+    ['fa-heartbeat','@EITHealth','Health','28.9K','234'],
+    ['fa-seedling','@EITFood','Food','21.4K','198']
+  ];
+  
+  document.getElementById('screen-seeds').innerHTML = `
+    <div class="flex justify-between items-center mb-16">
+      <div><h1>Seed Account <span>Selection</span></h1><p class="text-xs text-gray">EIT and KIC accounts as core field participants</p></div>
+      <button class="btn btn-sm"><i class="fas fa-plus"></i> Add Seed</button>
+    </div>
+    <div class="grid-2 mb-16">
+      ${seeds.map(([icon, handle, type, followers, lists]) => `
+        <div class="seed-card selected">
+          <div class="flex items-center gap-12">
+            <div style="width:36px;height:36px;background:#000;color:#fff;display:flex;align-items:center;justify-content:center"><i class="fas ${icon}"></i></div>
+            <div class="flex-1">
+              <div class="flex items-center gap-8 mb-4"><span class="text-sm" style="font-weight:600">${handle}</span><span class="tag">${type}</span></div>
+              <div class="flex gap-12 text-xs text-gray"><span><strong>${followers}</strong> followers</span><span><strong>${lists}</strong> lists</span></div>
+            </div>
+            <input type="checkbox" checked>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="cli-panel">
+      <div class="cli-header"><span class="text-xs">CLI EQUIVALENT</span><button class="btn btn-sm" style="background:transparent;color:#888;border-color:#444" onclick="toast('Copied!')"><i class="fas fa-copy"></i></button></div>
+      <code>rolefield seeds add @EIT_EU @ClimateKIC @EITDigital @InnoEnergy @EITHealth @EITFood</code>
+    </div>
+  `;
+}
+
+function renderDiscovery() {
+  const stats = state.statsData || {};
+  const comm = state.communityData || {};
+  const nNodes = stats.n_nodes ? stats.n_nodes.toLocaleString() : '65,046';
+  const nEdges = stats.n_edges ? stats.n_edges.toLocaleString() : '73,879';
+  const nComm = comm.n_communities || 96;
+
+  document.getElementById('screen-discovery').innerHTML = `
+    <h1 class="mb-16">Actor Discovery <span>Pipeline</span></h1>
+    <p class="text-gray mb-24">Mention network extraction from 268,309 tweets (2015-2020)</p>
+    <div class="grid-3 mb-24">
+      ${[['fa-database','Step 1: Data Collection','TweetBinder API export'],['fa-project-diagram','Step 2: Network Extraction','Mention relationships'],['fa-layer-group','Step 3: Community Detection','Louvain algorithm']].map(([icon, title, desc]) => `
+        <div class="card">
+          <div class="card-body">
+            <i class="fas ${icon}" style="font-size:20px;margin-bottom:8px"></i>
+            <div class="text-sm" style="font-weight:600">${title}</div>
+            <p class="text-xs text-gray mb-8">${desc}</p>
+            <span class="tag tag-success"><i class="fas fa-check"></i> Complete</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="card mb-16">
+      <div class="card-header"><i class="fas fa-info-circle"></i> Methodology: Benabdelkrim et al. (2020)</div>
+      <div class="card-body">
+        <div style="background:#fafafa;padding:12px;font-family:monospace;text-align:center;margin-bottom:12px">G = (V, E) where e<sub>ij</sub> = mentions(@i, @j)</div>
+        <p class="text-xs text-gray">Social curation approach: Twitter mention networks reveal field structure through collective attention patterns.</p>
+      </div>
+    </div>
+    <div class="grid-4 mb-16">
+      <div class="stat-box"><div class="stat-val">${nNodes}</div><div class="stat-label">Actors</div></div>
+      <div class="stat-box"><div class="stat-val">${nEdges}</div><div class="stat-label">Mention Relations</div></div>
+      <div class="stat-box"><div class="stat-val">268K</div><div class="stat-label">Tweets Analyzed</div></div>
+      <div class="stat-box"><div class="stat-val">${nComm}</div><div class="stat-label">Communities</div></div>
+    </div>
+    <div class="card mb-16">
+      <div class="card-header"><i class="fas fa-calendar"></i> Data Collection Period</div>
+      <div class="card-body">
+        <div class="flex items-center gap-16">
+          <div class="flex-1">
+            <div class="progress-bar" style="height:8px;margin-bottom:8px">
+              <div class="progress-fill" style="width:100%;background:linear-gradient(90deg,#377eb8,#4daf4a)"></div>
+            </div>
+            <div class="flex justify-between text-xs text-gray">
+              <span>Jan 2015</span>
+              <span>Aug 2020</span>
+            </div>
+          </div>
+          <div class="text-xs"><strong>5.5 years</strong> of Twitter activity</div>
+        </div>
+      </div>
+    </div>
+    <div class="cli-panel">
+      <div class="cli-header"><span class="text-xs">PROCESSING LOG</span></div>
+      <code>[INFO] Loaded 14 TweetBinder export files<br>[STEP 1] Parsed 268,309 tweets from EIT ecosystem<br>[STEP 2] Extracted ${nNodes} unique accounts<br>[STEP 3] Built mention network: ${nEdges} edges<br>[STEP 4] Louvain community detection: ${nComm} communities<br><span style="color:#0f0">[SUCCESS] Network ready for analysis</span></code>
+    </div>
+  `;
+}
+
+let sigmaInstance = null;
+let sigmaGraph = null;
+let originalPositions = {};
+let fa2Running = false;
+
+function renderNetwork() {
+  const stats = state.statsData || {};
+  const nNodes = stats.n_nodes ? stats.n_nodes.toLocaleString() : '500';
+  const nEdges = stats.n_edges ? stats.n_edges.toLocaleString() : '6,078';
+
+  document.getElementById('screen-network').innerHTML = `
+    <div class="flex justify-between items-center mb-16">
+      <div><h1>Field <span>Network</span></h1><p class="text-xs text-gray">${nNodes} actors · ${nEdges} relations · Sigma.js</p></div>
+      <div class="flex gap-8">
+        <input type="text" id="node-search" class="input" placeholder="Search nodes..." style="width:160px">
+        <select id="layout-select" class="select" style="width:140px">
+          <option value="forceatlas2" selected>ForceAtlas2</option>
+          <option value="fa2-strong">FA2 Strong Gravity</option>
+          <option value="fa2-linlog">FA2 LinLog</option>
+          <option value="noverlap">Noverlap</option>
+          <option value="circular">Circular</option>
+          <option value="grid">Grid</option>
+          <option value="random">Random</option>
+          <option value="original">Original Positions</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="applyLayout(document.getElementById('layout-select').value)"><i class="fas fa-play"></i> Apply</button>
+        <button class="btn btn-sm" onclick="applyAntiCollision()" title="Remove overlaps"><i class="fas fa-expand-arrows-alt"></i></button>
+        <button class="btn btn-sm" onclick="zoomIn()"><i class="fas fa-search-plus"></i></button>
+        <button class="btn btn-sm" onclick="zoomOut()"><i class="fas fa-search-minus"></i></button>
+        <button class="btn btn-sm" onclick="resetZoom()"><i class="fas fa-expand"></i></button>
+      </div>
+    </div>
+    <div class="card mb-16">
+      <div id="sigma-container" style="height:650px;background:#f8f9fa"></div>
+    </div>
+    <div id="node-info" class="card" style="display:none">
+      <div class="card-header"><i class="fas fa-user"></i> <span id="node-label">Node</span></div>
+      <div class="card-body">
+        <div class="flex justify-between text-xs mb-4"><span>Community:</span><strong id="node-comm">-</strong></div>
+        <div class="flex justify-between text-xs"><span>Connections:</span><strong id="node-deg">-</strong></div>
+      </div>
+    </div>
+  `;
+
+  // Initialize Sigma.js if data is loaded
+  if (state.networkData && typeof graphology !== 'undefined') {
+    initSigma();
+  }
+}
+
+function initSigma() {
+  const container = document.getElementById('sigma-container');
+  if (!container || !state.networkData) return;
+
+  sigmaGraph = new graphology.Graph();
+
+  // Add nodes and store original positions
+  state.networkData.nodes.forEach(node => {
+    // Use ColorBrewer palette based on community label
+    const commLabel = node.communityLabel || '';
+    const commId = node.community || 0;
+    const nodeColor = communityColors[commLabel] || categoryPalette[commId % categoryPalette.length];
+
+    sigmaGraph.addNode(node.id, {
+      label: node.label,
+      x: node.x,
+      y: node.y,
+      size: Math.max(4, Math.min(25, node.size / 3)),
+      color: nodeColor,
+      communityLabel: commLabel
+    });
+    originalPositions[node.id] = { x: node.x, y: node.y };
+  });
+
+  // Add edges with subtle gray color for light background
+  state.networkData.edges.forEach(edge => {
+    if (!sigmaGraph.hasEdge(edge.source, edge.target)) {
+      sigmaGraph.addEdge(edge.source, edge.target, { color: '#cccccc' });
+    }
+  });
+
+  // Apply ForceAtlas2 layout to spread nodes
+  console.log('Applying ForceAtlas2 layout...');
+  forceAtlas2(sigmaGraph, 100, { gravity: 0.5, scalingRatio: 50, strongGravityMode: false });
+  console.log('ForceAtlas2 layout complete');
+
+  // Create Sigma instance
+  if (sigmaInstance) sigmaInstance.kill();
+  sigmaInstance = new Sigma(sigmaGraph, container, {
+    renderEdgeLabels: false,
+    labelColor: { color: '#333' },
+    labelSize: 12,
+    labelDensity: 0.07,
+    defaultEdgeColor: '#cccccc',
+    minCameraRatio: 0.1,
+    maxCameraRatio: 10
+  });
+
+  // Node click handler
+  sigmaInstance.on('clickNode', ({ node }) => {
+    const attrs = sigmaGraph.getNodeAttributes(node);
+    document.getElementById('node-info').style.display = 'block';
+    document.getElementById('node-label').textContent = '@' + attrs.label;
+    document.getElementById('node-comm').textContent = attrs.communityLabel || 'Unknown';
+    document.getElementById('node-deg').textContent = sigmaGraph.degree(node);
+  });
+
+  // Search functionality
+  document.getElementById('node-search').addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    sigmaGraph.forEachNode((node, attrs) => {
+      const match = attrs.label.toLowerCase().includes(query);
+      sigmaGraph.setNodeAttribute(node, 'hidden', query && !match);
+    });
+    sigmaInstance.refresh();
+  });
+}
+
+function applyLayout(layoutType) {
+  if (!sigmaGraph || !sigmaInstance) return;
+
+  toast('Applying ' + layoutType + ' layout...');
+
+  if (layoutType === 'original') {
+    sigmaGraph.forEachNode((node) => {
+      if (originalPositions[node]) {
+        sigmaGraph.setNodeAttribute(node, 'x', originalPositions[node].x);
+        sigmaGraph.setNodeAttribute(node, 'y', originalPositions[node].y);
+      }
+    });
+    sigmaInstance.refresh();
+    toast('Original layout restored');
+  }
+  else if (layoutType === 'forceatlas2') {
+    forceAtlas2(sigmaGraph, 100, { gravity: 0.5, scalingRatio: 50, strongGravityMode: false });
+    sigmaInstance.refresh();
+    toast('ForceAtlas2 applied');
+  }
+  else if (layoutType === 'fa2-strong') {
+    forceAtlas2(sigmaGraph, 150, { gravity: 5, scalingRatio: 20, strongGravityMode: true });
+    sigmaInstance.refresh();
+    toast('FA2 Strong Gravity applied');
+  }
+  else if (layoutType === 'fa2-linlog') {
+    forceAtlas2(sigmaGraph, 100, { gravity: 1, scalingRatio: 10, linLogMode: true });
+    sigmaInstance.refresh();
+    toast('FA2 LinLog applied - emphasizes clusters');
+  }
+  else if (layoutType === 'noverlap') {
+    // Simple overlap removal
+    const nodes = sigmaGraph.nodes();
+    for (let iter = 0; iter < 50; iter++) {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const n1 = nodes[i], n2 = nodes[j];
+          const x1 = sigmaGraph.getNodeAttribute(n1, 'x'), y1 = sigmaGraph.getNodeAttribute(n1, 'y');
+          const x2 = sigmaGraph.getNodeAttribute(n2, 'x'), y2 = sigmaGraph.getNodeAttribute(n2, 'y');
+          const dx = x2 - x1, dy = y2 - y1;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+          const minDist = 15;
+          if (dist < minDist) {
+            const move = (minDist - dist) / 2;
+            sigmaGraph.setNodeAttribute(n1, 'x', x1 - (dx / dist) * move);
+            sigmaGraph.setNodeAttribute(n1, 'y', y1 - (dy / dist) * move);
+            sigmaGraph.setNodeAttribute(n2, 'x', x2 + (dx / dist) * move);
+            sigmaGraph.setNodeAttribute(n2, 'y', y2 + (dy / dist) * move);
+          }
+        }
+      }
+    }
+    sigmaInstance.refresh();
+    toast('Noverlap applied - removed overlaps');
+  }
+  else if (layoutType === 'circular') {
+    const nodes = sigmaGraph.nodes();
+    const n = nodes.length;
+    const radius = Math.sqrt(n) * 15;
+    nodes.forEach((node, i) => {
+      const angle = (2 * Math.PI * i) / n;
+      sigmaGraph.setNodeAttribute(node, 'x', radius * Math.cos(angle));
+      sigmaGraph.setNodeAttribute(node, 'y', radius * Math.sin(angle));
+    });
+    sigmaInstance.refresh();
+    toast('Circular layout applied');
+  }
+  else if (layoutType === 'grid') {
+    const nodes = sigmaGraph.nodes();
+    const cols = Math.ceil(Math.sqrt(nodes.length));
+    const spacing = 30;
+    nodes.forEach((node, i) => {
+      sigmaGraph.setNodeAttribute(node, 'x', (i % cols) * spacing);
+      sigmaGraph.setNodeAttribute(node, 'y', Math.floor(i / cols) * spacing);
+    });
+    sigmaInstance.refresh();
+    toast('Grid layout applied');
+  }
+  else if (layoutType === 'random') {
+    sigmaGraph.forEachNode((node) => {
+      sigmaGraph.setNodeAttribute(node, 'x', (Math.random() - 0.5) * 1000);
+      sigmaGraph.setNodeAttribute(node, 'y', (Math.random() - 0.5) * 1000);
+    });
+    sigmaInstance.refresh();
+    toast('Random layout applied');
+  }
+}
+
+function zoomIn() { if(sigmaInstance) sigmaInstance.getCamera().animatedZoom({ duration: 300 }); }
+function zoomOut() { if(sigmaInstance) sigmaInstance.getCamera().animatedUnzoom({ duration: 300 }); }
+function resetZoom() { if(sigmaInstance) sigmaInstance.getCamera().animatedReset({ duration: 300 }); }
+
+function applyAntiCollision() {
+  if (!sigmaGraph || !sigmaInstance) return;
+  toast('Applying anti-collision...');
+
+  const nodes = sigmaGraph.nodes();
+  const nodeCount = nodes.length;
+  const minDistance = 20; // Minimum distance between node centers
+  const maxIterations = 100;
+  const damping = 0.5;
+
+  for (let iter = 0; iter < maxIterations; iter++) {
+    let moved = false;
+
+    // Use spatial grid for efficiency
+    const gridSize = minDistance * 2;
+    const grid = {};
+
+    // Place nodes in grid cells
+    nodes.forEach(n => {
+      const x = sigmaGraph.getNodeAttribute(n, 'x');
+      const y = sigmaGraph.getNodeAttribute(n, 'y');
+      const cellX = Math.floor(x / gridSize);
+      const cellY = Math.floor(y / gridSize);
+      const key = `${cellX},${cellY}`;
+      if (!grid[key]) grid[key] = [];
+      grid[key].push({ id: n, x, y });
+    });
+
+    // Check collisions only within neighboring cells
+    nodes.forEach(n => {
+      const x1 = sigmaGraph.getNodeAttribute(n, 'x');
+      const y1 = sigmaGraph.getNodeAttribute(n, 'y');
+      const size1 = sigmaGraph.getNodeAttribute(n, 'size') || 5;
+      const cellX = Math.floor(x1 / gridSize);
+      const cellY = Math.floor(y1 / gridSize);
+
+      let dx = 0, dy = 0;
+
+      // Check 3x3 neighboring cells
+      for (let cx = cellX - 1; cx <= cellX + 1; cx++) {
+        for (let cy = cellY - 1; cy <= cellY + 1; cy++) {
+          const neighbors = grid[`${cx},${cy}`] || [];
+          neighbors.forEach(neighbor => {
+            if (neighbor.id === n) return;
+            const x2 = neighbor.x, y2 = neighbor.y;
+            const diffX = x1 - x2, diffY = y1 - y2;
+            const dist = Math.sqrt(diffX * diffX + diffY * diffY) || 0.001;
+            const size2 = sigmaGraph.getNodeAttribute(neighbor.id, 'size') || 5;
+            const requiredDist = minDistance + (size1 + size2) / 4;
+
+            if (dist < requiredDist) {
+              const overlap = requiredDist - dist;
+              const pushX = (diffX / dist) * overlap * damping;
+              const pushY = (diffY / dist) * overlap * damping;
+              dx += pushX;
+              dy += pushY;
+              moved = true;
+            }
+          });
+        }
+      }
+
+      if (dx !== 0 || dy !== 0) {
+        sigmaGraph.setNodeAttribute(n, 'x', x1 + dx);
+        sigmaGraph.setNodeAttribute(n, 'y', y1 + dy);
+      }
+    });
+
+    if (!moved) break;
+  }
+
+  sigmaInstance.refresh();
+  toast('Anti-collision complete');
+}
+
+function exportGEXF() {
+  if (!sigmaGraph) { toast('No network data'); return; }
+  let gexf = '<?xml version="1.0" encoding="UTF-8"?>\n<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2">\n<graph mode="static" defaultedgetype="directed">\n<nodes>\n';
+  sigmaGraph.forEachNode((id, attrs) => {
+    gexf += `<node id="${id}" label="${attrs.label}">\n<viz:color r="${parseInt(attrs.color.slice(1,3),16)}" g="${parseInt(attrs.color.slice(3,5),16)}" b="${parseInt(attrs.color.slice(5,7),16)}"/>\n</node>\n`;
+  });
+  gexf += '</nodes>\n<edges>\n';
+  let edgeId = 0;
+  sigmaGraph.forEachEdge((id, attrs, source, target) => {
+    gexf += `<edge id="${edgeId++}" source="${source}" target="${target}"/>\n`;
+  });
+  gexf += '</edges>\n</graph>\n</gexf>';
+  downloadFile(gexf, 'eit_network.gexf', 'application/xml');
+  toast('GEXF exported');
+}
+
+function exportCSV() {
+  if (!sigmaGraph) { toast('No network data'); return; }
+  let csv = 'id,label,community,degree,x,y\n';
+  sigmaGraph.forEachNode((id, attrs) => {
+    csv += `"${id}","${attrs.label}","${attrs.communityLabel || ''}",${sigmaGraph.degree(id)},${attrs.x.toFixed(2)},${attrs.y.toFixed(2)}\n`;
+  });
+  downloadFile(csv, 'eit_nodes.csv', 'text/csv');
+  toast('CSV exported');
+}
+
+function downloadFile(content, filename, type) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function renderRegions() {
+  const topRegions = getTopCommunities();
+  const comm = state.communityData || {};
+  const totalNodes = state.statsData?.n_nodes || 65046;
+  const mod = comm.modularity ? comm.modularity.toFixed(2) : '0.64';
+
+  document.getElementById('screen-regions').innerHTML = `
+    <div class="flex justify-between items-center mb-16">
+      <div><h1>Sub-Region <span>Analysis</span></h1><p class="text-xs text-gray">${comm.n_communities || 96} communities · Modularity: ${mod}</p></div>
+      <button class="btn btn-sm"><i class="fas fa-redo"></i> Re-run Louvain</button>
+    </div>
+    <div class="grid-2 mb-24">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-chart-bar"></i> Top Communities by Size</div>
+        <div class="card-body">
+          ${topRegions.slice(0, 10).map(r => {
+            const pct = ((r.size / totalNodes) * 100).toFixed(1);
+            return `
+            <div class="region-row">
+              <div class="color-dot" style="background:${r.color}"></div>
+              <span class="text-xs flex-1">${r.label}</span>
+              <div class="ranking-bar"><div class="ranking-bar-fill" style="width:${Math.min(100, r.size / 75)}%;background:${r.color}"></div></div>
+              <span class="text-xs" style="width:70px;text-align:right">${r.size.toLocaleString()} (${pct}%)</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-info-circle"></i> Labeled EIT Communities</div>
+        <div class="card-body">
+          ${topRegions.filter(r => !r.label.startsWith('Community')).map(r => {
+            const pct = ((r.size / totalNodes) * 100).toFixed(1);
+            return `
+            <div class="region-row">
+              <div class="color-dot" style="background:${r.color}"></div>
+              <span class="text-xs flex-1">${r.label}</span>
+              <span class="text-xs" style="width:70px;text-align:right">${r.size.toLocaleString()} (${pct}%)</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><i class="fas fa-broadcast-tower"></i> Top Mentioned by Community</div>
+      <div class="card-body">
+        <div class="grid-3 gap-12">
+          ${(state.statsData?.top_mentioned || []).slice(0, 9).map(([handle, count]) => `
+            <div class="flex items-center gap-8" style="padding:8px;background:#fafafa">
+              <i class="fas fa-at"></i>
+              <div class="flex-1">
+                <div class="text-xs" style="font-weight:500">${handle}</div>
+                <div class="text-xs text-gray">${count.toLocaleString()} mentions</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderTriangulation() {
+  document.getElementById('screen-triangulation').innerHTML = `
+    <h1 class="mb-16">Triangulation: <span>Internal ↔ External</span></h1>
+    <p class="text-gray mb-24">Mapping internal sociotype configurations to externally-identified sub-regions</p>
+    <div class="card mb-16">
+      <div class="card-header"><i class="fas fa-compress-arrows-alt"></i> Sociotype → Sub-Region Correspondence</div>
+      <div class="card-body" style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead><tr style="background:#fafafa"><th style="padding:10px;text-align:left">Sociotype</th><th style="padding:10px;text-align:left">Internal Character</th><th style="padding:10px;text-align:left">Corresponding Regions</th><th style="padding:10px;text-align:left">Alignment</th></tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #e5e5e5"><td style="padding:10px"><span class="sociotype-tag">Connective</span></td><td style="padding:10px">Platform, broker, ecosystem</td><td style="padding:10px" class="text-gray">Distributed</td><td style="padding:10px"><span class="tag tag-warning">Function ≠ Domain</span></td></tr>
+            <tr style="border-bottom:1px solid #e5e5e5"><td style="padding:10px"><span class="sociotype-tag">Acceleration</span></td><td style="padding:10px">Startup support, funding</td><td style="padding:10px">VC; Digital & Tech</td><td style="padding:10px"><span class="tag tag-success"><i class="fas fa-check"></i> Strong</span></td></tr>
+            <tr style="border-bottom:1px solid #e5e5e5"><td style="padding:10px"><span class="sociotype-tag">Knowledge</span></td><td style="padding:10px">Research, discovery</td><td style="padding:10px">Research; Education</td><td style="padding:10px"><span class="tag tag-success"><i class="fas fa-check"></i> Strong</span></td></tr>
+            <tr><td style="padding:10px"><span class="sociotype-tag">Accountability</span></td><td style="padding:10px">Impact, policy</td><td style="padding:10px">EU Policy & Funding</td><td style="padding:10px"><span class="tag tag-success"><i class="fas fa-check"></i> Validated</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-lightbulb"></i> Key Observations</div>
+        <div class="card-body">
+          <div style="padding:10px;background:#fef3c7;border-left:3px solid #f59e0b;margin-bottom:10px">
+            <div class="text-sm" style="font-weight:600">Connective ≠ Sub-Region</div>
+            <p class="text-xs text-gray">Connection is a function, not a domain.</p>
+          </div>
+          <div style="padding:10px;background:#dcfce7;border-left:3px solid #16a34a">
+            <div class="text-sm" style="font-weight:600">Sectoral → Thematic</div>
+            <p class="text-xs text-gray">Domain-specific roles map to thematic communities.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-th"></i> Seed Overlap (Jaccard)</div>
+        <div class="card-body" style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:10px">
+            <thead><tr><th class="matrix-cell"></th><th class="matrix-cell">EIT</th><th class="matrix-cell">Clim</th><th class="matrix-cell">Dig</th><th class="matrix-cell">Ener</th></tr></thead>
+            <tbody>
+              <tr><td class="matrix-cell" style="font-weight:600">EIT</td><td class="matrix-cell" style="background:#000;color:#fff">1.00</td><td class="matrix-cell" style="background:rgba(0,0,0,0.4);color:#fff">.52</td><td class="matrix-cell" style="background:rgba(0,0,0,0.45);color:#fff">.48</td><td class="matrix-cell" style="background:rgba(0,0,0,0.5);color:#fff">.51</td></tr>
+              <tr><td class="matrix-cell" style="font-weight:600">Clim</td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#000;color:#fff">1.00</td><td class="matrix-cell" style="background:rgba(0,0,0,0.3)">.32</td><td class="matrix-cell" style="background:rgba(0,0,0,0.6);color:#fff">.61</td></tr>
+              <tr><td class="matrix-cell" style="font-weight:600">Dig</td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#000;color:#fff">1.00</td><td class="matrix-cell" style="background:rgba(0,0,0,0.35)">.37</td></tr>
+              <tr><td class="matrix-cell" style="font-weight:600">Ener</td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell"></td><td class="matrix-cell" style="background:#000;color:#fff">1.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderBridging() {
+  const stats = state.statsData || {};
+  const topMentioned = stats.top_mentioned || [];
+  const topMentioners = stats.top_mentioners || [];
+
+  document.getElementById('screen-bridging').innerHTML = `
+    <h1 class="mb-16">Bridging <span>Analysis</span></h1>
+    <p class="text-gray mb-24">Key actors connecting communities in the EIT ecosystem</p>
+
+    <div class="grid-2 mb-16">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-bullhorn"></i> Most Mentioned Accounts</div>
+        <div class="card-body">
+          <p class="text-xs text-gray mb-12">Accounts receiving highest attention across the network</p>
+          ${topMentioned.slice(0, 10).map(([handle, count], i) => `
+            <div class="flex items-center gap-12" style="padding:8px;background:${i % 2 ? '#fff' : '#fafafa'}">
+              <span class="text-xs text-gray" style="width:20px">${i + 1}.</span>
+              <div class="flex-1"><span class="text-xs" style="font-weight:500">${handle}</span></div>
+              <span class="text-xs text-gray">${count.toLocaleString()}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="fas fa-users"></i> Most Active Mentioners</div>
+        <div class="card-body">
+          <p class="text-xs text-gray mb-12">Accounts most actively connecting to others</p>
+          ${topMentioners.slice(0, 10).map(([handle, count], i) => `
+            <div class="flex items-center gap-12" style="padding:8px;background:${i % 2 ? '#fff' : '#fafafa'}">
+              <span class="text-xs text-gray" style="width:20px">${i + 1}.</span>
+              <div class="flex-1"><span class="text-xs" style="font-weight:500">${handle}</span></div>
+              <span class="text-xs text-gray">${count.toLocaleString()}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-16">
+      <div class="card-header"><i class="fas fa-exchange-alt"></i> Network Reciprocity</div>
+      <div class="card-body">
+        <div class="grid-3 mb-16">
+          <div class="stat-box"><div class="stat-val" style="font-size:18px">${stats.reciprocity ? (stats.reciprocity * 100).toFixed(2) : '0.15'}%</div><div class="stat-label">Reciprocity Rate</div></div>
+          <div class="stat-box"><div class="stat-val" style="font-size:18px">${stats.n_components ? stats.n_components.toLocaleString() : '38,253'}</div><div class="stat-label">Components</div></div>
+          <div class="stat-box"><div class="stat-val" style="font-size:18px">${stats.largest_component_size ? stats.largest_component_size.toLocaleString() : '26,371'}</div><div class="stat-label">Giant Component</div></div>
+        </div>
+        <p class="text-xs text-gray">Low reciprocity (${stats.reciprocity ? (stats.reciprocity * 100).toFixed(2) : '0.15'}%) indicates asymmetric attention patterns typical of broadcast-style communication.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><i class="fas fa-lightbulb"></i> Key Findings</div>
+      <div class="card-body">
+        <div class="grid-2 gap-12">
+          <div style="padding:12px;background:#e8f5e9;border-left:3px solid #4daf4a">
+            <div class="text-sm" style="font-weight:600">@climatekic dominance</div>
+            <p class="text-xs text-gray">Climate-KIC receives 2x more mentions than EIT central, indicating strong thematic hub status.</p>
+          </div>
+          <div style="padding:12px;background:#e3f2fd;border-left:3px solid #377eb8">
+            <div class="text-sm" style="font-weight:600">Individual amplifiers</div>
+            <p class="text-xs text-gray">Top mentioners are individuals (Susanne Pedersen, Kaj Embren) rather than institutional accounts.</p>
+          </div>
+          <div style="padding:12px;background:#fff3e0;border-left:3px solid #ff7f00">
+            <div class="text-sm" style="font-weight:600">Regional variation</div>
+            <p class="text-xs text-gray">Nordic accounts (CKICNordic) show disproportionate activity relative to region size.</p>
+          </div>
+          <div style="padding:12px;background:#fce4ec;border-left:3px solid #e41a1c">
+            <div class="text-sm" style="font-weight:600">Fragmented structure</div>
+            <p class="text-xs text-gray">${stats.n_components ? stats.n_components.toLocaleString() : '38,253'} components suggest many peripheral actors with limited integration.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+render();
+</script>
+</body>
+</html>

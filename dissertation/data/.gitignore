@@ -1,0 +1,75 @@
+# RoleBox Data .gitignore
+# Common patterns for all modality pipelines
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+.venv
+env/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temp files
+*.log
+*_err.txt
+*_out.txt
+nul
+
+# Large data files (should be stored in data/raw/ with LFS or external)
+*.zip
+*.tar.gz
+*.parquet
+*.db
+*.sqlite
+
+# Model outputs (regeneratable)
+*.pkl
+*.joblib
+
+# Batch/shell scripts for local runs
+run_*.bat
+run_*.sh
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Coverage
+.coverage
+htmlcov/
+.pytest_cache/

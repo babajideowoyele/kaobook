@@ -1,0 +1,54 @@
+{
+  "triad_type": "powell_framework",
+  "name": "Powell Framework",
+  "description": "Organizations positioned by legitimacy vocabulary: Associational vs Scientific vs Managerial",
+  "axis_a": {
+    "name": "Associational",
+    "key": "associational",
+    "color": "#3498db",
+    "description": "Social values, civil society, moral purpose vocabulary",
+    "keywords": [
+      "accountability", "advocacy", "awareness", "charity", "commitment",
+      "common good", "compassion", "democracy", "empowerment", "ethics",
+      "justice", "mission", "moral", "participation", "principles",
+      "quality of life", "social benefit", "social change", "solidarity",
+      "trust", "values", "vision", "voice"
+    ],
+    "source_modality": "rolebox-websites"
+  },
+  "axis_b": {
+    "name": "Scientific",
+    "key": "scientific",
+    "color": "#2ecc71",
+    "description": "Evidence-based, research methodology vocabulary",
+    "keywords": [
+      "analysis", "assessment", "causality", "control group", "correlation",
+      "counterfactual", "criteria", "data", "evaluation", "evidence",
+      "experiment", "framework", "indicators", "measurement", "methodology",
+      "quantification", "randomized control trials", "review", "survey",
+      "theory of change", "treatment effects"
+    ],
+    "source_modality": "rolebox-websites"
+  },
+  "axis_c": {
+    "name": "Managerial",
+    "key": "managerial",
+    "color": "#e74c3c",
+    "description": "Business efficiency, performance metrics vocabulary",
+    "keywords": [
+      "benchmarks", "best practice", "bottom line", "capacity", "cost-benefit",
+      "effectiveness", "efficiency", "growth", "impact", "kpi",
+      "leverage", "management", "milestones", "monitoring", "objectives",
+      "optimization", "outcome", "output", "performance", "productivity",
+      "return on investment", "strategic", "transparency", "value proposition"
+    ],
+    "source_modality": "rolebox-websites"
+  },
+  "interstitial_threshold": 0.4,
+  "color_palette": {
+    "dominant_associational": "#3498db",
+    "dominant_scientific": "#2ecc71",
+    "dominant_managerial": "#e74c3c",
+    "interstitial": "#f1c40f"
+  }
+}

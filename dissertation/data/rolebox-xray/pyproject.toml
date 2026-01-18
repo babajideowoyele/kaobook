@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rolebox-xray"
+version = "0.1.0"
+description = "Scientific literature and bibliometric analysis for RoleBox"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Babajide Alamu Owoyele", email = "owoyele@rsm.nl"}
+]
+keywords = ["bibliometrics", "topic-modeling", "network-analysis", "bertopic"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Programming Language :: Python :: 3",
+]
+
+dependencies = [
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "networkx>=3.0",
+    "bertopic>=0.15.0",
+    "sentence-transformers>=2.2.0",
+    "umap-learn>=0.5.0",
+    "hdbscan>=0.8.0",
+    "plotly>=5.18.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+full = [
+    "role-xray",  # Install from METAFRASIA for full functionality
+]
+
+[project.urls]
+Homepage = "https://github.com/babajideowoyele/kaobook"
+Repository = "https://github.com/arenabox/METAFRASIA"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rolebox_xray"]

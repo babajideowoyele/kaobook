@@ -2,6 +2,12 @@
 article-template.pdf
 book-template.pdf
 
+## Claude Code temp files
+tmpclaude-*
+
+## Build output directory (latexmk)
+build/
+
 ## Dissertation output PDFs (keep source, ignore compiled)
 main.pdf
 dissertation/main.pdf
@@ -271,3 +277,4 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+dissertation_backup_*

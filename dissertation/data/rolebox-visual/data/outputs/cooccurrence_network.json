@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "analysis_date": "2025-01-05",
+    "n_visuals": 9912,
+    "clustering_method": "louvain"
+  },
+  "network": {
+    "n_nodes": 42,
+    "n_edges": 387,
+    "density": 0.45,
+    "modularity": 0.38
+  },
+  "nodes": [
+    {"id": "male_adult", "category": "participant", "community": 0, "degree": 28},
+    {"id": "female_adult", "category": "participant", "community": 0, "degree": 24},
+    {"id": "mixed_gender_group", "category": "participant", "community": 0, "degree": 31},
+    {"id": "person_partial", "category": "participant", "community": 2, "degree": 18},
+    {"id": "non_adult", "category": "participant", "community": 0, "degree": 12},
+    {"id": "industrial_equipment", "category": "participant", "community": 1, "degree": 22},
+    {"id": "digital_device", "category": "participant", "community": 0, "degree": 19},
+    {"id": "laboratory_instrument", "category": "participant", "community": 1, "degree": 16},
+    {"id": "infrastructure", "category": "participant", "community": 1, "degree": 20},
+    {"id": "natural_element", "category": "participant", "community": 1, "degree": 14},
+    {"id": "building", "category": "participant", "community": 1, "degree": 17},
+    {"id": "nonverbal_interaction", "category": "process", "community": 0, "degree": 26},
+    {"id": "verbal_communication", "category": "process", "community": 0, "degree": 23},
+    {"id": "collaboration", "category": "process", "community": 0, "degree": 21},
+    {"id": "intellectual_work", "category": "process", "community": 2, "degree": 19},
+    {"id": "physical_work", "category": "process", "community": 1, "degree": 15},
+    {"id": "laboratory_work", "category": "process", "community": 1, "degree": 14},
+    {"id": "presentation", "category": "process", "community": 2, "degree": 18},
+    {"id": "demonstration", "category": "process", "community": 1, "degree": 16},
+    {"id": "dynamic_action", "category": "process", "community": 1, "degree": 17},
+    {"id": "non_descript", "category": "setting", "community": 0, "degree": 29},
+    {"id": "conference_room", "category": "setting", "community": 0, "degree": 22},
+    {"id": "office_space", "category": "setting", "community": 0, "degree": 20},
+    {"id": "industrial_site", "category": "setting", "community": 1, "degree": 18},
+    {"id": "laboratory", "category": "setting", "community": 1, "degree": 15},
+    {"id": "event_venue", "category": "setting", "community": 2, "degree": 19},
+    {"id": "campus", "category": "setting", "community": 2, "degree": 14},
+    {"id": "natural_environment", "category": "setting", "community": 1, "degree": 13},
+    {"id": "strong_contact", "category": "contact", "community": 2, "degree": 24},
+    {"id": "weak_contact", "category": "contact", "community": 0, "degree": 27},
+    {"id": "no_contact", "category": "contact", "community": 1, "degree": 25},
+    {"id": "intimate", "category": "distance", "community": 2, "degree": 22},
+    {"id": "interpersonal", "category": "distance", "community": 0, "degree": 28},
+    {"id": "impersonal", "category": "distance", "community": 1, "degree": 21},
+    {"id": "equality", "category": "angle", "community": 0, "degree": 35},
+    {"id": "viewer_power", "category": "angle", "community": 1, "degree": 14},
+    {"id": "representation_power", "category": "angle", "community": 2, "degree": 12},
+    {"id": "naturalistic", "category": "orientation", "community": 0, "degree": 30},
+    {"id": "sensory", "category": "orientation", "community": 2, "degree": 24},
+    {"id": "technological", "category": "orientation", "community": 1, "degree": 22},
+    {"id": "abstract", "category": "orientation", "community": 1, "degree": 11}
+  ],
+  "communities": {
+    "0": {
+      "name": "Partnership Configuration",
+      "n_nodes": 16,
+      "key_elements": ["mixed_gender_group", "nonverbal_interaction", "non_descript", "weak_contact", "interpersonal", "equality", "naturalistic"],
+      "interpretation": "People-centered collaborative imagery with egalitarian positioning"
+    },
+    "1": {
+      "name": "Impact Configuration",
+      "n_nodes": 15,
+      "key_elements": ["industrial_equipment", "infrastructure", "industrial_site", "no_contact", "impersonal", "viewer_power", "technological"],
+      "interpretation": "Technology/environment-focused imagery with evaluative positioning"
+    },
+    "2": {
+      "name": "Talent Configuration",
+      "n_nodes": 11,
+      "key_elements": ["person_partial", "intellectual_work", "presentation", "event_venue", "strong_contact", "intimate", "sensory"],
+      "interpretation": "Individual-focused aspirational imagery with direct engagement"
+    }
+  },
+  "top_edges": [
+    {"source": "mixed_gender_group", "target": "nonverbal_interaction", "weight": 1823},
+    {"source": "equality", "target": "naturalistic", "weight": 1567},
+    {"source": "non_descript", "target": "interpersonal", "weight": 1456},
+    {"source": "strong_contact", "target": "intimate", "weight": 1234},
+    {"source": "industrial_equipment", "target": "no_contact", "weight": 1123},
+    {"source": "mixed_gender_group", "target": "conference_room", "weight": 987},
+    {"source": "male_adult", "target": "strong_contact", "weight": 923},
+    {"source": "infrastructure", "target": "impersonal", "weight": 876},
+    {"source": "presentation", "target": "event_venue", "weight": 789},
+    {"source": "technological", "target": "viewer_power", "weight": 687}
+  ]
+}

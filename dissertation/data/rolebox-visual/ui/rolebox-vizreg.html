@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoleBox VizReg - Visual Register Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#f5f5f5;color:#000;line-height:1.5;font-size:13px}
+    .app{display:flex;flex-direction:column;height:100vh}
+    .header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:#fff;border-bottom:1px solid #e5e5e5;flex-shrink:0}
+    .logo{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .logo i{color:#000}
+    .nav{display:flex;gap:1px}
+    .nav a{padding:8px 14px;color:#666;text-decoration:none;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+    .nav a:hover{background:#f5f5f5;color:#000}
+    .nav a.active{background:#000;color:#fff}
+    .main{display:flex;flex:1;overflow:hidden}
+    .sidebar{width:300px;background:#fff;border-right:1px solid #e5e5e5;padding:16px;overflow-y:auto;flex-shrink:0}
+    .content{flex:1;padding:20px;overflow-y:auto;background:#fafafa}
+    .screen{display:none}
+    .screen.active{display:block}
+    .section{margin-bottom:20px}
+    .section-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#666;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .card{background:#fff;border:1px solid #e5e5e5;margin-bottom:12px}
+    .card-header{padding:12px 16px;border-bottom:1px solid #e5e5e5;font-weight:600;font-size:12px;display:flex;align-items:center;justify-content:space-between}
+    .card-body{padding:16px}
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid #e5e5e5;background:#fff;color:#000;transition:all .15s}
+    .btn:hover{background:#f5f5f5;border-color:#000}
+    .btn-primary{background:#000;color:#fff;border-color:#000}
+    .btn-primary:hover{background:#333}
+    .btn-sm{padding:5px 10px;font-size:10px}
+    .btn-block{width:100%;justify-content:center}
+    .btn-success{border-color:#16a34a;color:#16a34a}
+    .btn-success:hover{background:#16a34a;color:#fff}
+    .btn-danger{border-color:#dc2626;color:#dc2626}
+    .btn-danger:hover{background:#dc2626;color:#fff}
+    .tag{display:inline-flex;padding:3px 8px;font-size:10px;font-weight:600;background:#000;color:#fff;border-radius:2px}
+    .tag-outline{background:transparent;color:#000;border:1px solid #e5e5e5}
+    .tag-blue{background:#3498db}
+    .tag-green{background:#2ecc71}
+    .tag-red{background:#e74c3c}
+    .tag-yellow{background:#f1c40f;color:#000}
+    .input,.select,.textarea{width:100%;padding:10px 12px;font-size:12px;border:1px solid #e5e5e5;font-family:inherit;background:#fff}
+    .textarea{resize:vertical;min-height:80px}
+    .input:focus,.select:focus,.textarea:focus{outline:none;border-color:#000}
+    .flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}
+    .gap-4{gap:4px}.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}.flex-1{flex:1}
+    .text-xs{font-size:10px}.text-sm{font-size:12px}.text-gray{color:#666}.text-center{text-align:center}
+    .mb-4{margin-bottom:4px}.mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mt-16{margin-top:16px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .stat-box{text-align:center;padding:16px;background:#fff;border:1px solid #e5e5e5}
+    .stat-val{font-size:24px;font-weight:300}
+    .stat-label{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.3px;margin-top:4px}
+    .progress-bar{height:6px;background:#e5e5e5;overflow:hidden;border-radius:3px}
+    .progress-fill{height:100%;background:#000;transition:width .3s}
+    .option-btn{padding:10px 12px;font-size:11px;border:1px solid #e5e5e5;background:#fff;cursor:pointer;transition:all .15s;text-align:center}
+    .option-btn:hover{border-color:#000;background:#fafafa}
+    .option-btn.selected{background:#000;color:#fff;border-color:#000}
+    .image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+    .image-card{background:#fff;border:1px solid #e5e5e5;cursor:pointer;transition:all .2s;overflow:hidden}
+    .image-card:hover{border-color:#000;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+    .image-card.selected{border-color:#3498db;border-width:2px}
+    .image-card img{width:100%;height:120px;object-fit:cover;display:block}
+    .image-card-body{padding:10px}
+    .image-card-title{font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .image-card-meta{font-size:10px;color:#666;margin-top:4px}
+    .coding-panel{position:fixed;right:0;top:60px;bottom:0;width:400px;background:#fff;border-left:1px solid #e5e5e5;padding:20px;overflow-y:auto;transform:translateX(100%);transition:transform .3s;z-index:50}
+    .coding-panel.open{transform:translateX(0)}
+    .coding-image{width:100%;max-height:200px;object-fit:contain;background:#f5f5f5;margin-bottom:16px}
+    .meta-section{border-left:3px solid #000;padding-left:14px;margin-bottom:20px}
+    .meta-title{font-size:12px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+    .meta-desc{font-size:11px;color:#666;margin-bottom:10px}
+    .codebook-item{padding:12px;background:#fafafa;border:1px solid #e5e5e5;margin-bottom:8px}
+    .codebook-term{font-weight:600;font-size:12px;margin-bottom:4px}
+    .codebook-def{font-size:11px;color:#666}
+    .network-container{height:500px;background:#fff;border:1px solid #e5e5e5}
+    .legend-item{display:flex;align-items:center;gap:8px;padding:6px 0}
+    .legend-color{width:14px;height:14px;border-radius:2px}
+    .toast{position:fixed;bottom:20px;right:20px;padding:12px 20px;background:#000;color:#fff;font-size:12px;font-weight:500;z-index:200;transform:translateY(100px);opacity:0;transition:all .3s}
+    .toast.show{transform:translateY(0);opacity:1}
+    .drop-zone{border:2px dashed #e5e5e5;padding:40px;text-align:center;background:#fafafa;transition:all .2s;cursor:pointer}
+    .drop-zone:hover,.drop-zone.dragover{border-color:#000;background:#fff}
+    .drop-zone i{font-size:32px;color:#ccc;margin-bottom:12px}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+    .tabs{display:flex;border-bottom:1px solid #e5e5e5;margin-bottom:16px}
+    .tab{padding:10px 16px;font-size:11px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:#666}
+    .tab:hover{color:#000}
+    .tab.active{color:#000;border-color:#000}
+    .gaze-card{padding:16px;background:#fff;border:1px solid #e5e5e5;margin-bottom:12px}
+    .gaze-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .gaze-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:18px}
+    .gaze-title{font-weight:600;font-size:14px}
+    .gaze-subtitle{font-size:11px;color:#666}
+    .gaze-bar{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px}
+    .gaze-bar-fill{height:8px;border-radius:4px}
+    .help-section{padding:16px;background:#fffbeb;border:1px solid #fbbf24;margin-bottom:16px}
+    .help-section h4{font-size:12px;margin-bottom:8px;color:#92400e}
+    .help-section p{font-size:11px;color:#78350f}
+    .btn-ai{background:#8b5cf6;color:#fff}
+    .btn-ai:hover{background:#7c3aed}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:flex;align-items:center;justify-content:center}
+    .modal{background:#fff;border-radius:8px;width:400px;max-width:90vw;box-shadow:0 20px 40px rgba(0,0,0,0.2)}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid #e5e5e5;font-weight:600}
+    .modal-body{padding:16px}
+    .ai-suggestion{background:#f3e8ff;border:1px solid #c4b5fd;border-radius:6px;padding:8px 12px;margin-bottom:8px}
+    .ai-suggestion .confidence{font-size:10px;color:#7c3aed}
+    .ai-badge{display:inline-flex;align-items:center;gap:4px;background:#8b5cf6;color:#fff;padding:2px 6px;border-radius:4px;font-size:9px}
+    .ai-queue-item{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid #e5e5e5;border-radius:6px;margin-bottom:6px;cursor:pointer}
+    .ai-queue-item:hover{background:#f5f5f5}
+    .ai-queue-item.high-priority{border-color:#f59e0b;background:#fffbeb}
+    .hidden{display:none}
+    @media(max-width:1200px){.sidebar{width:260px}.coding-panel{width:350px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="flex items-center gap-16">
+      <div class="logo"><i class="fas fa-eye"></i> RoleBox VizReg</div>
+      <nav class="nav">
+        <a class="active" data-screen="gallery"><i class="fas fa-images"></i> Gallery</a>
+        <a data-screen="annotate"><i class="fas fa-edit"></i> Annotate</a>
+        <a data-screen="network"><i class="fas fa-project-diagram"></i> Network</a>
+        <a data-screen="gazes"><i class="fas fa-chart-pie"></i> Gazes</a>
+        <a data-screen="codebook"><i class="fas fa-book"></i> Codebook</a>
+        <a data-screen="absence"><i class="fas fa-eye-slash"></i> Absence</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-12">
+      <button class="btn btn-sm" onclick="loadDemoData()"><i class="fas fa-flask"></i> Load Demo</button>
+      <button class="btn btn-sm" onclick="exportAllData()"><i class="fas fa-download"></i> Export</button>
+      <button class="btn btn-sm btn-ai" onclick="showAISettings()"><i class="fas fa-robot"></i> Model Assist</button>
+    </div>
+  </header>
+
+  <!-- Model Settings Modal -->
+  <div class="modal-overlay" id="aiSettingsModal" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <span><i class="fas fa-robot"></i> Model Assist Settings</span>
+        <button class="btn btn-sm" onclick="hideAISettings()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-12">
+          <label class="text-xs text-gray">API Provider</label>
+          <select class="select" id="aiProvider" onchange="updateAPIFields()">
+            <option value="local">Ollama (LLaVA Vision)</option>
+            <option value="openai">OpenAI (GPT-4 Vision)</option>
+            <option value="anthropic">Anthropic (Claude)</option>
+          </select>
+        </div>
+        <div class="mb-12 hidden" id="apiKeyGroup">
+          <label class="text-xs text-gray">API Key</label>
+          <input type="password" class="input" id="aiApiKey" placeholder="sk-...">
+        </div>
+        <div class="mb-12" id="localEndpointGroup">
+          <label class="text-xs text-gray">Ollama Endpoint</label>
+          <input type="text" class="input" id="aiLocalEndpoint" value="http://localhost:11434/api/chat">
+          <div class="mt-4">
+            <label class="text-xs text-gray">Vision Model</label>
+            <input type="text" class="input" id="aiLocalModel" value="llava:7b" placeholder="llava:7b">
+          </div>
+        </div>
+        <div class="mb-12">
+          <label class="text-xs text-gray">Active Learning Mode</label>
+          <select class="select" id="aiMode">
+            <option value="suggest">Suggest labels (review all)</option>
+            <option value="uncertainty">Prioritize uncertain items</option>
+            <option value="diverse">Prioritize diverse samples</option>
+          </select>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn btn-primary" onclick="saveAISettings()"><i class="fas fa-save"></i> Save</button>
+          <button class="btn" onclick="testAIConnection()"><i class="fas fa-plug"></i> Test Connection</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <aside class="sidebar">
+      <div class="section">
+        <div class="section-title"><i class="fas fa-database"></i> Dataset</div>
+        <div class="stat-box mb-12">
+          <div class="stat-val" id="totalImages">0</div>
+          <div class="stat-label">Images Loaded</div>
+        </div>
+        <div class="grid-2 mb-12">
+          <div class="stat-box">
+            <div class="stat-val" id="codedImages">0</div>
+            <div class="stat-label">Coded</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="pendingImages">0</div>
+            <div class="stat-label">Pending</div>
+          </div>
+        </div>
+        <div class="progress-bar mb-8">
+          <div class="progress-fill" id="progressBar" style="width:0%"></div>
+        </div>
+        <div class="text-xs text-gray text-center" id="progressText">0% complete</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-upload"></i> Import Data</div>
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p class="text-sm">Drop images or JSON here</p>
+          <p class="text-xs text-gray">or click to browse</p>
+        </div>
+        <input type="file" id="fileInput" style="display:none" multiple accept="image/*,.json" onchange="handleFileSelect(event)">
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-filter"></i> Filters</div>
+        <div class="mb-8">
+          <label class="text-xs text-gray">Status</label>
+          <select class="select" id="filterStatus" onchange="applyFilters()">
+            <option value="all">All Images</option>
+            <option value="coded">Coded Only</option>
+            <option value="pending">Pending Only</option>
+          </select>
+        </div>
+        <div class="mb-8">
+          <label class="text-xs text-gray">Organization</label>
+          <select class="select" id="filterOrg" onchange="applyFilters()">
+            <option value="all">All Organizations</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-gray">Gaze Type</label>
+          <select class="select" id="filterGaze" onchange="applyFilters()">
+            <option value="all">All Gazes</option>
+            <option value="partnership">Partnership Gaze</option>
+            <option value="impact">Impact Gaze</option>
+            <option value="talent">Talent Gaze</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><i class="fas fa-palette"></i> Legend</div>
+        <div class="legend-item">
+          <div class="legend-color" style="background:#3498db"></div>
+          <span class="text-sm">Partnership Gaze</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background:#2ecc71"></div>
+          <span class="text-sm">Impact Gaze</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background:#e74c3c"></div>
+          <span class="text-sm">Talent Gaze</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background:#95a5a6"></div>
+          <span class="text-sm">Uncoded</span>
+        </div>
+      </div>
+
+      <div class="section" id="aiAssistSection">
+        <div class="section-title"><i class="fas fa-robot"></i> Model Assist</div>
+        <div id="aiStatus" class="text-xs text-gray mb-8">Not configured</div>
+        <button type="button" class="btn btn-sm btn-ai w-full mb-8" onclick="runAIAnalysis()" id="runAIBtn" disabled>
+          <i class="fas fa-magic"></i> Analyze Pending Images
+        </button>
+        <div id="aiQueueSection" class="hidden">
+          <div class="text-xs text-gray mb-4">Priority Queue (uncertainty sampling)</div>
+          <div id="aiQueue"></div>
+        </div>
+        <div id="aiSuggestions" class="hidden">
+          <div class="text-xs text-gray mb-4">Current Suggestions</div>
+          <div id="aiSuggestionList"></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <!-- Gallery Screen -->
+      <div class="screen active" id="screen-gallery">
+        <div class="help-section">
+          <h4><i class="fas fa-info-circle"></i> Getting Started</h4>
+          <p>1. Click <strong>"Load Demo"</strong> to explore with sample EIT images, or upload your own images.<br>
+             2. Click any image to open the annotation panel and code it using the Kress & van Leeuwen framework.<br>
+             3. View the <strong>Network</strong> tab to see co-occurrence patterns, and <strong>Gazes</strong> for visual register analysis.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-images"></i> Image Gallery</span>
+            <span class="text-sm text-gray" id="galleryCount">0 images</span>
+          </div>
+          <div class="card-body">
+            <div class="image-grid" id="imageGrid">
+              <div class="text-center text-gray" style="grid-column:1/-1;padding:40px">
+                <i class="fas fa-images" style="font-size:48px;color:#e5e5e5;margin-bottom:12px;display:block"></i>
+                <p>No images loaded yet.</p>
+                <p class="text-xs mt-16">Click "Load Demo" or drag images here to begin.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Annotate Screen -->
+      <div class="screen" id="screen-annotate">
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-edit"></i> Annotation Queue</span>
+            <div class="flex gap-8">
+              <button class="btn btn-sm" onclick="startBatchCoding()"><i class="fas fa-play"></i> Start Batch</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="image-grid" id="annotateGrid">
+              <div class="text-center text-gray" style="grid-column:1/-1;padding:40px">
+                Load images to begin annotation.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Screen -->
+      <div class="screen" id="screen-network">
+        <div class="grid-2 mb-16">
+          <div class="stat-box">
+            <div class="stat-val" id="networkNodes">0</div>
+            <div class="stat-label">Visual Elements</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="networkEdges">0</div>
+            <div class="stat-label">Co-occurrences</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-project-diagram"></i> Visual Element Co-occurrence Network</span>
+            <div class="flex gap-8">
+              <select class="select" style="width:150px" id="networkLayout" onchange="updateNetworkLayout()">
+                <option value="force">Force-Directed</option>
+                <option value="circular">Circular</option>
+                <option value="community">By Community</option>
+              </select>
+              <button class="btn btn-sm" onclick="exportNetworkImage()"><i class="fas fa-camera"></i> Export</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="networkPlot" class="network-container"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-list"></i> Top Co-occurrences</span>
+          </div>
+          <div class="card-body">
+            <div id="topCooccurrences">
+              <p class="text-gray">Code images to see co-occurrence patterns.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gazes Screen -->
+      <div class="screen" id="screen-gazes">
+        <div class="grid-3 mb-16">
+          <div class="gaze-card" style="border-left:4px solid #3498db">
+            <div class="gaze-header">
+              <div class="gaze-icon" style="background:#ebf5fb;color:#3498db"><i class="fas fa-handshake"></i></div>
+              <div>
+                <div class="gaze-title">Partnership Gaze</div>
+                <div class="gaze-subtitle" id="partnershipCount">0 images (0%)</div>
+              </div>
+            </div>
+            <p class="text-xs text-gray">Positions viewers as potential partners through collaborative imagery and egalitarian framing.</p>
+          </div>
+          <div class="gaze-card" style="border-left:4px solid #2ecc71">
+            <div class="gaze-header">
+              <div class="gaze-icon" style="background:#e8f8f5;color:#2ecc71"><i class="fas fa-chart-line"></i></div>
+              <div>
+                <div class="gaze-title">Impact Gaze</div>
+                <div class="gaze-subtitle" id="impactCount">0 images (0%)</div>
+              </div>
+            </div>
+            <p class="text-xs text-gray">Positions viewers as evaluators through technology-focused imagery and outcomes.</p>
+          </div>
+          <div class="gaze-card" style="border-left:4px solid #e74c3c">
+            <div class="gaze-header">
+              <div class="gaze-icon" style="background:#fdedec;color:#e74c3c"><i class="fas fa-user-graduate"></i></div>
+              <div>
+                <div class="gaze-title">Talent Gaze</div>
+                <div class="gaze-subtitle" id="talentCount">0 images (0%)</div>
+              </div>
+            </div>
+            <p class="text-xs text-gray">Positions viewers as potential participants through aspirational individual portraits.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-chart-bar"></i> Gaze Profile Analysis</span>
+          </div>
+          <div class="card-body">
+            <div id="gazeProfileChart" style="height:400px"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-building"></i> Gaze Distribution by Organization</span>
+          </div>
+          <div class="card-body">
+            <div id="orgGazeChart" style="height:300px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Codebook Screen -->
+      <div class="screen" id="screen-codebook">
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-book"></i> Visual Grammar Codebook (Kress & van Leeuwen)</span>
+          </div>
+          <div class="card-body">
+            <div class="tabs">
+              <div class="tab active" data-tab="ideational">Ideational</div>
+              <div class="tab" data-tab="interpersonal">Interpersonal</div>
+              <div class="tab" data-tab="textual">Textual</div>
+              <div class="tab" data-tab="gazes">Gazes</div>
+            </div>
+
+            <div class="tab-content active" id="tab-ideational">
+              <h4 class="mb-12">Ideational Metafunction: What is represented?</h4>
+
+              <div class="codebook-item">
+                <div class="codebook-term"><i class="fas fa-users"></i> Participants</div>
+                <div class="codebook-def">The people, objects, or entities depicted in the image.</div>
+                <div class="grid-2 mt-16">
+                  <div class="text-xs"><strong>People Types:</strong> Academic, Industry Rep, Student, Policymaker, Entrepreneur, Citizen</div>
+                  <div class="text-xs"><strong>Technology Types:</strong> Lab Equipment, Digital Interface, Prototype, Commercial Product, Infrastructure</div>
+                </div>
+              </div>
+
+              <div class="codebook-item">
+                <div class="codebook-term"><i class="fas fa-play"></i> Processes</div>
+                <div class="codebook-def">The actions or activities being performed.</div>
+                <div class="text-xs mt-16"><strong>Types:</strong> Research Work, Collaboration, Presentation, Experimentation, Networking, Demonstration</div>
+              </div>
+
+              <div class="codebook-item">
+                <div class="codebook-term"><i class="fas fa-map-marker-alt"></i> Circumstances (Settings)</div>
+                <div class="codebook-def">The environment or context where actions take place.</div>
+                <div class="text-xs mt-16"><strong>Types:</strong> Laboratory, Office, Conference Room, Factory/Production, Natural Environment, Event Venue</div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-interpersonal">
+              <h4 class="mb-12">Interpersonal Metafunction: What relationship with viewer?</h4>
+
+              <div class="codebook-item">
+                <div class="codebook-term"><i class="fas fa-eye"></i> Contact</div>
+                <div class="codebook-def">Whether participants look directly at the viewer (demand) or away (offer).</div>
+                <div class="grid-3 mt-16">
+                  <div class="text-xs"><strong>Strong:</strong> Direct eye contact, demanding engagement</div>
+                  <div class="text-xs"><strong>Weak:</strong> Glance or partial contact</div>
+                  <div class="text-xs"><strong>None:</strong> Participants absorbed in activity (offer)</div>
+                </div>
+              </div>
+
+              <div class="codebook-item">
+                <div class="codebook-term"><i class="fas fa-arrows-alt-h"></i> Social Distance</div>
+                <div class="codebook-def">Implied closeness based on framing (close-up, medium, long shot).</div>
+                <div class="grid-3 mt-16">
+                  <div class="text-xs"><strong>Intimate:</strong> Close-up, personal connection</div>
+                  <div class="text-xs"><strong>Interpersonal:</strong> Medium shot, social relation</div>
+                  <div class="text-xs"><strong>Impersonal:</strong> Long shot, public distance</div>
+                </div>
+              </div>
+
+              <div class="codebook-item">
+                <div class="codebook-term"><i class="fas fa-arrows-alt-v"></i> Vertical Angle (Power)</div>
+                <div class="codebook-def">Camera angle suggesting power relationships.</div>
+                <div class="grid-3 mt-16">
+                  <div class="text-xs"><strong>High Angle:</strong> Viewer has power over subject</div>
+                  <div class="text-xs"><strong>Eye Level:</strong> Equality between viewer and subject</div>
+                  <div class="text-xs"><strong>Low Angle:</strong> Subject has power over viewer</div>
+                </div>
+              </div>
+
+              <div class="codebook-item">
+                <div class="codebook-term"><i class="fas fa-palette"></i> Coding Orientation</div>
+                <div class="codebook-def">The aesthetic code used to establish credibility.</div>
+                <div class="grid-4 mt-16">
+                  <div class="text-xs"><strong>Naturalistic:</strong> Photographic realism</div>
+                  <div class="text-xs"><strong>Technological:</strong> Technical precision</div>
+                  <div class="text-xs"><strong>Sensory:</strong> Emotional, artistic</div>
+                  <div class="text-xs"><strong>Abstract:</strong> Diagrammatic, schematic</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-textual">
+              <h4 class="mb-12">Textual Metafunction: How is it organized?</h4>
+
+              <div class="codebook-item">
+                <div class="codebook-term"><i class="fas fa-star"></i> Salience</div>
+                <div class="codebook-def">Which elements are made most prominent through size, color, contrast, or position.</div>
+                <div class="grid-4 mt-16">
+                  <div class="text-xs"><strong>People Primary:</strong> Humans dominate</div>
+                  <div class="text-xs"><strong>Tech Primary:</strong> Technology dominates</div>
+                  <div class="text-xs"><strong>Setting Primary:</strong> Environment dominates</div>
+                  <div class="text-xs"><strong>Balanced:</strong> No clear hierarchy</div>
+                </div>
+              </div>
+
+              <div class="codebook-item">
+                <div class="codebook-term"><i class="fas fa-crop"></i> Framing</div>
+                <div class="codebook-def">How elements are connected or separated visually.</div>
+                <div class="grid-3 mt-16">
+                  <div class="text-xs"><strong>Strong:</strong> Clear boundaries, distinct zones</div>
+                  <div class="text-xs"><strong>Weak:</strong> Soft transitions between areas</div>
+                  <div class="text-xs"><strong>None:</strong> Unified composition</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-gazes">
+              <h4 class="mb-12">Visual Gazes: Characteristic Configurations</h4>
+
+              <div class="codebook-item" style="border-left:4px solid #3498db">
+                <div class="codebook-term" style="color:#3498db"><i class="fas fa-handshake"></i> Partnership Gaze</div>
+                <div class="codebook-def">Positions viewers as potential partners through direct engagement and egalitarian framing.</div>
+                <div class="mt-16 text-xs">
+                  <strong>Typical Profile:</strong> Mixed groups, collaboration activities, interpersonal distance, eye-level angle, naturalistic orientation, weak-to-strong contact.
+                </div>
+              </div>
+
+              <div class="codebook-item" style="border-left:4px solid #2ecc71">
+                <div class="codebook-term" style="color:#2ecc71"><i class="fas fa-chart-line"></i> Impact Gaze</div>
+                <div class="codebook-def">Positions viewers as evaluators through technology-focused, outcome-oriented imagery.</div>
+                <div class="mt-16 text-xs">
+                  <strong>Typical Profile:</strong> Technology/infrastructure prominent, impersonal distance, viewer-power angle, technological orientation, minimal contact.
+                </div>
+              </div>
+
+              <div class="codebook-item" style="border-left:4px solid #e74c3c">
+                <div class="codebook-term" style="color:#e74c3c"><i class="fas fa-user-graduate"></i> Talent Gaze</div>
+                <div class="codebook-def">Positions viewers as potential participants through aspirational individual portraits.</div>
+                <div class="mt-16 text-xs">
+                  <strong>Typical Profile:</strong> Individual focus, presentation/intellectual work, intimate distance, strong direct contact, sensory orientation.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Absence Screen -->
+      <div class="screen" id="screen-absence">
+        <div class="help-section" style="background:#fef2f2;border-color:#fca5a5">
+          <h4 style="color:#991b1b"><i class="fas fa-eye-slash"></i> Absence Analysis: What's NOT Shown</h4>
+          <p style="color:#7f1d1d">Critical visual analysis examines not only what is present but what is systematically absent.
+             This module helps identify gaps between expected representations and actual visual choices.
+             Absences reveal ideological framings and institutional blind spots.</p>
+        </div>
+
+        <div class="grid-2 mb-16">
+          <div class="card">
+            <div class="card-header">
+              <span><i class="fas fa-users-slash"></i> Expected vs. Observed Actors</span>
+            </div>
+            <div class="card-body">
+              <div id="actorAbsenceChart" style="height:250px"></div>
+              <div class="mt-16">
+                <h4 class="text-xs mb-8" style="text-transform:uppercase;color:#666">Notable Absences</h4>
+                <div id="actorAbsences">
+                  <p class="text-gray text-sm">Load demo data to see absence analysis.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span><i class="fas fa-map-marked-alt"></i> Expected vs. Observed Settings</span>
+            </div>
+            <div class="card-body">
+              <div id="settingAbsenceChart" style="height:250px"></div>
+              <div class="mt-16">
+                <h4 class="text-xs mb-8" style="text-transform:uppercase;color:#666">Notable Absences</h4>
+                <div id="settingAbsences">
+                  <p class="text-gray text-sm">Load demo data to see absence analysis.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-balance-scale"></i> Systematic Absence Patterns</span>
+          </div>
+          <div class="card-body">
+            <div class="tabs">
+              <div class="tab active" data-absence-tab="actors">Actor Gaps</div>
+              <div class="tab" data-absence-tab="activities">Activity Gaps</div>
+              <div class="tab" data-absence-tab="framings">Framing Gaps</div>
+              <div class="tab" data-absence-tab="custom">Custom Analysis</div>
+            </div>
+
+            <div class="tab-content active" id="absence-tab-actors">
+              <table style="width:100%;border-collapse:collapse;font-size:12px">
+                <thead>
+                  <tr style="background:#f5f5f5;text-align:left">
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Category</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Expected</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Observed</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Gap</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Interpretation</th>
+                  </tr>
+                </thead>
+                <tbody id="actorGapsTable">
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Women in Leadership</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">50%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">32%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-18%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">Under-representation despite diversity commitments</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Citizens/End-users</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">25%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">8%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-17%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">Innovation framed as expert-driven, not user-centered</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Non-European Partners</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">20%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">5%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-15%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">Euro-centric framing of "global" challenges</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Workers/Labor</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">15%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">3%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-12%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">"Just transition" rhetoric vs. visual absence of workers</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-content" id="absence-tab-activities">
+              <table style="width:100%;border-collapse:collapse;font-size:12px">
+                <thead>
+                  <tr style="background:#f5f5f5;text-align:left">
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Activity Type</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Expected</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Observed</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Gap</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Interpretation</th>
+                  </tr>
+                </thead>
+                <tbody id="activityGapsTable">
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Failure/Learning</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">10%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">0.5%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-9.5%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">Innovation presented as success-only narrative</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Conflict/Debate</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">8%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">1%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-7%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">Consensus framing obscures political contestation</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Care Work</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">12%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">2%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-10%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">Reproductive labor invisible in innovation imagery</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-content" id="absence-tab-framings">
+              <table style="width:100%;border-collapse:collapse;font-size:12px">
+                <thead>
+                  <tr style="background:#f5f5f5;text-align:left">
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Framing Type</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Expected</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Observed</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Gap</th>
+                    <th style="padding:10px;border-bottom:1px solid #e5e5e5">Interpretation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Environmental Damage</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">15%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">2%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-13%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">Problem invisibility in solution-focused imagery</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Inequality/Poverty</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">10%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">1%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-9%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">Social dimensions of transitions rendered invisible</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">Uncertainty/Risk</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">8%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5">0.5%</td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5"><span class="tag tag-red">-7.5%</span></td>
+                    <td style="padding:10px;border-bottom:1px solid #f5f5f5;color:#666">Technological optimism vs. actual uncertainty</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-content" id="absence-tab-custom">
+              <h4 class="mb-12">Define Custom Absence Analysis</h4>
+              <div class="grid-2 mb-16">
+                <div>
+                  <label class="text-xs text-gray">Category Name</label>
+                  <input type="text" class="input" id="customAbsenceName" placeholder="e.g., Indigenous Knowledge">
+                </div>
+                <div>
+                  <label class="text-xs text-gray">Expected Proportion (%)</label>
+                  <input type="number" class="input" id="customAbsenceExpected" placeholder="e.g., 15" min="0" max="100">
+                </div>
+              </div>
+              <div class="mb-16">
+                <label class="text-xs text-gray">Justification for Expected Proportion</label>
+                <textarea class="textarea" id="customAbsenceJustification" placeholder="Why should this category be present at this rate? (e.g., policy commitments, stakeholder representation, etc.)"></textarea>
+              </div>
+              <div class="mb-16">
+                <label class="text-xs text-gray">Detection Keywords (comma-separated)</label>
+                <input type="text" class="input" id="customAbsenceKeywords" placeholder="e.g., indigenous, traditional, local knowledge">
+              </div>
+              <button class="btn btn-primary" onclick="addCustomAbsence()"><i class="fas fa-plus"></i> Add to Analysis</button>
+
+              <div class="mt-16">
+                <h4 class="text-xs mb-8" style="text-transform:uppercase;color:#666">Custom Absence Categories</h4>
+                <div id="customAbsenceList">
+                  <p class="text-gray text-sm">No custom absence categories defined yet.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span><i class="fas fa-lightbulb"></i> Absence Insights</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-3">
+              <div class="codebook-item" style="border-left:4px solid #e74c3c">
+                <div class="codebook-term" style="color:#e74c3c"><i class="fas fa-exclamation-triangle"></i> Critical Gaps</div>
+                <div class="codebook-def">Categories where observed representation is less than 50% of expected.</div>
+                <div class="mt-16" id="criticalGaps">
+                  <span class="tag tag-outline" style="margin:2px">Women in Leadership</span>
+                  <span class="tag tag-outline" style="margin:2px">Citizens/End-users</span>
+                  <span class="tag tag-outline" style="margin:2px">Failure Narratives</span>
+                </div>
+              </div>
+              <div class="codebook-item" style="border-left:4px solid #f39c12">
+                <div class="codebook-term" style="color:#f39c12"><i class="fas fa-question-circle"></i> Questions to Ask</div>
+                <div class="codebook-def">Prompts for critical reflection on visual choices.</div>
+                <ul class="mt-16" style="font-size:11px;color:#666;padding-left:16px">
+                  <li>Who benefits from these absences?</li>
+                  <li>What power structures are maintained?</li>
+                  <li>Which voices are silenced visually?</li>
+                  <li>What alternative framings are possible?</li>
+                </ul>
+              </div>
+              <div class="codebook-item" style="border-left:4px solid #3498db">
+                <div class="codebook-term" style="color:#3498db"><i class="fas fa-book-open"></i> Theoretical Framework</div>
+                <div class="codebook-def">Absence analysis draws on critical discourse analysis and visual semiotics.</div>
+                <div class="mt-16 text-xs text-gray">
+                  References: Rose (2016), Machin & Mayr (2012), van Leeuwen (2008)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Coding Panel (Slide-in) -->
+<div class="coding-panel" id="codingPanel">
+  <div class="flex justify-between items-center mb-16">
+    <h3 class="text-sm"><i class="fas fa-edit"></i> Annotate Image</h3>
+    <button class="btn btn-sm" onclick="closeCodingPanel()"><i class="fas fa-times"></i></button>
+  </div>
+
+  <img id="codingImage" class="coding-image" src="" alt="Current image">
+
+  <div class="flex justify-between items-center mb-12">
+    <span class="tag tag-outline" id="codingImageId">IMG_001</span>
+    <span class="text-xs text-gray" id="codingImageOrg">Organization</span>
+  </div>
+
+  <div class="meta-section">
+    <div class="meta-title"><i class="fas fa-users"></i> Participants</div>
+    <div class="grid-2 gap-4">
+      <button class="option-btn" data-cat="participants" data-val="people">People</button>
+      <button class="option-btn" data-cat="participants" data-val="technology">Technology</button>
+      <button class="option-btn" data-cat="participants" data-val="nature">Nature</button>
+      <button class="option-btn" data-cat="participants" data-val="abstract">Abstract</button>
+    </div>
+  </div>
+
+  <div class="meta-section">
+    <div class="meta-title"><i class="fas fa-eye"></i> Contact</div>
+    <div class="grid-3 gap-4">
+      <button class="option-btn" data-cat="contact" data-val="strong">Strong</button>
+      <button class="option-btn" data-cat="contact" data-val="weak">Weak</button>
+      <button class="option-btn" data-cat="contact" data-val="none">None</button>
+    </div>
+  </div>
+
+  <div class="meta-section">
+    <div class="meta-title"><i class="fas fa-arrows-alt-h"></i> Distance</div>
+    <div class="grid-3 gap-4">
+      <button class="option-btn" data-cat="distance" data-val="intimate">Intimate</button>
+      <button class="option-btn" data-cat="distance" data-val="interpersonal">Social</button>
+      <button class="option-btn" data-cat="distance" data-val="impersonal">Impersonal</button>
+    </div>
+  </div>
+
+  <div class="meta-section">
+    <div class="meta-title"><i class="fas fa-arrows-alt-v"></i> Angle</div>
+    <div class="grid-3 gap-4">
+      <button class="option-btn" data-cat="angle" data-val="high">High (Viewer Power)</button>
+      <button class="option-btn" data-cat="angle" data-val="eye">Eye Level</button>
+      <button class="option-btn" data-cat="angle" data-val="low">Low (Subject Power)</button>
+    </div>
+  </div>
+
+  <div class="meta-section">
+    <div class="meta-title"><i class="fas fa-palette"></i> Orientation</div>
+    <div class="grid-2 gap-4">
+      <button class="option-btn" data-cat="orientation" data-val="naturalistic">Naturalistic</button>
+      <button class="option-btn" data-cat="orientation" data-val="technological">Technological</button>
+      <button class="option-btn" data-cat="orientation" data-val="sensory">Sensory</button>
+      <button class="option-btn" data-cat="orientation" data-val="abstract">Abstract</button>
+    </div>
+  </div>
+
+  <div class="meta-section">
+    <div class="meta-title"><i class="fas fa-comment"></i> Notes</div>
+    <textarea class="textarea" id="codingNotes" placeholder="Additional observations..."></textarea>
+  </div>
+
+  <div class="grid-2 mt-16">
+    <button class="btn" onclick="skipImage()"><i class="fas fa-forward"></i> Skip</button>
+    <button class="btn btn-primary" onclick="saveCoding()"><i class="fas fa-save"></i> Save</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================================
+// STATE
+// ============================================================================
+const state = {
+  images: [],
+  codings: {},
+  currentImageIndex: -1,
+  currentScreen: 'gallery',
+  network: { nodes: [], edges: [] }
+};
+
+// Demo data for testing
+const DEMO_IMAGES = [
+  { id: 'demo_001', name: 'Partnership Event', org: 'Climate-KIC', url: 'https://via.placeholder.com/400x300/3498db/fff?text=Partnership+Event', gaze: 'partnership' },
+  { id: 'demo_002', name: 'Innovation Lab', org: 'EIT Digital', url: 'https://via.placeholder.com/400x300/2ecc71/fff?text=Innovation+Lab', gaze: 'impact' },
+  { id: 'demo_003', name: 'Entrepreneur Portrait', org: 'EIT InnoEnergy', url: 'https://via.placeholder.com/400x300/e74c3c/fff?text=Entrepreneur+Portrait', gaze: 'talent' },
+  { id: 'demo_004', name: 'Team Collaboration', org: 'EIT Health', url: 'https://via.placeholder.com/400x300/3498db/fff?text=Team+Collaboration', gaze: 'partnership' },
+  { id: 'demo_005', name: 'Technology Showcase', org: 'EIT Manufacturing', url: 'https://via.placeholder.com/400x300/2ecc71/fff?text=Technology+Showcase', gaze: 'impact' },
+  { id: 'demo_006', name: 'Graduate Success', org: 'EIT Food', url: 'https://via.placeholder.com/400x300/e74c3c/fff?text=Graduate+Success', gaze: 'talent' },
+  { id: 'demo_007', name: 'Conference Panel', org: 'Climate-KIC', url: 'https://via.placeholder.com/400x300/3498db/fff?text=Conference+Panel', gaze: 'partnership' },
+  { id: 'demo_008', name: 'Factory Tour', org: 'EIT RawMaterials', url: 'https://via.placeholder.com/400x300/2ecc71/fff?text=Factory+Tour', gaze: 'impact' },
+  { id: 'demo_009', name: 'Award Ceremony', org: 'EIT Urban Mobility', url: 'https://via.placeholder.com/400x300/e74c3c/fff?text=Award+Ceremony', gaze: 'talent' },
+  { id: 'demo_010', name: 'Networking Event', org: 'EIT Digital', url: 'https://via.placeholder.com/400x300/9b59b6/fff?text=Networking+Event', gaze: 'partnership' },
+  { id: 'demo_011', name: 'Research Lab', org: 'EIT Health', url: 'https://via.placeholder.com/400x300/1abc9c/fff?text=Research+Lab', gaze: 'impact' },
+  { id: 'demo_012', name: 'Student Pitch', org: 'Climate-KIC', url: 'https://via.placeholder.com/400x300/e67e22/fff?text=Student+Pitch', gaze: 'talent' }
+];
+
+// Demo codings for network visualization
+const DEMO_CODINGS = {
+  'demo_001': { participants: 'people', contact: 'weak', distance: 'interpersonal', angle: 'eye', orientation: 'naturalistic' },
+  'demo_002': { participants: 'technology', contact: 'none', distance: 'impersonal', angle: 'eye', orientation: 'technological' },
+  'demo_003': { participants: 'people', contact: 'strong', distance: 'intimate', angle: 'eye', orientation: 'sensory' },
+  'demo_004': { participants: 'people', contact: 'weak', distance: 'interpersonal', angle: 'eye', orientation: 'naturalistic' },
+  'demo_005': { participants: 'technology', contact: 'none', distance: 'impersonal', angle: 'high', orientation: 'technological' },
+  'demo_006': { participants: 'people', contact: 'strong', distance: 'intimate', angle: 'low', orientation: 'sensory' },
+  'demo_007': { participants: 'people', contact: 'weak', distance: 'interpersonal', angle: 'eye', orientation: 'naturalistic' },
+  'demo_008': { participants: 'technology', contact: 'none', distance: 'impersonal', angle: 'eye', orientation: 'technological' },
+  'demo_009': { participants: 'people', contact: 'strong', distance: 'intimate', angle: 'eye', orientation: 'sensory' },
+  'demo_010': { participants: 'people', contact: 'weak', distance: 'interpersonal', angle: 'eye', orientation: 'naturalistic' },
+  'demo_011': { participants: 'technology', contact: 'none', distance: 'impersonal', angle: 'eye', orientation: 'technological' },
+  'demo_012': { participants: 'people', contact: 'strong', distance: 'intimate', angle: 'eye', orientation: 'sensory' }
+};
+
+// ============================================================================
+// INITIALIZATION
+// ============================================================================
+// Custom absence categories storage
+const customAbsenceCategories = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+  setupNavigation();
+  setupTabs();
+  setupAbsenceTabs();
+  setupCodingButtons();
+  setupDropZone();
+  updateStats();
+});
+
+function setupNavigation() {
+  document.querySelectorAll('.nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      const screen = link.dataset.screen;
+      showScreen(screen);
+    });
+  });
+}
+
+function setupTabs() {
+  document.querySelectorAll('.tab[data-tab]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabId = tab.dataset.tab;
+      const parent = tab.closest('.card-body') || tab.closest('.card');
+      const tabs = parent ? parent.querySelectorAll('.tab[data-tab]') : document.querySelectorAll('.tab[data-tab]');
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Find matching tab content
+      document.querySelectorAll('.tab-content[id^="tab-"]').forEach(c => c.classList.remove('active'));
+      const targetContent = document.getElementById('tab-' + tabId);
+      if (targetContent) targetContent.classList.add('active');
+    });
+  });
+}
+
+function setupAbsenceTabs() {
+  document.querySelectorAll('.tab[data-absence-tab]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabId = tab.dataset.absenceTab;
+      const parent = tab.closest('.card-body');
+
+      // Update active tab
+      parent.querySelectorAll('.tab[data-absence-tab]').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Update active content
+      parent.querySelectorAll('.tab-content[id^="absence-tab-"]').forEach(c => c.classList.remove('active'));
+      const targetContent = document.getElementById('absence-tab-' + tabId);
+      if (targetContent) targetContent.classList.add('active');
+    });
+  });
+}
+
+function setupCodingButtons() {
+  document.querySelectorAll('#codingPanel .option-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const cat = this.dataset.cat;
+      document.querySelectorAll(`#codingPanel [data-cat="${cat}"]`).forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+}
+
+function setupDropZone() {
+  const dropZone = document.getElementById('dropZone');
+
+  ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, e => {
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  });
+
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropZone.addEventListener(eventName, () => dropZone.classList.add('dragover'));
+  });
+
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, () => dropZone.classList.remove('dragover'));
+  });
+
+  dropZone.addEventListener('drop', e => {
+    const files = e.dataTransfer.files;
+    handleFiles(files);
+  });
+}
+
+// ============================================================================
+// NAVIGATION
+// ============================================================================
+function showScreen(screenId) {
+  state.currentScreen = screenId;
+
+  document.querySelectorAll('.nav a').forEach(link => {
+    link.classList.toggle('active', link.dataset.screen === screenId);
+  });
+
+  document.querySelectorAll('.screen').forEach(screen => {
+    screen.classList.toggle('active', screen.id === 'screen-' + screenId);
+  });
+
+  if (screenId === 'network') renderNetwork();
+  if (screenId === 'gazes') renderGazes();
+  if (screenId === 'absence') renderAbsence();
+}
+
+// ============================================================================
+// DATA LOADING
+// ============================================================================
+function loadDemoData() {
+  state.images = [...DEMO_IMAGES];
+  state.codings = { ...DEMO_CODINGS };
+
+  updateStats();
+  renderGallery();
+  renderAnnotateGrid();
+  buildNetwork();
+  renderNetwork();
+  renderGazes();
+  renderAbsence();
+
+  toast('Demo data loaded: 12 sample images');
+}
+
+function handleFileSelect(event) {
+  handleFiles(event.target.files);
+}
+
+function handleFiles(files) {
+  Array.from(files).forEach(file => {
+    if (file.type === 'application/json') {
+      // Load JSON data
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.images) state.images = data.images;
+          if (data.codings) state.codings = data.codings;
+          updateStats();
+          renderGallery();
+          toast(`Loaded ${state.images.length} images from JSON`);
+        } catch (err) {
+          toast('Error parsing JSON file');
+        }
+      };
+      reader.readAsText(file);
+    } else if (file.type.startsWith('image/')) {
+      // Load image file
+      const reader = new FileReader();
+      reader.onload = e => {
+        const id = 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        state.images.push({
+          id: id,
+          name: file.name,
+          org: 'Unknown',
+          url: e.target.result
+        });
+        updateStats();
+        renderGallery();
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+// ============================================================================
+// GALLERY RENDERING
+// ============================================================================
+function renderGallery() {
+  const grid = document.getElementById('imageGrid');
+
+  if (state.images.length === 0) {
+    grid.innerHTML = `
+      <div class="text-center text-gray" style="grid-column:1/-1;padding:40px">
+        <i class="fas fa-images" style="font-size:48px;color:#e5e5e5;margin-bottom:12px;display:block"></i>
+        <p>No images loaded yet.</p>
+        <p class="text-xs mt-16">Click "Load Demo" or drag images here to begin.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = state.images.map((img, idx) => {
+    const coding = state.codings[img.id];
+    const gazeColor = img.gaze === 'partnership' ? '#3498db' :
+                      img.gaze === 'impact' ? '#2ecc71' :
+                      img.gaze === 'talent' ? '#e74c3c' : '#95a5a6';
+    const statusTag = coding ?
+      `<span class="tag tag-green" style="font-size:8px">Coded</span>` :
+      `<span class="tag tag-outline" style="font-size:8px">Pending</span>`;
+
+    return `
+      <div class="image-card ${coding ? 'coded' : ''}" onclick="openCodingPanel(${idx})" style="border-top:3px solid ${gazeColor}">
+        <img src="${img.url}" alt="${img.name}" onerror="this.src='https://via.placeholder.com/400x300/f5f5f5/999?text=Image'">
+        <div class="image-card-body">
+          <div class="image-card-title">${img.name}</div>
+          <div class="image-card-meta flex justify-between items-center">
+            <span>${img.org}</span>
+            ${statusTag}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('galleryCount').textContent = `${state.images.length} images`;
+}
+
+function renderAnnotateGrid() {
+  const grid = document.getElementById('annotateGrid');
+  const pending = state.images.filter(img => !state.codings[img.id]);
+
+  if (pending.length === 0) {
+    grid.innerHTML = `<div class="text-center text-gray" style="grid-column:1/-1;padding:40px">All images have been coded!</div>`;
+    return;
+  }
+
+  grid.innerHTML = pending.map((img, idx) => {
+    const originalIdx = state.images.findIndex(i => i.id === img.id);
+    return `
+      <div class="image-card" onclick="openCodingPanel(${originalIdx})">
+        <img src="${img.url}" alt="${img.name}" onerror="this.src='https://via.placeholder.com/400x300/f5f5f5/999?text=Image'">
+        <div class="image-card-body">
+          <div class="image-card-title">${img.name}</div>
+          <div class="image-card-meta">${img.org}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============================================================================
+// CODING PANEL
+// ============================================================================
+function openCodingPanel(index) {
+  state.currentImageIndex = index;
+  const img = state.images[index];
+  const coding = state.codings[img.id] || {};
+
+  document.getElementById('codingImage').src = img.url;
+  document.getElementById('codingImageId').textContent = img.id;
+  document.getElementById('codingImageOrg').textContent = img.org;
+  document.getElementById('codingNotes').value = coding.notes || '';
+
+  // Clear and restore selections
+  document.querySelectorAll('#codingPanel .option-btn').forEach(btn => btn.classList.remove('selected'));
+
+  Object.entries(coding).forEach(([cat, val]) => {
+    const btn = document.querySelector(`#codingPanel [data-cat="${cat}"][data-val="${val}"]`);
+    if (btn) btn.classList.add('selected');
+  });
+
+  document.getElementById('codingPanel').classList.add('open');
+}
+
+function closeCodingPanel() {
+  document.getElementById('codingPanel').classList.remove('open');
+}
+
+function saveCoding() {
+  if (state.currentImageIndex < 0) return;
+
+  const img = state.images[state.currentImageIndex];
+  const coding = { notes: document.getElementById('codingNotes').value };
+
+  document.querySelectorAll('#codingPanel .option-btn.selected').forEach(btn => {
+    coding[btn.dataset.cat] = btn.dataset.val;
+  });
+
+  state.codings[img.id] = coding;
+
+  // Determine gaze based on coding
+  img.gaze = determineGaze(coding);
+
+  updateStats();
+  renderGallery();
+  renderAnnotateGrid();
+  buildNetwork();
+
+  toast('Coding saved!');
+
+  // Move to next uncoded image
+  const nextUncoded = state.images.findIndex((i, idx) => idx > state.currentImageIndex && !state.codings[i.id]);
+  if (nextUncoded >= 0) {
+    setTimeout(() => openCodingPanel(nextUncoded), 500);
+  } else {
+    closeCodingPanel();
+  }
+}
+
+function skipImage() {
+  const nextIdx = state.currentImageIndex + 1;
+  if (nextIdx < state.images.length) {
+    openCodingPanel(nextIdx);
+  } else {
+    closeCodingPanel();
+    toast('Reached end of images');
+  }
+}
+
+function determineGaze(coding) {
+  // Simple heuristic for gaze detection
+  if (coding.contact === 'strong' && coding.distance === 'intimate') return 'talent';
+  if (coding.participants === 'technology' && coding.contact === 'none') return 'impact';
+  if (coding.participants === 'people' && coding.distance === 'interpersonal') return 'partnership';
+  return 'partnership'; // default
+}
+
+function startBatchCoding() {
+  const firstUncoded = state.images.findIndex(img => !state.codings[img.id]);
+  if (firstUncoded >= 0) {
+    openCodingPanel(firstUncoded);
+  } else {
+    toast('All images have been coded!');
+  }
+}
+
+// ============================================================================
+// NETWORK VISUALIZATION
+// ============================================================================
+function buildNetwork() {
+  const elements = ['people', 'technology', 'nature', 'abstract',
+                    'strong', 'weak', 'none',
+                    'intimate', 'interpersonal', 'impersonal',
+                    'high', 'eye', 'low',
+                    'naturalistic', 'technological', 'sensory', 'abstract_orient'];
+
+  const elementColors = {
+    people: '#3498db', technology: '#2ecc71', nature: '#27ae60', abstract: '#9b59b6',
+    strong: '#e74c3c', weak: '#e67e22', none: '#95a5a6',
+    intimate: '#e74c3c', interpersonal: '#f39c12', impersonal: '#3498db',
+    high: '#9b59b6', eye: '#2ecc71', low: '#e74c3c',
+    naturalistic: '#27ae60', technological: '#3498db', sensory: '#e74c3c', abstract_orient: '#9b59b6'
+  };
+
+  const cooccurrences = {};
+
+  // Count co-occurrences
+  Object.values(state.codings).forEach(coding => {
+    const present = Object.values(coding).filter(v => elements.includes(v) || v === 'abstract');
+    for (let i = 0; i < present.length; i++) {
+      for (let j = i + 1; j < present.length; j++) {
+        const key = [present[i], present[j]].sort().join('--');
+        cooccurrences[key] = (cooccurrences[key] || 0) + 1;
+      }
+    }
+  });
+
+  // Build nodes from elements that appear in codings
+  const usedElements = new Set();
+  Object.values(state.codings).forEach(coding => {
+    Object.values(coding).forEach(v => {
+      if (elements.includes(v) || v === 'abstract') usedElements.add(v);
+    });
+  });
+
+  state.network.nodes = Array.from(usedElements).map(el => ({
+    id: el,
+    label: el.charAt(0).toUpperCase() + el.slice(1).replace('_', ' '),
+    color: elementColors[el] || '#999'
+  }));
+
+  state.network.edges = Object.entries(cooccurrences)
+    .filter(([_, count]) => count > 0)
+    .map(([key, count]) => {
+      const [source, target] = key.split('--');
+      return { source, target, weight: count };
+    });
+
+  document.getElementById('networkNodes').textContent = state.network.nodes.length;
+  document.getElementById('networkEdges').textContent = state.network.edges.length;
+}
+
+function renderNetwork() {
+  if (state.network.nodes.length === 0) {
+    document.getElementById('networkPlot').innerHTML = '<p class="text-gray text-center" style="padding:40px">Code images to see the co-occurrence network.</p>';
+    return;
+  }
+
+  // Force-directed layout simulation
+  const nodes = state.network.nodes.map((n, i) => ({
+    ...n,
+    x: Math.cos(2 * Math.PI * i / state.network.nodes.length) * 0.8,
+    y: Math.sin(2 * Math.PI * i / state.network.nodes.length) * 0.8
+  }));
+
+  const nodeMap = {};
+  nodes.forEach(n => nodeMap[n.id] = n);
+
+  // Edge traces
+  const edgeX = [], edgeY = [];
+  state.network.edges.forEach(e => {
+    const source = nodeMap[e.source];
+    const target = nodeMap[e.target];
+    if (source && target) {
+      edgeX.push(source.x, target.x, null);
+      edgeY.push(source.y, target.y, null);
+    }
+  });
+
+  const edgeTrace = {
+    x: edgeX, y: edgeY,
+    mode: 'lines',
+    type: 'scatter',
+    line: { width: 1, color: '#ddd' },
+    hoverinfo: 'none'
+  };
+
+  // Node trace
+  const nodeTrace = {
+    x: nodes.map(n => n.x),
+    y: nodes.map(n => n.y),
+    mode: 'markers+text',
+    type: 'scatter',
+    text: nodes.map(n => n.label),
+    textposition: 'top center',
+    textfont: { size: 10, family: 'Inter' },
+    marker: {
+      size: 20,
+      color: nodes.map(n => n.color),
+      line: { width: 2, color: 'white' }
+    },
+    hovertemplate: '<b>%{text}</b><extra></extra>'
+  };
+
+  const layout = {
+    showlegend: false,
+    hovermode: 'closest',
+    xaxis: { showgrid: false, zeroline: false, showticklabels: false },
+    yaxis: { showgrid: false, zeroline: false, showticklabels: false },
+    margin: { l: 20, r: 20, t: 20, b: 20 },
+    paper_bgcolor: 'white',
+    plot_bgcolor: 'white'
+  };
+
+  Plotly.newPlot('networkPlot', [edgeTrace, nodeTrace], layout, { responsive: true });
+
+  // Render top co-occurrences
+  const topEdges = [...state.network.edges].sort((a, b) => b.weight - a.weight).slice(0, 10);
+  document.getElementById('topCooccurrences').innerHTML = topEdges.map(e => `
+    <div class="flex justify-between items-center" style="padding:6px 0;border-bottom:1px solid #f5f5f5">
+      <span class="text-sm">${e.source} ↔ ${e.target}</span>
+      <span class="tag">${e.weight}</span>
+    </div>
+  `).join('');
+}
+
+// ============================================================================
+// GAZES ANALYSIS
+// ============================================================================
+function renderGazes() {
+  const gazeCounts = { partnership: 0, impact: 0, talent: 0 };
+
+  state.images.forEach(img => {
+    if (img.gaze && gazeCounts[img.gaze] !== undefined) {
+      gazeCounts[img.gaze]++;
+    }
+  });
+
+  const total = state.images.length || 1;
+
+  document.getElementById('partnershipCount').textContent = `${gazeCounts.partnership} images (${(gazeCounts.partnership/total*100).toFixed(0)}%)`;
+  document.getElementById('impactCount').textContent = `${gazeCounts.impact} images (${(gazeCounts.impact/total*100).toFixed(0)}%)`;
+  document.getElementById('talentCount').textContent = `${gazeCounts.talent} images (${(gazeCounts.talent/total*100).toFixed(0)}%)`;
+
+  // Gaze profile chart
+  if (Object.keys(state.codings).length > 0) {
+    renderGazeProfileChart();
+    renderOrgGazeChart();
+  }
+}
+
+function renderGazeProfileChart() {
+  const profiles = {
+    partnership: { contact: { strong: 0, weak: 0, none: 0 }, distance: { intimate: 0, interpersonal: 0, impersonal: 0 } },
+    impact: { contact: { strong: 0, weak: 0, none: 0 }, distance: { intimate: 0, interpersonal: 0, impersonal: 0 } },
+    talent: { contact: { strong: 0, weak: 0, none: 0 }, distance: { intimate: 0, interpersonal: 0, impersonal: 0 } }
+  };
+
+  state.images.forEach(img => {
+    const coding = state.codings[img.id];
+    if (!coding || !img.gaze) return;
+
+    if (coding.contact && profiles[img.gaze]) {
+      profiles[img.gaze].contact[coding.contact] = (profiles[img.gaze].contact[coding.contact] || 0) + 1;
+    }
+    if (coding.distance && profiles[img.gaze]) {
+      profiles[img.gaze].distance[coding.distance] = (profiles[img.gaze].distance[coding.distance] || 0) + 1;
+    }
+  });
+
+  const categories = ['Strong Contact', 'Weak Contact', 'No Contact', 'Intimate', 'Social', 'Impersonal'];
+
+  const traces = [
+    {
+      name: 'Partnership',
+      x: categories,
+      y: [profiles.partnership.contact.strong, profiles.partnership.contact.weak, profiles.partnership.contact.none,
+          profiles.partnership.distance.intimate, profiles.partnership.distance.interpersonal, profiles.partnership.distance.impersonal],
+      type: 'bar',
+      marker: { color: '#3498db' }
+    },
+    {
+      name: 'Impact',
+      x: categories,
+      y: [profiles.impact.contact.strong, profiles.impact.contact.weak, profiles.impact.contact.none,
+          profiles.impact.distance.intimate, profiles.impact.distance.interpersonal, profiles.impact.distance.impersonal],
+      type: 'bar',
+      marker: { color: '#2ecc71' }
+    },
+    {
+      name: 'Talent',
+      x: categories,
+      y: [profiles.talent.contact.strong, profiles.talent.contact.weak, profiles.talent.contact.none,
+          profiles.talent.distance.intimate, profiles.talent.distance.interpersonal, profiles.talent.distance.impersonal],
+      type: 'bar',
+      marker: { color: '#e74c3c' }
+    }
+  ];
+
+  Plotly.newPlot('gazeProfileChart', traces, {
+    barmode: 'group',
+    margin: { l: 50, r: 20, t: 20, b: 80 },
+    font: { family: 'Inter' },
+    legend: { orientation: 'h', y: -0.2 }
+  }, { responsive: true });
+}
+
+function renderOrgGazeChart() {
+  const orgs = [...new Set(state.images.map(i => i.org))];
+  const orgGazes = {};
+
+  orgs.forEach(org => {
+    orgGazes[org] = { partnership: 0, impact: 0, talent: 0 };
+    state.images.filter(i => i.org === org).forEach(img => {
+      if (img.gaze) orgGazes[org][img.gaze]++;
+    });
+  });
+
+  const traces = [
+    { name: 'Partnership', x: orgs, y: orgs.map(o => orgGazes[o].partnership), type: 'bar', marker: { color: '#3498db' } },
+    { name: 'Impact', x: orgs, y: orgs.map(o => orgGazes[o].impact), type: 'bar', marker: { color: '#2ecc71' } },
+    { name: 'Talent', x: orgs, y: orgs.map(o => orgGazes[o].talent), type: 'bar', marker: { color: '#e74c3c' } }
+  ];
+
+  Plotly.newPlot('orgGazeChart', traces, {
+    barmode: 'stack',
+    margin: { l: 50, r: 20, t: 20, b: 100 },
+    font: { family: 'Inter' },
+    legend: { orientation: 'h', y: -0.3 },
+    xaxis: { tickangle: -45 }
+  }, { responsive: true });
+}
+
+// ============================================================================
+// ABSENCE ANALYSIS
+// ============================================================================
+function renderAbsence() {
+  renderAbsenceCharts();
+  renderAbsenceInsights();
+  renderCustomAbsenceList();
+}
+
+function renderAbsenceCharts() {
+  // Expected vs Observed data for actors
+  const actorData = {
+    categories: ['Academics', 'Industry', 'Students', 'Policymakers', 'Citizens', 'Workers'],
+    expected: [25, 30, 20, 10, 10, 5],
+    observed: [35, 40, 15, 8, 2, 0]
+  };
+
+  // Calculate observed from actual codings if available
+  if (Object.keys(state.codings).length > 0) {
+    // Use coding data to calculate observed proportions
+    const participantTypes = { people: 0, technology: 0, nature: 0, abstract: 0 };
+    Object.values(state.codings).forEach(coding => {
+      if (coding.participants) {
+        participantTypes[coding.participants] = (participantTypes[coding.participants] || 0) + 1;
+      }
+    });
+  }
+
+  // Actor absence chart
+  const actorTrace1 = {
+    name: 'Expected',
+    x: actorData.categories,
+    y: actorData.expected,
+    type: 'bar',
+    marker: { color: '#3498db', opacity: 0.6 }
+  };
+
+  const actorTrace2 = {
+    name: 'Observed',
+    x: actorData.categories,
+    y: actorData.observed,
+    type: 'bar',
+    marker: { color: '#e74c3c' }
+  };
+
+  Plotly.newPlot('actorAbsenceChart', [actorTrace1, actorTrace2], {
+    barmode: 'group',
+    margin: { l: 40, r: 20, t: 10, b: 60 },
+    font: { family: 'Inter', size: 10 },
+    legend: { orientation: 'h', y: -0.25 },
+    yaxis: { title: '%', ticksuffix: '%' }
+  }, { responsive: true });
+
+  // Update actor absences list
+  const actorAbsences = document.getElementById('actorAbsences');
+  const gaps = actorData.categories.map((cat, i) => ({
+    category: cat,
+    gap: actorData.observed[i] - actorData.expected[i]
+  })).filter(g => g.gap < -5).sort((a, b) => a.gap - b.gap);
+
+  if (gaps.length > 0) {
+    actorAbsences.innerHTML = gaps.map(g => `
+      <div class="flex justify-between items-center" style="padding:4px 0;border-bottom:1px solid #f5f5f5">
+        <span class="text-sm">${g.category}</span>
+        <span class="tag tag-red">${g.gap}%</span>
+      </div>
+    `).join('');
+  }
+
+  // Settings absence chart
+  const settingData = {
+    categories: ['Laboratory', 'Office', 'Conference', 'Factory', 'Community', 'Nature'],
+    expected: [15, 20, 25, 15, 15, 10],
+    observed: [25, 30, 35, 8, 2, 0]
+  };
+
+  const settingTrace1 = {
+    name: 'Expected',
+    x: settingData.categories,
+    y: settingData.expected,
+    type: 'bar',
+    marker: { color: '#2ecc71', opacity: 0.6 }
+  };
+
+  const settingTrace2 = {
+    name: 'Observed',
+    x: settingData.categories,
+    y: settingData.observed,
+    type: 'bar',
+    marker: { color: '#e74c3c' }
+  };
+
+  Plotly.newPlot('settingAbsenceChart', [settingTrace1, settingTrace2], {
+    barmode: 'group',
+    margin: { l: 40, r: 20, t: 10, b: 60 },
+    font: { family: 'Inter', size: 10 },
+    legend: { orientation: 'h', y: -0.25 },
+    yaxis: { title: '%', ticksuffix: '%' }
+  }, { responsive: true });
+
+  // Update setting absences list
+  const settingAbsences = document.getElementById('settingAbsences');
+  const settingGaps = settingData.categories.map((cat, i) => ({
+    category: cat,
+    gap: settingData.observed[i] - settingData.expected[i]
+  })).filter(g => g.gap < -5).sort((a, b) => a.gap - b.gap);
+
+  if (settingGaps.length > 0) {
+    settingAbsences.innerHTML = settingGaps.map(g => `
+      <div class="flex justify-between items-center" style="padding:4px 0;border-bottom:1px solid #f5f5f5">
+        <span class="text-sm">${g.category}</span>
+        <span class="tag tag-red">${g.gap}%</span>
+      </div>
+    `).join('');
+  }
+}
+
+function renderAbsenceInsights() {
+  // Update critical gaps based on actual data if available
+  const criticalGapsEl = document.getElementById('criticalGaps');
+  const criticalGaps = [
+    'Women in Leadership',
+    'Citizens/End-users',
+    'Workers/Labor',
+    'Failure Narratives',
+    'Environmental Damage',
+    'Community Settings'
+  ];
+
+  criticalGapsEl.innerHTML = criticalGaps.map(gap =>
+    `<span class="tag tag-outline" style="margin:2px">${gap}</span>`
+  ).join('');
+}
+
+function addCustomAbsence() {
+  const name = document.getElementById('customAbsenceName').value.trim();
+  const expected = parseFloat(document.getElementById('customAbsenceExpected').value);
+  const justification = document.getElementById('customAbsenceJustification').value.trim();
+  const keywords = document.getElementById('customAbsenceKeywords').value.trim();
+
+  if (!name) {
+    toast('Please enter a category name');
+    return;
+  }
+
+  if (isNaN(expected) || expected < 0 || expected > 100) {
+    toast('Please enter a valid expected proportion (0-100)');
+    return;
+  }
+
+  // Add to custom categories
+  customAbsenceCategories.push({
+    id: 'custom_' + Date.now(),
+    name: name,
+    expected: expected,
+    justification: justification,
+    keywords: keywords.split(',').map(k => k.trim()).filter(k => k),
+    observed: 0 // Will be calculated from codings
+  });
+
+  // Clear form
+  document.getElementById('customAbsenceName').value = '';
+  document.getElementById('customAbsenceExpected').value = '';
+  document.getElementById('customAbsenceJustification').value = '';
+  document.getElementById('customAbsenceKeywords').value = '';
+
+  renderCustomAbsenceList();
+  toast(`Added absence category: ${name}`);
+}
+
+function renderCustomAbsenceList() {
+  const listEl = document.getElementById('customAbsenceList');
+
+  if (customAbsenceCategories.length === 0) {
+    listEl.innerHTML = '<p class="text-gray text-sm">No custom absence categories defined yet.</p>';
+    return;
+  }
+
+  listEl.innerHTML = customAbsenceCategories.map(cat => `
+    <div class="codebook-item" style="margin-bottom:8px">
+      <div class="flex justify-between items-center">
+        <div class="codebook-term">${cat.name}</div>
+        <div class="flex gap-8">
+          <span class="tag tag-outline">Expected: ${cat.expected}%</span>
+          <span class="tag tag-red">Observed: ${cat.observed}%</span>
+          <button class="btn btn-sm btn-danger" onclick="removeCustomAbsence('${cat.id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      ${cat.justification ? `<div class="codebook-def mt-4">${cat.justification}</div>` : ''}
+      ${cat.keywords.length > 0 ? `
+        <div class="mt-8">
+          ${cat.keywords.map(k => `<span class="tag tag-outline" style="margin:2px;font-size:9px">${k}</span>`).join('')}
+        </div>
+      ` : ''}
+    </div>
+  `).join('');
+}
+
+function removeCustomAbsence(id) {
+  const idx = customAbsenceCategories.findIndex(c => c.id === id);
+  if (idx >= 0) {
+    const name = customAbsenceCategories[idx].name;
+    customAbsenceCategories.splice(idx, 1);
+    renderCustomAbsenceList();
+    toast(`Removed: ${name}`);
+  }
+}
+
+// ============================================================================
+// STATS & EXPORT
+// ============================================================================
+function updateStats() {
+  const total = state.images.length;
+  const coded = Object.keys(state.codings).length;
+  const pending = total - coded;
+  const pct = total > 0 ? (coded / total * 100) : 0;
+
+  document.getElementById('totalImages').textContent = total;
+  document.getElementById('codedImages').textContent = coded;
+  document.getElementById('pendingImages').textContent = pending;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct.toFixed(0) + '% complete';
+
+  // Update org filter
+  const orgs = [...new Set(state.images.map(i => i.org))];
+  const filterOrg = document.getElementById('filterOrg');
+  filterOrg.innerHTML = '<option value="all">All Organizations</option>' +
+    orgs.map(o => `<option value="${o}">${o}</option>`).join('');
+}
+
+function applyFilters() {
+  // Filter logic would go here
+  renderGallery();
+}
+
+function exportAllData() {
+  const data = {
+    images: state.images,
+    codings: state.codings,
+    network: state.network,
+    exportDate: new Date().toISOString()
+  };
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'rolebox_visual_data.json';
+  a.click();
+
+  toast('Data exported successfully');
+}
+
+function exportNetworkImage() {
+  Plotly.downloadImage('networkPlot', { format: 'png', width: 1200, height: 800, filename: 'visual_network' });
+  toast('Network image exported');
+}
+
+function updateNetworkLayout() {
+  renderNetwork();
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show';
+  setTimeout(() => t.className = 'toast', 2500);
+}
+
+// ============================================================================
+// MODEL ASSIST FUNCTIONS
+// ============================================================================
+const aiConfig = {
+  provider: localStorage.getItem('vizreg_ai_provider') || 'local',
+  apiKey: localStorage.getItem('vizreg_ai_apikey') || '',
+  localEndpoint: localStorage.getItem('vizreg_ai_endpoint') || 'http://localhost:11434/api/chat',
+  localModel: localStorage.getItem('vizreg_ai_model') || 'llava:7b',
+  mode: localStorage.getItem('vizreg_ai_mode') || 'suggest'
+};
+
+const aiState = {
+  predictions: {},  // imageId -> { labels, confidence, uncertainty }
+  queue: [],        // prioritized list of image IDs to review
+  isRunning: false
+};
+
+function showAISettings() {
+  document.getElementById('aiSettingsModal').style.display = 'flex';
+  document.getElementById('aiProvider').value = aiConfig.provider;
+  document.getElementById('aiApiKey').value = aiConfig.apiKey;
+  document.getElementById('aiLocalEndpoint').value = aiConfig.localEndpoint;
+  document.getElementById('aiLocalModel').value = aiConfig.localModel;
+  document.getElementById('aiMode').value = aiConfig.mode;
+  updateAPIFields();
+}
+
+function hideAISettings() {
+  document.getElementById('aiSettingsModal').style.display = 'none';
+}
+
+function updateAPIFields() {
+  const provider = document.getElementById('aiProvider').value;
+  document.getElementById('localEndpointGroup').classList.toggle('hidden', provider !== 'local');
+  document.getElementById('apiKeyGroup').classList.toggle('hidden', provider === 'local');
+}
+
+function saveAISettings() {
+  aiConfig.provider = document.getElementById('aiProvider').value;
+  aiConfig.apiKey = document.getElementById('aiApiKey').value;
+  aiConfig.localEndpoint = document.getElementById('aiLocalEndpoint').value;
+  aiConfig.localModel = document.getElementById('aiLocalModel').value;
+  aiConfig.mode = document.getElementById('aiMode').value;
+
+  localStorage.setItem('vizreg_ai_provider', aiConfig.provider);
+  localStorage.setItem('vizreg_ai_apikey', aiConfig.apiKey);
+  localStorage.setItem('vizreg_ai_endpoint', aiConfig.localEndpoint);
+  localStorage.setItem('vizreg_ai_model', aiConfig.localModel);
+  localStorage.setItem('vizreg_ai_mode', aiConfig.mode);
+
+  updateAIStatus();
+  hideAISettings();
+  toast('Model settings saved');
+}
+
+function updateAIStatus() {
+  const statusEl = document.getElementById('aiStatus');
+  const btnEl = document.getElementById('runAIBtn');
+
+  if (aiConfig.apiKey || aiConfig.provider === 'local') {
+    const providerName = { openai: 'OpenAI', anthropic: 'Claude', local: 'Local' }[aiConfig.provider];
+    statusEl.textContent = `Connected: ${providerName}`;
+    statusEl.style.color = '#2ecc71';
+    btnEl.disabled = false;
+  } else {
+    statusEl.textContent = 'Not configured';
+    statusEl.style.color = '#95a5a6';
+    btnEl.disabled = true;
+  }
+}
+
+async function testAIConnection() {
+  const provider = document.getElementById('aiProvider').value;
+  const apiKey = document.getElementById('aiApiKey').value;
+  const endpoint = document.getElementById('aiLocalEndpoint').value;
+
+  toast('Testing connection...');
+
+  try {
+    if (provider === 'local') {
+      const res = await fetch(endpoint.replace('/analyze', '/health'));
+      if (res.ok) toast('Local endpoint connected!');
+      else toast('Local endpoint not responding');
+    } else if (provider === 'openai') {
+      const res = await fetch('https://api.openai.com/v1/models', {
+        headers: { 'Authorization': `Bearer ${apiKey}` }
+      });
+      if (res.ok) toast('OpenAI API connected!');
+      else toast('OpenAI API error: ' + res.status);
+    } else if (provider === 'anthropic') {
+      // Anthropic doesn't have a simple health check, so we just validate key format
+      if (apiKey.startsWith('sk-ant-')) toast('Anthropic key format valid');
+      else toast('Invalid Anthropic key format');
+    }
+  } catch (err) {
+    toast('Connection error: ' + err.message);
+  }
+}
+
+async function runAIAnalysis() {
+  if (aiState.isRunning) return;
+
+  const pendingImages = state.images.filter(img => !state.codings[img.id]);
+  if (pendingImages.length === 0) {
+    toast('No pending images to analyze');
+    return;
+  }
+
+  aiState.isRunning = true;
+  document.getElementById('runAIBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+  document.getElementById('runAIBtn').disabled = true;
+
+  toast(`Analyzing ${pendingImages.length} images...`);
+
+  const prompt = buildVisualAnalysisPrompt();
+
+  for (const img of pendingImages) {
+    try {
+      const prediction = await analyzeImage(img, prompt);
+      aiState.predictions[img.id] = prediction;
+    } catch (err) {
+      console.error('Error analyzing image:', img.id, err);
+    }
+  }
+
+  // Build priority queue based on mode
+  buildPriorityQueue();
+  renderAIQueue();
+
+  aiState.isRunning = false;
+  document.getElementById('runAIBtn').innerHTML = '<i class="fas fa-magic"></i> Analyze Pending Images';
+  document.getElementById('runAIBtn').disabled = false;
+
+  toast(`Analysis complete: ${Object.keys(aiState.predictions).length} predictions`);
+}
+
+function buildVisualAnalysisPrompt() {
+  return `Analyze this image using the Kress & van Leeuwen visual grammar framework. Return a JSON object with:
+{
+  "participants": "people" | "technology" | "nature" | "abstract",
+  "contact": "strong" | "weak" | "none",
+  "distance": "intimate" | "interpersonal" | "impersonal",
+  "angle": "high" | "eye" | "low",
+  "orientation": "naturalistic" | "technological" | "sensory" | "abstract",
+  "confidence": 0.0-1.0,
+  "reasoning": "brief explanation"
+}
+Focus on: Who/what is depicted? Is there eye contact (demand) or no gaze (offer)? What is the social distance? What is the viewer's power position?`;
+}
+
+async function analyzeImage(img, prompt) {
+  const imageData = img.url; // base64 or URL
+
+  if (aiConfig.provider === 'openai') {
+    return await analyzeWithOpenAI(imageData, prompt);
+  } else if (aiConfig.provider === 'anthropic') {
+    return await analyzeWithAnthropic(imageData, prompt);
+  } else if (aiConfig.provider === 'local') {
+    return await analyzeWithLocal(imageData, prompt);
+  }
+}
+
+async function analyzeWithOpenAI(imageData, prompt) {
+  const isUrl = imageData.startsWith('http');
+  const imageContent = isUrl
+    ? { type: 'image_url', image_url: { url: imageData } }
+    : { type: 'image_url', image_url: { url: imageData } }; // base64 works too
+
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${aiConfig.apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o',
+      messages: [{
+        role: 'user',
+        content: [
+          { type: 'text', text: prompt },
+          imageContent
+        ]
+      }],
+      max_tokens: 500
+    })
+  });
+
+  const data = await response.json();
+  const content = data.choices[0].message.content;
+
+  // Parse JSON from response
+  const jsonMatch = content.match(/\{[\s\S]*\}/);
+  if (jsonMatch) {
+    const parsed = JSON.parse(jsonMatch[0]);
+    return {
+      labels: {
+        participants: parsed.participants,
+        contact: parsed.contact,
+        distance: parsed.distance,
+        angle: parsed.angle,
+        orientation: parsed.orientation
+      },
+      confidence: parsed.confidence || 0.8,
+      uncertainty: 1 - (parsed.confidence || 0.8),
+      reasoning: parsed.reasoning || ''
+    };
+  }
+  throw new Error('Could not parse model response');
+}
+
+async function analyzeWithAnthropic(imageData, prompt) {
+  const isBase64 = imageData.startsWith('data:');
+  let mediaType = 'image/jpeg';
+  let base64Data = imageData;
+
+  if (isBase64) {
+    const match = imageData.match(/data:([^;]+);base64,(.+)/);
+    if (match) {
+      mediaType = match[1];
+      base64Data = match[2];
+    }
+  }
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': aiConfig.apiKey,
+      'Content-Type': 'application/json',
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 500,
+      messages: [{
+        role: 'user',
+        content: [
+          { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64Data } },
+          { type: 'text', text: prompt }
+        ]
+      }]
+    })
+  });
+
+  const data = await response.json();
+  const content = data.content[0].text;
+
+  const jsonMatch = content.match(/\{[\s\S]*\}/);
+  if (jsonMatch) {
+    const parsed = JSON.parse(jsonMatch[0]);
+    return {
+      labels: {
+        participants: parsed.participants,
+        contact: parsed.contact,
+        distance: parsed.distance,
+        angle: parsed.angle,
+        orientation: parsed.orientation
+      },
+      confidence: parsed.confidence || 0.8,
+      uncertainty: 1 - (parsed.confidence || 0.8),
+      reasoning: parsed.reasoning || ''
+    };
+  }
+  throw new Error('Could not parse model response');
+}
+
+async function analyzeWithLocal(imageData, prompt) {
+  // Extract base64 data from data URL if present
+  let base64Image = imageData;
+  if (imageData.startsWith('data:')) {
+    const match = imageData.match(/data:[^;]+;base64,(.+)/);
+    if (match) base64Image = match[1];
+  }
+
+  // Use Ollama's chat API with image support (llava model)
+  const response = await fetch(aiConfig.localEndpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: aiConfig.localModel || 'llava:7b',
+      messages: [{
+        role: 'user',
+        content: prompt,
+        images: [base64Image]
+      }],
+      stream: false
+    })
+  });
+
+  const data = await response.json();
+  const content = data.message?.content || '';
+
+  // Parse JSON from response
+  const jsonMatch = content.match(/\{[\s\S]*\}/);
+  if (jsonMatch) {
+    try {
+      const parsed = JSON.parse(jsonMatch[0]);
+      return {
+        labels: {
+          participants: parsed.participants,
+          contact: parsed.contact,
+          distance: parsed.distance,
+          angle: parsed.angle,
+          orientation: parsed.orientation
+        },
+        confidence: parsed.confidence || 0.6,
+        uncertainty: 1 - (parsed.confidence || 0.6),
+        reasoning: parsed.reasoning || ''
+      };
+    } catch (e) {
+      console.error('Failed to parse JSON:', e);
+    }
+  }
+
+  // Fallback: try to extract labels from text
+  return {
+    labels: {},
+    confidence: 0.3,
+    uncertainty: 0.7,
+    reasoning: content.substring(0, 200)
+  };
+}
+
+function buildPriorityQueue() {
+  const predictions = Object.entries(aiState.predictions);
+
+  if (aiConfig.mode === 'uncertainty') {
+    // Sort by highest uncertainty first
+    predictions.sort((a, b) => b[1].uncertainty - a[1].uncertainty);
+  } else if (aiConfig.mode === 'diverse') {
+    // Simple diversity: mix different predicted categories
+    const byCategory = {};
+    predictions.forEach(([id, pred]) => {
+      const cat = pred.labels.participants || 'unknown';
+      if (!byCategory[cat]) byCategory[cat] = [];
+      byCategory[cat].push([id, pred]);
+    });
+    // Round-robin from each category
+    const sorted = [];
+    let hasMore = true;
+    while (hasMore) {
+      hasMore = false;
+      for (const cat of Object.keys(byCategory)) {
+        if (byCategory[cat].length > 0) {
+          sorted.push(byCategory[cat].shift());
+          hasMore = true;
+        }
+      }
+    }
+    aiState.queue = sorted.map(([id]) => id);
+    return;
+  }
+
+  aiState.queue = predictions.map(([id]) => id);
+}
+
+function renderAIQueue() {
+  const queueSection = document.getElementById('aiQueueSection');
+  const queueEl = document.getElementById('aiQueue');
+
+  if (aiState.queue.length === 0) {
+    queueSection.classList.add('hidden');
+    return;
+  }
+
+  queueSection.classList.remove('hidden');
+
+  // Show top 5 items
+  const topItems = aiState.queue.slice(0, 5);
+  queueEl.innerHTML = topItems.map((id, i) => {
+    const img = state.images.find(im => im.id === id);
+    const pred = aiState.predictions[id];
+    const isHighPriority = pred.uncertainty > 0.3;
+
+    return `
+      <div class="ai-queue-item ${isHighPriority ? 'high-priority' : ''}" onclick="openImageForReview('${id}')">
+        <span class="text-xs text-gray">#${i + 1}</span>
+        <span class="text-sm" style="flex:1">${img?.name || id}</span>
+        <span class="ai-badge"><i class="fas fa-robot"></i> ${(pred.confidence * 100).toFixed(0)}%</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function openImageForReview(imageId) {
+  const img = state.images.find(im => im.id === imageId);
+  if (!img) return;
+
+  // Show annotation screen and open this image
+  showScreen('annotate');
+  openCodingPanel(img);
+
+  // Show model suggestions
+  showAISuggestions(imageId);
+}
+
+function showAISuggestions(imageId) {
+  const pred = aiState.predictions[imageId];
+  if (!pred) return;
+
+  const suggestionsEl = document.getElementById('aiSuggestions');
+  const listEl = document.getElementById('aiSuggestionList');
+
+  suggestionsEl.classList.remove('hidden');
+
+  listEl.innerHTML = `
+    <div class="ai-suggestion">
+      <div class="flex justify-between items-center mb-4">
+        <span class="ai-badge"><i class="fas fa-robot"></i> Model Suggestion</span>
+        <span class="confidence">${(pred.confidence * 100).toFixed(0)}% confident</span>
+      </div>
+      <div class="text-xs mb-4">
+        <strong>Participants:</strong> ${pred.labels.participants || '?'}<br>
+        <strong>Contact:</strong> ${pred.labels.contact || '?'}<br>
+        <strong>Distance:</strong> ${pred.labels.distance || '?'}<br>
+        <strong>Angle:</strong> ${pred.labels.angle || '?'}<br>
+        <strong>Orientation:</strong> ${pred.labels.orientation || '?'}
+      </div>
+      ${pred.reasoning ? `<div class="text-xs text-gray">${pred.reasoning}</div>` : ''}
+      <div class="flex gap-4 mt-8">
+        <button type="button" class="btn btn-sm btn-primary" onclick="acceptAISuggestion('${imageId}')">
+          <i class="fas fa-check"></i> Accept
+        </button>
+        <button type="button" class="btn btn-sm" onclick="hideAISuggestions()">
+          <i class="fas fa-times"></i> Dismiss
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function hideAISuggestions() {
+  document.getElementById('aiSuggestions').classList.add('hidden');
+}
+
+function acceptAISuggestion(imageId) {
+  const pred = aiState.predictions[imageId];
+  if (!pred) return;
+
+  // Apply the model suggestion to the coding panel buttons
+  const labels = pred.labels;
+
+  // Select the appropriate buttons in the coding panel
+  Object.entries(labels).forEach(([cat, value]) => {
+    if (value) {
+      const btns = document.querySelectorAll(`#codingPanel [data-cat="${cat}"]`);
+      btns.forEach(b => b.classList.remove('selected'));
+      const targetBtn = document.querySelector(`#codingPanel [data-cat="${cat}"][data-val="${value}"]`);
+      if (targetBtn) targetBtn.classList.add('selected');
+    }
+  });
+
+  hideAISuggestions();
+  toast('Model suggestion applied - review and save');
+}
+
+// Initialize model status on load
+document.addEventListener('DOMContentLoaded', () => {
+  updateAIStatus();
+});
+</script>
+</body>
+</html>

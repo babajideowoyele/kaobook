@@ -1,0 +1,36 @@
+{
+  "triad_type": "role_modalities",
+  "name": "Role Modalities",
+  "description": "Organizations positioned by Claimed (websites) vs Attributed (news) vs Enacted (Crunchbase) roles",
+  "axis_a": {
+    "name": "Claimed",
+    "key": "claimed",
+    "color": "#3498db",
+    "description": "Self-presented organizational identity from websites",
+    "keywords": [],
+    "source_modality": "rolebox-websites"
+  },
+  "axis_b": {
+    "name": "Attributed",
+    "key": "attributed",
+    "color": "#2ecc71",
+    "description": "Media portrayal and external characterization",
+    "keywords": [],
+    "source_modality": "rolebox-news"
+  },
+  "axis_c": {
+    "name": "Enacted",
+    "key": "enacted",
+    "color": "#e74c3c",
+    "description": "Actual behavior from investment/funding patterns",
+    "keywords": [],
+    "source_modality": "rolebox-crunchbase"
+  },
+  "interstitial_threshold": 0.4,
+  "color_palette": {
+    "dominant_claimed": "#3498db",
+    "dominant_attributed": "#2ecc71",
+    "dominant_enacted": "#e74c3c",
+    "interstitial": "#f1c40f"
+  }
+}

@@ -1,0 +1,1022 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{CAS Proposition Visualizations}
+\labch{appendix-cas-propositions}
+
+This appendix provides visual representations of the fifteen Complex Adaptive Systems (CAS) propositions introduced in Chapter~\ref{ch:cas}. Each figure illustrates the core dynamic pattern that cartographic methods can trace. These static figures are designed for future conversion to interactive HTML visualizations, enabling dynamic exploration of CAS mechanisms in role constellation contexts.
+
+\begin{kaobox}[title=Interactive Version]
+An interactive HTML version of these visualizations is planned, allowing users to:
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item Animate temporal dynamics (emergence, co-evolution, non-linearity)
+\item Adjust parameters to explore mechanism sensitivity
+\item Link visualizations to empirical EIT ecosystem data
+\item Toggle between theoretical and empirical views
+\end{itemize}
+\end{kaobox}
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Emergence Propositions (P1--P3)}
+\labsec{appendix-cas:emergence}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection{P1: Role Multiplicity is the Norm}
+
+\begin{propositionbox}
+\textbf{P1: Role multiplicity is the norm, not the exception.}\\[3pt]
+Because roles emerge from diverse relationships rather than being inherent attributes, most intermediaries will perform multiple roles simultaneously.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 4.5) {Role Multiplicity: Single vs. Multiple Role Performance};
+
+    % Left: Single-role (rare)
+    \begin{scope}[shift={(-4, 0)}]
+        \node[font=\scriptsize\bfseries, text=Slate] at (0, 3.2) {Single Role (Rare)};
+        \node[draw, circle, fill=Slate!30, minimum size=2.5cm] (single) at (0, 1.2) {};
+        \node[font=\small\bfseries, text=Slate] at (0, 1.2) {Org A};
+        \node[draw, rounded corners, fill=Azure!40, font=\tiny, minimum width=1.5cm] at (0, -0.5) {Investor};
+        \draw[->, thick, Slate!60] (single) -- (0, 0);
+    \end{scope}
+
+    % Right: Multiple roles (norm)
+    \begin{scope}[shift={(3, 0)}]
+        \node[font=\scriptsize\bfseries, text=PandaBamboo] at (0, 3.2) {Multiple Roles (Norm)};
+        \node[draw, circle, fill=PandaBamboo!30, minimum size=2.5cm] (multi) at (0, 1.2) {};
+        \node[font=\small\bfseries, text=PandaBamboo] at (0, 1.2) {Org B};
+
+        % Multiple role boxes radiating
+        \node[draw, rounded corners, fill=Azure!40, font=\tiny, minimum width=1.2cm] (r1) at (-1.8, 0.2) {Investor};
+        \node[draw, rounded corners, fill=Marigold!40, font=\tiny, minimum width=1.2cm] (r2) at (0, -0.6) {Accelerator};
+        \node[draw, rounded corners, fill=AccentPurple!40, font=\tiny, minimum width=1.2cm] (r3) at (1.8, 0.2) {Broker};
+        \node[draw, rounded corners, fill=AccentCoral!40, font=\tiny, minimum width=1.2cm] (r4) at (1.2, 2.6) {Convener};
+        \node[draw, rounded corners, fill=AccentCyan!40, font=\tiny, minimum width=1.2cm] (r5) at (-1.2, 2.6) {Educator};
+
+        \draw[->, thick, PandaBamboo!60] (multi) -- (r1);
+        \draw[->, thick, PandaBamboo!60] (multi) -- (r2);
+        \draw[->, thick, PandaBamboo!60] (multi) -- (r3);
+        \draw[->, thick, PandaBamboo!60] (multi) -- (r4);
+        \draw[->, thick, PandaBamboo!60] (multi) -- (r5);
+    \end{scope}
+
+    % Distribution bar at bottom
+    \node[font=\scriptsize, text=Slate] at (0, -2.5) {Observed Distribution};
+    \draw[thick, Slate!40] (-5, -3.2) rectangle (5, -2.8);
+    \fill[Slate!30] (-5, -3.2) rectangle (-4.2, -2.8);
+    \fill[PandaBamboo!50] (-4.2, -3.2) rectangle (5, -2.8);
+    \node[font=\tiny, text=Slate] at (-4.6, -3.5) {8\%};
+    \node[font=\tiny, text=PandaBamboo] at (0.4, -3.5) {92\% multi-role};
+
+\end{tikzpicture}
+\captionof{figure}[P1: Role multiplicity]{P1 visualization: Role multiplicity is the norm. Most intermediaries perform multiple roles simultaneously; single-role specialization is rare and requires active maintenance.}
+\labfig{p1-multiplicity}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P2: Constellation-Level Functions Exceed Individual Roles}
+
+\begin{propositionbox}
+\textbf{P2: Constellation-level functions exceed the sum of individual role performances.}\\[3pt]
+Emergent properties mean the constellation as a system performs functions that no individual intermediary performs.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Emergent Constellation Functions};
+
+    % Individual actors with their roles
+    \node[draw, circle, fill=Azure!30, minimum size=1.4cm, font=\scriptsize] (a1) at (-4, 2) {Investor};
+    \node[draw, circle, fill=Marigold!30, minimum size=1.4cm, font=\scriptsize] (a2) at (-1.5, 3) {Accelerator};
+    \node[draw, circle, fill=PandaBamboo!30, minimum size=1.4cm, font=\scriptsize] (a3) at (1.5, 3) {Broker};
+    \node[draw, circle, fill=AccentPurple!30, minimum size=1.4cm, font=\scriptsize] (a4) at (4, 2) {Educator};
+    \node[draw, circle, fill=AccentCoral!30, minimum size=1.4cm, font=\scriptsize] (a5) at (-2.5, 0) {Convener};
+    \node[draw, circle, fill=AccentCyan!30, minimum size=1.4cm, font=\scriptsize] (a6) at (2.5, 0) {Advocate};
+
+    % Connections between actors
+    \draw[thick, Slate!40] (a1) -- (a2);
+    \draw[thick, Slate!40] (a2) -- (a3);
+    \draw[thick, Slate!40] (a3) -- (a4);
+    \draw[thick, Slate!40] (a1) -- (a5);
+    \draw[thick, Slate!40] (a4) -- (a6);
+    \draw[thick, Slate!40] (a5) -- (a6);
+    \draw[thick, Slate!40] (a2) -- (a5);
+    \draw[thick, Slate!40] (a3) -- (a6);
+
+    % Emergent functions (dashed cloud)
+    \draw[dashed, thick, CoverGold, rounded corners=20pt] (-5, -1.5) rectangle (5, 4.2);
+    \node[font=\scriptsize\bfseries, text=CoverGold] at (0, 4.5) {CONSTELLATION BOUNDARY};
+
+    % Emergent function labels
+    \node[draw, rounded corners, fill=CoverGold!20, font=\tiny, align=center, minimum width=2.2cm] at (-4.5, -2.5) {System-level\\bridging};
+    \node[draw, rounded corners, fill=CoverGold!20, font=\tiny, align=center, minimum width=2.2cm] at (-1.5, -2.5) {Collective\\legitimation};
+    \node[draw, rounded corners, fill=CoverGold!20, font=\tiny, align=center, minimum width=2.2cm] at (1.5, -2.5) {Distributed\\knowledge};
+    \node[draw, rounded corners, fill=CoverGold!20, font=\tiny, align=center, minimum width=2.2cm] at (4.5, -2.5) {Emergent\\identity};
+
+    % Arrows from constellation to emergent
+    \draw[->, thick, CoverGold!70] (0, -0.8) -- (-4.5, -2);
+    \draw[->, thick, CoverGold!70] (0, -0.8) -- (-1.5, -2);
+    \draw[->, thick, CoverGold!70] (0, -0.8) -- (1.5, -2);
+    \draw[->, thick, CoverGold!70] (0, -0.8) -- (4.5, -2);
+
+    % Note
+    \node[font=\tiny, text=Slate, align=center] at (0, -3.5) {Emergent functions are properties of the \textit{constellation}, not reducible to individual actors};
+
+\end{tikzpicture}
+\captionof{figure}[P2: Emergent constellation functions]{P2 visualization: The constellation produces system-level functions (bridging, legitimation, knowledge integration, collective identity) that no single actor performs alone.}
+\labfig{p2-emergence}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P3: Role Emergence Accelerates with Interaction Density}
+
+\begin{propositionbox}
+\textbf{P3: Role emergence accelerates with interaction density.}\\[3pt]
+Constellations with denser relationship networks will exhibit more differentiated and specialized role structures than sparse constellations.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 4.5) {Density--Differentiation Relationship};
+
+    % Left: Sparse network, undifferentiated
+    \begin{scope}[shift={(-4, 0)}]
+        \node[font=\scriptsize\bfseries, text=Slate] at (0, 3.2) {Sparse $\rightarrow$ Undifferentiated};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (s1) at (-1, 1.5) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (s2) at (1, 1.5) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (s3) at (-1, -0.5) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (s4) at (1, -0.5) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (s5) at (0, 0.5) {};
+
+        \draw[thick, Slate!30] (s1) -- (s5);
+        \draw[thick, Slate!30] (s5) -- (s4);
+
+        \node[font=\tiny, text=Slate] at (0, -1.5) {Few connections};
+        \node[font=\tiny, text=Slate] at (0, -2) {Similar roles};
+    \end{scope}
+
+    % Right: Dense network, differentiated
+    \begin{scope}[shift={(4, 0)}]
+        \node[font=\scriptsize\bfseries, text=PandaBamboo] at (0, 3.2) {Dense $\rightarrow$ Differentiated};
+        \node[draw, circle, fill=Azure!50, minimum size=0.8cm] (d1) at (-1, 1.5) {};
+        \node[draw, circle, fill=Marigold!50, minimum size=0.8cm] (d2) at (1, 1.5) {};
+        \node[draw, circle, fill=PandaBamboo!50, minimum size=0.8cm] (d3) at (-1, -0.5) {};
+        \node[draw, circle, fill=AccentPurple!50, minimum size=0.8cm] (d4) at (1, -0.5) {};
+        \node[draw, circle, fill=AccentCoral!50, minimum size=0.8cm] (d5) at (0, 0.5) {};
+
+        % Dense connections
+        \draw[thick, PandaBamboo!50] (d1) -- (d2);
+        \draw[thick, PandaBamboo!50] (d1) -- (d3);
+        \draw[thick, PandaBamboo!50] (d1) -- (d5);
+        \draw[thick, PandaBamboo!50] (d2) -- (d4);
+        \draw[thick, PandaBamboo!50] (d2) -- (d5);
+        \draw[thick, PandaBamboo!50] (d3) -- (d4);
+        \draw[thick, PandaBamboo!50] (d3) -- (d5);
+        \draw[thick, PandaBamboo!50] (d4) -- (d5);
+        \draw[thick, PandaBamboo!50] (d1) -- (d4);
+        \draw[thick, PandaBamboo!50] (d2) -- (d3);
+
+        \node[font=\tiny, text=PandaBamboo] at (0, -1.5) {Many connections};
+        \node[font=\tiny, text=PandaBamboo] at (0, -2) {Specialized roles};
+    \end{scope}
+
+    % Arrow between
+    \draw[->, thick, PandaCharcoal, line width=1.5pt] (-1, 0.5) -- (1, 0.5);
+    \node[font=\scriptsize, text=PandaCharcoal] at (0, 1) {density};
+
+    % Correlation plot at bottom
+    \begin{scope}[shift={(0, -4)}]
+        \draw[->, thick, Slate] (-3.5, 0) -- (3.5, 0) node[right, font=\tiny] {Network Density};
+        \draw[->, thick, Slate] (-3, -0.5) -- (-3, 1.8) node[above, font=\tiny] {Role Diversity};
+
+        % Scatter with trend
+        \fill[Azure!60] (-2.5, 0.2) circle (3pt);
+        \fill[Azure!60] (-2, 0.4) circle (3pt);
+        \fill[Azure!60] (-1.3, 0.5) circle (3pt);
+        \fill[Azure!60] (-0.5, 0.8) circle (3pt);
+        \fill[Azure!60] (0.2, 1.0) circle (3pt);
+        \fill[Azure!60] (1, 1.2) circle (3pt);
+        \fill[Azure!60] (1.8, 1.3) circle (3pt);
+        \fill[Azure!60] (2.5, 1.5) circle (3pt);
+
+        \draw[thick, AccentCoral, dashed] (-2.8, 0.1) -- (3, 1.5);
+    \end{scope}
+
+\end{tikzpicture}
+\captionof{figure}[P3: Density and differentiation]{P3 visualization: Network density correlates with role differentiation. Sparse networks have undifferentiated roles (all similar); dense networks produce specialized, diverse roles through emergence.}
+\labfig{p3-density}
+\end{center}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Self-Organization Propositions (P4--P6)}
+\labsec{appendix-cas:selforg}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection{P4: Role Differentiation Without Central Coordination}
+
+\begin{propositionbox}
+\textbf{P4: Role differentiation emerges without central coordination.}\\[3pt]
+Even in designed ecosystems like EIT, the specific role configuration will reflect self-organization more than policy design.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Self-Organized Differentiation Across KICs};
+
+    % Central design mandate
+    \node[draw, rounded corners, fill=Slate!20, minimum width=4cm, minimum height=1cm, font=\small\bfseries, align=center] (mandate) at (0, 3.5) {Same EIT Mandate\\``Knowledge Triangle''};
+
+    % Different resulting structures (8 KICs simplified to 4)
+    \begin{scope}[shift={(-5, 0)}]
+        \node[font=\scriptsize\bfseries, text=Azure] at (0, 1.5) {InnoEnergy};
+        \node[draw, circle, fill=Azure!60, minimum size=0.9cm] at (-0.5, 0.5) {};
+        \node[draw, circle, fill=Azure!30, minimum size=0.5cm] at (0.5, 0.8) {};
+        \node[draw, circle, fill=Azure!20, minimum size=0.4cm] at (0.3, 0) {};
+        \node[font=\tiny, text=Slate] at (0, -0.8) {Investment-heavy};
+    \end{scope}
+
+    \begin{scope}[shift={(-1.7, 0)}]
+        \node[font=\scriptsize\bfseries, text=PandaBamboo] at (0, 1.5) {Climate-KIC};
+        \node[draw, circle, fill=PandaBamboo!30, minimum size=0.5cm] at (-0.4, 0.7) {};
+        \node[draw, circle, fill=PandaBamboo!60, minimum size=0.8cm] at (0.4, 0.3) {};
+        \node[draw, circle, fill=PandaBamboo!40, minimum size=0.6cm] at (0, -0.2) {};
+        \node[font=\tiny, text=Slate] at (0, -0.8) {Accelerator-heavy};
+    \end{scope}
+
+    \begin{scope}[shift={(1.7, 0)}]
+        \node[font=\scriptsize\bfseries, text=Marigold] at (0, 1.5) {RawMaterials};
+        \node[draw, circle, fill=Marigold!20, minimum size=0.4cm] at (-0.5, 0.6) {};
+        \node[draw, circle, fill=Marigold!30, minimum size=0.5cm] at (0.4, 0.7) {};
+        \node[draw, circle, fill=Marigold!60, minimum size=0.9cm] at (0, 0) {};
+        \node[font=\tiny, text=Slate] at (0, -0.8) {Education-heavy};
+    \end{scope}
+
+    \begin{scope}[shift={(5, 0)}]
+        \node[font=\scriptsize\bfseries, text=AccentPurple] at (0, 1.5) {Health};
+        \node[draw, circle, fill=AccentPurple!40, minimum size=0.6cm] at (-0.3, 0.5) {};
+        \node[draw, circle, fill=AccentPurple!50, minimum size=0.7cm] at (0.5, 0.4) {};
+        \node[draw, circle, fill=AccentPurple!35, minimum size=0.55cm] at (0, -0.2) {};
+        \node[font=\tiny, text=Slate] at (0, -0.8) {Balanced};
+    \end{scope}
+
+    % Arrows from mandate
+    \draw[->, thick, Slate!50] (mandate) -- (-5, 1.8);
+    \draw[->, thick, Slate!50] (mandate) -- (-1.7, 1.8);
+    \draw[->, thick, Slate!50] (mandate) -- (1.7, 1.8);
+    \draw[->, thick, Slate!50] (mandate) -- (5, 1.8);
+
+    % Self-organization label
+    \node[draw, rounded corners, fill=CoverGold!20, font=\scriptsize, align=center] at (0, -2) {Same mandate $\rightarrow$ Different structures\\= Self-organization};
+
+\end{tikzpicture}
+\captionof{figure}[P4: Differentiation without coordination]{P4 visualization: Despite identical EIT mandates, KICs develop distinct role structures through self-organization. Local interactions, not central design, determine configuration.}
+\labfig{p4-differentiation}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P5: Hierarchy from Accumulated Advantage}
+
+\begin{propositionbox}
+\textbf{P5: Hierarchy emerges from accumulated advantage, not formal assignment.}\\[3pt]
+Influential positions in role constellations emerge through preferential attachment and resource accumulation rather than formal designation.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Emergent Hierarchy Through Accumulated Advantage};
+
+    % Time progression
+    \node[font=\scriptsize\bfseries, text=Slate] at (-5, 3.5) {$t_1$: Equal Start};
+    \node[font=\scriptsize\bfseries, text=Slate] at (0, 3.5) {$t_2$: Early Success};
+    \node[font=\scriptsize\bfseries, text=Slate] at (5, 3.5) {$t_3$: Hierarchy Forms};
+
+    % T1: Equal nodes
+    \begin{scope}[shift={(-5, 0)}]
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (t1a) at (0, 1.5) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (t1b) at (-1, 0) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (t1c) at (1, 0) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (t1d) at (0, -1.2) {};
+        \draw[thick, Slate!30] (t1a) -- (t1b);
+        \draw[thick, Slate!30] (t1a) -- (t1c);
+        \draw[thick, Slate!30] (t1b) -- (t1d);
+        \draw[thick, Slate!30] (t1c) -- (t1d);
+    \end{scope}
+
+    % T2: One grows
+    \begin{scope}[shift={(0, 0)}]
+        \node[draw, circle, fill=Azure!60, minimum size=1.2cm] (t2a) at (0, 1.5) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (t2b) at (-1.2, 0) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.8cm] (t2c) at (1.2, 0) {};
+        \node[draw, circle, fill=Slate!35, minimum size=0.7cm] (t2d) at (0, -1.2) {};
+        \draw[thick, Azure!50] (t2a) -- (t2b);
+        \draw[thick, Azure!50] (t2a) -- (t2c);
+        \draw[thick, Azure!50] (t2a) -- (t2d);
+        \draw[thick, Slate!30] (t2b) -- (t2d);
+        \draw[thick, Slate!30] (t2c) -- (t2d);
+        \node[font=\tiny, text=Azure] at (0.8, 2) {success};
+    \end{scope}
+
+    % T3: Clear hierarchy
+    \begin{scope}[shift={(5, 0)}]
+        \node[draw, circle, fill=Azure!70, minimum size=1.8cm, font=\tiny\bfseries] (t3a) at (0, 1.5) {Central};
+        \node[draw, circle, fill=Slate!40, minimum size=0.7cm] (t3b) at (-1.5, 0) {};
+        \node[draw, circle, fill=Slate!40, minimum size=0.7cm] (t3c) at (1.5, 0) {};
+        \node[draw, circle, fill=Slate!30, minimum size=0.5cm] (t3d) at (-0.8, -1.2) {};
+        \node[draw, circle, fill=Slate!30, minimum size=0.5cm] (t3e) at (0.8, -1.2) {};
+        \draw[thick, Azure!60] (t3a) -- (t3b);
+        \draw[thick, Azure!60] (t3a) -- (t3c);
+        \draw[thick, Azure!60] (t3a) -- (t3d);
+        \draw[thick, Azure!60] (t3a) -- (t3e);
+        \draw[thick, Slate!20] (t3b) -- (t3d);
+        \draw[thick, Slate!20] (t3c) -- (t3e);
+    \end{scope}
+
+    % Arrows
+    \draw[->, thick, PandaCharcoal, line width=1.2pt] (-3, 0.5) -- (-2, 0.5);
+    \draw[->, thick, PandaCharcoal, line width=1.2pt] (2, 0.5) -- (3, 0.5);
+
+    % Mechanism label
+    \node[draw, rounded corners, fill=CoverGold!20, font=\scriptsize, align=center] at (0, -2.5) {Preferential attachment:\\Success $\rightarrow$ Connections $\rightarrow$ More success};
+
+\end{tikzpicture}
+\captionof{figure}[P5: Emergent hierarchy]{P5 visualization: Hierarchy emerges through preferential attachment. Early success attracts more connections, creating centrality through accumulated advantage rather than formal assignment.}
+\labfig{p5-hierarchy}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P6: Niche Formation Reduces Competition}
+
+\begin{propositionbox}
+\textbf{P6: Niche formation reduces direct role competition.}\\[3pt]
+Self-organization drives differentiation to reduce competition. Over time, constellations will exhibit increasing role specialization as intermediaries carve out distinctive niches.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Niche Formation Over Time};
+
+    % Role space (ternary-like)
+    % Time 1: Overlapping
+    \begin{scope}[shift={(-4.5, 0)}]
+        \node[font=\scriptsize\bfseries, text=Slate] at (0, 3.5) {$t_1$: Overlapping};
+
+        % Draw role space
+        \draw[thick, Slate!30] (-2, -1) -- (2, -1) -- (0, 2.5) -- cycle;
+
+        % Overlapping nodes
+        \fill[Azure!40, opacity=0.7] (0, 0.5) circle (0.8cm);
+        \fill[Marigold!40, opacity=0.7] (0.3, 0.3) circle (0.8cm);
+        \fill[PandaBamboo!40, opacity=0.7] (-0.2, 0.1) circle (0.8cm);
+
+        \node[font=\tiny, text=AccentCoral] at (0, -0.8) {Competition};
+    \end{scope}
+
+    % Arrow
+    \draw[->, thick, PandaCharcoal, line width=1.5pt] (-1.5, 0.5) -- (1.5, 0.5);
+    \node[font=\scriptsize, text=PandaCharcoal] at (0, 1) {differentiation};
+
+    % Time 2: Differentiated
+    \begin{scope}[shift={(4.5, 0)}]
+        \node[font=\scriptsize\bfseries, text=PandaBamboo] at (0, 3.5) {$t_2$: Niches Formed};
+
+        % Draw role space
+        \draw[thick, Slate!30] (-2, -1) -- (2, -1) -- (0, 2.5) -- cycle;
+
+        % Separated niches
+        \fill[Azure!50] (-1.2, -0.3) circle (0.5cm);
+        \fill[Marigold!50] (1.2, -0.3) circle (0.5cm);
+        \fill[PandaBamboo!50] (0, 1.5) circle (0.5cm);
+
+        % Niche labels
+        \node[font=\tiny, text=Azure] at (-1.2, -1) {Niche A};
+        \node[font=\tiny, text=Marigold] at (1.2, -1) {Niche B};
+        \node[font=\tiny, text=PandaBamboo] at (0, 2.2) {Niche C};
+    \end{scope}
+
+    % Competition reduction graph
+    \begin{scope}[shift={(0, -3.5)}]
+        \draw[->, thick, Slate] (-3, 0) -- (3, 0) node[right, font=\tiny] {Time};
+        \draw[->, thick, Slate] (-2.8, -0.2) -- (-2.8, 1.5) node[above, font=\tiny] {Competition};
+
+        % Decreasing curve
+        \draw[thick, AccentCoral] (-2.5, 1.2) .. controls (-1, 0.8) and (0.5, 0.4) .. (2.5, 0.2);
+
+        \node[font=\tiny, text=Slate] at (0, -0.6) {Role similarity decreases as niches form};
+    \end{scope}
+
+\end{tikzpicture}
+\captionof{figure}[P6: Niche formation]{P6 visualization: Self-organization drives niche formation. Initially overlapping role profiles differentiate over time to reduce direct competition, creating specialized ecological niches.}
+\labfig{p6-niches}
+\end{center}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Co-evolution Propositions (P7--P9)}
+\labsec{appendix-cas:coevol}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection{P7: Constellation Structure and Policy Environment Co-evolve}
+
+\begin{propositionbox}
+\textbf{P7: Constellation structure and policy environment co-evolve.}\\[3pt]
+Role constellations both respond to and shape policy contexts. Policy shifts will produce constellation restructuring, but constellation activities will also correlate with subsequent policy changes.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 4.5) {Bidirectional Co-evolution: Policy $\leftrightarrow$ Structure};
+
+    % Policy environment (top)
+    \node[draw, rounded corners, fill=Slate!20, minimum width=8cm, minimum height=1.5cm] at (0, 2.5) {};
+    \node[font=\small\bfseries, text=Slate] at (0, 3) {Policy Environment};
+    \node[font=\tiny, text=Slate] at (0, 2.2) {EU Green Deal, Horizon Europe, EIT Reform};
+
+    % Constellation (bottom)
+    \node[draw, rounded corners, fill=PandaBamboo!20, minimum width=8cm, minimum height=2cm] at (0, -0.5) {};
+    \node[font=\small\bfseries, text=PandaBamboo] at (0, 0.2) {Role Constellation};
+
+    % Nodes inside constellation
+    \node[draw, circle, fill=Azure!40, minimum size=0.6cm] at (-2.5, -0.8) {};
+    \node[draw, circle, fill=Marigold!40, minimum size=0.6cm] at (-1, -0.8) {};
+    \node[draw, circle, fill=AccentPurple!40, minimum size=0.6cm] at (0.5, -0.8) {};
+    \node[draw, circle, fill=AccentCoral!40, minimum size=0.6cm] at (2, -0.8) {};
+
+    % Bidirectional arrows
+    \draw[->, thick, Azure, line width=1.5pt] (-2.5, 1.5) -- (-2.5, 0.8);
+    \node[font=\tiny, text=Azure, rotate=90] at (-2.9, 1.1) {shapes};
+
+    \draw[->, thick, CoverGold, line width=1.5pt] (2.5, 0.8) -- (2.5, 1.5);
+    \node[font=\tiny, text=CoverGold, rotate=90] at (2.9, 1.1) {influences};
+
+    % Timeline at bottom
+    \begin{scope}[shift={(0, -3)}]
+        \draw[->, thick, Slate] (-4, 0) -- (4, 0) node[right, font=\tiny] {Time};
+
+        % Policy events
+        \fill[Azure] (-3, 0.3) circle (4pt);
+        \node[font=\tiny, text=Azure, align=center] at (-3, 0.7) {Policy\\shift};
+
+        % Structure response
+        \fill[PandaBamboo] (-1.5, -0.3) circle (4pt);
+        \node[font=\tiny, text=PandaBamboo, align=center] at (-1.5, -0.7) {Structure\\adapts};
+
+        % Constellation influence
+        \fill[CoverGold] (1, 0.3) circle (4pt);
+        \node[font=\tiny, text=CoverGold, align=center] at (1, 0.7) {Advocacy\\activity};
+
+        % Policy change
+        \fill[Azure] (2.5, -0.3) circle (4pt);
+        \node[font=\tiny, text=Azure, align=center] at (2.5, -0.7) {Policy\\change};
+
+        % Connecting arrows
+        \draw[->, thick, Slate!50] (-2.7, 0.2) -- (-1.8, -0.2);
+        \draw[->, thick, Slate!50] (1.3, 0.2) -- (2.2, -0.2);
+    \end{scope}
+
+\end{tikzpicture}
+\captionof{figure}[P7: Policy co-evolution]{P7 visualization: Policy and constellation structure co-evolve bidirectionally. Policy shapes structure; constellation activities shape subsequent policy. Neither is purely cause or effect.}
+\labfig{p7-policy}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P8: Success of One Alters Fitness Landscape for Others}
+
+\begin{propositionbox}
+\textbf{P8: Success of one intermediary alters fitness landscape for others.}\\[3pt]
+When one intermediary achieves significant success, role opportunities for others in the constellation will shift---some enhanced, some diminished.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Success Ripple Effects};
+
+    % Central success event
+    \node[draw, circle, fill=CoverGold!60, minimum size=2cm, font=\small\bfseries, align=center] (success) at (0, 2) {Major\\Success};
+
+    % Ripple circles
+    \draw[dashed, CoverGold!40, line width=1pt] (0, 2) circle (2.5cm);
+    \draw[dashed, CoverGold!30, line width=1pt] (0, 2) circle (3.5cm);
+
+    % Affected organizations
+    \node[draw, circle, fill=PandaBamboo!50, minimum size=1cm, font=\tiny] (a1) at (-2.5, 3.5) {Enhanced};
+    \node[draw, circle, fill=PandaBamboo!50, minimum size=1cm, font=\tiny] (a2) at (2.5, 3.5) {Enhanced};
+    \node[draw, circle, fill=AccentCoral!50, minimum size=1cm, font=\tiny] (a3) at (-3, 0) {Displaced};
+    \node[draw, circle, fill=AccentCoral!50, minimum size=1cm, font=\tiny] (a4) at (3, 0) {Displaced};
+    \node[draw, circle, fill=Slate!30, minimum size=0.8cm, font=\tiny] (a5) at (0, -1.5) {Unaffected};
+
+    % Effect arrows
+    \draw[->, thick, PandaBamboo] (success) -- (a1);
+    \draw[->, thick, PandaBamboo] (success) -- (a2);
+    \draw[->, thick, AccentCoral] (success) -- (a3);
+    \draw[->, thick, AccentCoral] (success) -- (a4);
+
+    % Legend
+    \begin{scope}[shift={(0, -3.5)}]
+        \fill[PandaBamboo!50] (-3, 0) circle (4pt);
+        \node[font=\tiny, text=PandaBamboo, anchor=west] at (-2.7, 0) {Complementary roles enhanced};
+
+        \fill[AccentCoral!50] (0.5, 0) circle (4pt);
+        \node[font=\tiny, text=AccentCoral, anchor=west] at (0.8, 0) {Competing roles displaced};
+    \end{scope}
+
+\end{tikzpicture}
+\captionof{figure}[P8: Success ripple effects]{P8 visualization: Major success by one actor ripples through the constellation. Complementary actors benefit (enhanced opportunities); competitors are displaced (diminished opportunities).}
+\labfig{p8-success}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P9: Constellations Co-evolve with Technological Trajectories}
+
+\begin{propositionbox}
+\textbf{P9: Constellations co-evolve with technological trajectories.}\\[3pt]
+Technology maturation will correlate with shifts from niche-protective toward diffusion-oriented roles.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Technology Trajectory $\leftrightarrow$ Role Evolution};
+
+    % Technology maturity axis (bottom)
+    \draw[->, thick, Slate] (-5, -3) -- (5, -3) node[right, font=\scriptsize] {Tech Maturity};
+    \node[font=\tiny, text=Slate] at (-4, -3.4) {Nascent};
+    \node[font=\tiny, text=Slate] at (0, -3.4) {Growing};
+    \node[font=\tiny, text=Slate] at (4, -3.4) {Mature};
+
+    % S-curve
+    \draw[thick, Azure, line width=1.5pt] (-4.5, -2.5) .. controls (-3, -2.3) and (-1, -1) .. (0, 0) .. controls (1, 1) and (3, 2) .. (4.5, 2.3);
+    \node[font=\tiny, text=Azure, rotate=30] at (2, 1.8) {Technology adoption};
+
+    % Role shifts at different stages
+    % Early: Protection
+    \begin{scope}[shift={(-4, 1)}]
+        \node[draw, rounded corners, fill=AccentPurple!30, font=\tiny, align=center, minimum width=1.8cm] at (0, 0) {Niche\\protection};
+        \node[draw, rounded corners, fill=AccentPurple!20, font=\tiny, align=center, minimum width=1.5cm] at (0, -0.8) {Shielding};
+    \end{scope}
+
+    % Middle: Development
+    \begin{scope}[shift={(0, 2)}]
+        \node[draw, rounded corners, fill=Marigold!30, font=\tiny, align=center, minimum width=1.8cm] at (0, 0) {Market\\development};
+        \node[draw, rounded corners, fill=Marigold!20, font=\tiny, align=center, minimum width=1.5cm] at (0, -0.8) {Scaling};
+    \end{scope}
+
+    % Late: Diffusion
+    \begin{scope}[shift={(4, 3)}]
+        \node[draw, rounded corners, fill=PandaBamboo!30, font=\tiny, align=center, minimum width=1.8cm] at (0, 0) {Mainstream\\diffusion};
+        \node[draw, rounded corners, fill=PandaBamboo!20, font=\tiny, align=center, minimum width=1.5cm] at (0, -0.8) {Standards};
+    \end{scope}
+
+    % Connecting arrows
+    \draw[->, thick, Slate!60, dashed] (-4, 0) -- (-1, 1.2);
+    \draw[->, thick, Slate!60, dashed] (0, 1.2) -- (3, 2.2);
+
+    % Bidirectional note
+    \node[draw, rounded corners, fill=CoverGold!20, font=\tiny, align=center] at (0, -1.5) {Roles shift with technology AND\\role activities accelerate technology};
+
+\end{tikzpicture}
+\captionof{figure}[P9: Technology co-evolution]{P9 visualization: Role profiles co-evolve with technology trajectories. Early stages emphasize niche protection; maturation shifts roles toward diffusion and standardization.}
+\labfig{p9-technology}
+\end{center}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Non-linearity Propositions (P10--P12)}
+\labsec{appendix-cas:nonlinear}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection{P10: Punctuated Equilibrium}
+
+\begin{propositionbox}
+\textbf{P10: Constellation change follows punctuated equilibrium patterns.}\\[3pt]
+Role constellations will exhibit long periods of incremental adjustment interrupted by episodes of rapid restructuring.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 4.5) {Punctuated Equilibrium in Constellation Structure};
+
+    % Time axis
+    \draw[->, thick, Slate] (-5, -2) -- (5, -2) node[right, font=\scriptsize] {Time};
+
+    % Structure axis
+    \draw[->, thick, Slate] (-4.8, -2.2) -- (-4.8, 3.5) node[above, font=\scriptsize] {Structure};
+
+    % Punctuated equilibrium pattern
+    % Stable period 1
+    \draw[thick, Azure, line width=1.5pt] (-4.5, 0) -- (-2.5, 0.3);
+
+    % Punctuation 1
+    \draw[thick, AccentCoral, line width=1.5pt] (-2.5, 0.3) -- (-2, 1.5);
+    \fill[AccentCoral!60] (-2.25, 0.9) circle (5pt);
+
+    % Stable period 2
+    \draw[thick, Azure, line width=1.5pt] (-2, 1.5) -- (1, 1.7);
+
+    % Punctuation 2
+    \draw[thick, AccentCoral, line width=1.5pt] (1, 1.7) -- (1.5, 2.8);
+    \fill[AccentCoral!60] (1.25, 2.25) circle (5pt);
+
+    % Stable period 3
+    \draw[thick, Azure, line width=1.5pt] (1.5, 2.8) -- (4.5, 3);
+
+    % Labels
+    \node[font=\tiny, text=Azure, rotate=5] at (-3.5, 0.5) {stability};
+    \node[font=\tiny, text=AccentCoral] at (-2.7, 1.4) {rapid change};
+    \node[font=\tiny, text=Azure, rotate=3] at (-0.5, 2) {stability};
+    \node[font=\tiny, text=AccentCoral] at (0.5, 2.6) {rapid change};
+    \node[font=\tiny, text=Azure, rotate=2] at (3, 3.2) {stability};
+
+    % Event markers
+    \node[font=\tiny, text=Slate] at (-2.25, -2.4) {Event A};
+    \node[font=\tiny, text=Slate] at (1.25, -2.4) {Event B};
+
+    % Contrast with linear expectation (dashed)
+    \draw[dashed, Slate!50, line width=1pt] (-4.5, 0) -- (4.5, 3);
+    \node[font=\tiny, text=Slate!60, rotate=20] at (3, 1.2) {linear expectation};
+
+\end{tikzpicture}
+\captionof{figure}[P10: Punctuated equilibrium]{P10 visualization: Constellation structure changes through punctuated equilibrium---long stable periods (blue) interrupted by rapid restructuring episodes (red), not gradual linear change.}
+\labfig{p10-punctuated}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P11: Small Triggers, Large Effects}
+
+\begin{propositionbox}
+\textbf{P11: Small interventions can trigger disproportionate restructuring.}\\[3pt]
+Sensitivity to initial conditions means minor changes can cascade. Some policy interventions or organizational events will produce constellation effects far exceeding their apparent magnitude.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Sensitivity: Small Trigger $\rightarrow$ Large Effect};
+
+    % Left: Small trigger
+    \begin{scope}[shift={(-4, 1.5)}]
+        \node[font=\scriptsize\bfseries, text=Azure] at (0, 2) {Small Trigger};
+        \node[draw, circle, fill=Azure!40, minimum size=0.6cm] (trigger) at (0, 0.5) {};
+        \node[font=\tiny, text=Slate, align=center] at (0, -0.5) {Personnel\\change};
+    \end{scope}
+
+    % Cascade visualization
+    \begin{scope}[shift={(0, 1.5)}]
+        % Expanding ripples
+        \draw[thick, AccentCoral!30] (0, 0.5) circle (0.5cm);
+        \draw[thick, AccentCoral!40] (0, 0.5) circle (1cm);
+        \draw[thick, AccentCoral!50] (0, 0.5) circle (1.5cm);
+        \draw[thick, AccentCoral!60] (0, 0.5) circle (2cm);
+
+        \node[font=\scriptsize\bfseries, text=AccentCoral] at (0, 2.8) {Cascade};
+    \end{scope}
+
+    % Right: Large effect
+    \begin{scope}[shift={(4, 1.5)}]
+        \node[font=\scriptsize\bfseries, text=Marigold] at (0, 2) {Large Effect};
+        \node[draw, rounded corners, fill=Marigold!40, minimum width=2cm, minimum height=2.5cm] at (0, 0) {};
+        \node[font=\tiny, text=Slate, align=center] at (0, 0) {Constellation\\restructures\\completely};
+    \end{scope}
+
+    % Arrows
+    \draw[->, thick, PandaCharcoal, line width=1.2pt] (-2.5, 2) -- (-1.5, 2);
+    \draw[->, thick, PandaCharcoal, line width=1.2pt] (1.5, 2) -- (2.5, 2);
+
+    % Input-output comparison at bottom
+    \begin{scope}[shift={(0, -2)}]
+        \draw[thick, Slate!40] (-4, 0) rectangle (-2.5, 0.8);
+        \fill[Azure!50] (-3.8, 0.1) rectangle (-3.5, 0.3);
+        \node[font=\tiny, text=Slate] at (-3.25, 0.4) {Input};
+
+        \draw[thick, Slate!40] (2.5, 0) rectangle (4, 0.8);
+        \fill[Marigold!50] (2.7, 0.1) rectangle (3.8, 0.7);
+        \node[font=\tiny, text=Slate] at (3.25, 0.4) {Output};
+
+        \node[font=\scriptsize, text=AccentCoral] at (0, 0.4) {$\neq$ proportional};
+    \end{scope}
+
+\end{tikzpicture}
+\captionof{figure}[P11: Small triggers, large effects]{P11 visualization: Non-linear sensitivity means small triggers (personnel change, modest policy) can cascade into disproportionately large constellation restructuring.}
+\labfig{p11-sensitivity}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P12: Path Dependence}
+
+\begin{propositionbox}
+\textbf{P12: Path dependence constrains role repertoires.}\\[3pt]
+Early role choices create commitments (expertise, relationships, reputation) that constrain later possibilities. Intermediaries' current role profiles will correlate more strongly with their founding roles than with current environmental demands.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Path Dependence: History Constrains Possibilities};
+
+    % Decision tree showing paths
+    \node[draw, circle, fill=Slate!40, minimum size=1cm, font=\tiny] (start) at (0, 3) {Founding};
+
+    % First branch
+    \node[draw, circle, fill=Azure!40, minimum size=0.8cm, font=\tiny] (a1) at (-3, 1.5) {Investor};
+    \node[draw, circle, fill=Marigold!40, minimum size=0.8cm, font=\tiny] (b1) at (3, 1.5) {Educator};
+
+    % Second level branches
+    \node[draw, circle, fill=Azure!50, minimum size=0.6cm, font=\tiny] (a2) at (-4, 0) {Inv+};
+    \node[draw, circle, fill=Azure!30, minimum size=0.6cm, font=\tiny] (a3) at (-2, 0) {Inv+Acc};
+
+    \node[draw, circle, fill=Marigold!50, minimum size=0.6cm, font=\tiny] (b2) at (2, 0) {Edu+};
+    \node[draw, circle, fill=Marigold!30, minimum size=0.6cm, font=\tiny] (b3) at (4, 0) {Edu+Res};
+
+    % Connections
+    \draw[->, thick, Azure!60] (start) -- (a1);
+    \draw[->, thick, Marigold!60] (start) -- (b1);
+    \draw[->, thick, Azure!60] (a1) -- (a2);
+    \draw[->, thick, Azure!60] (a1) -- (a3);
+    \draw[->, thick, Marigold!60] (b1) -- (b2);
+    \draw[->, thick, Marigold!60] (b1) -- (b3);
+
+    % Blocked paths (X marks)
+    \draw[thick, AccentCoral] (-3.5, 0.7) -- (-2.5, 1.3);
+    \draw[thick, AccentCoral] (-2.5, 0.7) -- (-3.5, 1.3);
+    \node[font=\tiny, text=AccentCoral] at (-3, 0.4) {blocked};
+
+    % Current environment indicator
+    \node[draw, dashed, rounded corners, fill=PandaBamboo!20, minimum width=2cm, minimum height=1cm] at (0, -2) {};
+    \node[font=\tiny, text=PandaBamboo, align=center] at (0, -2) {Current\\demand};
+
+    % Mismatch indicator
+    \draw[thick, AccentCoral, dashed] (-3.5, -0.5) -- (0, -1.4);
+    \node[font=\tiny, text=AccentCoral, rotate=-20] at (-2, -1.2) {path constrains};
+
+    % Legend
+    \node[font=\tiny, text=Slate, align=center] at (0, -3.5) {Founding choices create commitments that constrain future role evolution,\\even when environment demands different roles};
+
+\end{tikzpicture}
+\captionof{figure}[P12: Path dependence]{P12 visualization: Early role choices create path-dependent constraints. An ``investor-origin'' organization can expand along investment-related paths but finds educator roles blocked by accumulated commitments.}
+\labfig{p12-path}
+\end{center}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Feedback and Fitness Propositions (P13--P15)}
+\labsec{appendix-cas:feedback}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection{P13: Reinforcing Feedback Produces Concentration}
+
+\begin{propositionbox}
+\textbf{P13: Reinforcing feedback produces role concentration.}\\[3pt]
+Success-breeds-success dynamics concentrate resources and influence. Over time, constellation distributions will become more skewed, with dominant intermediaries capturing disproportionate shares.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Matthew Effect: Success Breeds Success};
+
+    % Reinforcing loop diagram
+    \begin{scope}[shift={(-4, 2)}]
+        \node[draw, rounded corners, fill=PandaBamboo!30, font=\scriptsize, minimum width=1.5cm] (suc) at (0, 1) {Success};
+        \node[draw, rounded corners, fill=PandaBamboo!30, font=\scriptsize, minimum width=1.5cm] (res) at (2, -0.5) {Resources};
+        \node[draw, rounded corners, fill=PandaBamboo!30, font=\scriptsize, minimum width=1.5cm] (cap) at (-2, -0.5) {Capacity};
+
+        \draw[->, thick, PandaBamboo] (suc) -- (res);
+        \draw[->, thick, PandaBamboo] (res) -- (cap);
+        \draw[->, thick, PandaBamboo] (cap) -- (suc);
+
+        \node[font=\small\bfseries, text=PandaBamboo] at (0, -0.2) {+};
+    \end{scope}
+
+    % Distribution evolution
+    \begin{scope}[shift={(3, 1)}]
+        % Time 1: Equal distribution
+        \node[font=\scriptsize, text=Slate] at (0, 2.5) {$t_1$: Equal};
+        \fill[Azure!50] (-1.5, 0) rectangle (-1.1, 1);
+        \fill[Azure!50] (-0.8, 0) rectangle (-0.4, 1);
+        \fill[Azure!50] (0.1, 0) rectangle (0.5, 1);
+        \fill[Azure!50] (0.8, 0) rectangle (1.2, 1);
+        \draw[thick, Slate!40] (-1.8, 0) -- (1.5, 0);
+
+        % Time 2: Skewed distribution
+        \node[font=\scriptsize, text=Slate] at (0, -1) {$t_2$: Concentrated};
+        \fill[Marigold!50] (-1.5, -3.5) rectangle (-1.1, -1.5);
+        \fill[Marigold!50] (-0.8, -3.5) rectangle (-0.4, -2.5);
+        \fill[Marigold!50] (0.1, -3.5) rectangle (0.5, -3);
+        \fill[Marigold!50] (0.8, -3.5) rectangle (1.2, -3.2);
+        \draw[thick, Slate!40] (-1.8, -3.5) -- (1.5, -3.5);
+
+        % Arrow
+        \draw[->, thick, PandaCharcoal] (0, 0.2) -- (0, -0.8);
+    \end{scope}
+
+    % Gini coefficient trend
+    \begin{scope}[shift={(0, -3)}]
+        \draw[->, thick, Slate] (-3, 0) -- (3, 0) node[right, font=\tiny] {Time};
+        \draw[->, thick, Slate] (-2.8, -0.2) -- (-2.8, 1.2) node[above, font=\tiny] {Gini};
+
+        \draw[thick, AccentCoral] (-2.5, 0.2) .. controls (-1, 0.4) and (0.5, 0.7) .. (2.5, 0.9);
+        \node[font=\tiny, text=Slate] at (0, -0.5) {Inequality increases};
+    \end{scope}
+
+\end{tikzpicture}
+\captionof{figure}[P13: Reinforcing feedback concentration]{P13 visualization: Reinforcing feedback (success $\rightarrow$ resources $\rightarrow$ capacity $\rightarrow$ success) produces increasingly concentrated distributions over time.}
+\labfig{p13-concentration}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P14: Balancing Feedback Maintains Diversity}
+
+\begin{propositionbox}
+\textbf{P14: Balancing feedback maintains role diversity.}\\[3pt]
+Competitive pressure and coordination costs limit concentration. Despite reinforcing feedback, balancing mechanisms will prevent complete dominance and maintain minimum role diversity.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5) {Balancing Feedback Prevents Monopoly};
+
+    % Balancing loop diagram
+    \begin{scope}[shift={(-4, 2)}]
+        \node[draw, rounded corners, fill=AccentCoral!30, font=\scriptsize, minimum width=1.5cm] (gro) at (0, 1) {Growth};
+        \node[draw, rounded corners, fill=AccentCoral!30, font=\scriptsize, minimum width=1.5cm] (coo) at (2, -0.5) {Coord. cost};
+        \node[draw, rounded corners, fill=AccentCoral!30, font=\scriptsize, minimum width=1.5cm] (eff) at (-2, -0.5) {Efficiency};
+
+        \draw[->, thick, AccentCoral] (gro) -- node[right, font=\tiny] {+} (coo);
+        \draw[->, thick, AccentCoral] (coo) -- node[below, font=\tiny] {-} (eff);
+        \draw[->, thick, AccentCoral] (eff) -- node[left, font=\tiny] {+} (gro);
+
+        \node[font=\small\bfseries, text=AccentCoral] at (0, -0.2) {-};
+    \end{scope}
+
+    % Result: bounded diversity
+    \begin{scope}[shift={(3, 1.5)}]
+        % Diversity over time (bounded)
+        \draw[->, thick, Slate] (-2, 0) -- (2.5, 0) node[right, font=\tiny] {Time};
+        \draw[->, thick, Slate] (-1.8, -0.2) -- (-1.8, 2) node[above, font=\tiny] {Diversity};
+
+        % Trend with floor
+        \draw[thick, Azure] (-1.5, 1.5) .. controls (-0.5, 1) and (0.5, 0.7) .. (2, 0.6);
+
+        % Diversity floor
+        \draw[dashed, AccentCoral, thick] (-1.5, 0.5) -- (2, 0.5);
+        \node[font=\tiny, text=AccentCoral] at (0.5, 0.2) {diversity floor};
+
+        % Without balancing (would go to zero)
+        \draw[dotted, Slate!50] (-1.5, 1.5) .. controls (0, 0.5) and (1, 0.2) .. (2, 0.1);
+        \node[font=\tiny, text=Slate!50, rotate=-15] at (1, -0.2) {without balancing};
+    \end{scope}
+
+    % Multiple survivors illustration
+    \begin{scope}[shift={(0, -2.5)}]
+        \node[font=\scriptsize, text=Slate] at (0, 1) {Outcome: Multiple Viable Configurations};
+
+        \node[draw, circle, fill=Azure!50, minimum size=1.2cm] at (-3, 0) {};
+        \node[draw, circle, fill=Marigold!50, minimum size=0.9cm] at (-1.2, 0) {};
+        \node[draw, circle, fill=PandaBamboo!50, minimum size=0.7cm] at (0.4, 0) {};
+        \node[draw, circle, fill=AccentPurple!50, minimum size=0.6cm] at (1.7, 0) {};
+        \node[draw, circle, fill=AccentCoral!50, minimum size=0.5cm] at (2.8, 0) {};
+
+        \node[font=\tiny, text=Slate] at (0, -0.9) {Hierarchy exists but no monopoly};
+    \end{scope}
+
+\end{tikzpicture}
+\captionof{figure}[P14: Balancing feedback diversity]{P14 visualization: Balancing feedback (growth $\rightarrow$ coordination costs $\rightarrow$ reduced efficiency) prevents complete monopolization, maintaining a diversity floor.}
+\labfig{p14-balancing}
+\end{center}
+
+\vspace{0.5cm}
+\subsection{P15: Multi-dimensional Adaptation Required for Fitness}
+
+\begin{propositionbox}
+\textbf{P15: Fitness requires multi-dimensional adaptation.}\\[3pt]
+Intermediaries optimizing on single dimensions will prove less sustainable than those balancing multiple fitness components.
+\end{propositionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % Title
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0, 5.5) {Multi-dimensional Fitness Landscape};
+
+    % Radar chart / spider diagram
+    \begin{scope}[shift={(0, 1.5)}]
+        % Axes
+        \draw[thick, Slate!40] (0, 0) -- (90:2.5);
+        \draw[thick, Slate!40] (0, 0) -- (162:2.5);
+        \draw[thick, Slate!40] (0, 0) -- (234:2.5);
+        \draw[thick, Slate!40] (0, 0) -- (306:2.5);
+        \draw[thick, Slate!40] (0, 0) -- (18:2.5);
+
+        % Axis labels
+        \node[font=\tiny, text=Slate] at (90:2.8) {Network};
+        \node[font=\tiny, text=Slate] at (162:2.9) {Resources};
+        \node[font=\tiny, text=Slate] at (234:2.9) {Legitimacy};
+        \node[font=\tiny, text=Slate] at (306:2.9) {Expertise};
+        \node[font=\tiny, text=Slate] at (18:2.8) {Adaptability};
+
+        % Grid circles
+        \draw[thin, Slate!20] (0,0) circle (0.8);
+        \draw[thin, Slate!20] (0,0) circle (1.6);
+
+        % Balanced profile (sustainable)
+        \fill[PandaBamboo!40, opacity=0.5]
+            (90:1.8) -- (162:1.6) -- (234:1.5) -- (306:1.7) -- (18:1.6) -- cycle;
+        \draw[thick, PandaBamboo]
+            (90:1.8) -- (162:1.6) -- (234:1.5) -- (306:1.7) -- (18:1.6) -- cycle;
+
+        % Unbalanced profile (vulnerable)
+        \fill[AccentCoral!40, opacity=0.3]
+            (90:2.3) -- (162:0.5) -- (234:0.4) -- (306:0.6) -- (18:0.5) -- cycle;
+        \draw[thick, AccentCoral, dashed]
+            (90:2.3) -- (162:0.5) -- (234:0.4) -- (306:0.6) -- (18:0.5) -- cycle;
+    \end{scope}
+
+    % Legend
+    \begin{scope}[shift={(0, -2.5)}]
+        \fill[PandaBamboo!40] (-3, 0.3) rectangle (-2.5, 0.6);
+        \node[font=\tiny, text=PandaBamboo, anchor=west] at (-2.3, 0.45) {Balanced: sustainable};
+
+        \fill[AccentCoral!40] (0.5, 0.3) rectangle (1, 0.6);
+        \draw[dashed, AccentCoral] (0.5, 0.45) -- (1, 0.45);
+        \node[font=\tiny, text=AccentCoral, anchor=west] at (1.2, 0.45) {Single-dimension: vulnerable};
+    \end{scope}
+
+    % Longevity comparison
+    \begin{scope}[shift={(0, -4)}]
+        \node[font=\scriptsize, text=Slate] at (-2.5, 0) {Longevity:};
+
+        \fill[PandaBamboo!60] (-1, -0.2) rectangle (2.5, 0.2);
+        \node[font=\tiny, text=white] at (0.75, 0) {Balanced};
+
+        \fill[AccentCoral!60] (-1, -0.7) rectangle (0.5, -0.3);
+        \node[font=\tiny, text=white] at (-0.25, -0.5) {Unbalanced};
+    \end{scope}
+
+\end{tikzpicture}
+\captionof{figure}[P15: Multi-dimensional fitness]{P15 visualization: Sustainable fitness requires balance across multiple dimensions (network, resources, legitimacy, expertise, adaptability). Single-dimension optimization (dashed) creates vulnerability.}
+\labfig{p15-multidim}
+\end{center}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Summary: Propositions at a Glance}
+\labsec{appendix-cas:summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{table*}[h]
+\centering
+\caption{All 15 CAS propositions with visualization summary}
+\labtab{appendix-prop-summary}
+\tableminimal
+\scriptsize
+\begin{tabular}{@{}clp{6cm}p{3.5cm}@{}}
+\toprule
+\textbf{ID} & \textbf{Mechanism} & \textbf{Proposition} & \textbf{Visual Pattern} \\
+\midrule
+P1 & Emergence & Role multiplicity is the norm & Multi-role nodes dominate \\
+P2 & Emergence & Constellation functions exceed individual roles & Emergent system-level properties \\
+P3 & Emergence & Emergence accelerates with density & Density-diversity correlation \\
+\addlinespace
+P4 & Self-org & Differentiation without coordination & Same input, varied output \\
+P5 & Self-org & Hierarchy from accumulated advantage & Size-centrality coupling \\
+P6 & Self-org & Niche formation reduces competition & Diverging role positions \\
+\addlinespace
+P7 & Co-evol & Policy and structure co-evolve & Bidirectional arrows \\
+P8 & Co-evol & Success alters landscape for others & Ripple effects \\
+P9 & Co-evol & Technology trajectory coupling & S-curve role shifts \\
+\addlinespace
+P10 & Non-linear & Punctuated equilibrium & Step-change time series \\
+P11 & Non-linear & Small triggers, large effects & Input-output disproportion \\
+P12 & Non-linear & Path dependence constrains & Decision tree with blocked paths \\
+\addlinespace
+P13 & Feedback & Reinforcing $\rightarrow$ concentration & Skewing distributions \\
+P14 & Feedback & Balancing $\rightarrow$ diversity floor & Bounded inequality \\
+P15 & Fitness & Multi-dimensional adaptation required & Radar chart balance \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{insightbox}[From Static to Interactive]
+These static visualizations are designed as templates for interactive HTML implementation. The planned interactive version will enable:
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item \textbf{Animation}: Temporal propositions (P7--P12) animate over time
+\item \textbf{Parameter exploration}: Adjust mechanism parameters, observe effects
+\item \textbf{Empirical linking}: Connect theoretical patterns to EIT data
+\item \textbf{Proposition comparison}: Side-by-side views across mechanisms
+\end{itemize}
+The \texttt{rolebox-triads} framework provides the technical infrastructure for this interactive exploration.
+\end{insightbox}
+
+\end{document}

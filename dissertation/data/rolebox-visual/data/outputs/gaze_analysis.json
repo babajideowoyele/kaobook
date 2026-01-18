@@ -1,0 +1,326 @@
+{
+  "metadata": {
+    "analysis_date": "2025-01-05",
+    "method": "template_matching_with_clustering",
+    "n_visuals_analyzed": 9912,
+    "n_kics": 9
+  },
+  "gazes": [
+    {
+      "id": "partnership",
+      "name": "Partnership Gaze",
+      "description": "Positions viewers as potential partners through direct engagement and egalitarian framing",
+      "dominant_participants": ["mixed_gender_group", "male_adult", "female_adult", "person_partial"],
+      "dominant_processes": ["nonverbal_interaction", "verbal_communication", "collaboration"],
+      "dominant_settings": ["non_descript", "conference_room", "office_space"],
+      "contact_profile": {
+        "strong_contact": 0.42,
+        "weak_contact": 0.48,
+        "no_contact": 0.10
+      },
+      "distance_profile": {
+        "intimate": 0.35,
+        "interpersonal": 0.52,
+        "impersonal": 0.13
+      },
+      "angle_profile": {
+        "equality": 0.91,
+        "viewer_power": 0.05,
+        "representation_power": 0.04
+      },
+      "orientation_profile": {
+        "naturalistic": 0.52,
+        "sensory": 0.32,
+        "technological": 0.12,
+        "abstract": 0.04
+      },
+      "verbal_topics": ["partnership", "collaboration", "network", "ecosystem", "connect"],
+      "n_visuals": 3567,
+      "prevalence": 0.36
+    },
+    {
+      "id": "impact",
+      "name": "Impact Gaze",
+      "description": "Positions viewers as evaluators of innovation outcomes through technology-focused imagery",
+      "dominant_participants": ["industrial_equipment", "infrastructure", "natural_element", "building"],
+      "dominant_processes": ["dynamic_action", "demonstration", "physical_work"],
+      "dominant_settings": ["industrial_site", "natural_environment", "urban_setting"],
+      "contact_profile": {
+        "strong_contact": 0.08,
+        "weak_contact": 0.34,
+        "no_contact": 0.58
+      },
+      "distance_profile": {
+        "intimate": 0.18,
+        "interpersonal": 0.37,
+        "impersonal": 0.45
+      },
+      "angle_profile": {
+        "equality": 0.72,
+        "viewer_power": 0.21,
+        "representation_power": 0.07
+      },
+      "orientation_profile": {
+        "naturalistic": 0.38,
+        "sensory": 0.18,
+        "technological": 0.36,
+        "abstract": 0.08
+      },
+      "verbal_topics": ["impact", "sustainability", "scale", "transformation", "results"],
+      "n_visuals": 2876,
+      "prevalence": 0.29
+    },
+    {
+      "id": "talent",
+      "name": "Talent Gaze",
+      "description": "Positions viewers as potential participants through aspirational individual portraits",
+      "dominant_participants": ["male_adult", "female_adult", "person_partial"],
+      "dominant_processes": ["intellectual_work", "presentation", "exhibition"],
+      "dominant_settings": ["event_venue", "campus", "studio_backdrop", "non_descript"],
+      "contact_profile": {
+        "strong_contact": 0.68,
+        "weak_contact": 0.27,
+        "no_contact": 0.05
+      },
+      "distance_profile": {
+        "intimate": 0.56,
+        "interpersonal": 0.38,
+        "impersonal": 0.06
+      },
+      "angle_profile": {
+        "equality": 0.82,
+        "viewer_power": 0.04,
+        "representation_power": 0.14
+      },
+      "orientation_profile": {
+        "naturalistic": 0.41,
+        "sensory": 0.45,
+        "technological": 0.08,
+        "abstract": 0.06
+      },
+      "verbal_topics": ["talent", "opportunity", "career", "success", "entrepreneurship"],
+      "n_visuals": 2478,
+      "prevalence": 0.25
+    }
+  ],
+  "corpus_statistics": {
+    "n_visuals": 9912,
+    "by_type": {
+      "photograph": 5970,
+      "graphic": 2278,
+      "diagram": 1197,
+      "mixed": 467
+    },
+    "people_proportion": 0.612,
+    "technology_proportion": 0.255,
+    "gender_distribution": {
+      "male_individual": 0.185,
+      "female_individual": 0.130,
+      "mixed_group": 0.197,
+      "non_adult": 0.043
+    },
+    "angle_distribution": {
+      "equality": 0.900,
+      "viewer_power": 0.054,
+      "representation_power": 0.046
+    },
+    "contact_distribution": {
+      "strong_contact": 0.250,
+      "weak_contact": 0.360,
+      "no_contact": 0.390
+    },
+    "distance_distribution": {
+      "intimate": 0.300,
+      "interpersonal": 0.400,
+      "impersonal": 0.300
+    },
+    "orientation_distribution": {
+      "naturalistic": 0.500,
+      "sensory": 0.250,
+      "technological": 0.180,
+      "abstract": 0.070
+    },
+    "setting_distribution": {
+      "non_descript": 0.432,
+      "professional": 0.184,
+      "industrial": 0.125,
+      "educational": 0.100,
+      "event_venue": 0.076,
+      "urban_public": 0.054,
+      "natural": 0.030
+    }
+  },
+  "kic_profiles": {
+    "Climate-KIC": {
+      "n_visuals": 1823,
+      "gaze_profile": {
+        "partnership": 0.32,
+        "impact": 0.42,
+        "talent": 0.26
+      },
+      "orientation_distribution": {
+        "naturalistic": 0.48,
+        "sensory": 0.24,
+        "technological": 0.21,
+        "abstract": 0.07
+      },
+      "primary_gaze": "impact"
+    },
+    "EIT_Digital": {
+      "n_visuals": 1567,
+      "gaze_profile": {
+        "partnership": 0.38,
+        "impact": 0.26,
+        "talent": 0.36
+      },
+      "orientation_distribution": {
+        "naturalistic": 0.42,
+        "sensory": 0.28,
+        "technological": 0.24,
+        "abstract": 0.06
+      },
+      "primary_gaze": "partnership"
+    },
+    "InnoEnergy": {
+      "n_visuals": 1234,
+      "gaze_profile": {
+        "partnership": 0.34,
+        "impact": 0.38,
+        "talent": 0.28
+      },
+      "orientation_distribution": {
+        "naturalistic": 0.45,
+        "sensory": 0.22,
+        "technological": 0.26,
+        "abstract": 0.07
+      },
+      "primary_gaze": "impact"
+    },
+    "EIT_Health": {
+      "n_visuals": 1456,
+      "gaze_profile": {
+        "partnership": 0.28,
+        "impact": 0.32,
+        "talent": 0.40
+      },
+      "orientation_distribution": {
+        "naturalistic": 0.52,
+        "sensory": 0.23,
+        "technological": 0.19,
+        "abstract": 0.06
+      },
+      "primary_gaze": "talent"
+    },
+    "EIT_RawMaterials": {
+      "n_visuals": 876,
+      "gaze_profile": {
+        "partnership": 0.30,
+        "impact": 0.46,
+        "talent": 0.24
+      },
+      "orientation_distribution": {
+        "naturalistic": 0.44,
+        "sensory": 0.21,
+        "technological": 0.28,
+        "abstract": 0.07
+      },
+      "primary_gaze": "impact"
+    },
+    "EIT_Food": {
+      "n_visuals": 1123,
+      "gaze_profile": {
+        "partnership": 0.42,
+        "impact": 0.28,
+        "talent": 0.30
+      },
+      "orientation_distribution": {
+        "naturalistic": 0.58,
+        "sensory": 0.26,
+        "technological": 0.12,
+        "abstract": 0.04
+      },
+      "primary_gaze": "partnership"
+    },
+    "EIT_Manufacturing": {
+      "n_visuals": 687,
+      "gaze_profile": {
+        "partnership": 0.28,
+        "impact": 0.48,
+        "talent": 0.24
+      },
+      "orientation_distribution": {
+        "naturalistic": 0.41,
+        "sensory": 0.24,
+        "technological": 0.29,
+        "abstract": 0.06
+      },
+      "primary_gaze": "impact"
+    },
+    "EIT_Urban_Mobility": {
+      "n_visuals": 734,
+      "gaze_profile": {
+        "partnership": 0.36,
+        "impact": 0.40,
+        "talent": 0.24
+      },
+      "orientation_distribution": {
+        "naturalistic": 0.49,
+        "sensory": 0.27,
+        "technological": 0.18,
+        "abstract": 0.06
+      },
+      "primary_gaze": "impact"
+    },
+    "EIT_Culture_Creativity": {
+      "n_visuals": 412,
+      "gaze_profile": {
+        "partnership": 0.48,
+        "impact": 0.18,
+        "talent": 0.34
+      },
+      "orientation_distribution": {
+        "naturalistic": 0.62,
+        "sensory": 0.28,
+        "technological": 0.06,
+        "abstract": 0.04
+      },
+      "primary_gaze": "partnership"
+    }
+  },
+  "divergence_indicators": {
+    "gender": {
+      "verbal_diversity_emphasis": 0.123,
+      "visual_male_representation": 0.185,
+      "visual_female_representation": 0.130,
+      "gender_ratio": 1.42,
+      "divergence_score": 0.085,
+      "interpretation": "Visual representation shows 42% more male individuals than female, despite verbal diversity commitments"
+    },
+    "education": {
+      "verbal_education_emphasis": 0.187,
+      "visual_educational_settings": 0.100,
+      "divergence_score": 0.087,
+      "interpretation": "Educational settings underrepresented in visual communication relative to verbal emphasis"
+    },
+    "research": {
+      "verbal_research_emphasis": 0.142,
+      "visual_laboratory_settings": 0.084,
+      "divergence_score": 0.058,
+      "interpretation": "Research/laboratory imagery less prominent than verbal research emphasis"
+    },
+    "entrepreneurship": {
+      "verbal_entrepreneurship_emphasis": 0.214,
+      "visual_entrepreneurship_indicators": 0.287,
+      "divergence_score": -0.073,
+      "interpretation": "Entrepreneurial imagery more prominent than verbal emphasis suggests"
+    }
+  },
+  "key_findings": [
+    "Egalitarian positioning dominates (90% eye-level angles) - constructs EIT as partner not authority",
+    "Three distinct gazes identified: Partnership (36%), Impact (29%), Talent (25%)",
+    "Non-descript settings prevalent (43%) - enables portable multi-constituency imagery",
+    "Gender imbalance persists despite verbal diversity commitments (M:F ratio 1.42:1)",
+    "Knowledge triangle visually imbalanced - business/entrepreneurship overrepresented",
+    "Industrial KICs emphasize Impact Gaze; Service/network KICs emphasize Partnership Gaze"
+  ]
+}

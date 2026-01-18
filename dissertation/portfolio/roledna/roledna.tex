@@ -1,0 +1,343 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{ROLEDNA: A Python Platform for Discourse Network Analysis}
+\labch{roledna}
+\margintoc
+
+\begin{chapteroverview}
+This chapter presents ROLEDNA (Role-based Discourse Network Analysis), an exploratory reimplementation of the Discourse Network Analyzer (DNA) in Python. We trace the motivation from desktop-bound Java applications to web-accessible Python platforms, describe the technical architecture combining FastAPI, SQLAlchemy, and Sigma.js, demonstrate core analytical capabilities for actor-concept network analysis, and reflect critically on current limitations. ROLEDNA represents a proof-of-concept for modernizing computational discourse analysis---not a finished product, but a foundation for future development integrating large language models for automated coding assistance.
+\end{chapteroverview}
+
+\begin{quote}
+\textit{``The tools we use shape the questions we ask.\\
+What becomes possible when discourse network analysis meets modern Python?''}
+\end{quote}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{From DNA to ROLEDNA: Motivation}
+\labsec{roledna:motivation}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Discourse Network Analysis (DNA) has emerged as a powerful methodology for studying policy debates, mapping how actors position themselves relative to concepts, claims, and each other \cite{leifeld2013dna}. The method, pioneered by Philip Leifeld, combines qualitative content analysis with quantitative network methods \sidecite{borgatti2009network,newman2010networks}. Leifeld's Discourse Network Analyzer, first released in 2009, enabled systematic coding of actor-concept relationships from policy documents, news articles, and parliamentary debates.
+
+Three developments motivate ROLEDNA's Python reimplementation:
+
+\subsection{The Desktop-to-Web Transition}
+
+DNA runs as a local Java application \cite{leifeld2013dna}. Modern research increasingly demands web-based collaboration. ROLEDNA explores whether discourse network analysis can follow the trajectory from installed software to accessible web application.
+
+\subsection{The Python Ecosystem Advantage}
+
+The data science ecosystem has consolidated around Python. A Python-native implementation collapses Java/R polyglot workflows into a single environment where the same language handles interface, database, analysis, and visualization.
+
+\subsection{The LLM Horizon}
+
+Large language models are transforming text analysis. ROLEDNA's Python foundation positions it for LLM integration---the same codebase that serves the web interface can call OpenAI's API, run local Llama models, or integrate Hugging Face pipelines.
+
+\begin{criticalbox}[LLMs Are Not Magic]
+LLM-assisted coding is promising but perilous. Models hallucinate. They reflect training data biases. ROLEDNA envisions LLMs as \emph{assistants}---suggesting codes for human review---not autonomous coders. The human remains in the loop.
+\end{criticalbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Technical Architecture}
+\labsec{roledna:architecture}
+%═══════════════════════════════════════════════════════════════════════════════
+
+ROLEDNA adopts a modern web application architecture organized in four layers: browser interface, FastAPI backend, database abstraction, and core analysis engine.
+
+\sidenote{\textbf{Technology Stack}---Backend: FastAPI (Python 3.11+), Database: SQLAlchemy async + SQLite/PostgreSQL, Templates: Jinja2, Styling: IBM Carbon Design System, Visualization: Sigma.js + Graphology.}
+
+\sidenote{\iconcode\ Code: \texttt{dissertation/data/rolebox-pydna/}\\[0.3em]\iconui\ UI Mock: \texttt{rolebox-pydna.html}}
+
+\subsection{Layer Architecture}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Browser Interface] HTML/CSS/JavaScript rendered with Jinja2 templates, styled with IBM Carbon Design System. Network visualizations use Sigma.js with Graphology for graph data structures.
+
+\item[FastAPI Backend] REST API endpoints organized around core entities (documents, statements, actors, concepts, networks). Serves both JSON API responses and rendered HTML pages.
+
+\item[SQLAlchemy Async] Database abstraction layer supporting SQLite (development) and PostgreSQL (production). Async operations prevent blocking during long-running queries.
+
+\item[Core Analysis] NetworkX for graph computations, Pandas for data manipulation, Sentence Transformers for semantic similarity. This layer handles network projections, normalizations, and exports.
+\end{description}
+
+\subsection{API Design}
+
+The API follows RESTful conventions with endpoints organized around core entities. Key endpoint groups include:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[\texttt{/api/documents}] CRUD operations for source documents, including text import and metadata management.
+
+\item[\texttt{/api/statements}] Statement creation, retrieval, update, and deletion. Supports batch operations for efficient coding workflows.
+
+\item[\texttt{/api/actors}, \texttt{/api/concepts}] Entity management with merge and categorization operations.
+
+\item[\texttt{/api/networks}] Network generation endpoints accepting projection type, normalization method, and filter parameters. Returns GraphML, JSON, or edge list formats.
+\end{description}
+
+\noindent This separation enables future development of alternative interfaces---command-line tools, Jupyter integrations, or mobile applications---while preserving the analytical engine.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{User Interface}
+\labsec{roledna:ui}
+%═══════════════════════════════════════════════════════════════════════════════
+
+ROLEDNA provides a modern web-based interface built on IBM's Carbon Design System, enabling discourse network analysis through an accessible browser-based platform. The interface follows a consistent pattern: left sidebar for navigation and project statistics, main content area for the current task, and contextual panels for detailed information.
+
+\subsection{Dashboard and Project Overview}
+
+The dashboard provides an at-a-glance summary of the current project state. Statistics panels track document counts, statement totals, actor and concept inventories. A progress indicator shows coding completion across the document corpus, enabling researchers to monitor annotation progress during long-term projects.
+
+\begin{wideblock}
+\begin{center}
+\includegraphics[width=\linewidth]{dissertation/portfolio/roledna/screencapture-file-C-Users-babaj-Downloads-roledna-html-2026-01-05-17_16_00.pdf}
+\captionof{figure}{ROLEDNA dashboard overview showing project statistics (documents, statements, actors, concepts), coding progress, recent activity sparklines, and quick-access links to major functions. The left sidebar provides persistent navigation and project summary metrics.}
+\labfig{roledna-ui-dashboard}
+\end{center}
+\end{wideblock}
+
+\subsection{Document Coding Workflow}
+
+The statement annotation interface represents the core coding workflow. Researchers select text passages, assign actors and concepts, and mark the statement's qualifier (agreement or disagreement). The interface maintains the source document visible while coding, enabling researchers to preserve context. Coded statements appear in a running list for review and editing.
+
+The coding workflow proceeds as follows:
+\begin{enumerate}
+\item \textbf{Load document} from the project library
+\item \textbf{Select text} containing an actor-concept statement
+\item \textbf{Assign actor} (who made the statement)
+\item \textbf{Assign concept} (what claim is being made)
+\item \textbf{Mark qualifier} (+1 for support, -1 for opposition)
+\item \textbf{Save statement} to the project database
+\end{enumerate}
+
+\begin{wideblock}
+\begin{center}
+\includegraphics[width=\linewidth]{dissertation/portfolio/roledna/screencapture-file-C-Users-babaj-Downloads-roledna-html-2026-01-05-17_16_22.pdf}
+\captionof{figure}{Document coding interface showing the annotation workflow. Left panel displays the source document with highlighted text selection. Right panel provides controls for actor assignment, concept selection, and qualifier marking. The statement list below shows previously coded annotations for this document.}
+\labfig{roledna-ui-coding}
+\end{center}
+\end{wideblock}
+
+\subsection{Actor and Concept Management}
+
+Actors and concepts form the building blocks of discourse networks. The management interfaces enable researchers to create, edit, merge, and categorize these entities. Each actor displays aggregate statistics: total statements, positive/negative breakdown, and activity over time. Color coding distinguishes actor types (government, industry, NGO, etc.).
+
+\begin{wideblock}
+\begin{center}
+\includegraphics[width=\linewidth]{dissertation/portfolio/roledna/screencapture-file-C-Users-babaj-Downloads-roledna-html-2026-01-05-17_16_49.pdf}
+\captionof{figure}{Actor management panel displaying all coded entities with their statement frequencies, type classifications, and positive/negative statement ratios. Actors can be merged (for coreference resolution), edited, or categorized into type groups for network analysis.}
+\labfig{roledna-ui-actors}
+\end{center}
+\end{wideblock}
+
+Concepts function similarly, with additional features for hierarchical organization. Researchers can create concept trees, grouping related claims under parent categories. The interface shows concept contestation---whether a concept receives predominantly supporting or opposing statements---as a visual bar indicating the balance of positions.
+
+\begin{wideblock}
+\begin{center}
+\includegraphics[width=\linewidth]{dissertation/portfolio/roledna/screencapture-file-C-Users-babaj-Downloads-roledna-html-2026-01-05-17_17_08.pdf}
+\captionof{figure}{Concept management interface showing the discourse vocabulary. Each concept displays support/opposition counts and a contestation bar. Concepts with both supporting and opposing statements appear as ``contested'' while those with uniform positions appear as ``consensus'' items.}
+\labfig{roledna-ui-concepts}
+\end{center}
+\end{wideblock}
+
+\subsection{Network Visualization and Analysis}
+
+The network analysis interface transforms coded statements into interactive network graphs. The primary visualization uses Sigma.js with force-directed layout, positioning actors based on their relational structure. Node size reflects statement activity; edge color and width encode relationship type and strength.
+
+\begin{wideblock}
+\begin{center}
+\includegraphics[width=\linewidth]{dissertation/portfolio/roledna/screencapture-file-C-Users-babaj-Downloads-roledna-html-2026-01-05-17_17_26.pdf}
+\captionof{figure}{Network visualization showing actor relationships in a force-directed layout. Nodes represent actors (sized by statement count, colored by type). Edges connect actors who share positions on concepts, with green indicating agreement and red indicating conflict. Interactive controls enable filtering by actor type, time window, and concept subset.}
+\labfig{roledna-ui-network}
+\end{center}
+\end{wideblock}
+
+The analysis options panel provides controls for network projection and normalization. Researchers can switch between network types, adjust normalization methods, and configure visualization parameters. Export functions generate GraphML, CSV, or JSON formats for external analysis tools.
+
+\begin{wideblock}
+\begin{center}
+\includegraphics[width=\linewidth]{dissertation/portfolio/roledna/screencapture-file-C-Users-babaj-Downloads-roledna-html-2026-01-05-17_17_40.pdf}
+\captionof{figure}{Network analysis options panel showing projection type selection (two-mode, actor congruence, actor conflict), normalization method configuration (raw, Jaccard, cosine, average activity), and export format options. Network metrics including density, centralization, and polarization indices appear in the statistics section.}
+\labfig{roledna-ui-analysis}
+\end{center}
+\end{wideblock}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Core Analytical Features}
+\labsec{roledna:features}
+%═══════════════════════════════════════════════════════════════════════════════
+
+ROLEDNA implements the core network computations that make discourse network analysis distinctive: projecting two-mode actor-concept affiliations into one-mode networks revealing actor relationships.
+
+\subsection{Data Model}
+
+The fundamental data structure follows Leifeld's original DNA schema, adapted for Python's object model:
+
+\sidenote{\textbf{Hierarchical Structure}---Documents contain statements; statements reference actors and concepts with qualifiers. This nested structure enables both document-level and corpus-level analysis.}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Document] A source text (news article, policy document, parliamentary transcript) serving as the unit of coding.
+
+\item[Statement] A coded annotation linking an actor to a concept within a document, capturing what position an actor takes on a claim.
+
+\item[Actor] An entity making statements---individuals, organizations, institutions, or collective actors.
+
+\item[Concept] A claim, policy position, or normative statement that actors can support or oppose.
+
+\item[Qualifier] The direction of an actor's position on a concept: +1 (support/agreement) or -1 (oppose/disagreement).
+\end{description}
+
+\noindent This data model enables flexible queries: Which actors support carbon pricing? Which concepts are contested? How do actor positions cluster over time?
+
+\subsection{Network Types}
+
+Four network projections form the analytical core:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Two-Mode Affiliation] Bipartite network connecting actors to concepts. Answers: Who discusses what?
+
+\item[Actor Congruence] One-mode projection linking actors with shared positions. Answers: Who allies with whom?
+
+\item[Actor Conflict] One-mode projection linking actors with opposing positions. Answers: Who opposes whom?
+
+\item[Concept Co-occurrence] Concepts mentioned together by the same actors. Answers: Which ideas cluster?
+\end{description}
+
+\subsubsection{Two-Mode Affiliation Network}
+
+The two-mode (bipartite) network connects actors to concepts. Edges carry qualifier weights: positive edges for supporting statements, negative edges for opposing statements. This network answers ``who discusses what'' and reveals discourse participation patterns.
+
+\subsubsection{One-Mode Actor Projections}
+
+Projecting the two-mode network onto actors creates one-mode networks. The \emph{congruence network} connects actors who share positions on concepts---actors who both support carbon pricing, or both oppose fossil fuel subsidies. Edge weights reflect the number of shared positions.
+
+The \emph{conflict network} inverts this logic, connecting actors who take opposing positions on shared concepts. An edge appears when one actor supports a concept another opposes. This network reveals adversarial structure and polarization patterns.
+
+\subsection{Normalization Options}
+
+Raw edge weights reflect statement counts, which can bias toward prolific actors. A highly active speaker accumulates more shared positions simply by making more statements. ROLEDNA implements three standard normalizations:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Jaccard] $\frac{|A \cap B|}{|A \cup B|}$ --- Symmetric similarity, robust to activity differences
+
+\item[Cosine] $\frac{A \cdot B}{\|A\| \|B\|}$ --- Directional similarity, common in text analysis
+
+\item[Average Activity] $\frac{2|A \cap B|}{|A| + |B|}$ --- Balanced normalization, penalizes sparse overlap
+\end{description}
+
+\noindent Jaccard normalization is recommended for most analyses, as it accounts for both shared and unshared positions without directional bias.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Current Limitations}
+\labsec{roledna:limitations}
+%═══════════════════════════════════════════════════════════════════════════════
+
+ROLEDNA is a proof-of-concept, not a production system. It lacks some DNA features: regex-based entity detection, statement inheritance, multiple qualifier dimensions, and network backbone extraction.
+
+\begin{importantbox}
+\textbf{Use at your own risk.} ROLEDNA is research software in early development. It may contain bugs. It has not been security-audited for multi-user deployment.
+\end{importantbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Future Directions}
+\labsec{roledna:future}
+%═══════════════════════════════════════════════════════════════════════════════
+
+ROLEDNA's Python foundation positions it for integration with rapidly evolving AI capabilities. Four development trajectories merit discussion.
+
+\subsection{LLM-Assisted Coding}
+
+Large language models could accelerate the coding workflow by suggesting actor-concept-qualifier triples for human review. The envisioned workflow:
+
+\begin{enumerate}
+\item \textbf{Document ingestion}: User uploads source documents to the project.
+\item \textbf{LLM analysis}: The system prompts an LLM (via API or local model) to identify statements, specifying the existing actor and concept vocabularies.
+\item \textbf{Suggestion review}: Proposed statements appear in a review queue. The human coder accepts, rejects, or modifies each suggestion.
+\item \textbf{Model feedback}: Accepted and rejected suggestions inform prompt refinement for subsequent documents.
+\end{enumerate}
+
+\begin{criticalbox}[LLM Integration: Proceed with Caution]
+LLM-assisted coding remains highly experimental and error-prone. Current models exhibit serious limitations:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Hallucination}: Models fabricate plausible-sounding statements that don't exist in source texts
+\item \textbf{Inconsistency}: Same text produces different codings across runs with identical prompts
+\item \textbf{Concept drift}: Models misinterpret domain-specific concepts or conflate similar terms
+\item \textbf{Bias amplification}: Training data biases affect which actors and positions get recognized
+\item \textbf{Context limitations}: Long documents exceed context windows, causing incomplete analysis
+\end{itemize}
+Human validation is not optional---it is mandatory. Any LLM integration must preserve the epistemological foundations of qualitative content analysis by keeping humans in authoritative control of coding decisions. The goal is \emph{assisted} coding, not automated coding.
+\end{criticalbox}
+
+This approach, if implemented carefully, could reduce the mechanical burden of statement identification while preserving qualitative rigor.
+
+\subsection{NLP Pipeline Integration}
+
+Beyond LLMs, traditional NLP components could enhance ROLEDNA:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Named Entity Recognition] Automatic detection of potential actors (persons, organizations, institutions) within documents.
+
+\item[Coreference Resolution] Linking pronouns and aliases to canonical actor references (``the minister'' $\rightarrow$ ``Minister of Climate'').
+
+\item[Stance Detection] Classifying whether statements express support or opposition toward concepts.
+
+\item[Topic Modeling] Discovering latent concept structures from document corpora to seed the concept vocabulary.
+\end{description}
+
+\subsection{Collaborative Features}
+
+Research projects often involve multiple coders. Future versions could implement:
+
+\begin{itemize}
+\item Multi-user authentication and role-based access control
+\item Inter-coder reliability metrics (Cohen's $\kappa$, Krippendorff's $\alpha$)
+\item Version history and rollback for statement modifications
+\item Project sharing and export/import between installations
+\end{itemize}
+
+\subsection{Integration with RoleBox}
+
+ROLEDNA could integrate with the RoleBox modalities developed elsewhere in this dissertation. Cross-modal analysis might reveal:
+
+\begin{itemize}
+\item Whether discourse positions (claimed roles) align with network positions (enacted roles)
+\item How actors discuss themselves versus how media portrays them
+\item Temporal dynamics linking discourse shifts to structural changes
+\end{itemize}
+
+\begin{insightbox}[Toolkit Convergence]
+This dissertation develops two complementary tools: RoleBox for multimodal network analysis across websites, news, social media, and financial data; ROLEDNA for discourse network analysis of actor-concept relationships. They share conceptual foundations (relational perspectives on organizations) and technical stack (Python, NetworkX, web interfaces). Future work could unify them into a single platform for comprehensive role constellation analysis, enabling researchers to triangulate role claims, attributions, and enactments with discourse positions in a single analytical environment.
+\end{insightbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Chapter Summary}
+\labsec{roledna:summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{ROLEDNA} reimplements core Discourse Network Analyzer functionality in Python, transitioning from desktop Java to web-accessible platform.
+
+\item \textbf{Motivations} include: web-based collaboration, Python ecosystem integration, and positioning for LLM-assisted coding.
+
+\item \textbf{Technical architecture} combines FastAPI backend, SQLAlchemy async database layer, Carbon Design System interface, and Sigma.js network visualization.
+
+\item \textbf{Core features} include: two-mode affiliation networks, one-mode congruence/conflict projections, multiple normalization options, and interactive visualization.
+
+\item \textbf{Future directions} include: LLM-assisted coding, NLP pipeline integration, collaborative features, and potential RoleBox integration.
+
+\item ROLEDNA is \textbf{proof-of-concept} software demonstrating feasibility, not a production-ready replacement for DNA.
+\end{itemize}
+\end{summarybox}
+
+\end{document}

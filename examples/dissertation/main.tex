@@ -1,0 +1,274 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EUR Dissertation Template
+% Based on kaobook with EUR Corporate Identity
+%
+% Compile with: LuaLaTeX or XeLaTeX (recommended)
+%               pdfLaTeX also works but with limited font options
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+    fontsize=11pt,
+    a4paper,
+    twoside=true,
+    open=any,
+    %secnumdepth=2,
+]{kaobook}
+
+%----------------------------------------------------------------------------------------
+%	FONT CONFIGURATION
+%	Change the option to switch fonts:
+%	- libertinus (default, elegant serif)
+%	- firasans (modern, technical)
+%	- ibmplex (professional, readable)
+%	- helvetica (classic sans-serif)
+%	- museosans (if you have the font installed)
+%----------------------------------------------------------------------------------------
+
+% Font: Fira Sans (modern, excellent for technical/academic docs)
+\usepackage[firasans]{kaofonts}
+
+%----------------------------------------------------------------------------------------
+%	EUR CORPORATE IDENTITY
+%----------------------------------------------------------------------------------------
+
+\usepackage{kaoci-eur}
+\seteurlogopath{eur_ci/Erasmus University/}
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\usepackage{kaobiblio}
+\usepackage{kaorefs}
+\addbibresource{references.bib}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFO
+%----------------------------------------------------------------------------------------
+
+\title{Navigating Sustainability Transitions}
+\author{Your Name}
+\date{\today}
+
+% Dissertation-specific info
+\promotor{Prof. dr. First Promotor\\Erasmus University Rotterdam}
+\copromotor{Dr. Second Promotor\\Erasmus University Rotterdam}
+\committee{%
+Prof. dr. Committee Member 1, University Name\\
+Prof. dr. Committee Member 2, University Name\\
+Dr. Committee Member 3, University Name%
+}
+\defensedate{January 15, 2025}
+\defensetime{13:00}
+\defenselocation{Senaatszaal, Erasmus Building}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+% Option 1: Full EUR green title page
+\eurtitlepage
+
+% Option 2: Minimal title page (uncomment to use instead)
+%\eurtitlepageminimal
+
+%----------------------------------------------------------------------------------------
+%	FRONT MATTER
+%----------------------------------------------------------------------------------------
+
+\frontmatter
+
+% Committee page
+\committeepage
+
+% Table of contents
+\tableofcontents
+
+%----------------------------------------------------------------------------------------
+%	MAIN MATTER
+%----------------------------------------------------------------------------------------
+
+\mainmatter
+\setupeur % Apply EUR styling for chapters
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 1: INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\chapter{Introduction to Sustainability Transitions}
+\labch{introduction}
+
+\margintoc % Shows chapter contents in margin
+
+Sustainability transitions represent fundamental shifts in socio-technical systems towards more sustainable modes of production and consumption.\sidenote{The multi-level perspective (MLP) provides a useful analytical framework for understanding these transitions.}
+
+\section{The Multi-Level Perspective}
+
+The MLP conceptualizes transitions as the interplay between three analytical levels:
+
+\begin{enumerate}
+    \item \textbf{Niches}: Protected spaces where radical innovations emerge
+    \item \textbf{Regimes}: The dominant configuration of actors, institutions, and technologies
+    \item \textbf{Landscape}: Exogenous macro-level developments
+\end{enumerate}
+
+\begin{eurbox}[title=Key Concept]
+Transitions occur when niche innovations break through to challenge and eventually transform the regime, often facilitated by landscape pressures.
+\end{eurbox}
+
+\section{Research Questions}
+
+This dissertation addresses the following questions:\marginnote{These questions build on established transition theory while addressing empirical gaps.}
+
+\begin{enumerate}
+    \item How do niche innovations scale up to challenge incumbent regimes?
+    \item What role do intermediary actors play in transition processes?
+    \item How can policy interventions accelerate sustainability transitions?
+\end{enumerate}
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 2: WIDE VISUALIZATIONS EXAMPLE
+%----------------------------------------------------------------------------------------
+
+\chapter{Wide Visualizations and Data}
+\labch{visualizations}
+
+\margintoc
+
+This chapter demonstrates wide figures and tables that span the full page width, perfect for complex diagrams and data presentations.
+
+\section{Wide Figures}
+
+The following figure spans the full text width plus margins, ideal for multi-level perspective diagrams:
+
+\begin{widefigure}
+    \centering
+    % Placeholder - replace with your diagram
+    \begin{tikzpicture}
+        % Landscape level
+        \fill[EURgreen!20] (0,6) rectangle (14,8);
+        \node at (7,7) {\textbf{Landscape (macro-level)}};
+
+        % Regime level
+        \fill[EURgreen!40] (0,2.5) rectangle (14,5.5);
+        \node at (7,4) {\textbf{Regime (meso-level)}};
+
+        % Niche level
+        \fill[EURgreen!60] (0,0) rectangle (14,2);
+        \node at (7,1) {\textbf{Niches (micro-level)}};
+
+        % Arrows showing dynamics
+        \draw[->, thick, EURcyan] (3,1.5) -- (5,3) -- (7,5) -- (9,7);
+        \node[right] at (9,7) {\small Transition pathway};
+    \end{tikzpicture}
+    \caption{The Multi-Level Perspective framework showing interactions between landscape, regime, and niche levels over time.}
+    \labfig{mlp}
+\end{widefigure}
+
+\section{Wide Tables}
+
+For comprehensive data presentation:\marginnote{Wide tables are essential for comparing multiple cases or presenting detailed quantitative analysis.}
+
+\begin{widetable}
+    \centering
+    \caption{Comparison of transition pathways across different sustainability domains.}
+    \labtab{pathways}
+    \begin{tabular}{llllll}
+        \toprule
+        \textbf{Domain} & \textbf{Niche Innovation} & \textbf{Regime Response} & \textbf{Landscape Pressure} & \textbf{Timeline} & \textbf{Status} \\
+        \midrule
+        Energy & Solar PV & Gradual adoption & Climate policy & 30+ years & Ongoing \\
+        Mobility & Electric vehicles & Resistance/co-opt & Air quality & 20+ years & Accelerating \\
+        Food & Plant-based proteins & Diversification & Health concerns & 10+ years & Emerging \\
+        Construction & Circular materials & Limited uptake & Resource scarcity & 5+ years & Early stage \\
+        \bottomrule
+    \end{tabular}
+\end{widetable}
+
+\section{Margin Figures}
+
+For supporting visualizations, margin figures keep the main text flowing:
+
+\begin{marginfigure}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+        \draw[thick, EURgreen] (0,0) circle (1.5);
+        \node at (0,0) {\small Niche};
+        \draw[->, thick, EURcyan] (0,1.5) -- (0,2.5);
+    \end{tikzpicture}
+    \caption{Niche development cycle}
+    \labfig{niche}
+\end{marginfigure}
+
+Regular text continues here with the margin figure alongside. This layout is particularly effective for presenting supplementary diagrams, data visualizations, or conceptual illustrations without interrupting the main narrative flow.
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 3: METHODOLOGY
+%----------------------------------------------------------------------------------------
+
+\chapter{Methodology}
+\labch{methodology}
+
+\margintoc
+
+\section{Research Design}
+
+This dissertation employs a mixed-methods research design combining:
+
+\begin{eurbox}[title=Methods Overview]
+\begin{itemize}
+    \item Qualitative case studies of transition processes
+    \item Quantitative network analysis of actor relationships
+    \item Document analysis of policy frameworks
+\end{itemize}
+\end{eurbox}
+
+\section{Case Selection}
+
+Cases were selected based on:\sidenote{Case selection follows theoretical sampling principles as outlined by Eisenhardt (1989).}
+
+\begin{enumerate}
+    \item Variation in transition phase (early, accelerating, stabilizing)
+    \item Geographic diversity (Netherlands, Germany, UK)
+    \item Sectoral coverage (energy, mobility, food systems)
+\end{enumerate}
+
+\begin{eurboxgold}[title=Note on Data Collection]
+All interviews were conducted between 2022-2024 with informed consent from participants. Interview protocols were approved by the EUR Ethics Review Board.
+\end{eurboxgold}
+
+%----------------------------------------------------------------------------------------
+%	BACK MATTER
+%----------------------------------------------------------------------------------------
+
+\backmatter
+
+\chapter*{Summary}
+\addcontentsline{toc}{chapter}{Summary}
+
+This dissertation examines sustainability transitions through the lens of the multi-level perspective, contributing both theoretical refinements and empirical insights from multiple case studies.
+
+\chapter*{Samenvatting}
+\addcontentsline{toc}{chapter}{Samenvatting}
+
+Dit proefschrift onderzoekt duurzaamheidstransities vanuit het perspectief van de multi-level perspective, met zowel theoretische verfijningen als empirische inzichten uit meerdere case studies.
+
+\chapter*{Acknowledgments}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+
+I would like to thank my supervisors, colleagues, and family for their support throughout this journey.
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+%\printbibliography[heading=bibintoc, title=References]
+
+\end{document}

@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "analysis_date": "2025-01-05",
+    "method": "sociotype_to_subregion_mapping"
+  },
+  "triangulation": [
+    {
+      "sociotype": "Connective",
+      "internal_character": "Platform, broker, ecosystem builder",
+      "corresponding_regions": ["Distributed - no single region"],
+      "alignment": "none",
+      "interpretation": "Connective sociotype does not map to external sub-region. Connection is a FUNCTION, not a DOMAIN. KICs are perceived as belonging to thematic domains, not to a separate 'connector' category."
+    },
+    {
+      "sociotype": "Acceleration",
+      "internal_character": "Startup support, funding, scaling",
+      "corresponding_regions": ["Venture Capital", "Digital & Tech Startups"],
+      "alignment": "strong",
+      "interpretation": "Acceleration maps directly to VC and startup ecosystems. External observers group startup-support actors together regardless of thematic focus."
+    },
+    {
+      "sociotype": "Development",
+      "internal_character": "Education, training, certification",
+      "corresponding_regions": ["Higher Education"],
+      "alignment": "strong",
+      "interpretation": "Development sociotype validated by distinct Higher Education sub-region. Educational actors cluster together across thematic domains."
+    },
+    {
+      "sociotype": "Knowledge",
+      "internal_character": "Research, discovery, validation",
+      "corresponding_regions": ["Higher Education", "Research institutions"],
+      "alignment": "strong",
+      "interpretation": "Knowledge production spans research and education sub-regions. Research-intensive actors form coherent community."
+    },
+    {
+      "sociotype": "Accountability",
+      "internal_character": "Impact delivery, policy contribution",
+      "corresponding_regions": ["EU Policy & Funding", "Impact & Social Innovation"],
+      "alignment": "strong",
+      "interpretation": "Accountability recognized externally as distinct relational space. EU Policy sub-region validates that public accountability relationships form coherent community."
+    },
+    {
+      "sociotype": "Sectoral",
+      "internal_character": "Domain-specific stakeholders",
+      "corresponding_regions": ["Climate", "Health", "Food", "Urban", "Digital"],
+      "alignment": "strong",
+      "interpretation": "Sectoral configurations validated by thematic sub-regions. Domain-specific counterroles (patients, farmers, cities) correspond to externally-identified thematic communities."
+    }
+  ],
+  "key_observations": [
+    "Connective sociotype does NOT map to external sub-region - connection is a function, not a domain",
+    "Sectoral configurations validated by thematic sub-regions - external classification mirrors internal positioning",
+    "Accountability recognized externally as distinct relational space (EU Policy & Funding sub-region)",
+    "KICs exhibit INTERFACING pattern - classified with thematic peers but maintaining cross-regional ties",
+    "Field is organized thematically rather than by organizational form or geography"
+  ],
+  "validation_summary": {
+    "strong_alignments": 5,
+    "moderate_alignments": 0,
+    "weak_alignments": 0,
+    "no_alignment": 1,
+    "overall_validation": "Supported - 5 of 6 sociotypes find corresponding external structure"
+  },
+  "bridging_analysis": {
+    "n_bridging_actors": 847,
+    "total_cross_region_ties": 12432,
+    "avg_bridging_score": 0.67,
+    "top_bridging_actors": [
+      {"username": "@EUstartups", "bridging_score": 0.89, "connects": ["Digital", "Climate", "Policy"]},
+      {"username": "@InnovationHub", "bridging_score": 0.84, "connects": ["Health", "Digital", "Education"]},
+      {"username": "@TechEurope", "bridging_score": 0.81, "connects": ["Energy", "Digital", "Climate"]},
+      {"username": "@ScienceBusiness", "bridging_score": 0.78, "connects": ["Policy", "Research", "Corporate"]},
+      {"username": "@EIT_EU", "bridging_score": 0.78, "connects": ["All thematic regions"]}
+    ],
+    "high_bridging_actor_types": {
+      "umbrella_organizations": 0.35,
+      "media_outlets": 0.28,
+      "multi_domain_individuals": 0.22,
+      "funding_organizations": 0.15
+    }
+  },
+  "seed_overlap_jaccard": {
+    "EIT_EU-ClimateKIC": 0.52,
+    "EIT_EU-EITDigital": 0.48,
+    "EIT_EU-InnoEnergy": 0.51,
+    "EIT_EU-EITHealth": 0.46,
+    "ClimateKIC-InnoEnergy": 0.61,
+    "ClimateKIC-EITDigital": 0.32,
+    "EITDigital-EITHealth": 0.28,
+    "InnoEnergy-EITDigital": 0.37
+  },
+  "conforming_vs_interfacing": {
+    "conforming_actors": 11253,
+    "interfacing_actors": 1594,
+    "kic_pattern": "interfacing",
+    "interpretation": "KICs are classified with thematic peers but maintain substantial cross-regional ties - consistent with interstitial positioning"
+  }
+}

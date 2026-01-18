@@ -1,81 +1,417 @@
 % !TEX root = ../main.tex
-%************************************************
-\chapter{Visual Materials: Mapping Embodied Identity}
-\label{app:visual-materials}
-%************************************************
+\documentclass[../main.tex]{subfiles}
 
-\noindent\textit{This appendix explores visual materials---logos, photography, video, and design elements---as sources for mapping embodied identity: how organizations materialize their roles through aesthetic choices. Images communicate identity dimensions that text cannot capture: professionalism, innovation, sustainability commitment, and institutional positioning.}
+\begin{document}
+
+\chapter{Visual Materials: Mapping Aesthetic Sociotypes}
+\label{app:visual-materials}
+
+\noindent\textit{Visual materials provide the fifth modality of multimodal cartography---the \textbf{aesthetic map} of how organizations materialize their roles through visual choices. This appendix documents the methodological approach to visual data collection and analysis within \RoleBox, covering types of visual data in innovation research, theoretical perspectives on visuals in socio-technical change, analytical methods from image classification to logo network analysis, and ethical considerations for visual research.}
 
 \bigskip
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Why Visual Analysis?}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Theoretical Grounding: Visuals in Socio-Technical Change}
+%===============================================================================
 
-Visual elements carry meaning that complements textual analysis:
+Innovation studies and sustainability transition research increasingly tap into diverse forms of image-based data. Visual materials contribute to understanding transitions through several theoretical lenses.
 
-%\sidenote{\textbf{Visual Signals:} Color palettes, logo design, photography style, infographic aesthetics, video production quality.}
+\subsection{Socio-Technical Transitions and Imaginaries}
+
+In transition theory, narratives and visions of the future are key in mobilizing actor networks. Images often embody these visions---they function as \emph{sociotechnical imaginaries} in visual form, depicting desirable futures or cautionary tales.
+
+\begin{insightbox}[Material-Symbolic Work]
+Images perform what transition scholars call ``material-symbolic work'': the image is a material artifact that anchors a set of symbolic meanings (hope, progress, innovation) in a compelling way. Architectural renderings of sustainable smart cities or concept art of clean energy grids give concrete shape to otherwise abstract goals.
+\end{insightbox}
+
+When advocacy coalitions circulate iconic images (e.g., the famous photo of Earth from space galvanizing environmental consciousness), they encode narratives into visual form. Over time, certain images become shorthand for entire transition storylines: smokestacks = industrial pollution problem; wind farm on a hill = renewable solution.
+
+\subsection{Actor-Network Theory and Visual Actants}
+
+Actor-Network Theory (ANT) reminds us that non-human artifacts---including images---can be actors in networks, exerting influence and shaping relationships. From an ANT perspective, a technical diagram or project photo is not a neutral illustration but an ``inscription'' that can enroll other actors.
+
+Bruno Latour discussed how technical drawings serve as ``immutable mobiles''---they transport knowledge intact across spaces, convincing others and coordinating action. In innovation networks, a clear schematic of a new technology can enroll investors or regulators by making the concept legible and credible.
+
+\subsection{Material-Symbolic Anchoring and Role Claims}
+
+Visual materials help innovators perform identity work and claim roles in emerging ecosystems. How do actors communicate and negotiate roles? One way is through the images they associate with themselves:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item A \textbf{startup} may craft a forward-looking image on its website---showing prototype devices or hackathon teams---to claim the role of cutting-edge innovator
+\item A \textbf{government agency} might repeatedly publish images of stakeholder workshops and policy roundtables, visually claiming an orchestrator role
+\item A \textbf{research institute} may feature laboratory imagery and scientific visualizations to signal knowledge producer positioning
+\end{itemize}
+
+These patterns align with what socio-technical researchers call ``framing'': visuals frame an actor's narrative. By systematically analyzing an institution's visual outputs, one can discern intended role claims.
+
+
+%===============================================================================
+\section{Data Anatomy: Types of Visual Data}
+%===============================================================================
+
+Key visual data sources in innovation and sustainability research include:
+
+\subsection{Institutional Imagery}
+
+Photographs and graphics from organizational websites, press releases, and social media profiles. These show product demonstrations, team events, or facilities, offering clues to an actor's identity and activities.
+
+Recent work emphasizes that ``image-based data''---from corporate presentations to social media posts---has been underutilized in mapping business ecosystems. By capturing how organizations present themselves visually, institutional images help map roles and narrative positioning.
+
+\subsection{Logos and Brand Symbols}
+
+Logos, emblems, and visual brand elements carry symbolic meaning about an actor's identity and values. A green leaf in a logo signals eco-friendliness; geometric precision suggests technology focus; warm colors indicate human-centered mission.
+
+\begin{insightbox}[Logo Co-Occurrence Networks]
+When multiple logos appear together (on conference slides, funding announcement banners, or partnership pages), it implies collaboration or co-membership. Extracting and analyzing such ``logo maps'' constructs networks of inter-firm relationships that text analysis alone might miss.
+\end{insightbox}
+
+\subsection{Technical Diagrams and Schematics}
+
+Innovation processes generate visual technical artifacts---patent drawings, engineering blueprints, system schematics, workflow diagrams---containing rich information about socio-technical design. In patent analysis, images range from block diagrams of system components to perspective drawings of devices.
+
+Recent work applies deep learning to categorize patent images, recognizing different visualization styles (technical drawing, prototype photo, flowchart) to aid innovation research.
+
+\subsection{Pilot Project Documentation}
+
+Photographic documentation of demonstration projects, living labs, or new infrastructure is common in academic case studies and gray literature reports. These images serve as material evidence of transition progress, anchoring abstract concepts in tangible visuals.
+
+One study compiled 20,699 photographs that Chinese companies posted on social media about environmental initiatives, mining these to reveal patterns in technology adoption and linking visual ``proof'' of sustainability efforts to corporate outcomes.
+
+\subsection{Infographics and Visualized Data}
+
+Policy reports and industry white papers often include infographics---stylized charts, icon arrays, or conceptual illustrations conveying key metrics or frameworks. The UN Sustainable Development Goal icons form a visual vocabulary now common across initiatives---these 17 icons ``visually articulate a grand narrative of `sustainability.'''
+
+\subsection{Visual Metaphors and Symbolic Imagery}
+
+Innovation discourses employ metaphorical images---a lightbulb for innovation, a sprouting plant for growth, a globe in hands for global responsibility. These symbolic anchors make abstract ideas tangible and emotionally resonant.
+
+
+%===============================================================================
+\section{Analytical Methods for Visual Data}
+%===============================================================================
+
+Harnessing image data requires adapting methods from computer vision and multimodal data science.
+
+\subsection{Image Classification and Thematic Tagging}
+
+Training or applying models to recognize what images depict---technology types (solar panels, wind turbines, EV charging stations), settings (laboratory, factory floor, community meeting), or content types (diagram, photograph, infographic).
+
+Modern deep learning models (CNNs, Vision Transformers, CLIP) excel at image classification. Researchers have extended patent image datasets and applied state-of-the-art models to classify patent visuals into categories like ``graph,'' ``flowchart,'' ``3D rendering.''
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3cm}p{4cm}p{4.5cm}@{}}
+\toprule
+\textbf{Method} & \textbf{Application} & \textbf{Role Signal} \\
+\midrule
+CNN classification & Technology type detection & What innovations actors work with \\
+CLIP embeddings & Semantic visual search & Visual-concept alignment \\
+Object detection & Logo/entity identification & Actor presence and partnerships \\
+Color analysis & Palette extraction & Field conventions and positioning \\
+OCR & Text extraction from images & Embedded claims and data \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Visual analysis methods and role inference applications}
+\end{center}
+
+\subsection{Logo and Object Detection}
+
+Object detection identifies specific elements within images. A prime use case is \textbf{logo detection}---using computer vision to spot corporate logos or institutional emblems in images.
+
+This enables automated identification of which organizations are visually present. An analysis of industry conference photos might detect logos on banners or booths, revealing which firms or sponsors are ``seen'' in the event.
+
+Logo detection was a key step in the ``logomap mining'' approach for ecosystem intelligence---after identifying logos in presentation slides, the system labels images with corresponding organizations and feeds that into network analysis.
+
+\subsection{OCR on Images}
+
+Many images contain embedded text---presentation slides, infographics with annotations, photographs of signage. OCR tools (Tesseract, Google Vision API) extract this text, converting it to machine-readable form.
+
+In innovation studies, OCR can unlock important content: reading labels on pilot project signboards yields project names, partners, funders, and dates; extracting text from infographics gives data points or key claims.
+
+\subsection{Image Embeddings and Visual Clustering}
+
+Embeddings---numeric representations of images in vector space---capture visual similarity. CLIP produces embeddings that align with semantic meaning (images with similar content end up near each other).
+
+By generating embeddings for a corpus of images, one can apply clustering or dimensionality reduction (t-SNE, UMAP) to discover patterns:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Images might naturally cluster into groups like ``solar installations in rural areas,'' ``wind turbines with politicians present,'' ``infographics with emission data''
+\item Visual clustering reveals emergent themes without prior labeling
+\item Outliers may indicate novel or rare phenomena
+\end{itemize}
+
+\subsection{Network Mapping from Visual Co-Occurrence}
+
+Constructing networks based on image co-occurrences: defining entities of interest and drawing links if they appear in the same image.
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Immediate Impression] Visuals communicate before text is read
-\item[Identity Clustering] Similar aesthetics signal similar positioning
-\item[Professionalism Markers] Production quality signals resources and legitimacy
-\item[Sector Alignment] Visual conventions reveal field membership
+\item[Actor co-appearance network] Nodes are people/organizations; edges connect nodes if observed together in an image (e.g., CEOs photographed shaking hands at partnership signing)
+
+\item[Logo co-occurrence network] Links firms whose logos appear alongside each other, indicating alliances or common platforms
+
+\item[Concept co-occurrence network] Links technologies that frequently appear together in project photos (e.g., ``solar panels'' and ``battery storage'')
+\end{description}
+
+These visual networks can be analyzed with SNA techniques to find clusters, key hubs, or bridging nodes. An actor with many co-occurrences might be an intermediary connecting multiple groups.
+
+
+%===============================================================================
+\section{Inferring Actor Roles from Visuals}
+%===============================================================================
+
+A particularly intriguing use of image data is inferring roles, identities, and relationships of actors in innovation ecosystems.
+
+\subsection{Presence and Visibility}
+
+Who appears in images and where? Frequency and context of appearance matter:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item An actor consistently seen presenting at innovation forums plays a \textbf{thought-leadership role}
+\item One seen in the field installing equipment plays an \textbf{implementation role}
+\item A university lab director in many pilot project ribbon-cutting photos alongside industry partners likely plays an \textbf{intermediary role}
+\end{itemize}
+
+Co-appearance analysis translates visual presence into a network of influence and collaboration.
+
+\subsection{Visual Symbols of Affiliation}
+
+Actors often visually mark themselves with symbols of affiliations or roles:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item A startup nurtured in an incubator might always present with the incubator's logo, signaling network membership
+\item A city government official at a press event might stand before a backdrop of partner logos, visually name-dropping collaborators
+\item Logo placement and prominence (center vs. periphery, first from left) indicates hierarchy
+\end{itemize}
+
+\subsection{Visual Motifs and Identity Signals}
+
+The style and content of images an actor publishes hints at identity and strategy:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3.5cm}p{4cm}p{4cm}@{}}
+\toprule
+\textbf{Visual Pattern} & \textbf{Typical Content} & \textbf{Implied Role} \\
+\midrule
+Technical imagery & Product renderings, diagrams & Technology developer \\
+People-centric imagery & Workshops, training, communities & User engagement facilitator \\
+Infrastructure photos & Facilities, equipment, installations & Infrastructure provider \\
+Nature/landscape & Environmental contexts, green spaces & Sustainability advocate \\
+Event documentation & Conferences, meetings, awards & Network convener \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Visual patterns and implied organizational roles}
+\end{center}
+
+\subsection{Context and Setting Clues}
+
+Background context in images implies roles:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Laboratory/office}: Knowledge production, R\&D
+\item \textbf{Factory floor}: Manufacturing, implementation
+\item \textbf{Conference hall}: Networking, thought leadership
+\item \textbf{Community setting}: Grassroots engagement
+\item \textbf{Government building}: Policy, regulation
+\end{itemize}
+
+Multi-setting appearance could be a proxy for bridging roles---intermediaries often appear in varied contexts.
+
+
+%===============================================================================
+\section{Integration with Other Modalities}
+%===============================================================================
+
+The true power of image analysis emerges when combined with other datasets.
+
+\subsection{With Website Text}
+
+Comparing visual presentation with textual claims reveals alignment or divergence:
+
+\begin{criticalbox}[Visual-Textual Coherence Analysis]
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Do images and text reinforce the same message or diverge?
+\item A startup's website might claim ``community impact'' but show only product shots---revealing dissonance between narrative and visual rhetoric
+\item Images can fill gaps: social media posts might be terse but attached photos reveal who attended (indicating public support)
+\end{itemize}
+\end{criticalbox}
+
+\subsection{With News Media}
+
+Comparing organizational self-presentation (website imagery) with external portrayal (news photography):
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item How state media vs. independent media visually frame a new energy project
+\item Whether news photography confirms or contradicts self-presentation
+\item Visual framing differences across outlets reveal bias or positioning
+\end{itemize}
+
+\subsection{With Investment Data}
+
+Linking visual analysis with Crunchbase data:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Do visually prominent actors receive proportionate funding?
+\item Do projects that visually demonstrate prototypes earlier attract more follow-on investment?
+\item Analyzing all startup logos in a sector to test whether visual conventions correlate with funding success
+\end{itemize}
+
+\subsection{With Social Media}
+
+Images on Twitter often contain embedded meaning:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Visual virality: Do certain images of innovations drive online discussion?
+\item Image clusters map onto text clusters: optimistic imagery with ``innovation is exciting'' narratives
+\item Detecting stock images in tweets may indicate PR spin rather than authentic engagement
+\end{itemize}
+
+
+%===============================================================================
+\section{Empirical Applications}
+%===============================================================================
+
+\subsection{Ecosystem Mapping via Logo Networks}
+
+Basole (2021) mined ``logo maps''---slides or web pages where organizations display collages of partner logos---to extract ecosystem structure. By identifying which company logos appear together, the study constructed a knowledge graph of partnerships and inter-firm ties that would be hard to assemble from text alone.
+
+This approach, termed ``visual business ecosystem intelligence,'' detects new entrants by the appearance of their logos in trade show photos, then correlates with news text.
+
+\subsection{Green Infrastructure Documentation}
+
+Scholars have used images to catalogue spread of green technologies. Crowdsourced photo surveys analyze installations of solar panels, urban gardens, or cycling infrastructure.
+
+Ground-level photos provide complementary detail to satellite imagery: they show context (people using infrastructure, signage, implementation quality). Such studies blend manual coding with GIS mapping, revealing spatial patterns of transition efforts.
+
+\subsection{Diffusion of Sustainable Design Aesthetics}
+
+Sustainable innovation diffuses not only as technology but as culture and aesthetics. Design scholars note how certain visual vocabularies (styles, symbols, colors) become part of the sustainability movement.
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Prevalence of green leaf motifs or recycling arrows in corporate branding has grown
+\item One could assemble logos of renewable energy companies from 2000--2025 and see evolution from oil-drop icons to sun/leaf icons
+\item The SDG iconography has spread globally---17 multi-colored icons now appear across presentations and brochures worldwide
+\end{itemize}
+
+
+%===============================================================================
+\section{Data Collection Pipeline}
+%===============================================================================
+
+Visual data collection extracts images from organizational web presence for computational and qualitative analysis.
+
+\begin{center}
+\textbf{Pipeline Overview}
+
+\smallskip
+\fbox{Website Crawl} $\rightarrow$ \fbox{Image Extraction} $\rightarrow$ \fbox{Logo + Photo Archive}
+
+$\downarrow$
+
+\fbox{Images} $\rightarrow$ \fbox{CNN Feature Extraction} $\rightarrow$ \fbox{Visual Embeddings}
+
+\fbox{Images} $\rightarrow$ \fbox{Object Detection} $\rightarrow$ \fbox{Logo/Entity Recognition}
+
+\fbox{Images} $\rightarrow$ \fbox{Color/Composition Analysis} $\rightarrow$ \fbox{Aesthetic Features}
+
+$\downarrow$
+
+\fbox{Similarity Clustering} $\rightarrow$ \fbox{Co-occurrence Networks} $\rightarrow$ \fbox{Aesthetic Sociotype Map}
+\end{center}
+
+\subsection{Technical Implementation}
+
+Key tools for visual analysis:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3cm}p{4cm}p{4cm}@{}}
+\toprule
+\textbf{Tool} & \textbf{Function} & \textbf{Application} \\
+\midrule
+CLIP & Image-text embeddings & Semantic visual search, similarity \\
+Detectron2/YOLO & Object detection & Logo and entity recognition \\
+Tesseract & OCR & Text extraction from images \\
+ResNet/ViT & Feature extraction & Visual clustering \\
+OpenCV & Image processing & Preprocessing, color analysis \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Visual analysis toolkit}
+\end{center}
+
+
+%===============================================================================
+\section{Methodological Challenges and Limitations}
+%===============================================================================
+
+\begin{criticalbox}[What Visual Analysis Cannot Tell Us]
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Interpretation ambiguity}: Visual meaning is contextual; the same image may signal differently in different fields or cultures
+
+\item \textbf{Cultural bias}: Color and design conventions vary across cultures; Western-centric training data biases vision models
+
+\item \textbf{Algorithmic bias}: Off-the-shelf vision models over-represent certain geographies, ethnicities, or contexts in training data
+
+\item \textbf{Copyright and access}: Images are often not openly licensed; web scraping may violate terms of use
+
+\item \textbf{Privacy concerns}: Images of individuals raise ethical and legal considerations (GDPR, informed consent)
+
+\item \textbf{Stock image noise}: Widespread use of stock photography reduces distinctive signal
+
+\item \textbf{Temporal lag}: Website imagery may be outdated; visual presentation changes less frequently than text
+
+\item \textbf{Environmental impact}: Running deep learning models on large image datasets has a carbon footprint
+\end{enumerate}
+\end{criticalbox}
+
+\subsection{Mitigating Bias}
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Fine-tune models on domain-specific, diverse imagery
+\item Involve regional and domain experts in interpretation
+\item Use crowd-sourced human coding to supplement AI
+\item Test models rigorously for performance across contexts
+\item Document model limitations and version information
+\end{itemize}
+
+\subsection{Ethical Considerations}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Privacy] Avoid facial recognition that identifies private persons; anonymize or blur faces in sensitive contexts
+
+\item[Consent] Images from social media may require consideration of whether individuals consented to being analyzed
+
+\item[Copyright] Focus on images in public domain, Creative Commons, or fair use for transformative analysis
+
+\item[Reproducibility] Store copies of analyzed images when possible; at minimum, store extracted features and metadata
 \end{description}
 
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Types of Visual Data}
-%═══════════════════════════════════════════════════════════════════════════════
-
-\subsection*{Logos and Branding}
-
-Logos encode identity choices:
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item Color: Green for sustainability, blue for technology, warm tones for human focus
-\item Typography: Modern sans-serif vs. traditional serif
-\item Iconography: Abstract vs. representational
-\item Complexity: Minimalist vs. detailed
-\end{itemize}
-
-\subsection*{Photography and Imagery}
-
-Website and social media images reveal:
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item Team composition and diversity
-\item Workspace environments
-\item Technology and equipment
-\item Partner and event documentation
-\end{itemize}
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Analytical Approaches}
-%═══════════════════════════════════════════════════════════════════════════════
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Computer Vision] Automated image classification, object detection, color analysis
-\item[Embedding Similarity] Neural network embeddings for visual similarity clustering
-\item[Qualitative Coding] Human interpretation of visual rhetoric and symbolism
-\item[Multimodal Integration] Combining visual and textual signals
-\end{description}
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Chapter Summary}
-%═══════════════════════════════════════════════════════════════════════════════
+%===============================================================================
+\section{Summary}
+%===============================================================================
 
 \begin{summarybox}
+Visual materials analysis provides the fifth modality of multimodal cartography---the \textbf{aesthetic map} of sociotype presentation. Key methodological insights:
+
 \begin{itemize}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Visual materials} communicate identity dimensions that text cannot capture.
+\item \textbf{Theoretical role}: Images function as sociotechnical imaginaries, performing material-symbolic work that shapes transition narratives and enrolls actors.
 
-\item \textbf{Logos and branding} encode positioning through color, typography, and iconography.
+\item \textbf{Diverse data types}: Institutional imagery, logos, technical diagrams, pilot project documentation, infographics, and visual metaphors all carry role signals.
 
-\item \textbf{Photography} reveals team composition, resources, and institutional context.
+\item \textbf{Logo co-occurrence networks} reveal partnership structures and ecosystem relationships not visible in text.
 
-\item \textbf{Analytical approaches} combine computer vision, embedding similarity, and qualitative interpretation.
+\item \textbf{Image embeddings and clustering} discover emergent visual themes and tacit positioning strategies.
 
-\item \textbf{Integration} with textual modalities reveals consistency or divergence in identity presentation.
+\item \textbf{Role inference from visuals}: Presence, visual symbols of affiliation, visual motifs, and setting clues all signal organizational roles.
+
+\item \textbf{Multimodal integration}: Combining visual analysis with text, investment, and social media data enables cross-validation and richer insights.
+
+\item \textbf{Inherent limitations} (interpretation ambiguity, algorithmic bias, copyright, privacy) require careful ethical navigation and methodological transparency.
 \end{itemize}
+
+Together, the five modalities---declared (websites), attributed (news), enacted (investment), relational (social media), and aesthetic (visual)---provide a comprehensive multimodal cartography framework for role constellation analysis in sustainability transitions.
 \end{summarybox}
+
+\end{document}

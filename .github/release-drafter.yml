@@ -1,0 +1,102 @@
+# Release Drafter configuration
+# Automatically generates release notes from PR labels and commits
+# See: https://github.com/release-drafter/release-drafter
+
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+
+# Categories for grouping changes
+categories:
+  - title: '🚀 Features'
+    labels:
+      - 'feature'
+      - 'enhancement'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'bug'
+      - 'fix'
+      - 'bugfix'
+  - title: '📖 Documentation'
+    labels:
+      - 'documentation'
+      - 'docs'
+  - title: '🧪 Testing'
+    labels:
+      - 'testing'
+      - 'test'
+  - title: '🔧 Maintenance'
+    labels:
+      - 'chore'
+      - 'maintenance'
+      - 'dependencies'
+  - title: '⚠️ Breaking Changes'
+    labels:
+      - 'breaking'
+      - 'breaking-change'
+
+# Exclude certain labels from release notes
+exclude-labels:
+  - 'skip-changelog'
+  - 'wip'
+
+# Labels that trigger version bumps
+version-resolver:
+  major:
+    labels:
+      - 'breaking'
+      - 'breaking-change'
+  minor:
+    labels:
+      - 'feature'
+      - 'enhancement'
+  patch:
+    labels:
+      - 'bug'
+      - 'fix'
+      - 'documentation'
+      - 'chore'
+  default: patch
+
+# Autolabeler for PRs based on title/files
+autolabeler:
+  - label: 'documentation'
+    files:
+      - '*.md'
+      - 'instructions/**/*'
+    title:
+      - '/doc(s|umentation)?/i'
+  - label: 'bug'
+    title:
+      - '/fix(es)?/i'
+      - '/bug(fix)?/i'
+  - label: 'feature'
+    title:
+      - '/feat(ure)?/i'
+      - '/add(s|ed)?/i'
+  - label: 'testing'
+    files:
+      - '.github/workflows/**'
+      - 'examples/**'
+    title:
+      - '/test(s|ing)?/i'
+  - label: 'chore'
+    title:
+      - '/chore/i'
+      - '/maintain/i'
+      - '/update dep/i'
+
+# Template for release notes
+template: |
+  ## What's Changed
+
+  $CHANGES
+
+  ## Contributors
+
+  $CONTRIBUTORS
+
+  ---
+  **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+
+  > This release was compiled with the kaobook LaTeX class.
+  > For more information, see the [documentation](example_and_documentation.pdf).

@@ -1,0 +1,11 @@
+author_id,name,affiliation,h_index,total_citations,topics,community_weights
+AUTH-001,Paula Kivimaa,Finnish Environment Institute,42,8934,"intermediaries;transitions;policy",0.15;0.65;0.20
+AUTH-002,Julia Wittmayer,DRIFT Erasmus University Rotterdam,28,4567,"roles;actors;transitions",0.25;0.55;0.20
+AUTH-003,Derk Loorbach,DRIFT Erasmus University Rotterdam,52,12456,"transitions;governance;complexity",0.20;0.60;0.20
+AUTH-004,Frank Geels,University of Manchester,78,34567,"MLP;transitions;sociotechnical",0.10;0.75;0.15
+AUTH-005,Johan Schot,Utrecht University,56,18234,"transitions;history;policy",0.15;0.70;0.15
+AUTH-006,Gunther Kress,UCL Institute of Education,89,45678,"semiotics;multimodality;visual",0.80;0.10;0.10
+AUTH-007,Theo van Leeuwen,University of Southern Denmark,67,28934,"visual;discourse;semiotics",0.75;0.15;0.10
+AUTH-008,Norman Fairclough,Lancaster University,112,67890,"CDA;discourse;power",0.70;0.20;0.10
+AUTH-009,Maarten Grootendorst,Independent Researcher,15,2345,"NLP;topic modeling;BERT",0.10;0.10;0.80
+AUTH-010,Maria Pearce,Anthropic,8,456,"NLP;AI;ethics",0.05;0.15;0.80

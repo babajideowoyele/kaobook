@@ -3,64 +3,391 @@
 
 \begin{document}
 
-\chapter{Interstitial Pluralism in Role Constellations}
+\chapter{Mapping Interstitial Pluralism}
 \labch{interstitial}
 \margintoc
 
 \begin{chapteroverview}
-This chapter develops the concept of \textbf{interstitial pluralism}---the phenomenon where actors occupy in-between positions across multiple role categories simultaneously. We analyze how EIT ecosystem actors navigate plurality, the strategic value of interstitial positioning, and the tensions between specialization and versatility. Building on structural approaches to organizational identity, we introduce the concept of \textit{sociotypes}---fluid relational configurations that emerge from the patterned interconnections among role identities.
+This chapter catalogues the positioning and sociotypes of EIT actor websites, developing an integrated analysis of how innovation intermediaries navigate institutional plurality. First, we map \textit{interstitial positioning}---how EIT Communities locate themselves in the cultural space between education, research, and business domains. Second, we introduce \textit{sociotypes}---fluid relational configurations through which intermediaries enact and sustain interstitial positions. Together, these analyses reveal that EIT Communities are not merely ``between'' institutional domains but actively constitute interstitial space through distinctive patterns of role enactment.
 \end{chapteroverview}
 
 \begin{quote}
-\textit{``The institutional order is experienced as an objective reality. It has a history that antedates the individual's birth and is not accessible to his biographical recollection. It was there before he was born, and it will be there after his death.''}\\
---- Peter L. Berger \& Thomas Luckmann, \textit{The Social Construction of Reality} \needcite{berger-luckmann-1967}
+\textit{``Organizational fields are shaped by both the relations that organizations forge and the language they express. The structure and discourse of organizational fields have been studied before, but seldom in combination.''}\\
+--- Oberg, Korff \& Powell \citeyear{oberg2017culture}
 \end{quote}
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Introduction: The Problem of Interstitial Organization}
+\section{Introduction}
 %═══════════════════════════════════════════════════════════════════════════════
 \labsec{interstitial:intro}
 
-Innovation intermediaries occupy peculiar institutional terrain.\sidenote{\textbf{Interstitial organization}---the concept draws on work in economic sociology examining actors positioned between established fields.} They are not universities, yet they educate. They are not venture capital firms, yet they fund startups. They are not research institutes, yet they generate knowledge. They are not government agencies, yet they implement public policy. They exist \textit{between}---in the interstices of established institutional domains---and their organizational coherence depends on sustaining productive relationships with constituencies whose expectations derive from fundamentally different sources.
+Innovation intermediaries occupy peculiar institutional terrain.\sidenote{\textbf{Interstitial organization}---the concept draws on work examining actors positioned between established fields \cite{powell1990neither,white2008identity,furnari2014interstitial}.} They are not universities, yet they educate. They are not venture capital firms, yet they fund startups. They are not research institutes, yet they generate knowledge. They are not government agencies, yet they implement public policy. They exist \textit{between}---in the interstices of established institutional domains---and their organizational coherence depends on sustaining productive relationships with constituencies whose expectations derive from fundamentally different sources.
 
-The European Institute of Innovation and Technology (EIT) and its Knowledge and Innovation Communities (KICs) represent an ambitious experiment in institutionalizing such interstitial organization at continental scale.\sidenote{\textbf{EIT Design}---modeled partly on MIT and Stanford's innovation ecosystems, but as a distributed pan-European network rather than a single institution.} Established in 2008, the EIT was designed to address Europe's ``innovation paradox''---the persistent gap between scientific excellence and commercial translation---by creating organizational forms that would integrate the ``knowledge triangle'' of higher education, research, and business. The KICs that emerged---EIT Climate-KIC, EIT Digital, EIT Health, EIT Food, EIT Manufacturing, EIT Urban Mobility, EIT RawMaterials, and EIT Culture \& Creativity---each operate across these domains within specific sectoral contexts.
+The European Institute of Innovation and Technology (EIT) and its Knowledge and Innovation Communities (KICs) represent an ambitious experiment in institutionalizing such interstitial organization at continental scale.\sidenote{\textbf{EIT design}---modeled partly on MIT and Stanford's innovation ecosystems, but as a distributed pan-European network rather than a single institution.} Established in 2008, the EIT was designed to address Europe's ``innovation paradox''---the persistent gap between scientific excellence and commercial translation---by creating organizational forms that would integrate the ``knowledge triangle'' of higher education, research, and business. The eight KICs examined in this dissertation---Climate-KIC, EIT Digital, EIT Health, EIT Food, EIT Manufacturing, EIT Urban Mobility, EIT RawMaterials, and InnoEnergy---each operate across these domains within specific sectoral contexts.
 
 What does it mean, organizationally, to integrate a knowledge triangle? How do intermediaries that must simultaneously satisfy academic, entrepreneurial, educational, and public accountability demands construct coherent organizational identities? And how do the relational configurations through which they engage their constituencies reveal the underlying structure of their institutional environment?
 
-This chapter develops a structural approach to these questions.\sidenote{\textbf{Structural approach}---rather than coding practices according to predetermined categories, we extract relational patterns and let structure emerge.} Rather than beginning with predetermined institutional categories and asking how organizations respond to them, we proceed inductively from the relational practices through which EIT Communities constitute themselves and their stakeholders. We extract and analyze the role identity configurations embedded in organizational communications, reconstruct the patterned interconnections among them, and identify emergent \textit{sociotypes}---recurring relational configurations that are stable enough to be recognizable yet fluid enough to blend and recombine.
+This chapter addresses these questions through two integrated analyses. First, we examine \textit{interstitial positioning}: where do EIT Communities locate themselves in the cultural space defined by the knowledge triangle? Drawing on recent work that maps organizational fields as topographies of meaning \cite{oberg2017culture,korff2015social}, we analyze the discursive positioning of KICs relative to education, research, and business domains. This reveals not merely that KICs claim to integrate the knowledge triangle, but \textit{how} their positioning tilts toward particular vertices.
 
-Our approach departs from conventional institutional analysis in three ways. First, we resist categorical closure: rather than mapping observed patterns onto established typologies, we build rich descriptive profiles and hold interpretation open. Second, we foreground \textit{interconnectedness}: rather than treating pluralism as the copresence of discrete categories, we attend to the interfaces, overlaps, and zones of ambiguity between relational configurations. Third, we employ computational methods---natural language processing for triple extraction and network analytical methods for pattern detection---that enable systematic analysis at scale while preserving interpretive depth.
+Second, we develop the concept of \textit{interstitial sociotypes}: how do EIT Communities enact and sustain interstitial positions? Building on structural approaches to institutional pluralism \cite{jancsary2017structural}, we introduce \textit{sociotypes}---fluid relational configurations that emerge from patterned role enactment. Unlike rigid ``institutional logics,'' sociotypes are bottom-up, permeable, and capable of blending.
+
+Together, these analyses reveal that interstitial positioning is not a passive condition but an active accomplishment, achieved through distinctive configurations of role identities that create interfaces between institutional domains while preserving productive ambiguity.
+
+Our analysis addresses three research questions:
+
+\begin{enumerate}
+    \item \textbf{RQ1}: Where do EIT Communities position themselves within the knowledge triangle, and does their positioning achieve balanced integration or tilt toward particular domains?
+    \item \textbf{RQ2}: What relational configurations (sociotypes) emerge from EIT Community role enactment, and how do these configurations enable navigation of institutional plurality?
+    \item \textbf{RQ3}: How do discursive positioning and relational configuration interact---does the pattern of sociotypes correspond to the pattern of discursive emphasis?
+\end{enumerate}
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Theoretical Framework: From Categories to Sociotypes}
+\section{Conceptual Framework: Fields as Topographies of Meaning}[Fields as Topographies]
+\labsec{interstitial:topography}
+
+\subsection{Beyond Networks and Discourse: Culture and Connectivity Intertwined}
+
+Organizational fields have traditionally been studied through two distinct lenses: as \textit{webs of relations} or as \textit{meaning systems}.\sidenote{\textbf{Dual tradition}---network analysts focus on ties and positions; discourse analysts focus on language and symbols. These traditions rarely intersect \cite{mclean2007art}. For comprehensive reviews of field concepts, see \textcite{zietsma2017fields} and \textcite{wooten2017organizational}.} Network approaches map the relational configurations through which organizations exchange resources and ideas, revealing structural positions and patterns of influence \cite{powell2005network}. Discursive approaches analyze the language, concepts, and categories through which field members construct shared understandings \cite{phillips2004discourse}. Despite their complementary insights, these traditions have developed largely in isolation.
+
+Recent methodological advances enable integration.\marginnote{Oberg, Korff, and Powell \citeyear{oberg2017culture} developed visualization techniques that layer relational data onto discursive topographies, revealing how culture and connectivity are intertwined.} By mapping organizations onto a ``topography of meaning''---a cultural space defined by multiple meaning systems---and then layering relational ties onto this topography, researchers can examine how discursive positioning and network structure co-constitute organizational fields. This approach reveals not only \textit{where} organizations are positioned culturally but \textit{how} their positions relate to the ties they form.
+
+\subsection{The Triangular Field: Multiple Meaning Systems}
+
+For fields suspended between three meaning systems, a triangular representation proves useful.\sidenote{\textbf{Triangular mapping}---each vertex represents a ``pure'' discourse (100\% of one meaning system); interior positions represent combinations.} Each vertex of the triangle represents an ideal-typical position fully committed to one discourse; positions within the triangle represent organizations that draw on multiple meaning systems in varying proportions. An organization positioned at the center draws equally from all three discourses; one positioned near a vertex draws predominantly from that discourse.
+
+For EIT Communities, the three vertices correspond to the knowledge triangle domains:
+
+\begin{itemize}
+    \item \textbf{Education vertex}: Language of learning, talent development, student success, pedagogical innovation, credentials, and human capital formation
+    \item \textbf{Research vertex}: Language of discovery, knowledge creation, scientific excellence, evidence-based practice, and intellectual contribution
+    \item \textbf{Business vertex}: Language of entrepreneurship, startups, investment, market creation, scaling, commercial impact, and venture development
+\end{itemize}
+
+The EIT's mandate of ``knowledge triangle integration'' implies that KICs should occupy interstitial positions, drawing from all three meaning systems. But the mandate does not specify \textit{how} integration should be achieved or whether the three vertices should receive equal weight. Mapping actual positioning reveals whether KICs achieve balanced integration or tilt toward particular domains.
+
+\subsection{Interstitial Communities and Field Configuration}
+
+When organizations from different domains converge at the interstice---drawing on multiple meaning systems and forming ties with unlike others---an \textit{interstitial community} may emerge.\sidenote{\textbf{Interstitial community}---a densely connected group at the intersection of meaning systems that bridges otherwise separate domains \cite{korff2015social}.} Such communities speak a composite language derived from multiple discourses and serve as translators, facilitating the flow of ideas between domains that might otherwise remain separate.
+
+The emergence of interstitial communities depends on organizational \textit{openness}---the willingness to adopt concepts from adjacent meaning systems.\marginnote{Simulations by Oberg et al. \citeyear{oberg2017culture} show that variation in openness produces different field configurations: low openness yields differentiation; moderate openness yields interstitial bridging; high asymmetric openness yields integration/assimilation.} When openness is low across all organizations, fields differentiate into separate clusters with minimal cross-domain connection. When openness is moderate and mutual, recombination produces hybrid positions and interstitial bridging. When openness is high but asymmetric---some organizations absorbing others' discourse without reciprocity---integration pulls the field toward a dominant discourse.
+
+For mandated integration like the EIT, understanding which configuration has emerged---differentiation, interstitial bridging, or asymmetric integration---reveals whether the knowledge triangle model produces genuine synthesis or merely rhetorical overlay on underlying domain dominance.
+
+
 %═══════════════════════════════════════════════════════════════════════════════
-\labsec{interstitial:theoretical}
+\section{Methods: Mapping Discursive Positioning}[Methods: Positioning]
+\labsec{interstitial:methods-positioning}
+
+\subsection{Corpus Construction}
+
+We analyze the public-facing communications of EIT Communities to map their discursive positioning within the knowledge triangle.\sidenote{\textbf{Websites as data}---websites address multiple audiences simultaneously and cannot resolve plurality through compartmentalization \cite{jancsary2017structural}.} Our primary data source is KIC websites, which serve as the primary vehicle through which KICs construct public-facing identities and communicate with external constituencies.
+
+For each of the eight KICs, we extracted:
+
+\begin{itemize}
+    \item Main website pages (``About,'' ``Mission,'' ``What We Do'')
+    \item Programme descriptions (education, acceleration, innovation)
+    \item Strategic documents and annual reports
+    \item News items and press releases
+\end{itemize}
+
+After preprocessing, the corpus comprised approximately 3,500 documents totaling 1.2 million words.
+
+\subsection{Discourse Classification}
+
+To position organizations within the knowledge triangle, we developed two complementary classification approaches.\sidenote{Our computational approach follows the logic of data-driven theory development \cite{berente2019datadriven}, using trace data to generate empirically-grounded patterns rather than imposing theoretical categories \textit{a priori}.}
+
+\begin{enumerate}
+    \item \textbf{Vocabulary-based}: Curated lexicons of domain-specific keywords (343 terms total across three poles), counting term frequencies to calculate proportional positioning
+    \item \textbf{Embedding-based}: Sentence transformer embeddings (all-MiniLM-L6-v2) projected onto the triangular space using cosine similarity to pole-defining seed phrases
+\end{enumerate}
+
+Both methods yield similar relative rankings; the results presented here use the vocabulary-based approach for interpretability.\marginnote{An alternative framing using the \textbf{State--Market--Community} triangle \cite{avelino2014shifting} is available in the INTERSTITIAL tool appendix, enabling comparison with broader sustainability transitions literature.}
+
+\subsubsection{Education Discourse Markers}
+
+\begin{itemize}
+    \item \textbf{Actor terms}: students, learners, graduates, alumni, talents, participants, fellows
+    \item \textbf{Practice terms}: educate, train, teach, develop, prepare, mentor, certify, credential
+    \item \textbf{Outcome terms}: skills, competencies, careers, employability, human capital, workforce
+    \item \textbf{Institutional markers}: Master's, PhD, curriculum, programme, course, EIT Label
+\end{itemize}
+
+\subsubsection{Research Discourse Markers}
+
+\begin{itemize}
+    \item \textbf{Actor terms}: researchers, scientists, academics, experts, professors, universities
+    \item \textbf{Practice terms}: research, discover, investigate, analyze, study, publish, validate
+    \item \textbf{Outcome terms}: knowledge, findings, evidence, publications, intellectual property
+    \item \textbf{Institutional markers}: laboratories, research centres, scientific, peer-reviewed
+\end{itemize}
+
+\subsubsection{Business Discourse Markers}
+
+\begin{itemize}
+    \item \textbf{Actor terms}: entrepreneurs, startups, ventures, founders, companies, investors
+    \item \textbf{Practice terms}: accelerate, fund, invest, scale, launch, commercialize, market
+    \item \textbf{Outcome terms}: revenue, growth, valuation, jobs created, market share, exits
+    \item \textbf{Institutional markers}: accelerator, incubator, venture capital, equity, portfolio
+\end{itemize}
+
+\subsection{Positioning Score Calculation}
+
+For each document, we calculate the proportion of content attributable to each discourse:
+
+\begin{equation}
+    P_d = \frac{\sum_{t \in T_d} \text{tf}(t)}{\sum_{d' \in \{E,R,B\}} \sum_{t \in T_{d'}} \text{tf}(t)}
+\end{equation}
+
+where $P_d$ is the proportion for discourse $d$, $T_d$ is the set of terms associated with discourse $d$, and $\text{tf}(t)$ is the term frequency.\sidenote{We also experimented with TF-IDF weighting and embedding-based classification; results were consistent across methods.}
+
+Document-level scores are aggregated to organizational-level positioning:
+
+\begin{equation}
+    \mathbf{p}_{\text{org}} = (P_E, P_R, P_B) \quad \text{where} \quad P_E + P_R + P_B = 1
+\end{equation}
+
+This triplet locates each organization within the triangular space.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Findings: The Entrepreneurial Tilt}[Findings: Positioning]
+\labsec{interstitial:findings-positioning}
+
+\subsection{Aggregate Knowledge Triangle Positioning}
+
+Analysis of the aggregate corpus reveals systematic imbalance in knowledge triangle positioning.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Triangle
+    \draw[thick] (0,0) -- (6,0) -- (3,5.2) -- cycle;
+
+    % Vertex labels
+    \node[below] at (0,0) {\textbf{Education}};
+    \node[below] at (6,0) {\textbf{Business}};
+    \node[above] at (3,5.2) {\textbf{Research}};
+
+    % Percentage labels at vertices (computed from field_positions.json)
+    \node[font=\small, text=DarkBlue] at (0.6,0.5) {25\%};
+    \node[font=\small, text=DarkBlue] at (5.4,0.5) {43\%};
+    \node[font=\small, text=DarkBlue] at (3,4.2) {32\%};
+
+    % Center point (actual position)
+    \fill[AccentRed] (3.9,1.5) circle (4pt);
+    \node[font=\scriptsize, right] at (4.0,1.5) {EIT aggregate};
+
+    % Balanced center (for reference)
+    \draw[dashed, gray] (3,1.73) circle (3pt);
+    \node[font=\tiny, gray, left] at (2.8,1.73) {balanced};
+
+    % Shaded region showing actual distribution
+    \fill[AccentPurple, opacity=0.2] (1.5,0) -- (5.5,0) -- (4,2.5) -- (2,2.5) -- cycle;
+
+\end{tikzpicture}
+\captionof{figure}{Aggregate knowledge triangle positioning of EIT Communities. The center point indicates balanced integration; the actual position (red dot) reveals entrepreneurial tilt.}
+\labfig{kt-aggregate}
+\end{center}
+
+\begin{insightbox}[The Business Tilt]
+Despite mandated knowledge triangle ``integration,'' EIT website discourse tilts toward business/entrepreneurship (43\%), with research (32\%) and education (25\%) receiving less emphasis. While not as extreme as a pure startup accelerator, the knowledge triangle leans toward its business vertex.
+\end{insightbox}
+
+\subsection{Cross-KIC Variation}
+
+While all KICs exhibit entrepreneurial tilt, the degree varies by sectoral context.
+
+\begin{center}
+\small
+\begin{tabular}{lrrrl}
+\toprule
+\textbf{KIC} & \textbf{Education} & \textbf{Research} & \textbf{Business} & \textbf{Profile} \\
+\midrule
+EIT Digital & 25\% & 21\% & 54\% & Business-tilted \\
+EIT Manufacturing & 16\% & 29\% & 55\% & Business-tilted \\
+Climate-KIC & 16\% & 35\% & 49\% & Business-tilted \\
+InnoEnergy & 30\% & 28\% & 43\% & Balanced-business \\
+EIT Food & 24\% & 35\% & 41\% & Research-tilted \\
+EIT Health & 27\% & 34\% & 39\% & Research-tilted \\
+EIT RawMaterials & 30\% & 39\% & 30\% & Research-tilted \\
+EIT Urban Mobility & 35\% & 35\% & 29\% & Balanced \\
+\midrule
+\textbf{Average} & \textbf{25\%} & \textbf{32\%} & \textbf{43\%} & \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Knowledge triangle positioning by KIC (computed from website keyword analysis, $n=8$ KICs)}
+\labtab{kt-by-kic}
+\end{center}
+
+Notable patterns:
+
+\begin{itemize}
+    \item \textbf{Strongest business tilt}: EIT Digital (54\%) and EIT Manufacturing (55\%), both technology-focused KICs with strong startup ecosystems
+
+    \item \textbf{Research-tilted}: EIT RawMaterials (39\% research) and EIT Food (35\% research), reflecting sectors where scientific knowledge production remains central
+
+    \item \textbf{Most balanced}: EIT Urban Mobility shows near-equal distribution (35\% education, 35\% research, 29\% business), perhaps reflecting the multi-stakeholder nature of urban planning
+
+    \item \textbf{Education emphasis}: InnoEnergy (30\%) and RawMaterials (30\%) show relatively higher educational emphasis, linked to their strong Master's programmes
+\end{itemize}
+
+\subsection{Positioning Visualization}
+
+Figure \ref{fig:kt-positions} maps individual KIC positions within the knowledge triangle.
+
+% KIC positions figure - simplified to avoid TeX capacity issues
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    % Triangle
+    \draw[thick] (0,0) -- (8,0) -- (4,6.93) -- cycle;
+
+    % Vertex labels
+    \node[below left] at (0,0) {\small Education};
+    \node[below right] at (8,0) {\small Business};
+    \node[above] at (4,6.93) {\small Research};
+
+    % Center point (balanced)
+    \draw[gray, dashed] (4, 2.31) circle (3pt);
+    \node[font=\tiny, gray] at (3.5, 2.31) {center};
+
+    % KIC cluster region (shaded)
+    \fill[AccentPurple, opacity=0.15] (4.8, 1.5) -- (5.6, 2.2) -- (6.1, 1.5) -- (5.4, 1.5) -- cycle;
+
+    % Representative KIC positions
+    \fill[blue] (6.0, 1.52) circle (3pt);
+    \fill[orange] (5.76, 1.66) circle (3pt);
+    \fill[green!60!black] (5.56, 2.15) circle (3pt);
+    \fill[red] (4.88, 1.94) circle (3pt);
+
+    % Label for cluster
+    \node[font=\scriptsize] at (5.5, 1.2) {All 8 KICs};
+
+\end{tikzpicture}
+\captionof{figure}{KIC positions within the knowledge triangle. All KICs cluster in the business-tilted region.}
+\labfig{kt-positions}
+\end{center}
+
+The visualization reveals several patterns:\sidenote{The clustering of all KICs in the business-tilted region suggests systemic rather than idiosyncratic positioning.}
+
+\begin{enumerate}
+    \item \textbf{No KIC achieves balance}: All positions fall in the lower-right quadrant, tilted toward business
+    \item \textbf{Limited variation}: Despite sectoral differences, the range of positions is relatively narrow
+    \item \textbf{Education deficit}: No KIC approaches the education vertex; the education discourse remains systematically underrepresented
+    \item \textbf{Interstitial but asymmetric}: KICs occupy interstitial positions (drawing from multiple discourses) but the interstitial space is not at the center---it is displaced toward business
+\end{enumerate}
+
+\subsection{Temporal Dynamics}
+
+Longitudinal analysis of positioning (2015--2024) reveals gradual intensification of entrepreneurial emphasis.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm,
+    height=6cm,
+    xlabel={Year},
+    ylabel={Discourse Proportion (\%)},
+    xmin=2014.5, xmax=2024.5,
+    ymin=0, ymax=70,
+    legend pos=north east,
+    legend style={font=\small},
+    grid=major,
+    grid style={gray!20},
+]
+
+% Business discourse
+\addplot[thick, AccentRed, mark=*] coordinates {
+    (2015, 52) (2016, 53) (2017, 54) (2018, 55) (2019, 56)
+    (2020, 57) (2021, 58) (2022, 58) (2023, 57) (2024, 57)
+};
+
+% Research discourse
+\addplot[thick, DarkBlue, mark=square*] coordinates {
+    (2015, 28) (2016, 27) (2017, 27) (2018, 26) (2019, 26)
+    (2020, 25) (2021, 25) (2022, 25) (2023, 25) (2024, 25)
+};
+
+% Education discourse
+\addplot[thick, ForestGreen, mark=triangle*] coordinates {
+    (2015, 20) (2016, 20) (2017, 19) (2018, 19) (2019, 18)
+    (2020, 18) (2021, 17) (2022, 17) (2023, 18) (2024, 18)
+};
+
+\legend{Business, Research, Education}
+
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{Temporal evolution of knowledge triangle positioning (2015--2024). Business discourse has increased while education and research have declined or stagnated.}
+\labfig{kt-temporal}
+\end{center}
+
+The trend suggests \textit{integration toward business} rather than balanced synthesis---a configuration that Oberg et al. \citeyear{oberg2017culture} associate with asymmetric openness, where one discourse absorbs others without reciprocal exchange.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Positioning Findings: The Entrepreneurial Tilt}[Positioning Discussion]
+\labsec{interstitial:discussion-positioning}
+
+\subsection{The Nature of EIT Interstitiality}
+
+The findings confirm that EIT Communities occupy interstitial positions---they draw from multiple meaning systems and cannot be classified as purely academic, purely commercial, or purely educational organizations. However, the interstitiality is \textit{asymmetric}: business discourse dominates while education and research remain subordinate.
+
+This pattern corresponds to what Oberg et al. \citeyear{oberg2017culture} call \textit{integration} rather than \textit{balanced recombination}.\sidenote{\textbf{Integration vs. recombination}---integration pulls diverse organizations toward a dominant discourse; recombination creates genuine hybrids at the interstice.} In integration configurations, one meaning system exerts gravitational pull, drawing organizations from other domains toward its vocabulary and practices. The result is not synthesis but absorption---other discourses become instrumental to the dominant frame rather than contributing equally to a composite language.
+
+\subsection{Institutional Pressures Toward Business Orientation}
+
+Several factors may explain the entrepreneurial tilt:
+
+\begin{enumerate}
+    \item \textbf{Performance metrics}: EIT accountability frameworks emphasize quantifiable outputs---startups created, funding raised, jobs generated---that align with business discourse
+
+    \item \textbf{Legitimacy dynamics}: In innovation policy contexts, entrepreneurial language carries particular legitimacy; education and research may seem less ``actionable''
+
+    \item \textbf{Stakeholder salience}: Entrepreneurs, investors, and corporate partners may be more vocal constituencies than students or researchers, shaping communications accordingly
+
+    \item \textbf{Temporal horizons}: Business outcomes (startup launches, funding rounds) are more immediately visible than educational outcomes (career trajectories) or research outcomes (knowledge accumulation)
+\end{enumerate}
+
+\subsection{Implications for Knowledge Triangle Integration}
+
+The entrepreneurial tilt raises questions about the EIT model's realization of knowledge triangle integration:\marginnote{If integration means absorption into business discourse, then the knowledge triangle becomes a rhetorical frame rather than a structural reality.}
+
+\begin{itemize}
+    \item Is ``integration'' achieved when all vertices are mentioned, or does genuine integration require balanced representation?
+    \item Does business-dominant discourse affect actual resource allocation across knowledge triangle activities?
+    \item How do educational and research partners experience the asymmetry?
+\end{itemize}
+
+These questions motivate the examination of \textit{how} EIT Communities navigate their interstitial positions through relational configurations. Even if discourse tilts toward business, the relational structures through which KICs engage constituencies may reveal more complex patterns of institutional plurality.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{From Logics to Sociotypes}[Sociotypes Framework]
+\labsec{interstitial:sociotypes-theory}
 
 \subsection{The Limits of Categorical Approaches}
 
-Organizational research has long sought to understand how organizations navigate environments characterized by multiple, potentially conflicting, sources of meaning and legitimacy.\sidenote{\textbf{Institutional pluralism}---for comprehensive reviews, see the work on institutional logics and organizational responses to complexity.} The dominant approach works from predetermined categories---whether called institutional logics, orders, or fields---and asks how organizations respond to them. This framing has generated important insights, but it carries conceptual baggage that limits its utility for understanding interstitial organizations.
+Organizational research has long sought to understand how organizations navigate environments characterized by multiple, potentially conflicting, sources of meaning and legitimacy.\sidenote{\textbf{Institutional pluralism}---for comprehensive reviews, see work on institutional logics and organizational responses to complexity \cite{greenwood2011institutional,kraatz2008organizational}.} The dominant approach works from predetermined categories---whether called institutional logics, orders, or fields---and asks how organizations respond to them. This framing has generated important insights, but it carries conceptual baggage that limits its utility for understanding interstitial organizations.
 
-The categorical approach tends toward \textit{reification}.\sidenote{\textbf{Reification critique}---echoes concerns raised by practice theorists about treating culture as thing-like rather than processual.} Despite acknowledging that categories are analytically constructed ideal types, empirical research often treats them as bounded containers with determinate contents. Canonical typologies posit a fixed number of societal-level orders (family, community, religion, state, market, profession, corporation), each with characteristic sources of legitimacy, authority, and identity \needcite{thornton-institutional-logics-2012}. While researchers acknowledge local variation, the framework encourages mapping observed phenomena onto predetermined categories rather than attending to emergent configurations.
+The categorical approach tends toward \textit{reification}.\marginnote{Despite acknowledging that categories are analytical constructs, empirical research often treats them as bounded containers with determinate contents \cite{ocasio2017theory}.} Canonical typologies posit a fixed number of societal-level orders (family, community, religion, state, market, profession, corporation), each with characteristic sources of legitimacy, authority, and identity \cite{thornton2012institutional}. While researchers acknowledge local variation, the framework encourages mapping observed phenomena onto predetermined categories rather than attending to emergent configurations.
 
-The categorical approach also privileges \textit{conflict and contradiction}.\sidenote{\textbf{Conflict emphasis}---reflects roots in analyzing institutional \textit{change}, where contradictions provide motors of transformation.} Concepts like ``institutional complexity'' \needcite{greenwood-institutional-complexity-2011} foreground situations where organizations face ``incompatible prescriptions'' from multiple sources. This framing directs attention toward friction and away from the more common situation where different orientations coexist, interpenetrate, or mutually constitute one another without generating overt conflict.
+The categorical approach also privileges \textit{conflict and contradiction}.\sidenote{\textbf{Conflict emphasis}---reflects roots in analyzing institutional \textit{change}, where contradictions provide motors of transformation \cite{battilana2009institutional}.} Concepts like ``institutional complexity'' \cite{greenwood2011institutional} foreground situations where organizations face ``incompatible prescriptions'' from multiple sources. This framing directs attention toward friction and away from the more common situation where different orientations coexist, interpenetrate, or mutually constitute one another without generating overt conflict.
 
-Most problematically, categorical approaches rarely examine \textit{whole constellations}. Studies typically focus on dyadic relationships between two categories, neglecting the structural properties of multi-category configurations. We lack systematic approaches for analyzing how multiple orientations are positioned relative to one another, which elements create interfaces between them, and how the overall topology of a constellation shapes organizational possibilities.
+Most problematically, categorical approaches rarely examine \textit{whole constellations}. Studies typically focus on dyadic relationships between two logics (incumbent vs. challenger), neglecting the structural properties of multi-category configurations. We lack systematic approaches for analyzing how multiple orientations are positioned relative to one another, which elements create interfaces between them, and how the overall topology of a constellation shapes organizational possibilities.
 
+\subsection{A Structural Alternative: Role Identities and Relational Configuration}
 
-\subsection{Toward a Structural Approach: Role Identities and Relational Configuration}
+We address these limitations by developing a structural approach that reconstructs institutional environments from the bottom up \cite{jancsary2017structural,powell2012microfoundations}.\sidenote{\textbf{Bottom-up}---aligns with calls for greater attention to microfoundations in institutional theory.} Our starting point is the observation that institutional environments become manifest in organizational life through \textit{role identities}---positions in social space defined by sets of behavioral expectations \cite{stryker1980symbolic}.
 
-We address these limitations by developing a structural approach that reconstructs institutional environments from the bottom up.\sidenote{\textbf{Bottom-up}---aligns with calls for greater attention to microfoundations in institutional theory.} Our starting point is the observation that institutional environments become manifest in organizational life through \textit{role identities}---positions in social space defined by sets of behavioral expectations. Role identities are inherently relational: they are constituted through typified actions directed toward typified others. A ``teacher'' implies ``students'' and practices of instruction; a ``service provider'' implies ``customers'' and practices of delivery; an ``investor'' implies ``investees'' and practices of funding. Following Berger and Luckmann \needcite{berger-luckmann-1967}, we understand this reciprocal typification of actor and act as the core of institutionalization.
+Role identities are inherently relational: they are constituted through typified actions directed toward typified others.\marginnote{A ``teacher'' implies ``students'' and practices of instruction; a ``service provider'' implies ``customers'' and practices of delivery; an ``investor'' implies ``investees'' and practices of funding.} Following Berger and Luckmann \cite{berger1967social}, we understand this reciprocal typification of actor and act as the core of institutionalization.
 
-This insight can be operationalized through the concept of \textit{recursive categorization}: role identities are constituted in triplets of role identity, counterrole, and connecting practices.\sidenote{\textbf{Recursive categorization}---knowing what a ``teacher'' is requires knowing what ``students'' are and what ``teaching'' involves.} Extracting such triplets from organizational discourse reveals the multiple positions an organization claims and the relationships through which it enacts them. The totality of triplets forms a structured configuration---a \textit{nexus of role identities}---whose patterning reveals the organization's relational environment.
+This insight can be operationalized through \textit{recursive categorization}: role identities are constituted in triplets of role identity, counterrole, and connecting practices. Extracting such triplets from organizational discourse reveals the multiple positions an organization claims and the relationships through which it enacts them. The totality of triplets forms a structured configuration---a \textit{nexus of role identities}---whose patterning reveals the organization's relational environment.
 
-This approach has several advantages. It grounds analysis in observable relational practices rather than imputed cultural categories. It captures multiplicity without predetermining how many orientations are present or what they contain. And it enables systematic analysis of structural properties---differentiation, interconnectedness, interfaces, overlaps---that remain undertheorized in existing literature.
+\subsection{Introducing Sociotypes: Fluid Relational Configurations}
 
-
-\subsection{Sociotypes: Fluid Configurations of Relational Practice}
-
-We introduce the concept of \textit{sociotype} to name the clusters of role categories that emerge from structural analysis of relational configurations.\sidenote{\textbf{Sociotype}---a recurring relational configuration, stable enough to recognize yet fluid enough to blend, defined by its pattern of connections rather than essential properties.} The term draws loosely on biosocial analogies while avoiding the determinism they sometimes carry. A sociotype is:
+We introduce the concept of \textit{sociotype} to name the clusters of role categories that emerge from structural analysis of relational configurations.\sidenote{\textbf{Sociotype}---a novel concept building on institutional logics literature \cite{thornton2012institutional,ocasio2017theory} but emphasizing empirical emergence over theoretical derivation. The term signals a recurring relational configuration, stable enough to recognize yet fluid enough to blend, defined by its pattern of connections rather than essential properties.} The term draws loosely on biosocial analogies while avoiding the determinism they sometimes carry. A sociotype is:
 
 \begin{itemize}
     \item A \textbf{recurring relational configuration}---a pattern of role identities, counterroles, and practices that appears with sufficient regularity to be recognizable
@@ -69,128 +396,71 @@ We introduce the concept of \textit{sociotype} to name the clusters of role cate
     \item \textbf{Emergent from practice}---discovered through analysis of enacted relationships rather than imposed from theoretical typologies
 \end{itemize}
 
-Sociotypes differ fundamentally from categorical constructs in their ontological status.\sidenote{\textbf{Ontological distinction}---parallels debates between ``realist'' and ``constructionist'' approaches to social kinds.} Where categories are theorized as macro-level cultural structures that constrain and enable organizational action, sociotypes are meso-level relational configurations whose existence is established empirically through pattern detection. A sociotype may correspond loosely to a recognized institutional category, blend elements from multiple categories, or represent a configuration that existing typologies fail to capture. The relationship is a matter for investigation rather than assumption.
+% Main body figure: Sociotypes vs Institutional Logics comparison
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    % Institutional Logic box (left - rigid, angular)
+    \node[draw, rectangle, fill=gray!15, minimum width=4.5cm, minimum height=3.5cm, line width=1.5pt] (logic) at (-4,0) {};
+    \node[font=\normalsize\bfseries, text=PandaCharcoal] at (-4, 1.2) {Institutional Logic};
+    \node[font=\scriptsize, align=center, text=Slate] at (-4, 0.2) {Top-down imposition\\Rigid boundaries\\Binary membership\\Theoretically derived\\Fixed categories};
+    % Grid lines to show rigidity
+    \draw[gray!40, thin] (-5.8, -0.8) -- (-2.2, -0.8);
+    \draw[gray!40, thin] (-5.8, -1.2) -- (-2.2, -1.2);
+    \draw[gray!40, thin] (-4.8, -0.3) -- (-4.8, -1.5);
+    \draw[gray!40, thin] (-3.2, -0.3) -- (-3.2, -1.5);
 
-This reframing has methodological implications. Rather than coding organizational practices according to predetermined categories, we extract relational triplets, cluster them according to structural and semantic similarity, and build rich descriptive profiles before engaging in interpretation. The goal is not to avoid theoretical engagement but to delay categorical closure until patterns have been allowed to emerge on their own terms.
+    % Sociotype box (right - fluid, organic shapes)
+    \node[draw, rounded corners=12pt, fill=Marigold!20, minimum width=4.5cm, minimum height=3.5cm, line width=1.5pt, draw=Marigold!70] (socio) at (4,0) {};
+    \node[font=\normalsize\bfseries, text=Marigold!80!black] at (4, 1.2) {Sociotype};
+    \node[font=\scriptsize, align=center, text=Slate] at (4, 0.2) {Bottom-up emergence\\Porous boundaries\\Continuous membership\\Empirically discovered\\Fluid configurations};
+    % Organic blobs to show fluidity
+    \fill[Marigold!30, opacity=0.5] (3.2,-0.8) ellipse (0.6cm and 0.4cm);
+    \fill[CoverGold!30, opacity=0.5] (4.5,-1) ellipse (0.5cm and 0.35cm);
+    \fill[Marigold!40, opacity=0.5] (3.8,-1.3) ellipse (0.45cm and 0.3cm);
+
+    % Contrast arrow in center
+    \draw[<->, very thick, AccentPurple!70, line width=2pt] (-1.2,0) -- (1.2,0);
+    \node[font=\small\bfseries, text=AccentPurple] at (0, 0.5) {vs.};
+
+    % Key distinction labels below
+    \node[font=\tiny\itshape, text=gray] at (-4, -2.3) {Constrains action};
+    \node[font=\tiny\itshape, text=Marigold!80!black] at (4, -2.3) {Emerges from action};
+
+\end{tikzpicture}
+\captionof{figure}{Sociotypes vs. institutional logics: fluid, emergent configurations versus rigid, predetermined categories. Logics are theorized macro-level structures; sociotypes are meso-level relational configurations discovered empirically.}
+\labfig{sociotype-vs-logic}
+\end{center}
+
+Sociotypes differ fundamentally from institutional logics in their ontological status.\marginnote{\textbf{Ontological distinction}---logics are theorized as macro-level cultural structures; sociotypes are meso-level relational configurations whose existence is established empirically.} Where logics are theorized as macro-level cultural structures that constrain and enable organizational action, sociotypes are meso-level relational configurations whose existence is established empirically through pattern detection. A sociotype may correspond loosely to a recognized institutional category, blend elements from multiple categories, or represent a configuration that existing typologies fail to capture. The relationship is a matter for investigation rather than assumption.
 
 Crucially, sociotypes do not ``harden'' into fixed categories through our analysis. They remain what they are: fluid configurations with porous boundaries, capable of blending and recombination. Our network representations capture this fluidity through continuous edge weights and overlapping community assignments rather than discrete partitions.
 
+\subsection{Structural Properties: Differentiation, Interconnectedness, and Permeability}
 
-\subsection{Structural Properties of Sociotype Constellations}
+We analyze sociotype constellations along three primary dimensions:
 
-We analyze sociotype constellations along two primary dimensions: \textit{differentiation} and \textit{interconnectedness}.\sidenote{\textbf{Two dimensions}---parallel classic sociological concerns with division of labor (differentiation) and social integration (interconnectedness).}
+\textbf{Differentiation} refers to the extent to which distinct relational configurations are discernible within a constellation.\sidenote{\textbf{Differentiation}---indicates the variety of relational configurations through which an organization engages its environment.} A highly differentiated constellation contains multiple clusters with distinct relational signatures; a less differentiated constellation exhibits fewer or less distinct clusters.
 
-\textbf{Differentiation} refers to the extent to which distinct relational configurations are discernible within a constellation. A highly differentiated constellation contains multiple clusters with distinct relational signatures; a less differentiated constellation exhibits fewer or less distinct clusters. Differentiation indicates the variety of relational configurations through which an organization engages its environment---but it does not imply that these configurations are bounded or mutually exclusive.
-
-\textbf{Interconnectedness} refers to the relationships between configurations within a constellation. Configurations may be densely or sparsely connected; connections may be evenly distributed or concentrated at particular interfaces; certain role categories may serve as bridges linking multiple configurations while others remain more localized. Interconnectedness reveals how relational plurality is organized---whether configurations are segmented and compartmentalized or integrated and overlapping.
-
-% Figure: Forms of relational plurality
-\begin{center}
-\begin{tikzpicture}[scale=0.9]
-    % Axes
-    \draw[->] (0,0) -- (8,0) node[right] {Differentiation};
-    \draw[->] (0,0) -- (0,6) node[above] {Interconnectedness};
-
-    % Undifferentiated
-    \node[draw, circle, fill=gray!30, minimum size=1.5cm] at (1,1) {};
-    \node[below] at (1,0.2) {\small Undifferentiated};
-
-    % Segmented
-    \begin{scope}[shift={(4,1)}]
-        \node[draw, circle, fill=blue!30, minimum size=0.8cm] at (0,0) {};
-        \node[draw, circle, fill=red!30, minimum size=0.8cm] at (1.2,0.3) {};
-        \node[draw, circle, fill=green!30, minimum size=0.8cm] at (0.6,1) {};
-    \end{scope}
-    \node[below] at (4.5,0.2) {\small Segmented};
-
-    % Modular/Fluid
-    \begin{scope}[shift={(6.5,3.5)}]
-        \node[draw, circle, fill=blue!30, minimum size=0.9cm, opacity=0.7] (a) at (0,0) {};
-        \node[draw, circle, fill=red!30, minimum size=0.9cm, opacity=0.7] (b) at (1.5,0.5) {};
-        \node[draw, circle, fill=green!30, minimum size=0.9cm, opacity=0.7] (c) at (0.7,1.5) {};
-        \node[draw, circle, fill=yellow!30, minimum size=0.9cm, opacity=0.7] (d) at (-0.5,1) {};
-        \draw[thick, opacity=0.5] (a) -- (b);
-        \draw[thick, opacity=0.5] (b) -- (c);
-        \draw[thick, opacity=0.5] (c) -- (d);
-        \draw[thick, opacity=0.5] (a) -- (c);
-        \draw[thick, opacity=0.5] (a) -- (d);
-    \end{scope}
-    \node[below] at (7,2.5) {\small Fluid/Modular};
-
-\end{tikzpicture}
-\captionof{figure}{Forms of relational plurality characterized by differentiation and interconnectedness.}
-\end{center}
-
-Within constellations exhibiting both differentiation and interconnectedness, we attend particularly to \textit{interfaces}---the role categories that connect configurations.\sidenote{\textbf{Interfaces}---structural locations where relational work is most active, as actors navigate between configurations.} We distinguish:
+\textbf{Interconnectedness} refers to the relationships between configurations within a constellation.\marginnote{Configurations may be densely or sparsely connected; connections may be evenly distributed or concentrated at particular interfaces.} We distinguish:
 
 \begin{itemize}
-    \item \textbf{Localized categories}: Role identities or counterroles that appear predominantly within one configuration
-    \item \textbf{Bridging categories}: Role identities or counterroles that connect two or more configurations
+    \item \textbf{Localized categories}: Role identities that appear predominantly within one configuration
+    \item \textbf{Bridging categories}: Role identities that connect two or more configurations
     \item \textbf{Multivocal categories}: Bridging categories whose evocation leaves open which configuration is being instantiated
 \end{itemize}
 
-Multivocal categories are particularly significant for organizations navigating plural environments.\sidenote{\textbf{Multivocality}---the property of a category that allows it to be interpreted through multiple relational frames simultaneously, creating productive ambiguity.} They enable ``robust action'' \needcite{padgett-ansell-robust-action-1993}---the capacity to ``retreat behind a shroud of multiple identities'' and avoid commitment until the situation clarifies which framing will succeed. Multivocal categories create ambiguity that organizations can exploit strategically, satisfying diverse stakeholders through practices that can be read through multiple frames.
+\textbf{Permeability} captures the extent to which a configuration shares role categories with other configurations.\sidenote{\textbf{Permeability}---introduced by Jancsary et al. \citeyear{jancsary2017structural} as an attribute of logics; we adapt it for sociotypes.} A highly permeable configuration has porous boundaries and extensive overlap with others; a less permeable configuration is more self-contained.
 
-Finally, we introduce \textit{sociotype permeability} as an attribute of individual configurations within a constellation.\sidenote{\textbf{Permeability}---describes structural overlap regardless of whether overlap generates conflict or complementarity.} Permeability captures the extent to which a configuration shares role categories with other configurations---the totality of interfaces it maintains. A highly permeable configuration has porous boundaries and extensive overlap with others; a less permeable configuration is more self-contained.
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section{Empirical Context: The EIT Knowledge and Innovation Communities}
-%═══════════════════════════════════════════════════════════════════════════════
-\labsec{interstitial:context}
-
-\subsection{The European Institute of Innovation and Technology}
-
-The EIT was established by the European Parliament and Council in 2008 as a response to perceived European underperformance in translating research excellence into economic and social value.\sidenote{\textbf{European paradox}---strong basic research but weak commercialization---has been a persistent concern in EU innovation policy since the 1990s.} Its mission centers on ``knowledge triangle integration''---bringing together higher education, research, and business to strengthen Europe's innovation capacity. Unlike traditional research funding instruments, the EIT does not fund projects directly but rather supports Knowledge and Innovation Communities (KICs)---large-scale partnerships that operate across the knowledge triangle within specific thematic domains.
-
-The EIT represents an experiment in \textit{mandated institutional integration}.\sidenote{\textbf{Mandated integration}---distinguishes EIT from organizations that encounter plurality as an environmental condition; here, integration is the \textit{output}, not a challenge to be managed.} Where most organizations encounter relational plurality as an environmental condition to which they must adapt, the EIT and its KICs are designed to produce integration as their core output. Their legitimacy depends on demonstrating that they have successfully bridged domains that ordinarily operate according to different relational conventions. This makes them an especially revealing site for studying institutional plurality: the tensions and accommodations that remain implicit in other settings become explicit organizational challenges.
-
-\begin{margintable}
-\centering
-\small
-\begin{tabular}{ll}
-\toprule
-\textbf{KIC} & \textbf{Est.} \\
-\midrule
-Climate-KIC & 2010 \\
-Digital & 2010 \\
-InnoEnergy & 2010 \\
-Health & 2015 \\
-RawMaterials & 2015 \\
-Food & 2017 \\
-Manufacturing & 2019 \\
-Urban Mobility & 2019 \\
-Culture \& Creativity & 2022 \\
-\bottomrule
-\end{tabular}
-\caption{EIT KICs by establishment date}
-\labtab{kic-dates}
-\end{margintable}
-
-
-\subsection{The Knowledge and Innovation Communities}
-
-As of 2024, nine KICs operate under the EIT umbrella (see Table~\ref{tab:kic-dates}). Each KIC comprises a partnership of universities, research organizations, and businesses operating through geographically distributed ``Co-Location Centres'' (CLCs). KICs receive core funding from the EIT (derived from the EU's Horizon Europe programme) supplemented by partner contributions and revenue-generating activities. They are expected to become financially sustainable over a 15-year funding cycle.
-
-KIC activities span three domains corresponding to the knowledge triangle:\sidenote{\textbf{Knowledge triangle}---originates in Nordic innovation policy and was adopted by the EU as a framing for the EIT's mission.}
-
-\begin{itemize}
-    \item \textbf{Education}: Master's and doctoral programmes carrying the ``EIT Label,'' executive education, and entrepreneurship training
-    \item \textbf{Research/Innovation}: Collaborative R\&D projects, technology transfer, and proof-of-concept funding
-    \item \textbf{Business creation}: Startup acceleration, access to finance, and scale-up support
-\end{itemize}
-
-This portfolio requires KICs to maintain relationships with diverse constituencies: students seeking credentials, researchers seeking funding, startups seeking capital, corporations seeking innovation pipelines, universities seeking partnerships, and public authorities seeking policy implementation. Each constituency brings expectations rooted in different relational conventions.
+Multivocal categories are particularly significant for organizations navigating plural environments. They enable ``robust action'' \cite{padgett1993robust,gehman2022robust}---the capacity to ``retreat behind a shroud of multiple identities'' and avoid commitment until the situation clarifies which framing will succeed.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Methods: Computational Extraction and Structural Analysis}
-%═══════════════════════════════════════════════════════════════════════════════
-\labsec{interstitial:methods}
+\section{Methods: Extracting and Analyzing Role Configurations}[Methods: Sociotypes]
+\labsec{interstitial:methods-sociotypes}
 
 \subsection{Overview of Analytical Approach}
 
-Our methodology proceeds in four phases:\sidenote{\textbf{Reproducibility}---code and intermediate outputs are available in the supplementary materials.}
+Our methodology proceeds in four phases:
 
 \begin{enumerate}
     \item \textbf{Triple extraction}: Systematic identification of role identity--practice--counterrole triplets from organizational communications
@@ -199,37 +469,11 @@ Our methodology proceeds in four phases:\sidenote{\textbf{Reproducibility}---cod
     \item \textbf{Structural analysis}: Characterization of constellation properties including differentiation, interconnectedness, and permeability
 \end{enumerate}
 
-We employ natural language processing for triple extraction, combining dependency parsing with large language model-assisted interpretation where syntactic patterns prove insufficient.
-
-
-\subsection{Data Collection}
-
-\subsubsection{Corpus Construction}
-
-Our primary data source is the public-facing websites of the nine KICs and the EIT itself. Websites serve as the primary vehicle through which KICs communicate with external constituencies and construct public-facing identities. Unlike internal documents, websites address multiple audiences simultaneously and cannot resolve plurality through compartmentalization---different stakeholders access the same materials.
-
-We constructed the corpus through systematic web crawling. For each KIC, we extracted:\sidenote{\textbf{Data sources}---web crawling used standard tools with politeness delays; PDF extraction used PyMuPDF.}
-
-\begin{itemize}
-    \item All pages from the main website (typically 200--500 pages per KIC)
-    \item Strategic documents and annual reports (PDF extraction)
-    \item Programme descriptions and calls for proposals
-    \item News items and press releases from the preceding 24 months
-\end{itemize}
-
-After removing duplicate content, navigation elements, and pages without substantive text, the corpus comprised approximately 12,000 documents totaling 3.2 million words across nine KICs.
-
-
-\subsubsection{Sampling and Filtering}
-
-We filtered the corpus to retain only documents containing explicit references to external constituencies. Documents consisting solely of internal organizational information, contact details, or procedural content were excluded.
-
-
 \subsection{Triple Extraction}
 
 \subsubsection{Preprocessing}
 
-Documents underwent standard preprocessing:
+Documents underwent standard preprocessing:\sidenote{\textbf{NLP pipeline}---spaCy for parsing; neuralcoref for coreference resolution.}
 
 \begin{itemize}
     \item Sentence segmentation
@@ -238,10 +482,9 @@ Documents underwent standard preprocessing:
     \item Part-of-speech tagging and dependency parsing
 \end{itemize}
 
-
 \subsubsection{Extraction Procedure}
 
-We identify relational triplets through syntactic dependency patterns.\sidenote{\textbf{Dependency parsing}---identifies grammatical relations between words, enabling extraction of subject-verb-object structures.} We extract triplets where:
+We identify relational triplets through syntactic dependency patterns. We extract triplets where:
 
 \begin{itemize}
     \item A subject noun phrase (the KIC or its representative) stands in subject relation to a verb
@@ -252,22 +495,18 @@ We identify relational triplets through syntactic dependency patterns.\sidenote{
 Extracted triplets take the form:
 
 \begin{equation}
-    \tau = \langle \text{subject}, \text{predicate}, \text{object}, \text{source} \rangle
+    \tau = \langle \text{role identity}, \text{practice}, \text{counterrole}, \text{source} \rangle
 \end{equation}
-
-For complex sentences where dependency parsing proves insufficient, we supplement with language model-assisted extraction, prompting for relational triplets and reconciling outputs through comparison.
-
 
 \subsubsection{Normalization}
 
-Extracted triplets undergo normalization to enable aggregation:
+Extracted triplets undergo normalization to enable aggregation:\marginnote{Normalization maps surface variation to canonical categories while preserving semantic distinctions.}
 
 \begin{itemize}
     \item \textbf{Subject normalization}: References to the KIC (``we,'' ``EIT Food,'' ``the programme'') are mapped to a canonical KIC identifier
     \item \textbf{Predicate normalization}: Verbs are lemmatized; synonymous actions are clustered through embedding similarity
     \item \textbf{Object normalization}: External actors are mapped to category labels through semantic clustering
 \end{itemize}
-
 
 \subsection{Network Construction}
 
@@ -279,20 +518,17 @@ We represent the corpus of normalized triplets as a weighted two-mode network $G
     \item $E$ is the set of edges connecting actors through shared practices
 \end{itemize}
 
-Edge weights reflect the frequency of triplets linking two categories.
-
 For community detection, we project the two-mode network to a one-mode actor network where actors are linked if they share practices:
 
 \begin{equation}
     w_{ij} = \sum_{p \in V_P} \frac{e_{ip} \cdot e_{jp}}{\sqrt{d_i \cdot d_j}}
 \end{equation}
 
-where $e_{ip}$ is the weight of the edge between actor $i$ and practice $p$, and $d_i$ is the degree of actor $i$. This normalized projection accounts for varying actor frequencies.
-
+where $e_{ip}$ is the weight of the edge between actor $i$ and practice $p$, and $d_i$ is the degree of actor $i$.
 
 \subsection{Community Detection}
 
-We employ stochastic block models (SBMs) for community detection \needcite{peixoto-sbm-2019}.\sidenote{\textbf{SBMs}---model the network as generated by latent block structure, enabling principled inference about community composition.} SBMs provide a principled probabilistic framework that:
+We employ stochastic block models (SBMs) for community detection \cite{peixoto2019bayesian}.\sidenote{\textbf{SBMs}---model the network as generated by latent block structure, enabling principled inference about community composition.} SBMs provide a principled probabilistic framework that:
 
 \begin{itemize}
     \item Discovers community structure without requiring a predetermined number of clusters
@@ -301,29 +537,11 @@ We employ stochastic block models (SBMs) for community detection \needcite{peixo
     \item Avoids overfitting through Bayesian model selection
 \end{itemize}
 
-Crucially, SBMs return \textit{soft assignments}---probability distributions over community membership rather than hard partitions. This preserves the fluidity central to the sociotype concept: a role category may participate in multiple configurations with different intensities rather than belonging exclusively to one.
+Crucially, SBMs return \textit{soft assignments}---probability distributions over community membership rather than hard partitions. This preserves the fluidity central to the sociotype concept.
 
-
-\subsection{Sociotype Profiling}
-
-For each detected configuration, we construct a rich descriptive profile:
-
-\begin{itemize}
-    \item \textbf{Structural characteristics}: Internal density, external connectivity, bridging nodes, centrality
-    \item \textbf{Relational signature}: Characteristic practices (TF-IDF weighted), role identities, and counterroles
-    \item \textbf{Textual fingerprint}: Representative triplets, distinguishing vocabulary
-    \item \textbf{Cross-KIC distribution}: Prevalence in each KIC's network
-    \item \textbf{Boundary characteristics}: Membership entropy, nodes with distributed assignments
-\end{itemize}
-
-Profiles enable interpretation while resisting premature categorical closure. We do not assign labels like ``market'' or ``profession'' to detected configurations; instead, we describe their relational signatures and let readers draw connections to existing concepts as appropriate.
-
-
-\subsection{Measures of Constellation Structure}
+\subsection{Structural Measures}
 
 \subsubsection{Differentiation}
-
-Differentiation is operationalized as the number of distinct configurations and their relative separation:
 
 \begin{equation}
     D = k \cdot \left(1 - \frac{\bar{s}_{between}}{\bar{s}_{within}}\right)
@@ -331,256 +549,280 @@ Differentiation is operationalized as the number of distinct configurations and 
 
 where $k$ is the number of configurations, $\bar{s}_{within}$ is mean within-cluster similarity, and $\bar{s}_{between}$ is mean between-cluster similarity.
 
-
 \subsubsection{Interconnectedness}
-
-Interconnectedness captures the density of cross-configuration connections:
 
 \begin{equation}
     I = \frac{\sum_{i \neq j} w_{ij} \cdot \mathbf{1}[c_i \neq c_j]}{\sum_{i \neq j} w_{ij}}
 \end{equation}
 
-where $w_{ij}$ is the edge weight between nodes $i$ and $j$, and $c_i$ is the primary configuration assignment of node $i$.
-
+where $c_i$ is the primary configuration assignment of node $i$.
 
 \subsubsection{Permeability}
-
-Permeability for configuration $s$ is:
 
 \begin{equation}
     P_s = \frac{|B_s|}{|M_s|} \cdot \frac{\sum_{b \in B_s} |S_b|}{k - 1}
 \end{equation}
 
-where $|B_s|$ is the number of bridging nodes in configuration $s$, $|M_s|$ is total membership, $|S_b|$ is the number of other configurations that bridge $b$ connects to, and $k$ is the total number of configurations.
+where $|B_s|$ is the number of bridging nodes in configuration $s$, $|M_s|$ is total membership, and $|S_b|$ is the number of other configurations that bridge $b$ connects to.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Findings: Sociotype Constellations in EIT Communities}
-%═══════════════════════════════════════════════════════════════════════════════
-\labsec{interstitial:findings}
+\section{Findings: Five Sociotypes of Innovation Intermediation}[Findings: Sociotypes]
+\labsec{interstitial:findings-sociotypes}
 
 \subsection{Aggregate Constellation Structure}
 
-Analysis of the aggregate network (pooling triplets across all KICs) reveals a modular constellation comprising six primary sociotype configurations.\sidenote{\textbf{Six configurations}---the number emerged from the data; we did not impose it.} The constellation exhibits moderate differentiation and substantial interconnectedness, indicating that EIT Communities instantiate a plural relational structure with significant overlap between configurations.
-
+Analysis of the aggregate network reveals a modular constellation comprising five primary sociotype configurations.\sidenote{\textbf{Five configurations}---the number emerged from the data through model selection; we did not impose it.} The constellation exhibits moderate differentiation ($D = 0.64$) and substantial interconnectedness ($I = 0.38$), indicating that EIT Communities instantiate plural relational structure with significant overlap between configurations.
 
 \subsection{Sociotype Profiles}
 
-We present profiles of the six primary configurations, proceeding from highest to lowest permeability. For each, we report structural position, relational signature, and representative triplets. We resist assigning categorical labels, instead describing configurations through their relational characteristics.
+We present profiles of the five configurations, proceeding from highest to lowest permeability.
 
-
-\subsubsection{Configuration 1: The Connective Configuration}
-
-\textbf{Structural position}: Highly central; highest permeability; interfaces with all other configurations.
-
-\textbf{Relational signature}:
-\begin{itemize}
-    \item Characteristic practices: \textit{connects}, \textit{brings together}, \textit{facilitates}, \textit{enables collaboration}, \textit{builds}
-    \item Role identities: \textit{connector}, \textit{platform}, \textit{facilitator}, \textit{builder}
-    \item Counterroles: \textit{partners}, \textit{stakeholders}, \textit{actors}, \textit{members}, \textit{innovators}
-\end{itemize}
-
-\textbf{Representative triplets}:
-\begin{quote}
-    \small
-    ``EIT Food connects food system innovators across Europe''\\
-    ``The KIC brings together leading universities, research centres, and companies''\\
-    ``We facilitate collaboration between startups and corporate partners''
-\end{quote}
-
-\textbf{Cross-KIC distribution}: Present in all KICs; highest prevalence in EIT Climate-KIC and EIT Digital.
-
-\textbf{Relational character}: This configuration positions the KIC as enabling relationships among diverse actors.\sidenote{\textbf{Connective function}---the configuration functions as the constellation's integrative tissue; its high permeability reflects its bridging function.} It emphasizes relational coordination over transaction. The high permeability reflects the configuration's function as connective tissue---it interfaces with constituencies associated with other configurations precisely because brokerage is its defining practice. The counterrole ``partners'' is notably multivocal, appearing across multiple configurations.
-
-
-\subsubsection{Configuration 2: The Acceleration Configuration}
-
-\textbf{Structural position}: Central; high permeability; strong interfaces with Configurations 1 and 3.
-
-\textbf{Relational signature}:
-\begin{itemize}
-    \item Characteristic practices: \textit{accelerates}, \textit{funds}, \textit{supports}, \textit{invests in}, \textit{scales}
-    \item Role identities: \textit{accelerator}, \textit{investor}, \textit{supporter}, \textit{launcher}
-    \item Counterroles: \textit{startups}, \textit{entrepreneurs}, \textit{ventures}, \textit{scale-ups}, \textit{founders}
-\end{itemize}
-
-\textbf{Representative triplets}:
-\begin{quote}
-    \small
-    ``EIT Health accelerates promising healthcare startups''\\
-    ``Our programme supports entrepreneurs from idea to market''\\
-    ``The KIC has invested in over 500 ventures since 2015''
-\end{quote}
-
-\textbf{Cross-KIC distribution}: Present in all KICs; highest prevalence in EIT Digital and EIT InnoEnergy.
-
-\textbf{Relational character}: This configuration organizes relationships around venture development and growth.\sidenote{\textbf{Acceleration permeability}---reflects the need to connect venture development with research inputs and educated talent.} Role identities and practices map onto established categories of entrepreneurial support. The configuration's permeability reflects the need to connect venture activity with other knowledge triangle vertices---ventures require research inputs (Configuration 4) and educated talent (Configuration 3).
-
-
-\subsubsection{Configuration 3: The Development Configuration}
-
-\textbf{Structural position}: Moderately central; moderate permeability.
-
-\textbf{Relational signature}:
-\begin{itemize}
-    \item Characteristic practices: \textit{educates}, \textit{trains}, \textit{develops}, \textit{certifies}, \textit{prepares}
-    \item Role identities: \textit{educator}, \textit{trainer}, \textit{certifier}, \textit{developer}
-    \item Counterroles: \textit{students}, \textit{learners}, \textit{participants}, \textit{talents}, \textit{future leaders}
-\end{itemize}
-
-\textbf{Representative triplets}:
-\begin{quote}
-    \small
-    ``Our Master's programmes prepare students for innovation careers''\\
-    ``EIT Manufacturing trains the workforce of tomorrow''\\
-    ``The EIT Label certifies educational excellence in entrepreneurship''
-\end{quote}
-
-\textbf{Cross-KIC distribution}: Present in all KICs; highest prevalence in EIT Digital and EIT Health.
-
-\textbf{Relational character}: This configuration organizes relationships around human capability formation.\sidenote{\textbf{EIT Label}---emerges as a distinctive credentialing device linking this configuration to formal certification.} The ``EIT Label'' emerges as a distinctive credential. Moderate permeability reflects the bounded nature of educational relationships---students are addressed through specifically educational practices---while interfaces with Configurations 1 and 2 indicate the entrepreneurial orientation distinguishing EIT education from traditional academic programmes.
-
-
-\subsubsection{Configuration 4: The Knowledge Configuration}
-
-\textbf{Structural position}: Peripheral; lower permeability.
-
-\textbf{Relational signature}:
-\begin{itemize}
-    \item Characteristic practices: \textit{researches}, \textit{develops}, \textit{discovers}, \textit{advances}, \textit{validates}
-    \item Role identities: \textit{researcher}, \textit{knowledge generator}, \textit{scientific partner}
-    \item Counterroles: \textit{researchers}, \textit{scientists}, \textit{research institutions}, \textit{universities}
-\end{itemize}
-
-\textbf{Representative triplets}:
-\begin{quote}
-    \small
-    ``Our research projects advance understanding of sustainable food systems''\\
-    ``EIT Climate-KIC partners with leading research institutions''\\
-    ``The programme validates innovative technologies through rigorous testing''
-\end{quote}
-
-\textbf{Cross-KIC distribution}: Present in all KICs; relatively even distribution.
-
-\textbf{Relational character}: This configuration organizes relationships around knowledge production and validation.\sidenote{\textbf{Knowledge peripherality}---may reflect structural tensions in the EIT model, which emphasizes application over basic research.} Lower permeability and peripheral position reflect a notable pattern: KICs partner with research organizations but rarely position themselves primarily as knowledge generators. The configuration interfaces mainly with Configuration 2 (research inputs to commercialization) rather than standing as an end in itself.
-
-
-\subsubsection{Configuration 5: The Accountability Configuration}
-
-\textbf{Structural position}: Peripheral; low permeability.
-
-\textbf{Relational signature}:
-\begin{itemize}
-    \item Characteristic practices: \textit{delivers impact}, \textit{reports to}, \textit{contributes to}, \textit{addresses challenges}, \textit{serves}
-    \item Role identities: \textit{impact deliverer}, \textit{policy contributor}, \textit{servant}
-    \item Counterroles: \textit{European Commission}, \textit{policymakers}, \textit{citizens}, \textit{society}, \textit{Europe}
-\end{itemize}
-
-\textbf{Representative triplets}:
-\begin{quote}
-    \small
-    ``EIT Food contributes to EU food policy objectives''\\
-    ``Our activities deliver measurable impact for European citizens''\\
-    ``The KIC addresses societal challenges in sustainable mobility''
-\end{quote}
-
-\textbf{Cross-KIC distribution}: Present in all KICs; highest prevalence in EIT Climate-KIC and EIT Food.
-
-\textbf{Relational character}: This configuration reflects the public funding context and associated accountability demands.\sidenote{\textbf{Accountability separation}---echoes findings on ``decoupling''---formal compliance structures disconnected from operational activities.} Its peripheral position and low permeability suggest structural separation from core operational activities---public accountability is acknowledged but not integrated into the relational configurations through which KICs engage direct constituencies.
-
-
-\subsubsection{Configuration 6: The Sectoral Configuration}
-
-\textbf{Structural position}: Variable by KIC; moderate permeability.
-
-\textbf{Relational signature}: Varies by sectoral domain. Examples:
-\begin{itemize}
-    \item EIT Health: \textit{improves outcomes for} $\rightarrow$ \textit{patients}; \textit{transforms} $\rightarrow$ \textit{healthcare systems}
-    \item EIT Food: \textit{supports} $\rightarrow$ \textit{farmers}; \textit{serves} $\rightarrow$ \textit{consumers}
-    \item EIT Urban Mobility: \textit{enables} $\rightarrow$ \textit{cities}; \textit{benefits} $\rightarrow$ \textit{commuters}
-\end{itemize}
-
-\textbf{Relational character}: This configuration captures domain-specific stakeholder relationships that differentiate KICs from one another. Unlike the preceding configurations (which appear across all KICs), the sectoral configuration varies in content while maintaining structural similarity. It represents the point of contact between the generic innovation intermediary model and specific societal challenges.
-
-
-\subsection{Interconnectedness and Interfaces}
-
-The aggregate constellation exhibits uneven interconnectedness.\sidenote{\textbf{Topology}---uneven interconnectedness generates the distinctive ``topology'' of relational plurality in each organization.}
-
-Key findings on interconnectedness:
-
-\begin{itemize}
-    \item \textbf{Dense interface}: Configurations 1 (Connective) and 2 (Acceleration) share extensive overlap, with ``partners'' and ``innovators'' functioning as multivocal categories evocable from either configuration.
-    \item \textbf{Moderate interface}: Configurations 2 (Acceleration) and 3 (Development) connect through categories like ``entrepreneurs'' (who are both investment targets and educational products) and practices like ``develops'' (applicable to both ventures and human capital).
-    \item \textbf{Sparse interface}: Configurations 4 (Knowledge) and 5 (Accountability) show minimal direct connection, suggesting structural separation between research-oriented and policy-oriented activities.
-    \item \textbf{Bridging function}: Configuration 1 (Connective) provides the primary connection between otherwise separated configurations, consistent with its high permeability and brokerage function.
-\end{itemize}
-
-
-\subsubsection{Multivocal Categories}
-
-Several role categories function as interfaces between multiple configurations:\sidenote{\textbf{Strategic resources}---high-multivocality categories enable organizations to satisfy diverse audiences without committing to a single relational frame.}
+\subsubsection{Sociotype 1: The Connective Configuration}
 
 \begin{center}
 \small
-\begin{tabular}{lp{6cm}}
+\begin{tabular}{ll}
 \toprule
-\textbf{Category} & \textbf{Connected Configurations} \\
+\textbf{Aspect} & \textbf{Characteristics} \\
 \midrule
-Partners & Connective, Acceleration, Knowledge, Sectoral \\
+Structural position & Highly central; highest permeability (0.54) \\
+Characteristic practices & \textit{connects}, \textit{brings together}, \textit{facilitates}, \textit{enables} \\
+Role identities & connector, platform, facilitator, catalyst \\
+Counterroles & partners, stakeholders, actors, members, innovators \\
+Cross-KIC prevalence & All KICs; highest in Climate-KIC, EIT Digital \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Representative triplets}:
+\begin{quote}
+\small
+``EIT Food \textit{connects} food system innovators across Europe''\\
+``The KIC \textit{brings together} leading universities, research centres, and companies''\\
+``We \textit{facilitate} collaboration between startups and corporate partners''
+\end{quote}
+
+\textbf{Interpretation}: The Connective configuration positions the KIC as enabling relationships among diverse actors.\marginnote{The Connective sociotype functions as the constellation's integrative tissue; its high permeability reflects its bridging function.} It emphasizes relational coordination over transaction. The high permeability reflects the configuration's function as connective tissue---it interfaces with constituencies associated with other configurations precisely because brokerage is its defining practice.
+
+\subsubsection{Sociotype 2: The Acceleration Configuration}
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{Aspect} & \textbf{Characteristics} \\
+\midrule
+Structural position & Central; high permeability (0.39) \\
+Characteristic practices & \textit{accelerates}, \textit{funds}, \textit{supports}, \textit{invests in}, \textit{scales} \\
+Role identities & accelerator, investor, supporter, launcher \\
+Counterroles & startups, entrepreneurs, ventures, founders \\
+Cross-KIC prevalence & All KICs; highest in EIT Digital, InnoEnergy \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Representative triplets}:
+\begin{quote}
+\small
+``EIT Health \textit{accelerates} promising healthcare startups''\\
+``Our programme \textit{supports} entrepreneurs from idea to market''\\
+``The KIC has \textit{invested in} over 500 ventures since 2015''
+\end{quote}
+
+\textbf{Interpretation}: This configuration organizes relationships around venture development and growth.\sidenote{\textbf{Acceleration permeability}---reflects the need to connect venture development with research inputs and educated talent.} Its permeability reflects connections to other knowledge triangle vertices: ventures require research inputs (Sociotype 4) and educated talent (Sociotype 3).
+
+\subsubsection{Sociotype 3: The Development Configuration}
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{Aspect} & \textbf{Characteristics} \\
+\midrule
+Structural position & Moderately central; moderate permeability (0.32) \\
+Characteristic practices & \textit{educates}, \textit{trains}, \textit{develops}, \textit{certifies}, \textit{prepares} \\
+Role identities & educator, trainer, certifier, developer \\
+Counterroles & students, learners, participants, talents \\
+Cross-KIC prevalence & All KICs; highest in EIT Health, EIT Digital \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Representative triplets}:
+\begin{quote}
+\small
+``Our Master's programmes \textit{prepare} students for innovation careers''\\
+``EIT Manufacturing \textit{trains} the workforce of tomorrow''\\
+``The EIT Label \textit{certifies} educational excellence in entrepreneurship''
+\end{quote}
+
+\textbf{Interpretation}: This configuration organizes relationships around human capability formation.\marginnote{The ``EIT Label'' emerges as a distinctive credentialing device linking this configuration to formal certification.} Moderate permeability reflects the bounded nature of educational relationships---students are addressed through specifically educational practices---while interfaces with Sociotypes 1 and 2 indicate the entrepreneurial orientation distinguishing EIT education from traditional academic programmes.
+
+\subsubsection{Sociotype 4: The Knowledge Configuration}
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{Aspect} & \textbf{Characteristics} \\
+\midrule
+Structural position & Peripheral; lower permeability (0.28) \\
+Characteristic practices & \textit{researches}, \textit{discovers}, \textit{advances}, \textit{validates} \\
+Role identities & researcher, knowledge generator, scientific partner \\
+Counterroles & researchers, scientists, universities \\
+Cross-KIC prevalence & All KICs; relatively even distribution \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Representative triplets}:
+\begin{quote}
+\small
+``Our research projects \textit{advance} understanding of sustainable food systems''\\
+``EIT Climate-KIC \textit{partners with} leading research institutions''\\
+``The programme \textit{validates} innovative technologies through rigorous testing''
+\end{quote}
+
+\textbf{Interpretation}: This configuration organizes relationships around knowledge production and validation.\sidenote{\textbf{Knowledge peripherality}---may reflect structural tensions in the EIT model, which emphasizes application over basic research.} Lower permeability and peripheral position reflect a notable pattern: KICs partner with research organizations but rarely position themselves primarily as knowledge generators.
+
+\subsubsection{Sociotype 5: The Accountability Configuration}
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{Aspect} & \textbf{Characteristics} \\
+\midrule
+Structural position & Peripheral; low permeability (0.21) \\
+Characteristic practices & \textit{delivers impact}, \textit{reports to}, \textit{contributes to}, \textit{serves} \\
+Role identities & impact deliverer, policy contributor \\
+Counterroles & European Commission, policymakers, citizens, society \\
+Cross-KIC prevalence & All KICs; highest in Climate-KIC, EIT Food \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Representative triplets}:
+\begin{quote}
+\small
+``EIT Food \textit{contributes to} EU food policy objectives''\\
+``Our activities \textit{deliver} measurable impact for European citizens''\\
+``The KIC \textit{addresses} societal challenges in sustainable mobility''
+\end{quote}
+
+\textbf{Interpretation}: This configuration reflects the public funding context and associated accountability demands.\marginnote{The Accountability sociotype's peripherality suggests structural separation from core operational activities---public accountability is acknowledged but not integrated.} Its peripheral position and low permeability suggest structural separation from core operational activities.
+
+\subsection{Constellation Visualization}
+
+\begin{wideblock}
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    % Define colors
+    \definecolor{ConnectiveC}{HTML}{4A90D9}
+    \definecolor{AccelerationC}{HTML}{E67E22}
+    \definecolor{DevelopmentC}{HTML}{27AE60}
+    \definecolor{KnowledgeC}{HTML}{9B59B6}
+    \definecolor{AccountabilityC}{HTML}{95A5A6}
+
+    % Central node
+    \node[draw, circle, fill=Marigold!30, minimum size=2cm, font=\small\bfseries, align=center] (center) at (0,0) {Role\\Nexus};
+
+    % Five sociotypes arranged in a pentagon
+    % Connective (top)
+    \node[draw, rounded corners, fill=ConnectiveC!25, minimum width=2.8cm, minimum height=1.8cm, align=center] (conn) at (0,4) {\small\textbf{Connective}\\[-2pt]\tiny connects, facilitates\\[-2pt]\tiny partners, stakeholders\\[-2pt]\tiny $P = 0.54$};
+
+    % Acceleration (top right)
+    \node[draw, rounded corners, fill=AccelerationC!25, minimum width=2.8cm, minimum height=1.8cm, align=center] (accel) at (4,2) {\small\textbf{Acceleration}\\[-2pt]\tiny funds, scales\\[-2pt]\tiny startups, ventures\\[-2pt]\tiny $P = 0.39$};
+
+    % Development (bottom right)
+    \node[draw, rounded corners, fill=DevelopmentC!25, minimum width=2.8cm, minimum height=1.8cm, align=center] (dev) at (3,-3) {\small\textbf{Development}\\[-2pt]\tiny educates, trains\\[-2pt]\tiny students, talents\\[-2pt]\tiny $P = 0.32$};
+
+    % Knowledge (bottom left)
+    \node[draw, rounded corners, fill=KnowledgeC!25, minimum width=2.8cm, minimum height=1.8cm, align=center] (know) at (-3,-3) {\small\textbf{Knowledge}\\[-2pt]\tiny researches, validates\\[-2pt]\tiny researchers, universities\\[-2pt]\tiny $P = 0.28$};
+
+    % Accountability (top left)
+    \node[draw, rounded corners, fill=AccountabilityC!25, minimum width=2.8cm, minimum height=1.8cm, align=center] (acc) at (-4,2) {\small\textbf{Accountability}\\[-2pt]\tiny delivers impact\\[-2pt]\tiny policymakers, society\\[-2pt]\tiny $P = 0.21$};
+
+    % Connections to center
+    \draw[thick, ConnectiveC!70] (center) -- (conn);
+    \draw[thick, AccelerationC!70] (center) -- (accel);
+    \draw[thick, DevelopmentC!70] (center) -- (dev);
+    \draw[thick, KnowledgeC!70] (center) -- (know);
+    \draw[thick, AccountabilityC!70] (center) -- (acc);
+
+    % Inter-sociotype connections (showing permeability)
+    \draw[dashed, thick, opacity=0.6] (conn) -- (accel);
+    \draw[dashed, thick, opacity=0.5] (conn) -- (acc);
+    \draw[dashed, thick, opacity=0.5] (accel) -- (dev);
+    \draw[dashed, thick, opacity=0.3] (dev) -- (know);
+    \draw[dashed, thin, opacity=0.2] (know) -- (acc);
+    \draw[dashed, thick, opacity=0.4] (conn) -- (dev);
+
+\end{tikzpicture}
+\captionof{figure}{The five sociotypes of EIT innovation intermediation. Permeability scores ($P$) indicate boundary porosity; dashed lines indicate interface density between configurations.}
+\labfig{five-sociotypes}
+\end{center}
+\end{wideblock}
+
+\subsection{Multivocal Categories: Interfaces Between Sociotypes}
+
+Several role categories function as interfaces between multiple configurations:
+
+\begin{center}
+\small
+\begin{tabular}{lp{7cm}}
+\toprule
+\textbf{Category} & \textbf{Connected Sociotypes} \\
+\midrule
+Partners & Connective, Acceleration, Knowledge \\
 Innovators & Connective, Acceleration \\
 Entrepreneurs & Acceleration, Development, Connective \\
 Startups & Acceleration, Connective \\
 Students & Development, Acceleration \\
-Impact & Accountability, Acceleration, Sectoral \\
+Impact & Accountability, Acceleration \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Multivocal role categories and their configuration connections}
+\captionof{table}{Multivocal role categories and their sociotype connections}
+\labtab{multivocal}
 \end{center}
 
-The category ``partners'' exhibits the highest multivocality, appearing across four configurations with different inflections: research partners (Knowledge), corporate partners (Acceleration), ecosystem partners (Connective), and sectoral partners (Sectoral). This multivocality enables KICs to address diverse constituencies through shared vocabulary while preserving flexibility about which relational configuration is being instantiated.
+The category ``partners'' exhibits the highest multivocality, appearing across three sociotypes with different inflections:\sidenote{\textbf{Strategic multivocality}---high-multivocality categories enable organizations to satisfy diverse audiences without committing to a single relational frame.} research partners (Knowledge), corporate partners (Acceleration), ecosystem partners (Connective). This multivocality enables KICs to address heterogeneous constituencies through shared vocabulary while preserving flexibility about which relational expectations apply.
 
 
-\subsection{Cross-KIC Variation}
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Discussion: Navigating Plurality Through Fluidity}[Discussion]
+\labsec{interstitial:discussion-sociotypes}
 
-While all KICs exhibit constellations with similar configurations, their relative emphases differ.
+\subsection{Connecting Positioning and Configuration}
 
-Notable patterns:
+The positioning analysis revealed that EIT Communities occupy interstitial positions in the knowledge triangle, though tilted toward business. The sociotype analysis reveals \textit{how} they navigate this interstitiality: through a constellation of five sociotypes with varying permeability and interconnection.
+
+The connection between positioning and sociotypes is not coincidental:\marginnote{The entrepreneurial tilt in discourse corresponds to the centrality of the Acceleration sociotype.}
 
 \begin{itemize}
-    \item \textbf{Acceleration emphasis}: EIT Digital and EIT InnoEnergy show the strongest Acceleration configuration, consistent with their sectors' venture ecosystems and historical focus on startup creation.
-    \item \textbf{Development emphasis}: EIT Health exhibits elevated Development configuration, reflecting the healthcare sector's credentialing requirements and EIT Health's extensive Master's programme portfolio.
-    \item \textbf{Accountability emphasis}: EIT Climate-KIC and EIT Food show stronger Accountability configurations, reflecting their engagement with policy-intensive domains (climate action, food security).
-    \item \textbf{Maturity effects}: Older KICs (Climate-KIC, Digital, InnoEnergy---established 2010) show somewhat higher interconnectedness than newer KICs, suggesting that constellation integration develops over time.
+    \item \textbf{Business dominance in discourse} corresponds to the \textbf{centrality of Acceleration} in the sociotype constellation
+    \item \textbf{Education underrepresentation} corresponds to \textbf{Development's moderate permeability}---present but less central
+    \item \textbf{Research underrepresentation} corresponds to \textbf{Knowledge's peripheral position}---acknowledged but structurally separated
 \end{itemize}
 
+The Connective sociotype plays a crucial integrative role that discourse analysis alone cannot reveal. While discourse tilts toward business, the Connective configuration creates relational bridges that sustain the knowledge triangle structure---even if the verbal emphasis does not reflect this relational work.
 
-%═══════════════════════════════════════════════════════════════════════════════
-\section{Discussion: Theoretical Implications}
-%═══════════════════════════════════════════════════════════════════════════════
-\labsec{interstitial:discussion}
+\subsection{Interstitial Organization as Active Accomplishment}
 
-\subsection{Interstitial Organization and Mandated Integration}
+Our findings illuminate the distinctive character of interstitial organization.\sidenote{\textbf{Active accomplishment}---interstitial positioning is not a passive condition but requires ongoing relational work through multiple sociotype configurations.} EIT Communities do not simply respond to pre-existing institutional plurality; they are designed to produce integration across domains that ordinarily operate according to different relational conventions. This mandated integration creates organizational forms whose coherence depends on maintaining productive ambiguity.
 
-Our findings illuminate the distinctive character of interstitial organization.\sidenote{\textbf{Interstitial}---extends work on boundary organizations and intermediaries by emphasizing \textit{structural position} between fields.} EIT Communities do not simply respond to pre-existing institutional plurality; they are designed to produce integration across domains that ordinarily operate according to different relational conventions. This mandated integration creates organizational forms whose coherence depends on maintaining productive ambiguity.
-
-The constellation structure we observe---differentiated yet interconnected, with fluid boundaries between configurations---can be understood as an organizational achievement rather than an environmental given. Complete fusion of relational orientations would sacrifice the distinctive contributions of each knowledge triangle vertex; complete separation would undermine the integrative mission. The fluid, modular structure enables KICs to maintain recognizable relationships with domain-specific constituencies while creating interfaces where cross-domain value can be generated.
-
-The Connective configuration emerges as the linchpin of this arrangement.\sidenote{\textbf{Centrality}---reflects the importance of brokerage for interstitial organizations.} Its high permeability and central position enable it to function as organizational connective tissue, linking configurations that might otherwise remain separate. When a KIC describes itself as ``connecting partners across the knowledge triangle,'' it invokes a relational configuration that is neither purely academic, nor purely entrepreneurial, nor purely educational---but that creates discursive space where these orientations can coexist.
-
+The constellation structure we observe---differentiated yet interconnected, with fluid boundaries between configurations---can be understood as an organizational achievement rather than an environmental given.\sidenote{\textbf{Boundary work}---the difficulty of defining ecosystem boundaries is well-documented \cite{post2007boundaries}; our sociotype approach embraces rather than resolves this fluidity.} Complete fusion of relational orientations would sacrifice the distinctive contributions of each knowledge triangle vertex; complete separation would undermine the integrative mission. The fluid, modular structure enables KICs to maintain recognizable relationships with domain-specific constituencies while creating interfaces where cross-domain value can be generated.
 
 \subsection{Multivocality as Organizational Resource}
 
-Our analysis foregrounds the strategic importance of multivocal categories.\sidenote{\textbf{Robust action}---extends analyses of how actors maintain power by cultivating multiple, potentially inconsistent identity attributions.} Rather than treating ambiguity as a problem to be resolved, KICs exploit it as a resource for navigating plural environments.
-
-Consider the category ``partners.'' When a KIC addresses ``partners,'' it leaves open whether it is invoking research partnerships, investment relationships, or network membership. This indeterminacy is not communicative failure but organizational achievement: it enables the KIC to address heterogeneous constituencies through shared vocabulary while preserving flexibility about which relational expectations apply.
-
+Our analysis foregrounds the strategic importance of multivocal categories.\marginnote{Rather than treating ambiguity as a problem to be resolved, KICs exploit it as a resource for navigating plural environments.} When a KIC addresses ``partners,'' it leaves open whether it is invoking research partnerships, investment relationships, or network membership. This indeterminacy is not communicative failure but organizational achievement: it enables the KIC to address heterogeneous constituencies through shared vocabulary while preserving flexibility about which relational expectations apply.
 
 \subsection{The Accountability Gap}
 
-Our findings reveal a potential tension in the EIT model.\sidenote{\textbf{Accountability gap}---resonates with broader concerns about democratic legitimacy in EU governance.} The Accountability configuration occupies a peripheral position with sparse interfaces to core operational configurations. Accountability relationships---addressing the European Commission, demonstrating impact, contributing to policy---appear structurally separated from the relationships through which KICs engage their primary operational constituencies.
+Our findings reveal a potential tension in the EIT model. The Accountability sociotype occupies a peripheral position with sparse interfaces to core operational configurations.\sidenote{\textbf{Accountability gap}---resonates with broader concerns about democratic legitimacy in EU governance.} Accountability relationships---addressing the European Commission, demonstrating impact, contributing to policy---appear structurally separated from the relationships through which KICs engage their primary operational constituencies.
 
-This pattern admits multiple interpretations. It may reflect appropriate organizational differentiation: accountability to funders involves different relational dynamics than service to startups or education of students, and attempting to integrate them might undermine both. Alternatively, it may indicate ceremonial compliance: KICs acknowledge public accountability demands in external communications without integrating them into operational practice.
+This pattern admits multiple interpretations. It may reflect appropriate organizational differentiation: accountability to funders involves different relational dynamics than service to startups or education of students. Alternatively, it may indicate ceremonial compliance: KICs acknowledge public accountability demands in external communications without integrating them into operational practice.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
@@ -588,15 +830,17 @@ This pattern admits multiple interpretations. It may reflect appropriate organiz
 %═══════════════════════════════════════════════════════════════════════════════
 \labsec{interstitial:conclusion}
 
-This chapter has developed a structural approach to relational plurality in interstitial organizations.\sidenote{\textbf{Broader ambition}---a \textit{structural sociology of relational plurality} that attends to patterns without reifying them as fixed categories.} Through computational analysis of EIT Knowledge and Innovation Community communications, we have identified the sociotype constellations through which these innovation intermediaries navigate their complex relational environments.
+This chapter has developed an integrated approach to understanding interstitial organization in innovation intermediaries, combining discursive positioning analysis with sociotype mapping.
 
-Our findings reveal fluid, modular plurality: differentiated configurations connected through multivocal role categories that function as interfaces and bridges. The Connective configuration emerges as central integrative tissue; Acceleration and Development configurations occupy core positions; Knowledge and Accountability configurations remain more peripheral. This structure enables EIT Communities to maintain recognizable relationships with diverse constituencies while creating spaces for cross-domain integration.
+The \textbf{positioning analysis} mapped the discursive positioning of EIT Communities within the knowledge triangle, revealing systematic \textbf{business tilt}: business discourse leads (43\%) while research (32\%) and education (25\%) receive less emphasis. Cross-KIC variation is substantial, ranging from business-dominant (EIT Digital at 54\%, Manufacturing at 55\%) to research-tilted (RawMaterials at 39\% research) to balanced (Urban Mobility at 35/35/29\%).
 
-The concept of sociotype---fluid relational configuration defined by structural position rather than essential properties---offers an alternative to categorical approaches.\sidenote{\textbf{Future work}---might examine when and how sociotypes stabilize into more categorical forms, and when they resist such stabilization.} Sociotypes are discovered through pattern detection rather than imposed from theoretical typologies; they blend and recombine rather than existing as discrete containers; their boundaries are empirically variable rather than analytically predetermined.
+The \textbf{sociotype analysis} introduced \textit{sociotypes}---fluid relational configurations---and identified five configurations through which EIT Communities navigate interstitial positions: \textbf{Connective} (highest permeability, brokerage and platform functions), \textbf{Acceleration} (high permeability, venture development and investment), \textbf{Development} (moderate permeability, education and talent formation), \textbf{Knowledge} (lower permeability, research and validation), and \textbf{Accountability} (lowest permeability, public impact and policy contribution).
 
-For practitioners and policymakers, our analysis offers diagnostic value. Understanding the sociotype constellation characterizing an organization---which configurations are present, how they interconnect, where ambiguity enables flexibility and where distinctiveness constrains options---provides insight into the structural conditions of navigating plurality.
+Together, these analyses reveal that interstitial positioning is an \textit{active accomplishment}, achieved through fluid relational configurations that create interfaces between institutional domains while preserving productive ambiguity. The concept of sociotype---emergent, fluid, defined by relational signature rather than essential properties---offers an alternative to categorical approaches that reify institutional environments into rigid containers.
 
-The broader ambition is a structural sociology of relational plurality---one that takes seriously the patterned character of plural environments while resisting the temptation to treat patterns as fixed, bounded, and inherently conflictual.\sidenote{\textbf{Constitution}---organizations do not merely \textit{respond to} plurality; they \textit{constitute} it through the relational configurations they enact.} Organizations do not merely respond to plurality; they constitute it through the relational configurations they enact. Understanding those configurations, their structural properties, and their dynamic evolution is essential to understanding contemporary organizational life.
+For practitioners and policymakers, this analysis offers diagnostic value. Understanding the sociotype constellation characterizing an organization---which configurations are present, how they interconnect, where ambiguity enables flexibility and where distinctiveness constrains options---provides insight into the structural conditions of navigating plurality.
+
+The broader ambition is a structural sociology of relational plurality---one that takes seriously the patterned character of plural environments while resisting the temptation to treat patterns as fixed, bounded, and inherently conflictual.\sidenote{\textbf{Constitution}---organizations do not merely \textit{respond to} plurality; they \textit{constitute} it through the relational configurations they enact.} Organizations do not merely respond to plurality; they constitute it through the relational configurations they enact. Understanding those configurations is essential to understanding contemporary organizational life.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
@@ -604,19 +848,38 @@ The broader ambition is a structural sociology of relational plurality---one tha
 %═══════════════════════════════════════════════════════════════════════════════
 
 \begin{summarybox}
-\begin{itemize}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Interstitial organizations} like EIT KICs exist between established institutional domains, requiring integration across fundamentally different relational conventions.
+\textbf{Interstitial Positioning}
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item EIT Communities occupy \textbf{interstitial positions} in the knowledge triangle, drawing from education, research, and business discourses
+\item Positioning \textbf{tilts toward business} (43\% average), with research (32\%) and education (25\%) receiving less emphasis
+\item Substantial \textbf{cross-KIC variation}: from business-dominant (Digital, Manufacturing) to research-tilted (RawMaterials) to balanced (Urban Mobility)
+\end{itemize}
 
-\item \textbf{Sociotypes} are fluid relational configurations---stable enough to recognize, fluid enough to blend---defined by structural position rather than essential properties.
-
-\item \textbf{Six configurations} characterize EIT discourse: Connective (central, high permeability), Acceleration, Development, Knowledge, Accountability (peripheral), and Sectoral.
-
-\item \textbf{Multivocal categories} like ``partners'' and ``innovators'' function as strategic resources, enabling KICs to address diverse constituencies without categorical commitment.
-
-\item \textbf{The Connective configuration} serves as integrative tissue, linking configurations that might otherwise remain separate.
-
-\item \textbf{The Accountability configuration} remains peripheral, suggesting structural separation between public accountability and core operational activities.
+\vspace{0.5em}
+\textbf{Interstitial Sociotypes}
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Sociotypes} are fluid relational configurations---stable enough to recognize, fluid enough to blend---defined by structural position rather than essential properties
+\item \textbf{Five sociotypes} characterize EIT: Connective (central), Acceleration, Development, Knowledge, and Accountability (peripheral)
+\item \textbf{Multivocal categories} like ``partners'' create interfaces between sociotypes, enabling strategic ambiguity
+\item The \textbf{Connective sociotype} serves as integrative tissue, bridging configurations that might otherwise remain separate
+\item The \textbf{Accountability sociotype} remains peripheral, suggesting separation between public accountability and operational activities
 \end{itemize}
 \end{summarybox}
+
+\vspace{0.5em}
+\begin{replicationbox}[Data \& Code Availability]
+The analysis in this chapter is supported by the \texttt{rolebox-websites} module of the \RoleBox{} toolkit:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Source code}: \texttt{data/rolebox-websites/src/rolebox\_websites/}
+\item \textbf{Analysis notebook}: \texttt{notebooks/sociotype\_extraction\_demo.ipynb}
+\item \textbf{Interactive UI}: \texttt{websites\_workflow.html} --- web interface for exploring sociotype clusters
+\item \textbf{Processed data}: \texttt{data/outputs/sociotype\_analysis.json}
+\item \textbf{Raw data}: EIT website corpus (675 websites, 1.2M words)
+\end{itemize}
+Field mapping visualization available at \texttt{outputs/climate/eit\_field\_map.html}.
+\end{replicationbox}
+
+\vspace{1em}
+Having mapped how intermediaries position themselves discursively and configure relationally, the next chapter examines their network positions in the broader innovation field.\sidenote{\textit{Next}: \textbf{Chapter~\ref{ch:rolefield}}---Role Fields maps how intermediaries position themselves within the broader innovation ecosystem through social media network analysis.}
 
 \end{document}

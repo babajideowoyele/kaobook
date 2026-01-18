@@ -21,19 +21,13 @@
 \DeclareBoolOption{addspace}% If true, automatically add a space before printing the citation marker
 \DeclareBoolOption{linkeverything}% If true, the author name is a hyperlink in citation styles that support it
 
-% Choose the default options, which will be overwritten by the options 
+% Choose the default options, which will be overwritten by the options
 % passed to this package.
 \PassOptionsToPackage{
-	%style=numeric-comp,
-	%citestyle=authortitle-icomp,
-	citestyle=numeric-comp,
-	%bibstyle=authoryear,
-	bibstyle=numeric,
-	sorting=none,
-	%sorting=nyt,
-	%sortcites=true,
-	%autocite=footnote,
-	backend=biber, % Compile the bibliography with biber
+	style=apa,           % APA style for both citations and bibliography
+	sorting=nyt,         % Sort by name, year, title (standard for author-year)
+	sortcites=true,      % Sort multiple citations in same \cite
+	backend=biber,       % Compile the bibliography with biber
 	hyperref=true,
 	backref=true,
 	citecounter=true,
@@ -41,7 +35,11 @@
 	citetracker=true,
 	ibidtracker=context,
 	autopunct=true,
-	autocite=plain,
+	autocite=inline,     % \autocite produces inline author-year
+	uniquename=false,    % Don't disambiguate common surnames
+	uniquelist=false,    % Don't expand author lists for disambiguation
+	maxcitenames=2,      % Show max 2 authors before "et al." in citations
+	maxbibnames=99,      % Show all authors in bibliography
 }{biblatex}
 
 % Pass the unknown options to biblatex, overwriting the previous settings. Avoid passing the kao-specific options.

@@ -5,6 +5,70 @@
 % Custom colors, environments, and icons for the
 % "Multimodal Cartography of Role Constellations" dissertation
 %
+% OVERVIEW
+% --------
+% This package provides dissertation-specific styling:
+%   - RoleBox color palette (neutrals, brand, semantic, accents)
+%   - FontAwesome5 icon shortcuts for data modalities
+%   - tcolorbox environments for insights, methods, caveats, etc.
+%   - Research question boxes (mainrq, subrq)
+%   - Intermezzo support (unnumbered transitional sections)
+%   - Table styling commands
+%   - Custom chapter style
+%   - Chapter divider images
+%   - Citation placeholder (\needcite)
+%
+% USAGE
+% -----
+%   \usepackage{kaoci-rolebox}
+%
+% ENVIRONMENTS
+% ------------
+%   roleconceptbox  - Purple left border, for role concepts
+%   insightbox      - Gold left border, for key findings (optional title)
+%   methodbox       - Cyan left border, for methodology notes
+%   databox         - Green left border, for data descriptions
+%   caveatbox       - Coral left border, for warnings
+%   criticalbox     - Coral with title, for important warnings
+%   importantbox    - Purple outline, for key takeaways
+%   chapteroverview - Green left border, italic, for chapter intros
+%   summarybox      - Green shaded, for chapter summaries
+%   propositionbox  - Purple outline, for theoretical propositions
+%   pandaquote      - Styled quote block
+%   mainrq          - Main research question (prominent)
+%   subrq           - Sub research question (subtle)
+%   roledef         - Definition box with optional title
+%
+% ICON COMMANDS
+% -------------
+%   Status:    \iconok, \iconwarn, \iconerr, \iconinfo, \iconidea, \iconnote
+%   Modality:  \iconweb, \iconnews, \iconsocial, \iconvisual, \iconinvest, \iconbiblio, \iconwiki
+%   Actors:    \iconorg, \iconnetwork, \icongov
+%   Technical: \icongithub, \iconcode, \icondata, \iconui, \iconapi, \icontool
+%   Method:    \iconnatural, \iconinterpret, \icondesign, \iconeval, \iconcomm
+%   Navigation:\iconnext, \iconprev, \iconlink, \iconexternal
+%
+% COLORS
+% ------
+%   Neutrals: RBblack, RBcharcoal, RBcream
+%   Brand:    RBdark, RBgold
+%   Semantic: RBdata (blue), RBnature (green), RBwarn (gold), RBerror (coral)
+%   Accents:  RBpurple, RBcyan, RBgreen, RBpink, RBteal
+%
+% OTHER COMMANDS
+% --------------
+%   \intermezzo{title}    - Start intermezzo section
+%   \closeintermezzo      - End intermezzo, restore numbering
+%   \chapterdivider{name} - Full-page image divider
+%   \needcite{desc}       - Placeholder for missing citation
+%   \role{text}           - Format role category
+%   \actor{text}          - Format actor name
+%   \concept{text}        - Format concept
+%
+% DEPENDENCIES
+% ------------
+%   xcolor, tikz, tcolorbox, fontawesome5, changepage
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
@@ -15,6 +79,7 @@
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins,breakable}
 \RequirePackage{changepage}  % For adjustwidth environment
+\RequirePackage{fontawesome5}  % Load early for icon commands in chapters
 
 %========================================================================================
 % ROLEBOX COLOR PALETTE (Streamlined)
@@ -66,23 +131,104 @@
 \definecolor{Slate}{HTML}{708090}          % Slate gray for secondary elements
 \colorlet{darkgray}{RBcharcoal}
 
+% Colors for Chapter 5 (Interstitial Pluralism) diagrams
+\definecolor{DarkBlue}{HTML}{1565C0}       % For knowledge triangle labels
+\definecolor{AccentRed}{HTML}{C62828}      % For highlight points
+\definecolor{ForestGreen}{HTML}{2E7D32}    % For research/nature elements
+
 %========================================================================================
 % ICON SHORTCUTS (requires fontawesome5)
 %========================================================================================
+%
+% Design principles:
+% 1. Icons appear in sidenotes/margins, not body text
+% 2. Same icon = same semantic meaning throughout
+% 3. Grayscale-compatible (shape > color for meaning)
+% 4. Sparse usage - one icon per sidenote maximum
+%
+%========================================================================================
+% fontawesome5 already loaded above
 
-\RequirePackage{fontawesome5}
+%----------------------------------------------------------------------------------------
+% ICON SCALING (adjust size relative to text)
+%----------------------------------------------------------------------------------------
+% Scale factor for icons (1.0 = normal, 1.2 = 20% larger)
+\newcommand{\iconscale}{1.15}
+\newcommand{\faicon}[1]{{\fontsize{\iconscale em}{\iconscale em}\selectfont#1}}
 
-% Status icons
-\newcommand{\iconok}{\textcolor{AccentGreen}{\faCheckCircle}}
-\newcommand{\iconwarn}{\textcolor{Marigold}{\faExclamationTriangle}}
-\newcommand{\iconerr}{\textcolor{AccentCoral}{\faTimesCircle}}
-\newcommand{\iconinfo}{\textcolor{Azure}{\faInfoCircle}}
+%----------------------------------------------------------------------------------------
+% STATUS ICONS (colored, for callouts)
+%----------------------------------------------------------------------------------------
+\newcommand{\iconok}{\textcolor{AccentGreen}{\faicon{\faCheckCircle}}}
+\newcommand{\iconwarn}{\textcolor{Marigold}{\faicon{\faExclamationTriangle}}}
+\newcommand{\iconerr}{\textcolor{AccentCoral}{\faicon{\faTimesCircle}}}
+\newcommand{\iconinfo}{\textcolor{Azure}{\faicon{\faInfoCircle}}}
+\newcommand{\iconidea}{\textcolor{Marigold}{\faicon{\faLightbulb}}}
+\newcommand{\iconnote}{\textcolor{PandaCharcoal!70}{\faicon{\faStickyNote}}}
 
-% Category-colored icons
-\newcommand{\icondata}[1]{\textcolor{Azure}{#1}}
-\newcommand{\iconprocess}[1]{\textcolor{PandaForest}{#1}}
-\newcommand{\iconintegrate}[1]{\textcolor{CoverGold}{#1}}
-\newcommand{\iconrole}[1]{\textcolor{AccentPurple}{#1}}
+%----------------------------------------------------------------------------------------
+% DATA MODALITY ICONS (for chapter/data references)
+%----------------------------------------------------------------------------------------
+% Each modality gets a consistent icon throughout the dissertation
+\newcommand{\iconweb}{\faicon{\faGlobe}}           % Websites / web data
+\newcommand{\iconnews}{\faicon{\faNewspaper}}      % News media
+\newcommand{\iconsocial}{\faicon{\faTwitter}}      % Social media (Twitter/X)
+\newcommand{\iconvisual}{\faicon{\faImage}}        % Visual materials / images
+\newcommand{\iconinvest}{\faicon{\faChartLine}}    % Investment / Crunchbase
+\newcommand{\iconbiblio}{\faicon{\faBook}}         % Bibliometric / scientific lit
+\newcommand{\iconwiki}{\faicon{\faWikipediaW}}     % Wikipedia / Wikidata
+
+%----------------------------------------------------------------------------------------
+% ACTOR/NETWORK ICONS (for role constellation analysis)
+%----------------------------------------------------------------------------------------
+\newcommand{\iconorg}{\faicon{\faBuilding}}        % Organization / actor
+\newcommand{\iconnetwork}{\faicon{\faProjectDiagram}} % Network / connections
+\newcommand{\icongov}{\faicon{\faLandmark}}        % Governance / policy
+
+%----------------------------------------------------------------------------------------
+% TECHNICAL/CODE ICONS (for repositories and tools)
+%----------------------------------------------------------------------------------------
+\newcommand{\icongithub}{\faicon{\faGithub}}       % GitHub repositories
+\newcommand{\iconcode}{\faicon{\faCode}}           % Code / source
+\newcommand{\icondata}{\faicon{\faDatabase}}       % Data / datasets
+\newcommand{\iconui}{\faicon{\faDesktop}}          % User interface / UI mock
+\newcommand{\iconapi}{\faicon{\faPlug}}            % API / integration
+\newcommand{\faJupyter}{\faicon{\faBook}}          % Jupyter notebook (using book as fallback)
+\newcommand{\icontool}{\faicon{\faWrench}}         % Tool / utility
+
+%----------------------------------------------------------------------------------------
+% METHODOLOGY ICONS (for DSR phases and science types)
+%----------------------------------------------------------------------------------------
+\newcommand{\iconnatural}{\faicon{\faFlask}}       % Natural science
+\newcommand{\iconinterpret}{\faicon{\faSearch}}    % Interpretive science
+\newcommand{\icondesign}{\faicon{\faWrench}}       % Design science
+\newcommand{\iconeval}{\faicon{\faBalanceScale}}   % Evaluation
+\newcommand{\iconcomm}{\faicon{\faShareAlt}}       % Communication / sharing
+
+%----------------------------------------------------------------------------------------
+% NAVIGATION ICONS (for cross-references)
+%----------------------------------------------------------------------------------------
+\newcommand{\iconnext}{\faicon{\faArrowRight}}     % Next chapter
+\newcommand{\iconprev}{\faicon{\faArrowLeft}}      % Previous chapter
+\newcommand{\iconlink}{\faicon{\faLink}}           % Internal link
+\newcommand{\iconexternal}{\faicon{\faExternalLinkAlt}} % External link
+
+%----------------------------------------------------------------------------------------
+% CATEGORY-COLORED WRAPPERS (apply color to any icon)
+%----------------------------------------------------------------------------------------
+\newcommand{\iconcollect}[1]{\textcolor{Azure}{#1}}       % Collection layer
+\newcommand{\iconprocess}[1]{\textcolor{PandaForest}{#1}} % Processing layer
+\newcommand{\iconintegrate}[1]{\textcolor{CoverGold}{#1}} % Integration layer
+\newcommand{\iconrole}[1]{\textcolor{AccentPurple}{#1}}   % Role-related
+
+%----------------------------------------------------------------------------------------
+% CONVENIENCE COMMANDS (icon + label for sidenotes)
+%----------------------------------------------------------------------------------------
+% Usage: \sidedata{path/to/data/} -> produces icon + formatted path
+\newcommand{\sidedata}[1]{\icondata\ \texttt{#1}}
+\newcommand{\sidecode}[1]{\iconcode\ \texttt{#1}}
+\newcommand{\sidegithub}[1]{\icongithub\ \texttt{#1}}
+\newcommand{\sideui}[1]{\iconui\ \texttt{#1}}
 
 %========================================================================================
 % CUSTOM TCOLORBOX ENVIRONMENTS
@@ -100,6 +246,7 @@
     colback=PandaCream,
     colbacktitle=AccentPurple,
     coltitle=white,
+    coltext=black,
     fonttitle=\bfseries\sffamily,
     sharp corners,
     left=8pt,
@@ -119,6 +266,7 @@
     frame hidden,
     borderline west={3pt}{0pt}{CoverGold},
     colback=PandaIvory,
+    coltext=black,
     fonttitle=\bfseries\sffamily,
     coltitle=CoverGold!80!black,
     attach title to upper={\par\smallskip},
@@ -140,6 +288,7 @@
     frame hidden,
     borderline west={3pt}{0pt}{AccentCyan},
     colback=white,
+    coltext=black,
     fonttitle=\bfseries\sffamily,
     sharp corners,
     left=8pt,
@@ -159,6 +308,7 @@
     frame hidden,
     borderline west={3pt}{0pt}{PandaForest},
     colback=PandaCream,
+    coltext=black,
     fonttitle=\bfseries\sffamily,
     sharp corners,
     left=8pt,
@@ -166,6 +316,30 @@
     top=6pt,
     bottom=6pt,
     #1
+}
+
+% Replication box - for data/code availability sections
+\newtcolorbox{replicationbox}[1][]{%
+    breakable,
+    enhanced,
+    before skip=1.5\topskip,
+    after skip=1.5\topskip,
+    boxrule=0.5pt,
+    frame hidden,
+    borderline west={3pt}{0pt}{AccentCyan},
+    colback=RBcream,
+    colframe=AccentCyan!30,
+    coltext=black,
+    fonttitle=\bfseries\sffamily\small,
+    coltitle=AccentCyan!80!black,
+    attach boxed title to top left={yshift=-2mm, xshift=5mm},
+    boxed title style={colback=white, colframe=white},
+    sharp corners,
+    left=8pt,
+    right=8pt,
+    top=6pt,
+    bottom=6pt,
+    title={\faIcon{code}~#1},
 }
 
 % Warning/Caveat box
@@ -178,6 +352,7 @@
     frame hidden,
     borderline west={3pt}{0pt}{AccentCoral},
     colback=PandaBlush!30,
+    coltext=black,
     fonttitle=\bfseries\sffamily,
     sharp corners,
     left=8pt,
@@ -197,8 +372,9 @@
     frame hidden,
     borderline west={3pt}{0pt}{AccentCoral},
     colback=AccentCoral!10,
-    colbacktitle=AccentCoral,
-    coltitle=white,
+    colbacktitle=AccentCoral!10,
+    coltitle=black,
+    coltext=black,
     fonttitle=\bfseries\sffamily,
     attach title to upper={\par\smallskip},
     sharp corners,
@@ -218,6 +394,7 @@
     boxrule=1pt,
     colframe=AccentPurple!50,
     colback=AccentPurple!5,
+    coltext=black,
     sharp corners,
     left=8pt,
     right=8pt,
@@ -235,6 +412,7 @@
     frame hidden,
     borderline west={4pt}{0pt}{PandaBamboo},
     colback=PandaCream,
+    coltext=black,
     sharp corners,
     left=12pt,
     right=12pt,
@@ -253,6 +431,7 @@
     frame hidden,
     borderline west={3pt}{0pt}{PandaBamboo},
     colback=PandaBamboo!10,
+    coltext=black,
     sharp corners,
     left=8pt,
     right=8pt,
@@ -269,6 +448,7 @@
     boxrule=1pt,
     colframe=AccentPurple!40,
     colback=AccentPurple!5,
+    coltext=black,
     sharp corners,
     left=8pt,
     right=8pt,
@@ -281,6 +461,7 @@
     enhanced,
     breakable,
     colback=PandaCream,
+    coltext=black,
     frame hidden,
     borderline west={1.5pt}{0pt}{PandaCharcoal},
     left=15pt,
@@ -305,6 +486,7 @@
     boxrule=2pt,
     colframe=AccentPurple,
     colback=AccentPurple!8,
+    coltext=black,
     sharp corners,
     left=12pt,
     right=12pt,
@@ -323,6 +505,7 @@
     frame hidden,
     borderline west={2pt}{0pt}{AccentPurple!60},
     colback=AccentPurple!5,
+    coltext=black,
     sharp corners,
     left=10pt,
     right=10pt,
@@ -345,6 +528,7 @@
     frame hidden,
     borderline west={3pt}{0pt}{Azure},
     colback=Azure!8,
+    coltext=black,
     fonttitle=\bfseries\sffamily,
     coltitle=Azure,
     attach title to upper={\par\smallskip},
@@ -374,12 +558,17 @@
 %   - Don't count toward main page numbering
 %   - Have their own running headers (not the previous chapter's)
 %   - Use symbol marks for sidenotes (*, †, ‡, etc.) instead of numbers
+\newcounter{savedtocdepth}
 \newcommand{\intermezzo}[1]{%
     \cleardoublepage
     % Save current page number and switch to roman numerals for intermezzo
     \setcounter{savedpage}{\value{page}}%
     \pagenumbering{roman}%
     \setcounter{page}{1}%
+    %
+    % Save TOC depth and set to -1 to suppress all section entries in TOC
+    \setcounter{savedtocdepth}{\value{tocdepth}}%
+    \setcounter{tocdepth}{-1}%
     %
     % Switch sidenotes to use symbols instead of numbers
     \setcounter{savedsidenote}{\value{sidenote}}%
@@ -399,15 +588,18 @@
         {\color{AccentPurple}\rule{2cm}{2pt}}
     \end{center}
     \vspace{1.5cm}
-    % Add to TOC as a special entry (indented, italic, smaller)
+    % Add to TOC as a special entry (indented, italic, at chapter level but unnumbered)
     \addtocontents{toc}{\protect\vspace{0.3em}}%
-    \addtocontents{toc}{\protect\contentsline{section}{\protect\textit{Intermezzo: #1}}{\thepage}{}}%
+    \addtocontents{toc}{\protect\contentsline{chapter}{\protect\numberline{}\protect\textit{Intermezzo: #1}}{\thepage}{}}%
     \addtocontents{toc}{\protect\vspace{0.3em}}%
 }
 
 % Command to end intermezzo and restore page numbering
 \newcommand{\closeintermezzo}{%
     \cleardoublepage
+    % Restore TOC depth
+    \setcounter{tocdepth}{\value{savedtocdepth}}%
+    %
     % Restore arabic sidenote numbering
     \renewcommand{\thesidenote}{\arabic{sidenote}}%
     \setcounter{sidenote}{\value{savedsidenote}}%
@@ -445,9 +637,10 @@
 }
 
 % Table header styling - consistent black & white
-\newcommand{\tablehead}[1]{\textbf{#1}}
-\newcommand{\minimalhead}[1]{\textbf{#1}}
-\newcommand{\stripedhead}[1]{\textbf{#1}}
+% Use \providecommand to avoid conflict with supertabular package
+\providecommand{\tablehead}[1]{\textbf{#1}}
+\providecommand{\minimalhead}[1]{\textbf{#1}}
+\providecommand{\stripedhead}[1]{\textbf{#1}}
 
 %========================================================================================
 % CHAPTER STYLE FOR ROLEBOX
@@ -520,17 +713,44 @@
 % Full-page divider image before chapters
 % Usage: \chapterdivider{ch1-introduction} (without extension)
 % Images should be in dividers/images/ folder as PNG files
+% Set size with \chapterdividerwidth (default: full page width including margin)
+\newlength{\chapterdividerwidth}
+\setlength{\chapterdividerwidth}{\textwidth}
+\addtolength{\chapterdividerwidth}{\marginparsep}
+\addtolength{\chapterdividerwidth}{\marginparwidth}
+
+% Simple centered divider with fixed equal margins (2cm each side)
 \newcommand{\chapterdivider}[1]{%
     \clearpage
     \thispagestyle{empty}%
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=center] at (current page.center) {%
+            \includegraphics[width=\paperwidth-4cm,keepaspectratio]{#1.png}%
+        };
+    \end{tikzpicture}%
     \null
-    \vfill
-    \begin{center}
-        \includegraphics[width=0.85\textwidth,keepaspectratio]{#1.png}%
-    \end{center}
-    \vfill
-    \null
+    \clearpage
 }
+
+%========================================================================================
+% WIDE TABLE ENVIRONMENT
+%========================================================================================
+% For tables that need to extend into the margin
+% Usage: \begin{widetable}{caption}{label}...\end{widetable}
+% Or use table* environment directly for more control
+
+% Simple wide tabular wrapper - extends into margin
+\newenvironment{wideblock}{%
+    \begin{adjustwidth}{0pt}{-\marginparwidth-\marginparsep}%
+}{%
+    \end{adjustwidth}%
+}
+
+% Calculate full width including margin
+\newlength{\fulltextwidth}
+\setlength{\fulltextwidth}{\textwidth}
+\addtolength{\fulltextwidth}{\marginparsep}
+\addtolength{\fulltextwidth}{\marginparwidth}
 
 %========================================================================================
 % PLACEHOLDER CITATIONS

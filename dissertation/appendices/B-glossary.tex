@@ -6,24 +6,224 @@
 \chapter{Glossary of Terms}
 \labch{appendix-glossary}
 
+This glossary defines key terms used throughout the dissertation, organized alphabetically. Terms are drawn from sustainability transitions research, complex systems theory, computational social science, and the methodological frameworks developed in this work.
+
+\section*{A}
+
 \begin{description}[leftmargin=0.5cm, style=nextline]
 
-\item[Complex Adaptive System (CAS)] A system composed of many interacting agents whose aggregate behavior emerges from local interactions rather than central control.
+\item[Actor Constellation] See \textit{Role Constellation}. Some literature uses ``actor constellation'' to emphasize the agents themselves rather than the roles they occupy.
 
-\item[Interstitial Pluralism] The phenomenon where actors occupy in-between positions across multiple role categories simultaneously.
+\item[Agent-Based Model (ABM)] A computational simulation approach where autonomous agents interact according to defined rules, enabling study of emergent macro-level patterns from micro-level behaviors. \RoleSim{} employs ABM to test whether CAS mechanisms suffice to generate observed constellation patterns.
 
-\item[Knowledge Triangle] The EIT's conceptual framework integrating education, research, and business/innovation.
+\item[Aspiration Gap] The divergence between roles an organization claims (e.g., on their website) and roles they actually enact (observable through network positions or behaviors). A key finding of this dissertation: 34\% claim connector roles but only 13\% occupy bridging positions.
 
-\item[Multimodal Cartography] The methodological approach of mapping phenomena using multiple complementary data sources.
-
-\item[Role Constellation] The dynamic configuration of interconnected roles within an innovation ecosystem.
-
-\item[\RoleBox] The computational toolkit developed in this dissertation for multimodal role constellation analysis.
-
-\item[\RoleSim] The agent-based modeling platform for simulating role constellation dynamics.
+\item[Attributed Role] A role assigned to an organization by external observers, such as journalists, analysts, or other stakeholders. Contrast with \textit{Claimed Role} and \textit{Enacted Role}.
 
 \end{description}
 
-\textit{[Additional terms to be added.]}
+\section*{B}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[BERTopic] A topic modeling technique combining transformer-based embeddings (BERT) with clustering algorithms. Used in \RoleBox{} for extracting semantic themes from text corpora.
+
+\item[Betweenness Centrality] A network metric measuring how often a node lies on shortest paths between other nodes. High betweenness indicates bridging or brokerage positions within a network.
+
+\item[Boundary Spanner] An actor who operates across organizational, sectoral, or institutional boundaries, facilitating knowledge transfer and coordination. Related to \textit{Connector} and \textit{Intermediary} roles.
+
+\item[Bridging Position] A structural location in a network where an actor connects otherwise disconnected clusters or communities. Operationalized through betweenness centrality and structural hole metrics.
+
+\end{description}
+
+\section*{C}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Claimed Role] A role that an organization explicitly asserts for itself, typically through self-presentation channels such as websites, mission statements, or promotional materials. Contrast with \textit{Attributed Role} and \textit{Enacted Role}.
+
+\item[Co-evolution] A CAS mechanism where actors and their environment mutually shape each other over time. Role possibilities depend on what other actors do; landscape changes alter fitness criteria for roles.
+
+\item[Co-Location Network] A network structure where actors are linked based on appearing together in the same context (e.g., mentioned in the same news article, participating in the same project).
+
+\item[Complex Adaptive System (CAS)] A system composed of many interacting agents whose aggregate behavior emerges from local interactions rather than central control. Key mechanisms include emergence, self-organization, co-evolution, non-linearity, feedback loops, and fitness landscapes.
+
+\item[Connector] An intermediary role type characterized by linking diverse actors, facilitating introductions, and enabling resource or information flow across network segments. Often associated with high betweenness centrality.
+
+\item[Connector Gap] The systematic divergence between claimed connector roles and enacted bridging positions. A core empirical finding of this dissertation: organizations aspire to intermediary positions more than they structurally occupy them.
+
+\item[Convergence (Cross-Modal)] When multiple data modalities agree on an actor's role attribution, strengthening confidence in the classification. Contrast with \textit{Divergence}.
+
+\end{description}
+
+\section*{D}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Design Science Research (DSR)] A research paradigm focused on creating and evaluating artifacts (tools, frameworks, methods) that address practical problems while generating theoretical knowledge. The methodology guiding \RoleBox{} development.
+
+\item[Discourse Network Analysis (DNA)] A method combining content analysis with network analysis to study how actors are connected through shared concepts, arguments, or positions in public discourse.
+
+\item[Divergence (Cross-Modal)] When different data modalities assign conflicting role attributions to the same actor. Treated as analytical signal (revealing aspiration gaps, perception gaps, strategic positioning) rather than measurement error.
+
+\end{description}
+
+\section*{E}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[EIT (European Institute of Innovation and Technology)] An EU body established in 2008 to strengthen Europe's innovation capacity by integrating higher education, research, and business through Knowledge and Innovation Communities (KICs).
+
+\item[Emergence] A CAS mechanism where macro-level patterns arise from micro-level interactions without being explicitly programmed or centrally directed. Constellation-level properties (functional coverage, resilience) emerge from individual actor behaviors.
+
+\item[Enacted Role] A role observable through an organization's actual behaviors, network positions, and resource allocations. Contrast with \textit{Claimed Role} and \textit{Attributed Role}.
+
+\item[Entity Alignment] The process of matching organizational identities across different data sources that may use varying names, abbreviations, or identifiers for the same entity.
+
+\end{description}
+
+\section*{F}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Feedback Loop] A CAS mechanism where outputs of a process become inputs that either amplify (positive feedback) or dampen (negative feedback) subsequent iterations. Role success can attract resources that reinforce the role (positive) or trigger competition that limits it (negative).
+
+\item[Fitness Landscape] A metaphor from evolutionary biology describing how different configurations (roles, strategies) have varying viability in a given environment. In CAS, fitness landscapes are dynamic---they shift as environments and other actors change.
+
+\item[Functional Coverage] A constellation-level property measuring whether all necessary intermediary functions (connecting, translating, advocating, capacity building, etc.) are adequately represented in an ecosystem.
+
+\end{description}
+
+\section*{G--H}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Generative Testing] An approach to theory evaluation using simulation: if a model instantiating proposed mechanisms generates patterns resembling empirical observations, the mechanisms are at least \textit{sufficient} (though not necessarily the only explanation).
+
+\item[Hub] A network role type characterized by high degree centrality---many direct connections to other actors. Hubs often coordinate information and resource flows within their local network neighborhood.
+
+\end{description}
+
+\section*{I}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Influence Typology] The role classification system in \RoleSim{} that assigns roles based on network position (information flow patterns). Comprises nineteen types collapsed into eight primary categories for interpretability.
+
+\item[Innovation Ecosystem] A network of interconnected organizations and institutions that collectively support innovation processes, including firms, universities, investors, intermediaries, and public agencies.
+
+\item[Innovation Intermediary] An organization that facilitates innovation processes for others by providing connections, resources, knowledge, or legitimacy. Central analytical focus of this dissertation.
+
+\item[Institutional Logic] A set of material practices and symbolic systems that shape how actors interpret situations and guide appropriate behavior. Organizations in transition spaces often navigate multiple, potentially conflicting logics.
+
+\item[Interstitial Pluralism] The phenomenon where actors occupy in-between positions across multiple role categories simultaneously, avoiding exclusive commitment to any single sociotype.
+
+\end{description}
+
+\section*{K}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[KIC (Knowledge and Innovation Community)] An EIT partnership bringing together higher education institutions, research organizations, and businesses around a specific societal challenge. Eight thematic KICs exist: Climate, Digital, Food, Health, InnoEnergy, Manufacturing, Raw Materials, and Urban Mobility.
+
+\item[Knowledge Triangle] The EIT's conceptual framework integrating education, research, and business/innovation as mutually reinforcing domains. Empirical analysis reveals persistent imbalance favoring business vocabulary.
+
+\end{description}
+
+\section*{L--M}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Legitimacy] Social acceptance and credibility granted to an organization by relevant audiences. In transitions, intermediaries must construct legitimacy across multiple stakeholder groups with potentially divergent expectations.
+
+\item[Meta-Design Requirement (MDR)] High-level principles guiding artifact development in Design Science Research. This dissertation articulates four MDRs: theory-data reconciliation, hypothesis-driven selection, computational-human complementarity, and knowledge accumulation.
+
+\item[Multi-Actor Perspective (MaP)] A framework distinguishing four institutional sectors (state, market, third sector, community) and their interactions in sustainability transitions. Emphasizes the hybrid sphere of boundary-crossing intermediaries.
+
+\item[Multi-Level Perspective (MLP)] The dominant framework in sustainability transitions research, analyzing interactions between niches (protected spaces for radical innovation), regimes (dominant socio-technical configurations), and landscapes (exogenous macro-trends).
+
+\item[Multimodal Cartography] The methodological approach of mapping phenomena using multiple complementary data sources (websites, news, social media, investment data, visual materials). Treats both convergence and divergence as analytical signal.
+
+\end{description}
+
+\section*{N--O}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Niche] In MLP theory, a protected space where radical innovations can develop shielded from mainstream market selection pressures. Niche actors champion and nurture innovations before they can compete with regime technologies.
+
+\item[Non-linearity] A CAS property where small causes can produce large effects (and vice versa), and where relationships between variables are not proportional. Implies potential for tipping points, threshold effects, and surprises.
+
+\end{description}
+
+\section*{P--Q}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Perception Gap] Divergence between how an organization is described by external observers (attributed sociotype) and how it presents itself (claimed sociotype). Reveals legitimacy contests over role positioning.
+
+\item[Punctuated Equilibrium] A pattern of long periods of relative stability interrupted by rapid, discontinuous change. Observed in both biological evolution and socio-technical transitions.
+
+\end{description}
+
+\section*{R}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Regime] In MLP theory, the dominant socio-technical configuration comprising established technologies, institutions, practices, and actor networks. Regime actors have vested interests in maintaining existing structures.
+
+\item[Resource Gap] Divergence between roles an organization claims and the investment or material support it actually receives. Indicates unfunded ambitions or strategic intentions without backing.
+
+\item[Role] A recognizable set of activities addressing recurring situations, associated with expectations about appropriate behavior. Roles are relational---they exist in relation to other roles and contexts.
+
+\item[Role Constellation] The dynamic configuration of interconnected roles within an innovation ecosystem. Constellations exhibit CAS properties: emergence, self-organization, co-evolution, and non-linear dynamics.
+
+\item[\RoleBox] The computational toolkit developed in this dissertation for multimodal role constellation analysis. Comprises six modality pipelines (Wikipedia, websites, news, Crunchbase, social media, visual materials) with integration protocols.
+
+\item[RoleDNA] A Python implementation of Discourse Network Analysis for studying actor-concept affiliation networks in role-related discourse.
+
+\item[\RoleSim] The agent-based modeling platform for simulating role constellation dynamics. Tests whether CAS mechanisms suffice to generate observed patterns through generative testing.
+
+\item[RoleXray] The NLP pipeline component of \RoleBox{} for extracting role-relevant information from text using topic modeling, semantic role labeling, and embedding-based clustering.
+
+\end{description}
+
+\section*{S}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Self-Organization] A CAS mechanism where ordered patterns emerge from local interactions without central coordination or external direction. Role differentiation in ecosystems can occur through self-organization.
+
+\item[Semantic Role Labeling (SRL)] An NLP technique that identifies ``who did what to whom'' in text, extracting actor-action-target triplets. Used in \RoleBox{} for systematic role extraction from unstructured text.
+
+\item[Sentence Embedding] A vector representation of text that captures semantic meaning, enabling comparison of textual similarity. SBERT (Sentence-BERT) embeddings are used in \RoleBox{} for clustering and role vocabulary identification.
+
+\item[Sociotype] A characteristic pattern of how actors occupy role constellations, expressed across multiple modalities. Analogous to the biological phenotype (observable traits) emerging from genotype (underlying code), sociotypes are the observable expressions of role positioning revealed through claimed, attributed, enacted, relational, and aesthetic dimensions. This dissertation identifies five recurring sociotypes: Entrepreneurial, Research, Connective, Public, and Accountability.
+
+\item[Structural Hole] A gap in a network where actors on either side are not connected. Actors who bridge structural holes gain brokerage advantages and often occupy connector roles.
+
+\item[Sustainability Transition] A fundamental shift in socio-technical systems toward more sustainable modes of production and consumption. Involves changes in technologies, institutions, practices, and actor configurations.
+
+\end{description}
+
+\section*{T}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[Transition Intermediary] An organization that supports sustainability transitions by facilitating connections, knowledge transfer, legitimacy building, or capacity development among transition actors.
+
+\item[Triangulation] A research strategy combining multiple data sources, methods, or perspectives to enhance confidence in findings. Multimodal cartography extends triangulation by treating divergence as signal.
+
+\end{description}
+
+\section*{U--Z}
+
+\begin{description}[leftmargin=0.5cm, style=nextline]
+
+\item[UMAP (Uniform Manifold Approximation and Projection)] A dimensionality reduction technique used for visualizing high-dimensional data (e.g., embedding spaces) in two or three dimensions while preserving local structure.
+
+\item[Visual Register] A semiotic framework for analyzing how visual elements (color, composition, imagery) communicate sociotype positioning through design choices.
+
+\end{description}
 
 \end{document}

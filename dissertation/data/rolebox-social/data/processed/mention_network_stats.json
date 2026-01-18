@@ -1,0 +1,253 @@
+{
+  "n_nodes": 65046,
+  "n_edges": 73879,
+  "density": 1.746169891247715e-05,
+  "top_mentioned": [
+    [
+      "@climatekic",
+      104759
+    ],
+    [
+      "@eiteu",
+      50294
+    ],
+    [
+      "@eit_digital",
+      39354
+    ],
+    [
+      "@ckicnordic",
+      19723
+    ],
+    [
+      "@eitrawmaterials",
+      19346
+    ],
+    [
+      "@innoenergyeu",
+      12909
+    ],
+    [
+      "@eitdigitalaccel",
+      9970
+    ],
+    [
+      "@eueic",
+      9603
+    ],
+    [
+      "@climatesusanne",
+      7109
+    ],
+    [
+      "@kajembren",
+      6170
+    ],
+    [
+      "@climatekic_uki",
+      5635
+    ],
+    [
+      "@climatekicspain",
+      4955
+    ],
+    [
+      "@eithealth",
+      4022
+    ],
+    [
+      "@gabrielmariya",
+      3997
+    ],
+    [
+      "@eitalumni",
+      3979
+    ],
+    [
+      "@edcentrecc",
+      3936
+    ],
+    [
+      "@climatelaunch",
+      3694
+    ],
+    [
+      "@willemjonkernl",
+      3691
+    ],
+    [
+      "@eiturbanmob",
+      3592
+    ],
+    [
+      "@ckic_alumni",
+      3416
+    ],
+    [
+      "@eitdigitalacad",
+      3255
+    ],
+    [
+      "@globalclimathon",
+      3146
+    ],
+    [
+      "@chrysalisleap",
+      2977
+    ],
+    [
+      "@eu_commission",
+      2551
+    ],
+    [
+      "@climatekicitaly",
+      2535
+    ],
+    [
+      "@tnavracsicseu",
+      2176
+    ],
+    [
+      "@sollazophoniasd",
+      2147
+    ],
+    [
+      "@c40cities",
+      2111
+    ],
+    [
+      "@anderswijkman",
+      2016
+    ],
+    [
+      "@aster_er",
+      1995
+    ]
+  ],
+  "top_mentioners": [
+    [
+      "@susanne pedersen",
+      23334
+    ],
+    [
+      "@kaj embren",
+      21693
+    ],
+    [
+      "@climate-kic nordic",
+      18711
+    ],
+    [
+      "@eit climate-kic",
+      17734
+    ],
+    [
+      "@eit rawmaterials \ud83c\uddea\ud83c\uddfa",
+      9486
+    ],
+    [
+      "@\ud83c\uddea\ud83c\uddfa edna ayme-yahil \ud83c\uddfa\ud83c\uddf8",
+      7392
+    ],
+    [
+      "@eit digital accel",
+      7274
+    ],
+    [
+      "@eit digital",
+      6674
+    ],
+    [
+      "@milj\u00f6tweets",
+      5918
+    ],
+    [
+      "@line gry knudsen",
+      5454
+    ],
+    [
+      "@eiteu",
+      5393
+    ],
+    [
+      "@climate-kic nl",
+      4759
+    ],
+    [
+      "@climate-kic spain",
+      4751
+    ],
+    [
+      "@eit innoenergy",
+      4186
+    ],
+    [
+      "@stelios yiatros",
+      4158
+    ],
+    [
+      "@climate-kic germany",
+      4084
+    ],
+    [
+      "@willem jonker",
+      3845
+    ],
+    [
+      "@scaleup retweeter",
+      3630
+    ],
+    [
+      "@climate-kic_ch",
+      3568
+    ],
+    [
+      "@dawn rose turner",
+      3548
+    ],
+    [
+      "@alexandros charalambides",
+      3417
+    ],
+    [
+      "@micha\u0142 boni",
+      3296
+    ],
+    [
+      "@climate-kic austria",
+      3124
+    ],
+    [
+      "@eit digital alumni",
+      2758
+    ],
+    [
+      "@beatrice mazzali",
+      2598
+    ],
+    [
+      "@pamela ragazzi",
+      2560
+    ],
+    [
+      "@talent community",
+      2547
+    ],
+    [
+      "@gulyas zana laszlo",
+      2522
+    ],
+    [
+      "@olivia g.f.",
+      2434
+    ],
+    [
+      "@climate-kic uk & i",
+      2426
+    ]
+  ],
+  "reciprocity": 0.0015430636581437215,
+  "n_components": 38253,
+  "largest_component_size": 26371,
+  "largest_component_pct": 40.542077914091564
+}

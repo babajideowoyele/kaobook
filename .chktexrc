@@ -1,0 +1,54 @@
+# ChkTeX configuration for kaobook
+# This file configures which warnings to suppress
+
+# Suppress common false positives for kaobook
+
+# Warning 1: Command terminated with space
+CmdLine { -n1 }
+
+# Warning 2: Non-breaking space should have been used
+CmdLine { -n2 }
+
+# Warning 3: Enclose previous parenthesis with {}
+CmdLine { -n3 }
+
+# Warning 6: No italic correction
+CmdLine { -n6 }
+
+# Warning 8: Wrong length of dash (often false positive)
+CmdLine { -n8 }
+
+# Warning 24: Delete space to maintain page references
+CmdLine { -n24 }
+
+# Warning 36: Space in front of parenthesis
+CmdLine { -n36 }
+
+# Warning 44: User Regex (not configured)
+CmdLine { -n44 }
+
+# Verbatim environments to ignore
+VerbEnvir { lstlisting, minted, verbatim, Verbatim, BVerbatim, LVerbatim }
+
+# Math environments (already default but explicit)
+MathEnvir { displaymath, math, equation, equation* }
+MathEnvir { align, align*, gather, gather*, multline, multline* }
+MathEnvir { flalign, flalign*, alignat, alignat* }
+
+# Commands whose arguments should not be checked
+WipeArg { \includegraphics:[]{} }
+WipeArg { \bibliographystyle:{} }
+WipeArg { \bibliography:{} }
+WipeArg { \addbibresource:{} }
+WipeArg { \input:{} }
+WipeArg { \include:{} }
+WipeArg { \subfile:{} }
+WipeArg { \url:{} }
+WipeArg { \href:[][]{} }
+WipeArg { \hyperref:[][]{} }
+
+# kaobook-specific commands
+WipeArg { \sidecite:[][]{} }
+WipeArg { \sidetext:{} }
+WipeArg { \marginnote:{} }
+WipeArg { \sidenote:[][]{} }

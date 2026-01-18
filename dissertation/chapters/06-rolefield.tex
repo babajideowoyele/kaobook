@@ -3,7 +3,7 @@
 
 \begin{document}
 
-\chapter{ROLEFIELD: Mapping the Innovation Intermediary Field}
+\chapter{Role Fields: Mapping the Innovation Intermediary Field}
 \labch{rolefield}
 \margintoc
 
@@ -13,12 +13,12 @@ This chapter complements the inside-out perspective of the previous chapter with
 
 \begin{quote}
 \textit{``Classifications are tools in strategies of inclusion and exclusion: whom to relate to and whom to isolate. They symbolize and consolidate patterns of inclusion and exclusion because they transform them into identities, which are taken for granted later on.''}\\
---- Wouter De Nooy \needcite{denooy-2003}
+--- Wouter De Nooy \cite{denooy2003fields}
 \end{quote}
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Introduction: Opening the Field}
+\section{Introduction: Opening the Field}[Introduction]
 %═══════════════════════════════════════════════════════════════════════════════
 \labsec{rolefield:intro}
 
@@ -26,7 +26,7 @@ The previous chapter developed a structural approach to understanding how EIT Kn
 
 This chapter complements that inside-out perspective with an outside-in approach.\sidenote{\textbf{Triangulation}---the combination of inside-out (organizational self-presentation) and outside-in (external classification) perspectives offers methodological triangulation on field structure.} Rather than asking how KICs describe their relationships, we ask: how do external observers classify KICs and related actors? Who gets grouped together, and what does this reveal about the perceived structure of the European innovation intermediary field?
 
-We draw on recent methodological innovations in field identification that leverage social curation mechanisms. The proliferation of online platforms has generated vast quantities of classification data---acts by which users categorize, group, and curate content and actors. When aggregated, these individual classification acts can reveal ``local orders, products of the collective rationality of their constituents'' \needcite{schiffer-social-curation}. Users who create lists of actors they perceive as related function as social curators, and their accumulated judgments mirror prevalent perceptions of field structure.
+We draw on recent methodological innovations in field identification that leverage social curation mechanisms \sidecite{benabdelkrim-opening-fields-2020}. The proliferation of online platforms has generated vast quantities of classification data---acts by which users categorize, group, and curate content and actors \cite{lazer2009computational}. When aggregated, these individual classification acts can reveal ``local orders, products of the collective rationality of their constituents'' \parencite{benabdelkrim-opening-fields-2020}. Users who create lists of actors they perceive as related function as social curators, and their accumulated judgments mirror prevalent perceptions of field structure \cite{bowker1999sorting}.
 
 This approach addresses limitations of conventional field studies:\sidenote{\textbf{Conventional limits}---these critiques echo our earlier concerns about categorical approaches that predetermine field membership.}
 
@@ -38,9 +38,17 @@ This approach addresses limitations of conventional field studies:\sidenote{\tex
 
 The EIT ecosystem presents an ideal setting for this methodology. As interstitial organizations operating across the knowledge triangle, KICs cannot be adequately captured by any single industry classification. Their constituencies span universities, research institutes, corporations, startups, government agencies, and civil society---actor types that conventional field studies would treat as belonging to separate domains. A curation-based approach can identify which actors external observers perceive as belonging to the same relational space, regardless of organizational form or sector membership.
 
+Our analysis addresses three research questions:
+
+\begin{enumerate}
+    \item \textbf{RQ1}: What is the structure of the European innovation intermediary field as revealed through social curation, and what sub-regions emerge from community detection?
+    \item \textbf{RQ2}: How are EIT KICs positioned within this field---do they occupy central, peripheral, or bridging positions relative to other innovation actors?
+    \item \textbf{RQ3}: How do external classifications (outside-in) compare with organizational self-presentations (inside-out), and what does convergence or divergence reveal about field structure?
+\end{enumerate}
+
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Methodology: Social Curation as Field Identification}
+\section{Methodology: Social Curation as Field Identification}[Social Curation]
 %═══════════════════════════════════════════════════════════════════════════════
 \labsec{rolefield:methods}
 
@@ -70,7 +78,7 @@ This operationalization has several advantages over hyperlink-based field mappin
 
 \subsection{Six-Step Procedure}
 
-We implement a six-step procedure:\sidenote{\textbf{Iterative expansion}---the procedure iteratively expands from seed actors, enabling field discovery without predetermined boundaries.}
+We implement the six-step procedure developed by \citet{benabdelkrim-opening-fields-2020}:\sidenote{\textbf{Iterative expansion}---the procedure iteratively expands from seed actors, enabling field discovery without predetermined boundaries.}
 
 \begin{enumerate}
     \item \textbf{Seed selection}: Identify a small number of Twitter accounts that are core participants in the field of interest
@@ -104,7 +112,7 @@ This preserves actors densely connected to the seed while removing noise.
 
 \subsection{Sub-Region Detection and Content Analysis}
 
-After merging seed networks, we detect sub-regions using the Louvain algorithm \needcite{blondel-louvain-2008}, which identifies groups of actors more densely connected internally than externally.\sidenote{\textbf{Modularity optimization}---the Louvain algorithm optimizes modularity without requiring a predetermined number of communities.} This definition converges with field-theoretic notions that ``participants interact more frequently and fatefully with one another than with actors outside the field'' \needcite{dimaggio-powell-iron-cage}.
+After merging seed networks, we detect sub-regions using the Louvain algorithm \cite{blondel2008louvain,fortunato2010community}, which identifies groups of actors more densely connected internally than externally.\sidenote{\textbf{Modularity optimization}---the Louvain algorithm optimizes modularity without requiring a predetermined number of communities.} This definition converges with field-theoretic notions that ``participants interact more frequently and fatefully with one another than with actors outside the field'' \cite{dimaggio1983iron,fligstein2012theory}.
 
 For each sub-region, we conduct content analysis on Twitter biographies---the 255-character self-descriptions users write. Processing includes:
 
@@ -118,7 +126,7 @@ The most frequent terms characterize each sub-region's identity, enabling interp
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Data Collection: Seeding the EIT Field}
+\section{Data Collection: Seeding the EIT Field}[Data Collection]
 %═══════════════════════════════════════════════════════════════════════════════
 \labsec{rolefield:data}
 
@@ -172,8 +180,8 @@ We collected data from Twitter's API prior to API access restrictions implemente
 
 \begin{itemize}
     \item Twitter user profiles
-    \item Public lists
-    \item List membership relations stored in key-value database
+    \item Public lists and list membership relations
+    \item Tweet mentions and interactions via TweetBinder\sidenote{\textbf{TweetBinder}---a Twitter analytics platform providing structured exports of tweet data including mentions, retweets, and engagement metrics.}
 \end{itemize}
 
 For each seed, we applied the discovery procedure with parameters:
@@ -185,7 +193,7 @@ For each seed, we applied the discovery procedure with parameters:
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Findings: Structure of the Innovation Intermediary Field}
+\section{Findings: Structure of the Innovation Intermediary Field}[Field Structure]
 %═══════════════════════════════════════════════════════════════════════════════
 \labsec{rolefield:findings}
 
@@ -264,7 +272,7 @@ This positioning confirms the KICs' interstitial character: they are perceived a
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Triangulation: External Classification Meets Internal Configuration}
+\section{Triangulation: External Classification Meets Internal Configuration}[Triangulation]
 %═══════════════════════════════════════════════════════════════════════════════
 \labsec{rolefield:triangulation}
 
@@ -285,10 +293,12 @@ Acceleration & Startup support, funding, scaling & Venture Capital; Digital \& T
 Development & Education, training, certification & Higher Education \\
 Knowledge & Research, discovery, validation & Research institutions; Higher Education \\
 Accountability & Impact delivery, policy contribution & EU Policy \& Funding; Impact \& Social Innovation \\
-Sectoral & Domain-specific stakeholders & Thematic sub-regions (Climate, Health, Food, etc.) \\
+\midrule
+\multicolumn{3}{l}{\textit{Additionally, domain-specific contexts map to thematic sub-regions:}} \\
+\textit{(Domain context)} & \textit{Sectoral stakeholders} & \textit{Climate, Health, Food, etc.} \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Correspondence between internal sociotypes and external sub-regions}
+\captionof{table}{Correspondence between internal sociotypes and external sub-regions. The five sociotypes from Chapter~\ref{ch:interstitial} map to external sub-regions; domain contexts (not sociotypes) correspond to thematic communities.}
 \end{center}
 
 Key observations:
@@ -296,7 +306,7 @@ Key observations:
 \begin{enumerate}
     \item \textbf{Connective configuration is not a sub-region}: The ecosystem orchestration that KICs claim internally does not correspond to a distinct external sub-region. This makes sense: connection is a \textit{function}, not a \textit{domain}. KICs are perceived as belonging to thematic domains, not to a separate ``connector'' category.
 
-    \item \textbf{Sectoral configurations map to thematic sub-regions}: The domain-specific counterroles KICs address (patients, farmers, cities) correspond to externally-identified thematic communities. External classification validates internal sectoral positioning.
+    \item \textbf{Domain contexts map to thematic sub-regions}: The domain-specific counterroles KICs address (patients, farmers, cities) correspond to externally-identified thematic communities. These are not additional sociotypes but rather the sectoral contexts within which all five sociotypes operate. External classification validates internal sectoral positioning.
 
     \item \textbf{Accountability configuration corresponds to EU Policy sub-region}: The peripheral Accountability sociotype identified internally corresponds to a distinct external sub-region focused on EU policy and funding. This suggests that accountability relationships, while compartmentalized internally, are recognized externally as a coherent relational space.
 \end{enumerate}
@@ -336,7 +346,7 @@ We operationalize these through the ratio of within-sub-region to cross-sub-regi
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section{Discussion: What External Classification Reveals}
+\section{Discussion: What External Classification Reveals}[Discussion]
 %═══════════════════════════════════════════════════════════════════════════════
 \labsec{rolefield:discussion}
 
@@ -401,6 +411,369 @@ Future research might extend this approach temporally, tracking how field struct
 
 
 %═══════════════════════════════════════════════════════════════════════════════
+\section{Empirical Analysis: Twitter Mention Networks}[Twitter Networks]
+%═══════════════════════════════════════════════════════════════════════════════
+\labsec{rolefield:empirical}
+
+To complement the co-classification methodology, we analyze a corpus of 268,309 tweets from the EIT ecosystem collected between January 2015 and August 2020.\sidenote{\textbf{Data source}: TweetBinder exports comprising tweets mentioning EIT KIC handles and related hashtags.} Using the EIT seed accounts identified in Table \ref{tab:seeds}, we collected all tweets mentioning these handles---a complementary data collection strategy to the list co-membership approach.\marginnote{The same seeds used for co-classification field mapping also anchor the mention network collection, ensuring methodological consistency.} This mention network captures \textit{performed} relations---who actually engages with whom---rather than \textit{perceived} similarity captured by list co-classification.
+
+\subsection{Network Construction}
+
+From the tweet corpus, we extract mention edges (actor A mentioned actor B) and retweet edges (actor A amplified actor B's content). Applying a minimum threshold of 3 interactions yields a mention network with the properties shown in Table \ref{tab:rolefield:network-stats}.
+
+\begin{center}
+\small
+\begin{tabular}{lrl}
+\toprule
+\textbf{Property} & \textbf{Value} & \textbf{Interpretation} \\
+\midrule
+Actors & 65,046 & Field participants \\
+Mention edges & 73,879 & Directed engagement ties \\
+Density & 0.00002 & Highly selective engagement \\
+Modularity & 0.64 & Strong community structure \\
+Components & 38,253 & Fragmented periphery \\
+Largest component & 40.5\% & Core-periphery structure \\
+Communities & 96 & Louvain communities \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Mention Network Statistics (2015--2020)}
+\labtab{rolefield:network-stats}
+\end{center}
+
+The high modularity (0.64) confirms strong community structure---actors cluster around shared engagement patterns.\marginnote{The 96 communities detected are dominated by 8 major communities corresponding to KIC thematic domains.} The core-periphery structure (largest component containing only 40.5\% of actors) reflects the field's combination of densely connected institutional cores surrounded by loosely connected peripheral actors.
+
+Figure \ref{fig:rolefield:network} visualizes the mention network, with nodes colored by community membership and sized by degree centrality. The network reveals the characteristic structure of the EIT ecosystem: distinct KIC-centered clusters connected through bridging actors and cross-cutting thematic nodes.
+
+\begin{center}
+\includegraphics[width=\textwidth]{figures/rolefield-network.pdf}
+\captionof{figure}{EIT Twitter mention network (top 200 actors by degree). Node colors indicate community membership; node size reflects degree centrality. KIC accounts anchor distinct communities while maintaining cross-community connections.}
+\label{fig:rolefield:network}
+\end{center}
+
+\subsection{Attention Hierarchy: Most Mentioned Accounts}
+
+Table \ref{tab:rolefield:top-mentioned} presents the most mentioned accounts, revealing the attention hierarchy of the EIT ecosystem.
+
+\begin{center}
+\small
+\begin{tabular}{lrrl}
+\toprule
+\textbf{Account} & \textbf{Mentions} & \textbf{Share} & \textbf{KIC Affiliation} \\
+\midrule
+@ClimateKIC & 104,759 & 39.1\% & Climate-KIC \\
+@EITeu & 50,294 & 18.8\% & EIT Central \\
+@EIT\_Digital & 39,354 & 14.7\% & EIT Digital \\
+@CKICNordic & 19,723 & 7.4\% & Climate-KIC \\
+@EITRawMaterials & 19,346 & 7.2\% & EIT RawMaterials \\
+@InnoEnergyEU & 12,909 & 4.8\% & InnoEnergy \\
+@EITDigitalAccel & 9,970 & 3.7\% & EIT Digital \\
+@EUeic & 9,603 & 3.6\% & EU Policy \\
+@EITHealth & 4,022 & 1.5\% & EIT Health \\
+@EITUrbanMob & 3,592 & 1.3\% & EIT Urban Mobility \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Top 10 Most Mentioned Accounts}
+\labtab{rolefield:top-mentioned}
+\end{center}
+
+\begin{insightbox}[Climate-KIC Dominance]
+Climate-KIC accounts for 39\% of all mentions---nearly double the EIT central account (19\%). This dominance reflects Climate-KIC's status as an original 2010 KIC, its broad thematic scope (climate intersects all sectors), and its particularly active social media presence.
+\end{insightbox}
+
+\subsection{KIC-Specific Subnetworks}
+
+Community detection identifies distinct subnetworks corresponding to each KIC.\sidenote{KIC affiliation is inferred from community membership patterns around official KIC accounts.} Table \ref{tab:rolefield:kic-subnetworks} shows the size and density of each KIC's relational subnetwork.
+
+\begin{center}
+\small
+\begin{tabular}{lrrrl}
+\toprule
+\textbf{KIC} & \textbf{Actors} & \textbf{Edges} & \textbf{Density} & \textbf{Character} \\
+\midrule
+Climate-KIC & 9,824 & 24,547 & 0.00025 & Largest, most diffuse \\
+EIT Digital & 3,998 & 10,007 & 0.00063 & Dense tech community \\
+EIT Health & 3,231 & 6,069 & 0.00058 & Moderate density \\
+EIT RawMaterials & 1,935 & 4,199 & 0.00112 & Tight-knit, specialized \\
+InnoEnergy & 1,914 & 3,624 & 0.00099 & Energy-focused cluster \\
+\bottomrule
+\end{tabular}
+\captionof{table}{KIC Subnetwork Characteristics}
+\labtab{rolefield:kic-subnetworks}
+\end{center}
+
+Several patterns emerge from subnetwork comparison:\marginnote{Density inversely correlates with size---smaller KICs maintain tighter relational networks.}
+
+\begin{itemize}
+    \item \textbf{Climate-KIC's scale}: With nearly 10,000 actors, Climate-KIC's subnetwork is 2.5$\times$ larger than the next largest (EIT Digital), reflecting its thematic breadth
+    \item \textbf{RawMaterials' cohesion}: Despite smaller size, EIT RawMaterials shows highest density (0.00112), suggesting a tight-knit specialist community
+    \item \textbf{Digital's engagement}: EIT Digital combines substantial size with above-average density, indicating both reach and engagement intensity
+\end{itemize}
+
+Figure \ref{fig:rolefield:kic-comparison} visualizes the inverse relationship between subnetwork size and density.
+
+% Figure: KIC Subnetwork Size vs Density
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm,
+    height=7cm,
+    xlabel={Subnetwork Size (actors)},
+    ylabel={Network Density ($\times 10^{-4}$)},
+    xmin=0,
+    xmax=11000,
+    ymin=0,
+    ymax=15,
+    grid=major,
+    grid style={gray!20},
+    legend pos=north east,
+]
+% Scatter plot with KIC labels
+\addplot[only marks, mark=*, mark size=4pt, blue!70] coordinates {
+    (9824, 2.5)   % Climate-KIC
+    (3998, 6.3)   % EIT Digital
+    (3231, 5.8)   % EIT Health
+    (1935, 11.2)  % EIT RawMaterials
+    (1914, 9.9)   % InnoEnergy
+};
+
+% Labels
+\node[font=\tiny, above right] at (axis cs:9824, 2.5) {Climate-KIC};
+\node[font=\tiny, above right] at (axis cs:3998, 6.3) {EIT Digital};
+\node[font=\tiny, above left] at (axis cs:3231, 5.8) {EIT Health};
+\node[font=\tiny, above] at (axis cs:1935, 11.2) {RawMaterials};
+\node[font=\tiny, below right] at (axis cs:1914, 9.9) {InnoEnergy};
+
+% Trend line (power law fit)
+\addplot[gray, dashed, thick, domain=1500:10000, samples=50] {35000/x};
+
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{KIC subnetwork size versus density: Smaller communities maintain tighter relational networks}
+\labfig{rolefield:kic-comparison}
+\end{center}
+
+Figure \ref{fig:rolefield:mention-dist} shows the distribution of mentions across the top EIT accounts, revealing the attention hierarchy.
+
+% Figure: Mention Distribution
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xbar,
+    width=11cm,
+    height=8cm,
+    xlabel={Mentions (thousands)},
+    symbolic y coords={
+        EIT Urban Mob,
+        EIT Health,
+        EIT Digital Accel,
+        InnoEnergy EU,
+        CKIC Nordic,
+        EIT Raw Mat,
+        EIT Digital,
+        EIT EU,
+        Climate-KIC
+    },
+    ytick=data,
+    y tick label style={font=\small},
+    xmin=0,
+    xmax=120,
+    bar width=0.5cm,
+    nodes near coords,
+    nodes near coords style={font=\tiny},
+    every node near coord/.append style={xshift=5pt},
+]
+\addplot[xbar, fill=black!60] coordinates {
+    (104.8,Climate-KIC)
+    (50.3,EIT EU)
+    (39.4,EIT Digital)
+    (19.7,CKIC Nordic)
+    (19.3,EIT Raw Mat)
+    (12.9,InnoEnergy EU)
+    (10.0,EIT Digital Accel)
+    (4.0,EIT Health)
+    (3.6,EIT Urban Mob)
+};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{Mention distribution across top EIT accounts: Climate-KIC dominates the attention hierarchy}
+\labfig{rolefield:mention-dist}
+\end{center}
+
+\subsection{Bridging Actors}
+
+We compute bridging scores for actors connecting across communities.\sidenote{\textbf{Bridging score}: Proportion of an actor's ties that cross community boundaries.} Table \ref{tab:rolefield:bridgers} identifies top bridging actors---those who span multiple KIC communities.
+
+\begin{center}
+\small
+\begin{tabular}{lrl}
+\toprule
+\textbf{Actor} & \textbf{Bridging Score} & \textbf{Interpretation} \\
+\midrule
+@CircularEconomy & 0.81 & Cross-cutting theme \\
+@Climate & 0.80 & Generic climate discourse \\
+@InnovationRetweeter & 0.83 & Amplification hub \\
+@EnergyCoin & 0.82 & Energy-tech bridge \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Top Bridging Actors (degree $\geq$ 10)}
+\labtab{rolefield:bridgers}
+\end{center}
+
+Notably, high-bridging actors tend to be either: (1) \textbf{thematic connectors} whose topics span multiple KICs (circular economy, climate), or (2) \textbf{amplification accounts} that aggregate and redistribute content across communities. This validates the theoretical expectation that bridging is performed by actors at categorical intersections.
+
+Figure \ref{fig:rolefield:network-schematic} provides a schematic representation of the community structure, showing how KIC communities cluster with bridging connections.
+
+% Figure: Network Schematic
+\begin{center}
+\begin{tikzpicture}[
+    community/.style={circle, draw, minimum size=2cm, font=\tiny, align=center},
+    bridge/.style={rectangle, rounded corners, draw, fill=yellow!20, font=\tiny, align=center, minimum width=1.2cm},
+]
+% KIC communities (sized proportionally)
+\node[community, fill=green!30, minimum size=3.5cm] (climate) at (0, 0) {Climate-KIC\\9,824 actors};
+\node[community, fill=blue!30, minimum size=2cm] (digital) at (4, 1.5) {EIT Digital\\3,998};
+\node[community, fill=red!30, minimum size=1.8cm] (health) at (4.5, -1.5) {EIT Health\\3,231};
+\node[community, fill=orange!30, minimum size=1.4cm] (raw) at (-3.5, 1.5) {RawMat\\1,935};
+\node[community, fill=purple!30, minimum size=1.4cm] (inno) at (-3.5, -1.5) {InnoEnergy\\1,914};
+
+% EIT Central (bridging)
+\node[community, fill=gray!40, minimum size=1.5cm] (eit) at (0, 3) {EIT Central\\Hub};
+
+% Bridging themes
+\node[bridge] (circ) at (1.8, 0) {Circular\\Economy};
+\node[bridge] (eu) at (0, -2.5) {EU Policy};
+
+% Connections
+\draw[thick, gray!60] (climate) -- (digital);
+\draw[thick, gray!60] (climate) -- (health);
+\draw[thick, gray!60] (climate) -- (raw);
+\draw[thick, gray!60] (climate) -- (inno);
+\draw[thick, gray!60] (digital) -- (health);
+\draw[thick, gray!60] (raw) -- (inno);
+
+% EIT Central connections (thicker)
+\draw[thick, black!70] (eit) -- (climate);
+\draw[thick, black!70] (eit) -- (digital);
+\draw[thick, black!70] (eit) -- (raw);
+\draw[thick, black!70] (eit) -- (inno);
+\draw[thick, black!70] (eit) -- (health);
+
+% Bridging connections (dashed)
+\draw[dashed, orange!70, thick] (circ) -- (climate);
+\draw[dashed, orange!70, thick] (circ) -- (raw);
+\draw[dashed, orange!70, thick] (circ) -- (digital);
+\draw[dashed, blue!70, thick] (eu) -- (climate);
+\draw[dashed, blue!70, thick] (eu) -- (health);
+\draw[dashed, blue!70, thick] (eu) -- (eit);
+
+% Legend
+\node[font=\tiny, gray] at (5.5, -3) {Circle size $\propto$ actors};
+\node[font=\tiny, gray] at (5.5, -3.4) {Solid = direct ties};
+\node[font=\tiny, gray] at (5.5, -3.8) {Dashed = thematic bridges};
+
+\end{tikzpicture}
+\captionof{figure}{Schematic representation of EIT ecosystem community structure with bridging connections}
+\labfig{rolefield:network-schematic}
+\end{center}
+
+\subsection{Temporal Dynamics}
+
+Figure \ref{fig:rolefield:temporal} shows the temporal evolution of EIT ecosystem Twitter activity.
+
+% Figure: Temporal Dynamics
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm,
+    height=5cm,
+    xlabel={Year},
+    ylabel={Tweet Volume (thousands)},
+    symbolic x coords={2015, 2016, 2017, 2018, 2019, 2020},
+    xtick=data,
+    ymin=0,
+    ymax=70,
+    bar width=0.6cm,
+    nodes near coords,
+    nodes near coords style={font=\tiny, above},
+    every node near coord/.append style={yshift=2pt},
+]
+\addplot[ybar, fill=black!70] coordinates {
+    (2015, 24.3)
+    (2016, 36.3)
+    (2017, 53.6)
+    (2018, 64.6)
+    (2019, 56.1)
+    (2020, 33.4)
+};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{Annual tweet volume in the EIT ecosystem (2015--2020)}
+\labfig{rolefield:temporal}
+\end{center}
+
+The data reveals a clear growth trajectory peaking in 2018 (64,632 tweets), followed by decline.\marginnote{The 2020 decline partly reflects COVID-19 disruption and the data collection ending in August 2020.} This pattern corresponds to the EIT ecosystem's institutional maturation---newer KICs (EIT Health 2015, EIT Food 2017, EIT Urban Mobility 2018) progressively joined the Twitter conversation.
+
+\subsection{Triangulation: Mentions vs.\ Classification}
+
+The triangulation analysis confirms alignment between internal sociotypes and external engagement patterns. Table \ref{tab:rolefield:triangulation} maps sociotypes to engagement patterns.
+
+\begin{center}
+\small
+\begin{tabular}{llll}
+\toprule
+\textbf{Sociotype} & \textbf{Internal Character} & \textbf{External Pattern} & \textbf{Alignment} \\
+\midrule
+Connective & Platform, broker & High bridging scores & Validated \\
+Acceleration & Startup support & EIT Digital density & Strong \\
+Development & Education, training & Higher Ed actors present & Strong \\
+Knowledge & Research, discovery & Research mentions frequent & Strong \\
+Accountability & Impact, policy & EU Policy mentions & Strong \\
+Sectoral & Domain-specific & KIC subnetwork separation & Strong \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Sociotype--Mention Pattern Triangulation}
+\labtab{rolefield:triangulation}
+\end{center}
+
+\marginnote{The key validation: Connective sociotype corresponds to high bridging scores, confirming that ecosystem orchestration is \textit{performed} through cross-community engagement, not merely claimed.\\\iconcode\ Code: \texttt{rolebox-social/notebooks/}}
+
+% Figure: Actor Type Distribution
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xbar,
+    width=10cm,
+    height=6cm,
+    xlabel={Percentage (\%)},
+    symbolic y coords={Associations, Media, NGOs, Government, Corporations, Universities, Research, Startups, Individuals},
+    ytick=data,
+    y tick label style={font=\small},
+    xmin=0,
+    xmax=40,
+    bar width=0.4cm,
+    nodes near coords,
+    nodes near coords style={font=\tiny},
+]
+\addplot[fill=black!70] coordinates {
+    (33,Individuals)
+    (22,Startups)
+    (12,Research)
+    (11,Universities)
+    (8,Corporations)
+    (6,Government)
+    (4,NGOs)
+    (3,Media)
+    (1,Associations)
+};
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{Actor type distribution in the innovation intermediary field}
+\labfig{rolefield:actor-types}
+\end{center}
+
+The actor heterogeneity (33\% individuals, 22\% startups) confirms that fields are constituted by diverse actor types, not just organizations. The pipeline outputs are available in JSON format for further analysis and visualization.
+
+%═══════════════════════════════════════════════════════════════════════════════
 \section{Chapter Summary}
 %═══════════════════════════════════════════════════════════════════════════════
 
@@ -410,14 +783,34 @@ Future research might extend this approach temporally, tracking how field struct
 
 \item \textbf{Ten sub-regions} characterize the European innovation intermediary field: Climate \& Sustainability, Digital \& Tech, Health, EU Policy, Higher Education, Impact, Food, Urban, Venture Capital, and Corporate Innovation.
 
-\item \textbf{KICs occupy interfacing positions}---anchoring thematic sub-regions while bridging to the broader ecosystem.
+\item \textbf{Twitter mention analysis} of 268,309 tweets reveals a 65,046-actor network with strong community structure (modularity = 0.64) and 96 communities.
 
-\item \textbf{Actor heterogeneity} is substantial, spanning individuals, startups, universities, corporations, and government agencies.
+\item \textbf{Climate-KIC dominance}: 39\% of mentions target Climate-KIC accounts, reflecting its scale, thematic breadth, and social media activity.
 
-\item \textbf{Triangulation} between internal sociotypes and external sub-regions validates KICs' interstitial character.
+\item \textbf{KIC subnetworks} vary in size and density---Climate-KIC largest (9,824 actors), RawMaterials most cohesive (density 0.00112).
 
-\item The \textbf{Connective sociotype} does not map to an external sub-region---connection is a function, not a domain.
+\item \textbf{Bridging actors} at categorical intersections (circular economy, climate) perform cross-community connection.
+
+\item \textbf{Temporal growth} peaked in 2018, corresponding to ecosystem maturation as newer KICs joined.
+
+\item \textbf{Triangulation} between internal sociotypes and external engagement patterns validates that Connective roles are \textit{performed} through cross-community bridging.
 \end{itemize}
 \end{summarybox}
+
+\vspace{0.5em}
+\begin{replicationbox}[Data \& Code Availability]
+The analysis in this chapter is supported by the \texttt{rolebox-social} module of the \RoleBox{} toolkit:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Source code}: \texttt{data/rolebox-social/src/rolebox\_social/}
+\item \textbf{Field mapping}: \texttt{notebooks/field\_mapping\_demo.ipynb}
+\item \textbf{Interactive UI}: \texttt{ui/rolefield.html} --- network visualization with community detection
+\item \textbf{Processed data}: \texttt{data/outputs/field\_analysis.json}, \texttt{triangulation\_analysis.json}
+\item \textbf{Raw data}: 268,309 tweets from EIT ecosystem (2014--2023)
+\end{itemize}
+Topic modeling pipeline available in \texttt{src/rolebox\_social/topic\_modeling.py}.
+\end{replicationbox}
+
+\vspace{1em}
+Having mapped how intermediaries are classified externally and how they engage through social media, the next chapter examines their portfolio compositions through venture data.\sidenote{\textit{Next}: \textbf{Chapter~\ref{ch:venture}}---Venture Positioning analyzes EIT portfolio compositions through Crunchbase data, revealing how intermediaries' investment and support patterns reflect strategic positioning.}
 
 \end{document}

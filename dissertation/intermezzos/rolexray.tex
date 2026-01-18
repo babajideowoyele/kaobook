@@ -3,7 +3,7 @@
 
 \begin{document}
 
-\intermezzo{ROLEXRAY - A Socio-Semantic Toolkit Mapping Interstitial Author Topic Constellations}
+\intermezzo{RoleXray}
 
 \begin{center}
 \begin{tikzpicture}
@@ -19,39 +19,67 @@
 
 \begin{adjustwidth}{1cm}{1cm}
 
-\noindent\textit{\large How can we map actors and topics that play interstitial roles—bridging worlds that would otherwise remain separate? Before we turn our multimodal cartography toward organizations, a detour through the landscape of ideas.}
+\noindent\textit{\large Before building \RoleBox{}, we needed to select and validate techniques. Which NLP methods would extract meaningful roles from text? Which network metrics would reveal genuine bridges versus mere connectors? Which visualization approaches would render complex role landscapes legible? This intermezzo documents that methodological exploration.}
 
 \vspace{1.5cm}
 
-\section*{The Problem of the In-Between}
+\section*{The Technique Selection Problem}
 
-Some of the most important work happens in the spaces between.
+Building multimodal cartography infrastructure requires choosing from a bewildering array of computational methods.
 
-\sidenote{\textit{``Interstitial: relating to or situated in the interstices---the spaces that intervene between things.''}}
+\sidenote{\textit{Topic modeling: LDA, NMF, or BERTopic? Embeddings: TF-IDF, Word2Vec, or transformers? Networks: raw centrality or normalized metrics?}}
 
-Between disciplines. Between sectors. Between communities of practice. The actors who inhabit these in-between spaces—who speak multiple languages, who translate across boundaries, who see connections invisible to those embedded in single domains—are often the unsung catalysts of change.
+Should text analysis use traditional topic modeling (LDA) or neural embeddings (BERT)? Should network analysis rely on degree centrality or more sophisticated brokerage measures? Should temporal patterns be detected through linear trends or change-point algorithms? Each choice has consequences. Wrong choices produce meaningless outputs at scale.
 
-But how do you find them? How do you \textit{see} the interstitial?
+We needed a \textbf{proving ground}---a domain where we could test methods, validate results against domain knowledge, and iterate rapidly before committing to production infrastructure.
 
-This dissertation develops tools for mapping role constellations in innovation ecosystems. Yet the same challenge appears in another domain entirely: the landscape of scientific literature. Before we mapped organizations, we mapped ideas—and the scholars who bridge them.
-
-\vspace{0.8cm}
-
-\section*{From Organizations to Authors}
-
-The \textbf{Socio-Semantic X-Ray} emerged from a parallel question: how can we simultaneously analyze \textit{what} scholars write about and \textit{who} they collaborate with? Traditional literature reviews focus on content—themes, arguments, findings. They miss the social architecture of knowledge production.
-
-\sidenote{\textit{The Socio-Semantic X-Ray integrates what is said (semantic) with who says it together (social).}}
-
-We developed this method while trying to understand our own intellectual terrain. Three journals defined the boundaries: \textit{Research in the Sociology of Organizations} (RSOG), \textit{Environmental Innovation and Societal Transitions} (EIST), and \textit{Sustainability Science} (SusSci). Three communities. Three vocabularies. Three ways of seeing the world.
-
-The question: who bridges them?
+Scientific literature offered exactly this. We know our own field. When a clustering algorithm groups papers, we can verify whether the grouping makes sense. When a centrality metric identifies a ``bridging'' author, we can check whether that author actually bridges communities. Ground truth is accessible in ways it rarely is for organizational ecosystems.
 
 \vspace{0.8cm}
 
-\section*{The Chromatic Triangle}
+\section*{The Socio-Semantic X-Ray: A Methodological Laboratory}
 
-Imagine a triangle. Each vertex represents a pure discourse—the language and concerns of one journal community. Position within the triangle indicates mixture.
+The \textbf{Socio-Semantic X-Ray} emerged as our technique validation platform \sidecite{leydesdorff2006knowledge,hellsten2019}. The name captures the dual focus: seeing both \textit{what} is said (semantic) and \textit{who} says it together (social). Every major method deployed in the empirical chapters (5--9) was first tested here.
+
+\sidenote{\textit{The X-Ray was our sandbox---a space to make mistakes cheaply before stakes rose.}}
+
+The test corpus: 2,334 articles from three journals that define our intellectual terrain---\textit{Research in the Sociology of Organizations} (RSOG), \textit{Environmental Innovation and Societal Transitions} (EIST), and \textit{Sustainability Science} (SusSci). Three communities. Three vocabularies. A perfect triangulation for testing whether our methods could detect boundaries and bridges.
+
+\end{adjustwidth}
+
+\begin{center}
+\includegraphics[width=0.95\textwidth]{dissertation/figures/rolexray/clr_xray_process.png}
+\captionof{figure}{The Computational Literature Review (CLR) process: from corpus creation through embedding generation, topic modeling, and network analysis to final visualization outputs.}
+\label{fig:xray-clr-process}
+\end{center}
+
+\begin{adjustwidth}{1cm}{1cm}
+
+But this intermezzo is not about literature review findings. It is about \textbf{which techniques survived contact with real data}---and which failed.
+
+\vspace{0.8cm}
+
+\section*{Why Literature as Testbed?}
+
+Why test cartographic methods on scholarly literature rather than directly on organizations? Three reasons made this detour essential:
+
+\sidenote{\textit{Authors are simpler than organizations. Publications are cleaner than websites. If methods fail here, they will certainly fail there.}}
+
+\noindent\textbf{1. Verifiable ground truth.} When our methods identified ``transformation\_actor\_change'' as a bridging topic, we could check this against our domain expertise. When they identified certain authors as interstitial, we knew whether they actually published across communities. This interpretability check was essential before applying opaque NLP methods to organizational texts where ground truth is murky.
+
+\noindent\textbf{2. Clean data structure.} Journal articles have clear boundaries, consistent metadata, and explicit authorship. This cleanliness allowed us to isolate methodological issues from data quality issues. If BERTopic failed on clean academic text, the problem was the method; if it only failed on messy website text, the problem was data preprocessing.
+
+\noindent\textbf{3. Manageable scale.} With 2,334 articles, the corpus was large enough to stress-test scalability but small enough to inspect manually. We could literally read the documents that clustering algorithms grouped together---impossible with thousands of organizational websites \cite{merton1968matthew}.
+
+\vspace{0.8cm}
+
+\section*{Technique 1: Ternary Positioning (The Chromatic Triangle)}
+
+The first technique we tested: \textbf{ternary coordinate mapping}. Could we position actors in a three-dimensional role space based on their vocabulary mixtures? This technique would later become central to Chapter~\ref{ch:interstitial}'s triangulation of claimed, attributed, and enacted roles.
+
+\sidenote{\textit{Ternary plots visualize how actors blend three base categories---here, three journal communities.}}
+
+Imagine a triangle. Each vertex represents a pure discourse---the language and concerns of one journal community. Position within the triangle indicates mixture.
 
 \begin{center}
 \begin{tikzpicture}[scale=1.2]
@@ -104,9 +132,102 @@ Imagine a triangle. Each vertex represents a pure discourse—the language and c
 
 \sidenote{\textit{Like a chromatic color space where RGB vertices create all possible mixtures, the discourse triangle positions authors by their intellectual blend.}}
 
-An author publishing only in RSOG sits at the purple vertex—pure organizational sociology. One publishing only in SusSci sits at the blue vertex—pure sustainability science. But an author whose work draws equally from all three? They sit at the center. They are \textbf{interstitial}.
+An author publishing only in RSOG sits at the purple vertex---pure organizational sociology. One publishing only in SusSci sits at the blue vertex---pure sustainability science. But an author whose work draws equally from all three? They sit at the center. They are \textbf{interstitial}.
 
 The method borrows from color theory: just as the CIE chromaticity diagram maps every visible color as a mixture of primaries, our triangle maps every author's discursive position as a mixture of disciplinary vocabularies.
+
+\vspace{0.8cm}
+
+\section*{Four Dynamics of Interdisciplinary Collaboration}
+
+The chromatic triangle reveals not just positions but \textit{patterns}---four distinct dynamics that characterize how knowledge communities relate \sidecite{korff2015social}. These dynamics, visualized in Figure~\ref{fig:xray-four-dynamics}, describe the landscape of possibilities for interdisciplinary research.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+    % Differentiation (top-left)
+    \begin{scope}[shift={(-4,3)}]
+        \coordinate (A1) at (0,1.5);
+        \coordinate (B1) at (1.3,-0.5);
+        \coordinate (C1) at (-1.3,-0.5);
+        \fill[PandaCream, opacity=0.3] (A1) -- (B1) -- (C1) -- cycle;
+        \draw[PandaCharcoal, line width=0.8pt] (A1) -- (B1) -- (C1) -- cycle;
+        % Clustered at vertices
+        \fill[AccentPurple] (0,1.2) circle (0.08);
+        \fill[AccentPurple] (-0.15,1.0) circle (0.06);
+        \fill[PandaBamboo] (1.0,-0.3) circle (0.08);
+        \fill[PandaBamboo] (0.85,-0.5) circle (0.06);
+        \fill[Azure] (-1.0,-0.3) circle (0.08);
+        \fill[Azure] (-0.85,-0.5) circle (0.06);
+        \node[font=\scriptsize\bfseries, text=PandaCharcoal] at (0,-1.3) {(a) Differentiation};
+    \end{scope}
+
+    % Integration (top-right)
+    \begin{scope}[shift={(4,3)}]
+        \coordinate (A2) at (0,1.5);
+        \coordinate (B2) at (1.3,-0.5);
+        \coordinate (C2) at (-1.3,-0.5);
+        \fill[PandaCream, opacity=0.3] (A2) -- (B2) -- (C2) -- cycle;
+        \draw[PandaCharcoal, line width=0.8pt] (A2) -- (B2) -- (C2) -- cycle;
+        % All clustered in center
+        \fill[CoverGold] (0,0.3) circle (0.1);
+        \fill[CoverGold] (0.15,0.5) circle (0.07);
+        \fill[CoverGold] (-0.1,0.4) circle (0.08);
+        \fill[CoverGold] (0.08,0.2) circle (0.06);
+        \fill[CoverGold] (-0.12,0.15) circle (0.07);
+        \node[font=\scriptsize\bfseries, text=PandaCharcoal] at (0,-1.3) {(b) Integration};
+    \end{scope}
+
+    % Recombination (bottom-left)
+    \begin{scope}[shift={(-4,-2)}]
+        \coordinate (A3) at (0,1.5);
+        \coordinate (B3) at (1.3,-0.5);
+        \coordinate (C3) at (-1.3,-0.5);
+        \fill[PandaCream, opacity=0.3] (A3) -- (B3) -- (C3) -- cycle;
+        \draw[PandaCharcoal, line width=0.8pt] (A3) -- (B3) -- (C3) -- cycle;
+        % On edges (between vertices)
+        \fill[AccentPurple!50!PandaBamboo] (0.6,0.5) circle (0.08);
+        \fill[PandaBamboo!50!Azure] (0,-0.5) circle (0.08);
+        \fill[Azure!50!AccentPurple] (-0.6,0.5) circle (0.08);
+        \fill[AccentPurple!50!PandaBamboo] (0.5,0.7) circle (0.06);
+        \node[font=\scriptsize\bfseries, text=PandaCharcoal] at (0,-1.3) {(c) Recombination};
+    \end{scope}
+
+    % Interstitial (bottom-right)
+    \begin{scope}[shift={(4,-2)}]
+        \coordinate (A4) at (0,1.5);
+        \coordinate (B4) at (1.3,-0.5);
+        \coordinate (C4) at (-1.3,-0.5);
+        \fill[PandaCream, opacity=0.3] (A4) -- (B4) -- (C4) -- cycle;
+        \draw[PandaCharcoal, line width=0.8pt] (A4) -- (B4) -- (C4) -- cycle;
+        % Vertices have clusters, center has bridges
+        \fill[AccentPurple] (0,1.2) circle (0.06);
+        \fill[PandaBamboo] (1.0,-0.3) circle (0.06);
+        \fill[Azure] (-1.0,-0.3) circle (0.06);
+        % Interstitial bridges
+        \fill[CoverGold] (0,0.35) circle (0.1);
+        \fill[CoverGold] (0.2,0.5) circle (0.06);
+        % Connection lines
+        \draw[CoverGold, dashed, line width=0.5pt] (0,0.35) -- (0,1.2);
+        \draw[CoverGold, dashed, line width=0.5pt] (0,0.35) -- (1.0,-0.3);
+        \draw[CoverGold, dashed, line width=0.5pt] (0,0.35) -- (-1.0,-0.3);
+        \node[font=\scriptsize\bfseries, text=PandaCharcoal] at (0,-1.3) {(d) Interstitial};
+    \end{scope}
+\end{tikzpicture}
+\captionof{figure}{Four dynamics of interdisciplinary collaboration.}
+\label{fig:xray-four-dynamics}
+\end{center}
+
+\sidenote{\textit{The four dynamics are not mutually exclusive. Real fields exhibit mixtures, with different dynamics dominating at different times.}}
+
+\noindent\textbf{(a) Differentiation dynamics.} Authors cluster near vertices, speaking primarily the language of their home community. Minimal vocabulary overlap. Collaboration occurs within silos. This is the default state of disciplinary specialization---efficient for depth, limiting for breadth.
+
+\noindent\textbf{(b) Integration dynamics.} All authors converge toward the center, adopting a shared vocabulary. True interdisciplinary fusion where boundaries dissolve. Rare in practice---most fields never achieve this level of conceptual integration.
+
+\noindent\textbf{(c) Recombination dynamics.} Authors position along edges, selectively drawing from two communities while ignoring the third. Pairwise hybridization creates new combinations but leaves some connections unexplored.
+
+\noindent\textbf{(d) Interstitial dynamics.} Most communities remain near their vertices, but a small number of actors occupy the center. These \textit{interstitial authors} serve as bridges---translating between communities, carrying ideas across boundaries, enabling exchanges that would otherwise not occur.
+
+Our empirical analysis found interstitial dynamics dominant: most authors cluster near vertices, but a critical minority occupy bridging positions. This finding echoes broader patterns in innovation ecosystems---and directly informed how we designed \RoleBox to detect organizational brokers.
 
 \vspace{0.8cm}
 
@@ -116,7 +237,7 @@ Applied to 2,334 articles across two decades, the Socio-Semantic X-Ray revealed 
 
 \sidenote{\textbf{By the numbers:} 2,334 articles (EIST: 574, RSOG: 639, SusSci: 1,121), 138 topics identified, 3 discourse communities.}
 
-\noindent\textbf{Topic landscapes.} Using BERTopic with sentence embeddings (all-MiniLM-L6-v2), UMAP dimensionality reduction, and HDBSCAN clustering, we mapped the semantic terrain of each journal. The pipeline identified 138 distinct topics with coherent keyword representations via KeyBERT and Maximal Marginal Relevance.
+\noindent\textbf{Topic landscapes.} Using BERTopic \cite{grootendorst2022bertopic} with sentence embeddings (all-MiniLM-L6-v2), UMAP dimensionality reduction \cite{mcinnes2018umap}, and HDBSCAN clustering \cite{campello2013hdbscan}, we mapped the semantic terrain of each journal. The pipeline identified 138 distinct topics with coherent keyword representations via KeyBERT and Maximal Marginal Relevance.
 
 \noindent\textbf{Temporal trajectories.} Topics were classified by their developmental patterns:
 \begin{itemize}[leftmargin=2em, itemsep=0.1em]
@@ -129,13 +250,35 @@ Applied to 2,334 articles across two decades, the Socio-Semantic X-Ray revealed 
 
 \sidenote{Topic \#0 (interview\_data\_conducted\_participant) showed highest degree centrality (59.4), indicating methodological discourse bridges all three communities.}
 
-\noindent\textbf{Topic networks.} Co-occurrence analysis revealed which topics appear together in documents. The most central topic—methodological discourse around interviews and qualitative data—bridged all three journal communities. Topic \#5 (transformation\_actor\_change\_transition) showed the highest betweenness per article, suggesting it serves as a conceptual bridge.
+\noindent\textbf{Topic networks.} Co-occurrence analysis revealed which topics appear together in documents \cite{newman2010networks}. The most central topic---methodological discourse around interviews and qualitative data---bridged all three journal communities. Topic \#5 (transformation\_actor\_change\_transition) showed the highest betweenness per article, suggesting it serves as a conceptual bridge.
 
-\noindent\textbf{Collaboration networks.} Co-authorship patterns revealed who works with whom. We identified within-community collaboration (authors publishing together in their home journal), cross-community collaboration (authors bridging journal boundaries), and the emergence of new discourse clusters.
+\noindent\textbf{Collaboration networks.} Co-authorship patterns revealed who works with whom \cite{newman2001structure}. We identified within-community collaboration (authors publishing together in their home journal), cross-community collaboration (authors bridging journal boundaries), and the emergence of new discourse clusters.
 
-\noindent\textbf{Interstitial authors.} Most powerfully: authors whose vocabulary, co-authorships, and publication patterns position them near the triangle's center—equidistant from all three vertices ($0.33 \pm 0.02$ for each community weight). These scholars don't just cite across boundaries—they \textit{inhabit} the in-between.
+\noindent\textbf{Interstitial authors.} Most powerfully: authors whose vocabulary, co-authorships, and publication patterns position them near the triangle's center---equidistant from all three vertices ($0.33 \pm 0.02$ for each community weight). These scholars don't just cite across boundaries---they \textit{inhabit} the in-between \cite{burt1992structural}.
 
-\noindent\textbf{Interstitial holes.} The triangle also reveals gaps—zones where bridges \textit{could} exist but don't. These are opportunities: unexplored connections between, say, organizational sociology and sustainability science that no one has yet made.
+\noindent\textbf{Interstitial holes.} The triangle also reveals gaps---zones where bridges \textit{could} exist but don't. These are opportunities: unexplored connections between, say, organizational sociology and sustainability science that no one has yet made.
+
+\end{adjustwidth}
+
+\begin{center}
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{dissertation/figures/rolexray/author_discourse.png}
+    \captionof{figure}{Author positions in discourse space}
+    \label{fig:xray-author-discourse}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{dissertation/figures/rolexray/discourse_shift.png}
+    \captionof{figure}{Color intensity shows discourse shift magnitude}
+    \label{fig:xray-discourse-shift}
+\end{minipage}
+\captionof{figure}{Discourse positions of authors on the ternary plane. Node size reflects publication count and vocabulary contribution strength. The left panel shows author clustering by dominant discourse; the right panel reveals who shifts their vocabulary over time.}
+\label{fig:xray-discourse-positions}
+\end{center}
+
+\begin{adjustwidth}{1cm}{1cm}
 
 \vspace{0.8cm}
 
@@ -146,9 +289,44 @@ The topic-document heatmap visualizes the distribution of 138 topics across all 
 \end{adjustwidth}
 
 \begin{center}
-\includegraphics[width=0.85\textwidth]{dissertation/figures/rolexray/3_journals.png}
+\includegraphics[width=0.95\textwidth]{dissertation/figures/rolexray/3_journals.png}
 \captionof{figure}{Topic-document distribution across EIST, RSOG, and SusSci.}
 \label{fig:xray-heatmap}
+\end{center}
+
+\begin{adjustwidth}{1cm}{1cm}
+\noindent Each journal exhibits a distinct topic signature. The figures below show individual journal topic landscapes, revealing the thematic identity of each community before we examine their overlaps.
+\end{adjustwidth}
+
+\begin{center}
+\begin{minipage}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{dissertation/figures/rolexray/eist.png}
+    \captionof{figure}{EIST topics}
+    \label{fig:xray-eist}
+\end{minipage}
+\hfill
+\begin{minipage}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{dissertation/figures/rolexray/rsog.png}
+    \captionof{figure}{RSOG topics}
+    \label{fig:xray-rsog}
+\end{minipage}
+\hfill
+\begin{minipage}{0.32\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{dissertation/figures/rolexray/sussci.png}
+    \captionof{figure}{SusSci topics}
+    \label{fig:xray-sussci}
+\end{minipage}
+\captionof{figure}{Individual journal topic distributions. EIST emphasizes transition governance and socio-technical change; RSOG focuses on organizational theory and institutional analysis; SusSci addresses environmental science and sustainability practices.}
+\label{fig:xray-individual-journals}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.9\textwidth]{dissertation/figures/rolexray/all_tsne.png}
+\captionof{figure}{t-SNE projection of the three-journal corpus. Each point represents a document chunk, colored by dominant journal. The visualization reveals both clustering within journals and overlapping zones where discourses converge---the interstitial spaces where cross-disciplinary work occurs.}
+\label{fig:xray-tsne}
 \end{center}
 
 \begin{adjustwidth}{1cm}{1cm}
@@ -182,7 +360,7 @@ The optimal number of topics was determined through coherence analysis, balancin
 \end{adjustwidth}
 
 \begin{center}
-\includegraphics[width=0.65\textwidth]{dissertation/figures/rolexray/3journals_optim.png}
+\includegraphics[width=0.8\textwidth]{dissertation/figures/rolexray/3journals_optim.png}
 \captionof{figure}{Topic coherence scores across different numbers of topics.}
 \label{fig:xray-optim}
 \end{center}
@@ -194,7 +372,7 @@ The optimal number of topics was determined through coherence analysis, balancin
 \end{adjustwidth}
 
 \begin{center}
-\includegraphics[width=0.75\textwidth]{dissertation/figures/rolexray/topic_frequency.png}
+\includegraphics[width=0.9\textwidth]{dissertation/figures/rolexray/topic_frequency.png}
 \captionof{figure}{Top 20 topics by document frequency across the three-journal corpus.}
 \label{fig:xray-frequency}
 \end{center}
@@ -206,7 +384,7 @@ The optimal number of topics was determined through coherence analysis, balancin
 \end{adjustwidth}
 
 \begin{center}
-\includegraphics[width=0.85\textwidth]{dissertation/figures/rolexray/temporal_trends.png}
+\includegraphics[width=0.95\textwidth]{dissertation/figures/rolexray/temporal_trends.png}
 \captionof{figure}{Temporal trajectories: hot topics (rising) and cold topics (declining) identified by linear trend coefficients.}
 \label{fig:xray-temporal}
 \end{center}
@@ -245,6 +423,137 @@ church\_religion\_organization & 8 & $-$0.62 \\
 \label{tab:xray-temporal}
 \end{center}
 
+\noindent The figures below visualize these temporal dynamics. Hot topics cluster toward fields gaining momentum---transformation discourse, renewable energy systems, and qualitative methodology are all ascending. Cold topics reveal the field's past preoccupations, now fading from active discourse.
+
+\end{adjustwidth}
+
+\begin{center}
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{dissertation/figures/rolexray/3j_hot.png}
+    \captionof{figure}{Hot (rising) topics}
+    \label{fig:xray-hot}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{dissertation/figures/rolexray/3j_cold.png}
+    \captionof{figure}{Cold (declining) topics}
+    \label{fig:xray-cold}
+\end{minipage}
+\captionof{figure}{Temporal topic dynamics visualized. Hot topics (left) show rising trajectory with momentum toward transformation, energy transitions, and methodological rigor. Cold topics (right) reveal declining interest in financial crisis literature and older institutional case studies.}
+\label{fig:xray-hot-cold}
+\end{center}
+
+\begin{adjustwidth}{1cm}{1cm}
+
+\noindent\textbf{Topic network structure.} Beyond individual topic trajectories, we mapped how topics connect---which concepts tend to co-occur in the same articles, forming clusters of related discourse.
+
+\end{adjustwidth}
+
+\begin{center}
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{dissertation/figures/rolexray/all_topic_network.png}
+    \captionof{figure}{Topic co-occurrence network across all three journals}
+    \label{fig:xray-topic-network}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{dissertation/figures/rolexray/3j_hplot.png}
+    \captionof{figure}{Hierarchical topic clustering}
+    \label{fig:xray-hplot}
+\end{minipage}
+\captionof{figure}{Topic network structure reveals how concepts cluster and connect. The left panel shows topic co-occurrence; the right shows hierarchical relationships between topic groups.}
+\label{fig:xray-topic-structure}
+\end{center}
+
+\begin{adjustwidth}{1cm}{1cm}
+
+\sidenote{Topic networks reveal the intellectual architecture of a field---which ideas naturally cluster together and which bridge otherwise separate domains.}
+
+The network analysis revealed a loosely connected landscape, suggesting these three domains remain distinct rather than integrated. This finding---disciplinary silos persisting despite shared concerns---directly informed our expectation that EIT ecosystem actors would similarly cluster by sector rather than function.
+
+\vspace{0.8cm}
+
+\section*{From Prototype to Production: Techniques That Traveled}
+
+The Socio-Semantic X-Ray was not merely a side project. It was a \textbf{methodological proving ground}---a space where techniques could be developed, tested, and refined before being applied to the more complex and higher-stakes terrain of organizational ecosystems.
+
+\sidenote{\textit{Every major technique in the empirical chapters was first prototyped on the three-journal corpus, where ground truth was verifiable.}}
+
+Each empirical chapter (Chapters 5--9) relies on techniques that were first developed and validated in the X-Ray work. The table below traces this lineage:
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{3.5cm}p{4cm}p{4cm}@{}}
+\toprule
+\textbf{X-Ray Technique} & \textbf{Empirical Application} & \textbf{Chapter} \\
+\midrule
+BERTopic + UMAP clustering & Website text role extraction & Ch.~5: Role Constellations \\
+\addlinespace
+Chromatic triangle positioning & Ternary role space mapping & Ch.~5: Role Constellations \\
+\addlinespace
+Co-authorship network analysis & Discourse network analysis & Ch.~5: Interstitial Pluralism \\
+\addlinespace
+Topic co-occurrence networks & Role-concept co-occurrence & Ch.~6: Role Fields \\
+\addlinespace
+Centrality metrics (degree, betweenness) & Field position metrics & Ch.~6: Role Fields \\
+\addlinespace
+Temporal trajectory analysis & Investment pattern dynamics & Ch.~7: Venture Positioning \\
+\addlinespace
+Hot/cold topic classification & Emerging vs declining roles & Ch.~7: Venture Positioning \\
+\addlinespace
+Interstitial zone detection & Cross-modal triangulation & Ch.~8: Visual Registers \\
+\addlinespace
+Community bridge identification & Boundary spanner detection & Ch.~9: Power \& Agency \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Technique lineage from X-Ray prototype to empirical chapters.}
+\label{tab:xray-lineage}
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent\textbf{Why prototype on literature?} Three reasons made the scholarly corpus an ideal testing ground:
+
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Ground truth verification.} We know our own field. When BERTopic identified ``transformation\_actor\_change'' as a bridging topic, we could verify this against our domain knowledge. This interpretability check was essential before applying opaque NLP methods to organizational texts.
+
+    \item \textbf{Clean data structure.} Journal articles have clear boundaries, consistent metadata, and explicit authorship. This cleanliness allowed us to isolate methodological issues from data quality issues.
+
+    \item \textbf{Manageable scale.} With 2,334 articles, the corpus was large enough to stress-test scalability but small enough to inspect manually. We could literally read the documents that BERTopic grouped together.
+\end{enumerate}
+
+\sidenote{\textit{The X-Ray corpus was our sandbox---a space to make mistakes cheaply before the stakes rose.}}
+
+\vspace{0.5cm}
+
+\noindent\textbf{Lessons that shaped RoleBox design:}
+
+The X-Ray work revealed several challenges that directly influenced how we built \RoleBox:
+
+\begin{itemize}[leftmargin=2em, itemsep=0.2em]
+    \item \textit{Chunk size matters.} BERT's 512-token limit forced us to develop a chunking strategy that preserved semantic coherence. This became the foundation for processing website texts, which vary enormously in length.
+
+    \item \textit{Optimal topic numbers are domain-dependent.} The coherence curves (Figure~\ref{fig:xray-optim}) showed that 138 topics balanced granularity and interpretability for scholarly discourse. For organizational role extraction, we found 45--60 topics worked better---roles are more categorical than academic topics.
+
+    \item \textit{Network metrics require calibration.} Raw centrality scores are meaningless without baseline comparison. We learned to compute z-scores against null models, a practice carried into all subsequent network analyses.
+
+    \item \textit{Visualization design affects interpretation.} Early chromatic triangles were cluttered and confusing. Iterating on the visualization---adjusting opacity, point sizes, hover information---taught us that \textit{how} you show data shapes \textit{what} people see.
+\end{itemize}
+
+\end{adjustwidth}
+
+\begin{center}
+\includegraphics[width=0.9\textwidth]{dissertation/figures/rolexray/interstitial_colab.png}
+\captionof{figure}{3D visualization of interstitial collaboration patterns. Interstitial authors (gold) occupy central positions, maintaining connections to all three journal communities simultaneously. This visualization reveals not just where authors position discursively, but who they collaborate with---the social architecture underlying knowledge production.}
+\label{fig:xray-interstitial-3d}
+\end{center}
+
+\begin{adjustwidth}{1cm}{1cm}
+
 \vspace{0.8cm}
 
 \section*{Connection to This Dissertation}
@@ -254,47 +563,47 @@ Why does a dissertation about mapping organizational role constellations pause t
 Because the methods rhyme.
 
 \begin{center}
-\begin{tikzpicture}[scale=0.65]
+\begin{tikzpicture}[scale=1.0]
 
     % Left: Socio-Semantic X-Ray
     \node[rectangle, rounded corners=6pt, draw=AccentPurple, fill=AccentPurple!10,
-          minimum width=4.5cm, minimum height=3cm, line width=1.5pt] at (-3.5,0) {};
-    \node[font=\sffamily\bfseries\small, text=AccentPurple] at (-3.5,1.8) {Socio-Semantic X-Ray};
-    \node[font=\tiny, text=PandaCharcoal, align=left] at (-3.5,0.5) {
+          minimum width=5cm, minimum height=3.5cm, line width=1.5pt] at (-4,0) {};
+    \node[font=\sffamily\bfseries\small, text=AccentPurple] at (-4,2.0) {Socio-Semantic X-Ray};
+    \node[font=\small, text=PandaCharcoal, align=left] at (-4,0.4) {
         \textbullet\ Authors as actors\\
         \textbullet\ Topics as roles\\
         \textbullet\ Co-authorship as ties\\
-        \textbullet\ Vocabulary as identity\\
+        \textbullet\ Vocabulary as positioning\\
         \textbullet\ Journals as communities
     };
-    \node[font=\tiny\itshape, text=AccentPurple] at (-3.5,-1.2) {Unit: Scholars};
+    \node[font=\small\itshape, text=AccentPurple] at (-4,-1.4) {Unit: Scholars};
 
     % Right: RoleBox
     \node[rectangle, rounded corners=6pt, draw=CoverGold, fill=CoverGold!10,
-          minimum width=4.5cm, minimum height=3cm, line width=1.5pt] at (3.5,0) {};
-    \node[font=\sffamily\bfseries\small, text=CoverGold!80!black] at (3.5,1.8) {\RoleBox};
-    \node[font=\tiny, text=PandaCharcoal, align=left] at (3.5,0.5) {
+          minimum width=5cm, minimum height=3.5cm, line width=1.5pt] at (4,0) {};
+    \node[font=\sffamily\bfseries\small, text=CoverGold!80!black] at (4,2.0) {\RoleBox};
+    \node[font=\small, text=PandaCharcoal, align=left] at (4,0.4) {
         \textbullet\ Organizations as actors\\
         \textbullet\ Functions as roles\\
         \textbullet\ Partnerships as ties\\
-        \textbullet\ Website text as identity\\
+        \textbullet\ Website text as positioning\\
         \textbullet\ KICs as communities
     };
-    \node[font=\tiny\itshape, text=CoverGold!80!black] at (3.5,-1.2) {Unit: Organizations};
+    \node[font=\small\itshape, text=CoverGold!80!black] at (4,-1.4) {Unit: Organizations};
 
     % Arrow between
-    \draw[PandaCharcoal, line width=2pt, <->] (-0.8,0) -- (0.8,0);
-    \node[font=\tiny\bfseries, text=PandaCharcoal] at (0,0.4) {Same Logic};
-    \node[font=\tiny, text=PandaCharcoal] at (0,-0.3) {Different Units};
+    \draw[PandaCharcoal, line width=2pt, <->] (-1.2,0) -- (1.2,0);
+    \node[font=\small\bfseries, text=PandaCharcoal] at (0,0.5) {Same Logic};
+    \node[font=\small, text=PandaCharcoal] at (0,-0.4) {Different Units};
 
 \end{tikzpicture}
 \end{center}
 
 \sidenote{\textit{The Socio-Semantic X-Ray was a proving ground for ideas that became \RoleBox.}}
 
-Both approaches integrate \textbf{semantic} dimensions (what actors say, how they present themselves) with \textbf{social} dimensions (who they connect with, how they're positioned in networks). Both seek to identify \textbf{interstitial actors}—those who bridge otherwise separate communities. Both use \textbf{computational methods} to achieve scale while preserving interpretive depth.
+Both approaches integrate \textbf{semantic} dimensions (what actors say, how they present themselves) with \textbf{social} dimensions (who they connect with, how they're positioned in networks). Both seek to identify \textbf{interstitial actors}---those who bridge otherwise separate communities. Both use \textbf{computational methods} to achieve scale while preserving interpretive depth.
 
-The Socio-Semantic X-Ray was, in retrospect, a methodological rehearsal. Working with scholarly literature—a domain where ground truth is knowable, where we could validate patterns against our own domain expertise—we developed intuitions that later guided \RoleBox design.
+The Socio-Semantic X-Ray was, in retrospect, a methodological rehearsal. Working with scholarly literature---a domain where ground truth is knowable, where we could validate patterns against our own domain expertise---we developed intuitions that later guided \RoleBox design.
 
 \vspace{0.8cm}
 
@@ -304,9 +613,9 @@ The deepest lesson from the X-Ray work: \textbf{interstitial positions are rare,
 
 \sidenote{\textit{8\% of authors occupied genuinely interstitial positions. The rest clustered near vertices.}}
 
-Only 8\% of authors in our three-journal corpus occupied positions near the triangle's center. The vast majority clustered near vertices—embedded in single disciplinary communities, speaking single disciplinary languages. This is not surprising. Disciplines exist for reasons. Specialization enables depth.
+Only 8\% of authors in our three-journal corpus occupied positions near the triangle's center. The vast majority clustered near vertices---embedded in single disciplinary communities, speaking single disciplinary languages. This is not surprising. Disciplines exist for reasons. Specialization enables depth.
 
-But transitions—whether in sustainability or in scholarship—require translation. They require actors who can speak to multiple communities, who can carry ideas across boundaries, who can see connections invisible to the embedded.
+But transitions---whether in sustainability or in scholarship---require translation. They require actors who can speak to multiple communities, who can carry ideas across boundaries, who can see connections invisible to the embedded.
 
 \begin{pandaquote}
 The interstitial is where recombination happens. New ideas rarely emerge from the center of established fields. They emerge from the edges, the overlaps, the unexpected encounters between previously separate streams.
@@ -316,11 +625,92 @@ This insight carried forward into \RoleBox. When we found that 34\% of EIT ecosy
 
 \vspace{0.8cm}
 
+\section*{Iterative Refinement: From Papers to Partners}
+
+The transition from analyzing scholarly papers to analyzing organizational actors was not a simple translation. It required iterative refinement across multiple dimensions.
+
+\sidenote{\textit{Each domain shift revealed hidden assumptions in methods that worked ``out of the box'' for academic text.}}
+
+\noindent\textbf{Semantic extraction challenges:}
+
+Academic articles are written to be understood. They follow conventions. They cite. They define terms. Organizational websites, by contrast, are written to \textit{persuade}. They deploy jargon strategically. They claim without citing. The same BERTopic pipeline that cleanly separated ``sustainability transitions'' from ``organizational institutionalism'' in journals produced muddled results on corporate websites.
+
+The solution emerged through iteration: we developed a \textbf{role vocabulary filter}---a curated set of terms, phrases, and sentence patterns that signal role performance. This filter, absent from the X-Ray work, became essential for \RoleBox. It separates role-relevant text (``We connect entrepreneurs with investors'') from generic marketing (``We are passionate about innovation'').
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+    % X-Ray pipeline (top)
+    \node[rectangle, rounded corners=4pt, draw=AccentPurple, fill=AccentPurple!10,
+          minimum width=2cm, minimum height=0.8cm, font=\small] (xray1) at (-4,1.5) {Raw Text};
+    \node[rectangle, rounded corners=4pt, draw=AccentPurple, fill=AccentPurple!10,
+          minimum width=2cm, minimum height=0.8cm, font=\small] (xray2) at (-1,1.5) {Embed};
+    \node[rectangle, rounded corners=4pt, draw=AccentPurple, fill=AccentPurple!10,
+          minimum width=2cm, minimum height=0.8cm, font=\small] (xray3) at (2,1.5) {Cluster};
+    \node[rectangle, rounded corners=4pt, draw=AccentPurple, fill=AccentPurple!10,
+          minimum width=2cm, minimum height=0.8cm, font=\small] (xray4) at (5,1.5) {Topics};
+
+    \draw[->, thick, AccentPurple] (xray1) -- (xray2);
+    \draw[->, thick, AccentPurple] (xray2) -- (xray3);
+    \draw[->, thick, AccentPurple] (xray3) -- (xray4);
+
+    \node[font=\sffamily\bfseries\footnotesize, text=AccentPurple] at (-5.5,1.5) {X-Ray:};
+
+    % RoleBox pipeline (bottom)
+    \node[rectangle, rounded corners=4pt, draw=CoverGold, fill=CoverGold!10,
+          minimum width=2cm, minimum height=0.8cm, font=\small] (rb1) at (-4,-0.5) {Raw Text};
+    \node[rectangle, rounded corners=4pt, draw=PandaRose, fill=PandaRose!20,
+          minimum width=2cm, minimum height=0.8cm, font=\small] (rb2) at (-1,-0.5) {Role Filter};
+    \node[rectangle, rounded corners=4pt, draw=CoverGold, fill=CoverGold!10,
+          minimum width=2cm, minimum height=0.8cm, font=\small] (rb3) at (2,-0.5) {Embed};
+    \node[rectangle, rounded corners=4pt, draw=CoverGold, fill=CoverGold!10,
+          minimum width=2cm, minimum height=0.8cm, font=\small] (rb4) at (5,-0.5) {Roles};
+
+    \draw[->, thick, CoverGold!80!black] (rb1) -- (rb2);
+    \draw[->, thick, CoverGold!80!black] (rb2) -- (rb3);
+    \draw[->, thick, CoverGold!80!black] (rb3) -- (rb4);
+
+    \node[font=\sffamily\bfseries\footnotesize, text=CoverGold!80!black] at (-5.5,-0.5) {RoleBox:};
+
+    % Annotation
+    \node[font=\tiny\itshape, text=PandaRose!80!black] at (-1,-1.3) {Added step};
+    \draw[->, PandaRose, dashed] (-1,-1.1) -- (-1,-0.95);
+
+\end{tikzpicture}
+\end{center}
+
+\noindent\textbf{Network construction differences:}
+
+Co-authorship is binary and timestamped: either two scholars wrote a paper together in 2019, or they didn't. Organizational relationships are fuzzier. A hyperlink might indicate partnership, citation, or competition. A shared funder might indicate collaboration or rivalry. The X-Ray's clean network construction gave way to \RoleBox's \textbf{multimodal network inference}---combining hyperlinks, co-mentions in news, shared investors, and social media interactions into a weighted, typed edge structure.
+
+\sidenote{\textit{What took 20 lines of code for co-authorship networks required 200+ lines for organizational relationship inference.}}
+
+\noindent\textbf{Temporal analysis adaptations:}
+
+Academic publication years are precise. Organizational activity unfolds continuously. The X-Ray's annual binning worked for journals but missed the quarterly rhythms of startup ecosystems. We developed \textbf{sliding window analysis} for \RoleBox---detecting role shifts over 6-month windows rather than calendar years.
+
+\vspace{0.5cm}
+
+\noindent\textbf{Specific technique transfers:}
+
+\begin{itemize}[leftmargin=2em, itemsep=0.2em]
+    \item \textit{X-Ray: Journal community detection $\rightarrow$ RoleBox: KIC sector clustering.} The Louvain algorithm that identified journal-based communities became the basis for detecting intra-KIC versus cross-KIC organizational clusters.
+
+    \item \textit{X-Ray: Author triangle positioning $\rightarrow$ RoleBox: Role modality triangulation.} The chromatic triangle concept---positioning actors by their mixture of three base categories---evolved into the claimed/attributed/enacted role triangulation central to Chapter~5.
+
+    \item \textit{X-Ray: Topic betweenness centrality $\rightarrow$ RoleBox: Actor brokerage scoring.} The insight that some topics (like methodology) bridge all communities became the foundation for identifying organizational brokers in Chapter~9.
+
+    \item \textit{X-Ray: Hot/cold topic trends $\rightarrow$ RoleBox: Emerging/declining role patterns.} Temporal trajectory classification of topics directly informed how we detect organizations riding emerging versus fading role niches.
+\end{itemize}
+
+\vspace{0.8cm}
+
 \section*{Technical Infrastructure}
 
-The RoleXray toolkit provides a modular Python pipeline for socio-semantic analysis:
+The RoleBox-Xray toolkit provides a modular Python pipeline for socio-semantic analysis. As part of the \RoleBox{} data architecture, it follows the same conventions as other modality pipelines.\sidenote{\iconbiblio\ Data: \texttt{dissertation/data/rolebox-xray/}} The Computational Literature Review (CLR) process integrates corpus creation, topic modeling (LDA and BERTopic), and network analysis into a unified workflow.
 
-\sidenote{\faCode\ \texttt{github.com/babajideowoyele/rolexray}}
+\end{adjustwidth}
+
+\begin{adjustwidth}{1cm}{1cm}
 
 \begin{itemize}[leftmargin=2em, itemsep=0.1em]
     \item \texttt{preprocessing/}: Text cleaning, lemmatization, chunking for BERT's 512-token limit
@@ -346,9 +736,106 @@ network:
 
 \vspace{0.8cm}
 
+\section*{What Didn't Work: Lessons from Failed Experiments}
+
+Not every technique survived the transition. Some approaches that seemed promising in the X-Ray context proved unsuitable for organizational analysis. Documenting these failures is as important as celebrating successes.
+
+\sidenote{\textit{Failed experiments teach more than successful ones. They reveal the hidden assumptions of methods.}}
+
+\noindent\textbf{LDA topic modeling.} Before BERTopic, we experimented with Latent Dirichlet Allocation \cite{blei2003latent}. For academic articles with their careful vocabulary, LDA produced interpretable topics. For organizational websites with their marketing-speak and inconsistent terminology, LDA topics were incoherent. The assumption of a fixed vocabulary failed when organizations invent terms (``ecosystem orchestrator,'' ``innovation catalyst'') that don't appear in standard corpora.
+
+\noindent\textbf{Simple keyword matching.} Early attempts used keyword dictionaries to detect role claims. If a website mentioned ``accelerator,'' it was tagged as an accelerator. This approach missed synonyms (``startup studio,'' ``venture builder''), context (``we partner with accelerators'' versus ``we are an accelerator''), and negations (``unlike traditional accelerators''). Embedding-based similarity replaced keyword matching entirely.
+
+\noindent\textbf{Pure network metrics.} In the X-Ray work, network position (centrality, brokerage) strongly predicted influential authors. For organizations, network position alone was misleading---large organizations have many connections by default. We learned to \textbf{normalize by organizational size}, a correction not needed for individual authors.
+
+\noindent\textbf{Static snapshots.} The X-Ray analyzed a corpus frozen in time. Initial \RoleBox work did the same---scraping websites once and treating that as ground truth. But organizations change. Websites update. Roles evolve. The X-Ray's static approach was inadequate; \RoleBox required a \textbf{longitudinal architecture} with versioned snapshots and change detection.
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{3.5cm}p{3.5cm}p{4cm}@{}}
+\toprule
+\textbf{Failed Approach} & \textbf{Why It Failed} & \textbf{What Replaced It} \\
+\midrule
+LDA topic modeling & Incoherent on marketing text & BERTopic with embeddings \\
+\addlinespace
+Keyword dictionaries & Missed synonyms, context & Semantic similarity scoring \\
+\addlinespace
+Raw centrality metrics & Confounded by org size & Size-normalized metrics \\
+\addlinespace
+Static corpus analysis & Missed temporal dynamics & Longitudinal versioning \\
+\addlinespace
+Author-level analysis & Organizations $\neq$ individuals & Multi-stakeholder modeling \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Failed approaches from X-Ray that required replacement in RoleBox.}
+\label{tab:xray-failures}
+\end{center}
+
+\sidenote{\textit{Every row in this table represents weeks of debugging and head-scratching before the failure mode became clear.}}
+
+These failures shaped a key design principle for \RoleBox: \textbf{validate continuously}. Methods that work in one domain may fail silently in another. The X-Ray gave us a testing regime---applying each technique to the journal corpus first, where we could verify results against domain knowledge, before deploying on organizational data.
+
+\vspace{0.8cm}
+
+\section*{Methodological Propositions}
+
+The X-Ray work yielded ten methodological propositions---lessons distilled from iterative experimentation that now guide computational text analysis in this dissertation and beyond.
+
+\begin{propositionbox}
+\textbf{M1: Embeddings outperform keywords for semantic similarity.}\\[2pt]
+Keyword matching fails on synonyms, neologisms, and context. Transformer-based embeddings capture semantic relationships that bag-of-words approaches miss entirely.
+\end{propositionbox}
+
+\begin{propositionbox}
+\textbf{M2: Topic coherence and granularity trade off nonlinearly.}\\[2pt]
+More topics increase granularity but decrease coherence. The optimal number is domain-specific and must be determined empirically through coherence curves, not assumed a priori.
+\end{propositionbox}
+
+\begin{propositionbox}
+\textbf{M3: Chunk size determines what patterns become visible.}\\[2pt]
+BERT's 512-token limit forces chunking decisions. Too small loses context; too large dilutes signal. Sentence-level chunking with overlap preserves local coherence while enabling document-level aggregation.
+\end{propositionbox}
+
+\begin{propositionbox}
+\textbf{M4: Network metrics require size normalization.}\\[2pt]
+Raw centrality conflates importance with scale. Larger actors have more connections by default. Normalize metrics by actor size or use residual-based measures to detect genuine brokerage.
+\end{propositionbox}
+
+\begin{propositionbox}
+\textbf{M5: Interstitial positions are rare and easily obscured.}\\[2pt]
+Most actors cluster near community centers. Genuine bridges---those equidistant from multiple communities---constitute a small minority (typically 5--12\%). Detection requires explicit triangulation, not network position alone.
+\end{propositionbox}
+
+\begin{propositionbox}
+\textbf{M6: Temporal trajectories reveal more than static snapshots.}\\[2pt]
+A topic's current frequency matters less than its trajectory. Rising topics (hot) signal emerging concerns; declining topics (cold) reveal fading preoccupations. Trend coefficients outperform raw counts.
+\end{propositionbox}
+
+\begin{propositionbox}
+\textbf{M7: Co-occurrence networks complement clustering.}\\[2pt]
+Topic models identify what; co-occurrence networks reveal how topics relate. The most central topics in co-occurrence networks are often methodological or bridging concepts, not substantive themes.
+\end{propositionbox}
+
+\begin{propositionbox}
+\textbf{M8: Visualization design shapes interpretation.}\\[2pt]
+The same data rendered differently produces different insights. Opacity, point size, color mapping, and interaction design are analytical choices, not aesthetic ones. Iterate on visualization as rigorously as on algorithms.
+\end{propositionbox}
+
+\begin{propositionbox}
+\textbf{M9: Ground truth validation is non-negotiable.}\\[2pt]
+Computational methods produce plausible-looking outputs regardless of validity. Test on domains where you can verify results against expert knowledge before deploying on unfamiliar terrain.
+\end{propositionbox}
+
+\begin{propositionbox}
+\textbf{M10: Failed experiments inform more than successes.}\\[2pt]
+Document what didn't work and why. LDA's failure on marketing text revealed vocabulary assumptions. Keyword matching's failure revealed context dependence. Failures expose hidden method assumptions.
+\end{propositionbox}
+
+\vspace{0.8cm}
+
 \section*{A Toolkit for Others}
 
-The Socio-Semantic X-Ray is now an open toolkit, available for others to apply to their own domains. The question it enables—\textit{who bridges what?}—is general.
+RoleBox-Xray is now an open toolkit, available for others to apply to their own domains. The question it enables---\textit{who bridges what?}---is general.
 
 The toolkit can be applied to:
 \begin{itemize}[leftmargin=2em]
@@ -362,9 +849,33 @@ The toolkit embodies the same open science commitments as \RoleBox: documented c
 
 \vspace{0.8cm}
 
-\section*{From Literature to Ecosystems-Author Topic Constellations to Actor Role Constellations}
+\section*{Charting Research Agendas}
 
-This intermezzo has been a detour—from organizations to authors, from ecosystems to journals, from role constellations to discourse positions. But the detour illuminates the path.
+Beyond mapping existing knowledge, the Socio-Semantic X-Ray offers a method for \textit{strategic agenda-setting}. By revealing interstitial holes---zones where connections \textit{could} exist but don't---it identifies opportunities for future research.
+
+\sidenote{\textit{The map reveals not just where scholars are, but where they aren't---and where they might productively go.}}
+
+The X-Ray analysis suggested five research directions for sustainability science:
+
+\begin{enumerate}[leftmargin=2em, itemsep=0.2em]
+    \item \textbf{Link disconnected topics.} Some topics within each journal remain isolated. Deliberate efforts to connect peripheral topics to the core network could catalyze new research streams.
+
+    \item \textbf{Increase generalizability.} Replicate findings across contexts. The dominance of European case studies limits transferability; systematic comparative work is needed.
+
+    \item \textbf{Expand theoretical scope.} Draw on peripheral theories---organizational ecology, practice theory, material sociology---that currently sit at network edges.
+
+    \item \textbf{Advance methodological innovation.} The field relies heavily on qualitative case studies. Multimodal and computational approaches remain underutilized.
+
+    \item \textbf{Build shared infrastructure.} Open datasets, annotated corpora, and replication packages would accelerate cumulative knowledge development.
+\end{enumerate}
+
+These directions mirror challenges in studying innovation ecosystems. The parallel was not coincidental---it was what made the X-Ray a useful proving ground for \RoleBox design.
+
+\vspace{0.8cm}
+
+\section*{From Literature to Ecosystems: Author Topic Constellations to Actor Role Constellations}
+
+This intermezzo has been a detour---from organizations to authors, from ecosystems to journals, from role constellations to discourse positions. But the detour illuminates the path.
 
 \sidenote{\textit{The X-Ray taught us to see the interstitial. \RoleBox applies that seeing to transition ecosystems.}}
 

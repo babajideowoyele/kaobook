@@ -1,0 +1,139 @@
+{
+  "methodology": "Schiffer et al. Social Curation",
+  "data_source": "TweetBinder mention co-occurrence",
+  "n_seeds": 9,
+  "seeds": [
+    "@EITeu",
+    "@EITClimatekic",
+    "@EITDigital",
+    "@EITHealth",
+    "@InnoEnergy",
+    "@EITFood",
+    "@EITRawMaterials",
+    "@EIT_Urban",
+    "@EITManufacturing"
+  ],
+  "n_communities": 96,
+  "top_communities": [
+    {
+      "rank": 1,
+      "label": "Climate-KIC",
+      "size": 7358,
+      "seed": "Climate-KIC"
+    },
+    {
+      "rank": 2,
+      "label": "EIT Digital",
+      "size": 3998,
+      "seed": "EIT Digital"
+    },
+    {
+      "rank": 3,
+      "label": "EIT Health",
+      "size": 3231,
+      "seed": "EIT Health"
+    },
+    {
+      "rank": 4,
+      "label": "Community_18",
+      "size": 2376,
+      "seed": ""
+    },
+    {
+      "rank": 5,
+      "label": "EIT RawMaterials",
+      "size": 1935,
+      "seed": "EIT RawMaterials"
+    },
+    {
+      "rank": 6,
+      "label": "InnoEnergy",
+      "size": 1914,
+      "seed": ""
+    },
+    {
+      "rank": 7,
+      "label": "Climate-KIC",
+      "size": 1417,
+      "seed": "Climate-KIC"
+    },
+    {
+      "rank": 8,
+      "label": "Community_74",
+      "size": 1031,
+      "seed": ""
+    },
+    {
+      "rank": 9,
+      "label": "Climate-KIC",
+      "size": 564,
+      "seed": "Climate-KIC"
+    },
+    {
+      "rank": 10,
+      "label": "Climate-KIC",
+      "size": 485,
+      "seed": "Climate-KIC"
+    },
+    {
+      "rank": 11,
+      "label": "Community_48",
+      "size": 424,
+      "seed": ""
+    },
+    {
+      "rank": 12,
+      "label": "Community_16",
+      "size": 232,
+      "seed": ""
+    },
+    {
+      "rank": 13,
+      "label": "Community_90",
+      "size": 190,
+      "seed": ""
+    },
+    {
+      "rank": 14,
+      "label": "Community_21",
+      "size": 129,
+      "seed": ""
+    },
+    {
+      "rank": 15,
+      "label": "Community_20",
+      "size": 96,
+      "seed": ""
+    },
+    {
+      "rank": 16,
+      "label": "Community_54",
+      "size": 70,
+      "seed": ""
+    },
+    {
+      "rank": 17,
+      "label": "Community_93",
+      "size": 61,
+      "seed": ""
+    },
+    {
+      "rank": 18,
+      "label": "Community_70",
+      "size": 56,
+      "seed": ""
+    },
+    {
+      "rank": 19,
+      "label": "Community_84",
+      "size": 53,
+      "seed": ""
+    },
+    {
+      "rank": 20,
+      "label": "Community_69",
+      "size": 52,
+      "seed": ""
+    }
+  ]
+}

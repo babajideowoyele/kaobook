@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triad Explorer - Powell Framework</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #000;
+    background: #f5f5f5;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo i { font-size: 18px; color: #3498db; }
+.logo h1 { font-size: 16px; font-weight: 600; }
+
+.nav {
+    display: flex;
+    gap: 4px;
+}
+
+.nav-item {
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all .15s;
+}
+
+.nav-item:hover { color: #000; background: #f5f5f5; }
+.nav-item.active { color: #fff; background: #000; }
+
+.main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background: #fff;
+    border-right: 1px solid #e5e5e5;
+    padding: 16px;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 12px;
+}
+
+.card-header {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: 600;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.card-header i { color: #666; }
+
+.card-body { padding: 14px; }
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    color: #000;
+    transition: all .15s;
+}
+
+.btn:hover { background: #f5f5f5; }
+.btn-sm { padding: 4px 8px; font-size: 10px; }
+
+.tag {
+    display: inline-flex;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    background: #000;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.tag-outline { background: #fff; color: #000; border: 1px solid #e5e5e5; }
+.tag-warning { background: #fef3c7; color: #92400e; }
+
+.select, .input {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 12px;
+    border: 1px solid #e5e5e5;
+    font-family: inherit;
+    background: #fff;
+}
+
+.select:focus, .input:focus {
+    outline: none;
+    border-color: #000;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.stat-label { color: #666; }
+.stat-value { font-weight: 600; }
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legend-label { font-size: 12px; }
+
+.search-results {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 8px;
+}
+
+.search-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.search-result:hover { background: #f5f5f5; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.metric { text-align: center; }
+.metric-value { font-size: 24px; font-weight: 600; }
+.metric-label { font-size: 11px; color: #666; }
+
+.pole-list h4 { margin-bottom: 8px; font-size: 12px; }
+.pole-list ul { list-style: none; }
+.pole-list li { padding: 4px 0; font-size: 12px; display: flex; justify-content: space-between; }
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 11px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+input[type="range"] {
+    width: 80px;
+    height: 4px;
+    -webkit-appearance: none;
+    background: #e5e5e5;
+    border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.info-panel {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    width: 320px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.info-panel.hidden { display: none; }
+
+.info-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: 600;
+}
+
+.info-panel-body { padding: 16px; }
+
+.info-section {
+    margin-bottom: 16px;
+}
+
+.info-section h4 {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.coord-bar {
+    display: grid;
+    grid-template-columns: 80px 1fr 40px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 11px;
+}
+
+.bar {
+    height: 8px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: 4px;
+}
+
+.confidence-meter {
+    height: 6px;
+    background: #f5f5f5;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.meter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 3px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.text-gray { color: #666; }
+.text-sm { font-size: 11px; }
+.text-center { text-align: center; }
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 200;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .3s;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+@media (max-width: 1024px) {
+    .sidebar { width: 240px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+    </style>
+</head>
+<body>
+<div class="app">
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-triangle"></i>
+            <h1>Triad Explorer - Powell Framework</h1>
+        </div>
+        <nav class="nav">
+            <a class="nav-item active" data-screen="overview">Overview</a>
+            <a class="nav-item" data-screen="positions">Positions</a>
+            <a class="nav-item" data-screen="network">Network</a>
+            <a class="nav-item" data-screen="animation">Animation</a>
+        </nav>
+        <div class="header-actions">
+            <button class="btn btn-sm" onclick="exportPNG()">
+                <i class="fas fa-download"></i> Export
+            </button>
+        </div>
+    </header>
+
+    <div class="main">
+        <aside class="sidebar">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie"></i> Statistics
+                </div>
+                <div class="card-body" id="stats-panel">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-filter"></i> Filters
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Classification</label>
+                        <select id="filter-classification" class="select" onchange="applyFilters()">
+                            <option value="all">All</option>
+                            <option value="dominant_associational">Associational</option>
+                            <option value="dominant_scientific">Scientific</option>
+                            <option value="dominant_managerial">Managerial</option>
+                            <option value="interstitial">Interstitial</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Color By</label>
+                        <select id="color-by" class="select" onchange="updateVisualization()">
+                            <option value="classification">Classification</option>
+                            <option value="confidence">Confidence</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Size By</label>
+                        <select id="size-by" class="select" onchange="updateVisualization()">
+                            <option value="fixed">Fixed</option>
+                            <option value="confidence">Confidence</option>
+                            <option value="raw_total">Raw Total</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-search"></i> Search
+                </div>
+                <div class="card-body">
+                    <input type="text" id="search-input" class="input"
+                           placeholder="Search organizations..."
+                           oninput="searchOrganizations(this.value)">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-palette"></i> Legend
+                </div>
+                <div class="card-body" id="legend-panel">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div id="screen-overview" class="screen active">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">Distribution Overview</div>
+                        <div class="card-body">
+                            <div id="overview-chart" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Key Metrics</div>
+                        <div class="card-body" id="key-metrics">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Triad Visualization</div>
+                    <div class="card-body">
+                        <div id="overview-ternary" style="height: 500px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="screen-positions" class="screen">
+                <div class="card">
+                    <div class="card-header">
+                        Position Analysis
+                        <span class="tag" id="position-count">0 organizations</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="positions-ternary" style="height: 600px;"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Top Organizations by Pole</div>
+                    <div class="card-body">
+                        <div class="grid-3" id="top-by-pole">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="screen-network" class="screen">
+                <div class="card">
+                    <div class="card-header">
+                        Network View
+                        <div class="header-controls">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="show-edges" checked onchange="toggleEdges()">
+                                Show Edges
+                            </label>
+                            <label>
+                                Edge Opacity:
+                                <input type="range" id="edge-opacity" min="0" max="100" value="30"
+                                       oninput="updateEdgeOpacity(this.value)">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="network-ternary" style="height: 600px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="screen-animation" class="screen">
+                <div class="card">
+                    <div class="card-header">
+                        Temporal Animation
+                        <span class="tag tag-warning">Coming Soon</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-gray">
+                            Animation view requires time-series data. Upload data with temporal
+                            information to enable this feature.
+                        </p>
+                        <div id="animation-ternary" style="height: 600px;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Info Panel (overlay) -->
+    <div id="info-panel" class="info-panel hidden">
+        <div class="info-panel-header">
+            <span id="info-panel-title">Organization</span>
+            <button class="btn btn-sm" onclick="closeInfoPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="info-panel-body" id="info-panel-body">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+</div>
+
+<script>
+// Data
+const TRIAD_CONFIG = {"triad_type": "powell_framework", "name": "Powell Framework", "description": "Organizations positioned by legitimacy vocabulary: Associational vs Scientific vs Managerial", "axis_a": {"name": "Associational", "key": "associational", "color": "#3498db", "description": "Social values, civil society, moral purpose vocabulary", "keywords": ["accountability", "advocacy", "awareness", "charity", "commitment", "common good", "compassion", "democracy", "empowerment", "ethics", "justice", "mission", "moral", "participation", "principles", "quality of life", "social benefit", "social change", "solidarity", "trust", "values", "vision", "voice"], "source_modality": "rolebox-websites"}, "axis_b": {"name": "Scientific", "key": "scientific", "color": "#2ecc71", "description": "Evidence-based, research methodology vocabulary", "keywords": ["analysis", "assessment", "causality", "control group", "correlation", "counterfactual", "criteria", "data", "evaluation", "evidence", "experiment", "framework", "indicators", "measurement", "methodology", "quantification", "randomized control trials", "review", "survey", "theory of change", "treatment effects"], "source_modality": "rolebox-websites"}, "axis_c": {"name": "Managerial", "key": "managerial", "color": "#e74c3c", "description": "Business efficiency, performance metrics vocabulary", "keywords": ["benchmarks", "best practice", "bottom line", "capacity", "cost-benefit", "effectiveness", "efficiency", "growth", "impact", "kpi", "leverage", "management", "milestones", "monitoring", "objectives", "optimization", "outcome", "output", "performance", "productivity", "return on investment", "strategic", "transparency", "value proposition"], "source_modality": "rolebox-websites"}, "interstitial_threshold": 0.4, "color_palette": {"dominant_associational": "#3498db", "dominant_scientific": "#2ecc71", "dominant_managerial": "#e74c3c", "interstitial": "#f1c40f"}};
+const POSITIONS = [{"org_id": "org_000", "org_name": "GreenPeace", "coordinates": {"a": 0.47512449258271405, "b": 0.20896226084344743, "c": 0.3159132465738384}, "raw_scores": {"a": 0.4190609655221144, "b": 0.1843052255856803, "c": 0.27863625680675974}, "classification": "dominant_associational", "confidence": 0.2661622317392666, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_001", "org_name": "TNO 12", "coordinates": {"a": 0.3215536383151458, "b": 0.42813711964145384, "c": 0.2503092420434003}, "raw_scores": {"a": 0.3448896010952994, "b": 0.45920811588676225, "c": 0.2684748183573851}, "classification": "dominant_scientific", "confidence": 0.17782787759805352, "kic_sectors": [], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_002", "org_name": "SustainCorp", "coordinates": {"a": 0.14776439392359264, "b": 0.25637209881459605, "c": 0.5958635072618114}, "raw_scores": {"a": 0.1839298350439194, "b": 0.3191193534026548, "c": 0.7417015269323116}, "classification": "dominant_managerial", "confidence": 0.4480991133382187, "kic_sectors": [], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_003", "org_name": "Sustainable Future", "coordinates": {"a": 0.6659996962617398, "b": 0.21210328800548886, "c": 0.12189701573277127}, "raw_scores": {"a": 0.5839199653806332, "b": 0.1859630646747466, "c": 0.10687407457721887}, "classification": "dominant_associational", "confidence": 0.5441026805289686, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_004", "org_name": "EcoSolutions 55", "coordinates": {"a": 0.1394726158833743, "b": 0.2057325226549727, "c": 0.654794861461653}, "raw_scores": {"a": 0.11940718306583538, "b": 0.17613451099103394, "c": 0.5605918365975104}, "classification": "dominant_managerial", "confidence": 0.5153222455782787, "kic_sectors": [], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_005", "org_name": "WWF", "coordinates": {"a": 0.6248770075457887, "b": 0.11300808260622235, "c": 0.26211490984798896}, "raw_scores": {"a": 0.6044910111757765, "b": 0.1093213053140947, "c": 0.25356366930599217}, "classification": "dominant_associational", "confidence": 0.5118689249395664, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_006", "org_name": "Sustainable Future", "coordinates": {"a": 0.5121854768756775, "b": 0.15430788315054283, "c": 0.3335066399737795}, "raw_scores": {"a": 0.40100691766175056, "b": 0.12081273559446999, "c": 0.26111335786288753}, "classification": "dominant_associational", "confidence": 0.35787759372513467, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_007", "org_name": "MIT 31", "coordinates": {"a": 0.2575685358923097, "b": 0.5614204940897871, "c": 0.18101097001790317}, "raw_scores": {"a": 0.27965909998879807, "b": 0.6095711556867376, "c": 0.19653551544227077}, "classification": "dominant_scientific", "confidence": 0.38040952407188394, "kic_sectors": [], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_008", "org_name": "TU Delft 13", "coordinates": {"a": 0.34348320754480466, "b": 0.5509430821759201, "c": 0.10557371027927522}, "raw_scores": {"a": 0.3659262633255326, "b": 0.586941483418483, "c": 0.1124718544002425}, "classification": "dominant_scientific", "confidence": 0.44536937189664494, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_009", "org_name": "Fraunhofer 27", "coordinates": {"a": 0.4478898357613556, "b": 0.35397557405489777, "c": 0.1981345901837465}, "raw_scores": {"a": 0.453282039010963, "b": 0.3582371314475899, "c": 0.20051995795891003}, "classification": "dominant_associational", "confidence": 0.24975524557760911, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_010", "org_name": "EU Commission", "coordinates": {"a": 0.4348568703310521, "b": 0.3009234584623191, "c": 0.2642196712066288}, "raw_scores": {"a": 0.48520590594783936, "b": 0.33576528105215575, "c": 0.2948118189772522}, "classification": "dominant_associational", "confidence": 0.17063719912442327, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_011", "org_name": "Fraunhofer", "coordinates": {"a": 0.31456431253723466, "b": 0.3017477214409669, "c": 0.3836879660217985}, "raw_scores": {"a": 0.3244452745644099, "b": 0.31122609409327445, "c": 0.3957402112112357}, "classification": "interstitial", "confidence": 0.0819402445808316, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_012", "org_name": "VITO", "coordinates": {"a": 0.3337196753045888, "b": 0.36623621185285443, "c": 0.3000441128425567}, "raw_scores": {"a": 0.3140774576324511, "b": 0.3446801217419937, "c": 0.2823839860600472}, "classification": "interstitial", "confidence": 0.06619209901029771, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_013", "org_name": "Climate Action 3", "coordinates": {"a": 0.6865419779116873, "b": 0.18661987485418455, "c": 0.12683814723412815}, "raw_scores": {"a": 0.769563795399744, "b": 0.20918735315597178, "c": 0.142176369584677}, "classification": "dominant_associational", "confidence": 0.5597038306775591, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_014", "org_name": "NetZero", "coordinates": {"a": 0.23888178689193112, "b": 0.15397973195527917, "c": 0.6071384811527896}, "raw_scores": {"a": 0.18615901620203446, "b": 0.11999539935129297, "c": 0.4731390526684747}, "classification": "dominant_managerial", "confidence": 0.4531587491975104, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_015", "org_name": "CleanTech 36", "coordinates": {"a": 0.16223625960042173, "b": 0.19162510039552252, "c": 0.6461386400040557}, "raw_scores": {"a": 0.1175913708642826, "b": 0.1388928609610074, "c": 0.4683313621356603}, "classification": "dominant_managerial", "confidence": 0.483902380403634, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_016", "org_name": "Fraunhofer", "coordinates": {"a": 0.3191419829637053, "b": 0.2834622754393789, "c": 0.3973957415969157}, "raw_scores": {"a": 0.28956319315772255, "b": 0.2571903603961597, "c": 0.36056421914621833}, "classification": "interstitial", "confidence": 0.1139334661575368, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_017", "org_name": "EcoSolutions", "coordinates": {"a": 0.29309832076955167, "b": 0.15174629170443338, "c": 0.555155387526015}, "raw_scores": {"a": 0.24489096574659786, "b": 0.126787815864635, "c": 0.4638461886568268}, "classification": "dominant_managerial", "confidence": 0.40340909582158163, "kic_sectors": [], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_018", "org_name": "SustainCorp 26", "coordinates": {"a": 0.2822125481076204, "b": 0.24005010757509201, "c": 0.47773734431728754}, "raw_scores": {"a": 0.2804630127388127, "b": 0.23856195208269848, "c": 0.4747756816042439}, "classification": "dominant_managerial", "confidence": 0.23768723674219552, "kic_sectors": [], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_019", "org_name": "Department of", "coordinates": {"a": 0.3947274565464519, "b": 0.2677344893923492, "c": 0.3375380540611989}, "raw_scores": {"a": 0.415321264231135, "b": 0.2817027920621028, "c": 0.355148163660404}, "classification": "interstitial", "confidence": 0.12699296715410274, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_020", "org_name": "WWF", "coordinates": {"a": 0.33947117680440453, "b": 0.3023825301990405, "c": 0.358146292996555}, "raw_scores": {"a": 0.31507901012125006, "b": 0.2806553097966476, "c": 0.3324122552559685}, "classification": "interstitial", "confidence": 0.05576376279751449, "kic_sectors": [], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_021", "org_name": "WWF", "coordinates": {"a": 0.5136186937273814, "b": 0.17342975245339387, "c": 0.31295155381922474}, "raw_scores": {"a": 0.47326947900606453, "b": 0.1598053372865248, "c": 0.28836648790041297}, "classification": "dominant_associational", "confidence": 0.3401889412739876, "kic_sectors": [], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_022", "org_name": "CleanTech", "coordinates": {"a": 0.3634326964916452, "b": 0.3221180297385577, "c": 0.3144492737697971}, "raw_scores": {"a": 0.3405903460510723, "b": 0.3018723749321961, "c": 0.2946856130519495}, "classification": "interstitial", "confidence": 0.048983422721848136, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_023", "org_name": "Cambridge 9", "coordinates": {"a": 0.1125948905261915, "b": 0.7324956207596416, "c": 0.15490948871416688}, "raw_scores": {"a": 0.10675382935320296, "b": 0.6944961013337756, "c": 0.14687328213652165}, "classification": "dominant_scientific", "confidence": 0.61990073023345, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_024", "org_name": "GreenEnergy 83", "coordinates": {"a": 0.14676261714281505, "b": 0.148030988348506, "c": 0.7052063945086791}, "raw_scores": {"a": 0.15613422966702992, "b": 0.15748359345590054, "c": 0.7502377601765643}, "classification": "dominant_managerial", "confidence": 0.558443777365864, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_025", "org_name": "SustainCorp 52", "coordinates": {"a": 0.2852128138063969, "b": 0.3552674607056474, "c": 0.3595197254879556}, "raw_scores": {"a": 0.2959308124684656, "b": 0.36861803958638584, "c": 0.37303010002317144}, "classification": "interstitial", "confidence": 0.07430691168155867, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_026", "org_name": "EU Commission 53", "coordinates": {"a": 0.4000484621615582, "b": 0.2675981257756508, "c": 0.332353412062791}, "raw_scores": {"a": 0.337986937907787, "b": 0.2260842864688961, "c": 0.2807937604343125}, "classification": "dominant_associational", "confidence": 0.13245033638590742, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_027", "org_name": "Ministry of", "coordinates": {"a": 0.3238844023458758, "b": 0.37111273827406116, "c": 0.30500285938006305}, "raw_scores": {"a": 0.31509211725950503, "b": 0.361038375413559, "c": 0.2967231396022517}, "classification": "interstitial", "confidence": 0.06610987889399811, "kic_sectors": [], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_028", "org_name": "GreenEnergy", "coordinates": {"a": 0.2326915892437045, "b": 0.18834576551013488, "c": 0.5789626452461606}, "raw_scores": {"a": 0.17579806355332822, "b": 0.14229487607509975, "c": 0.43740520331996163}, "classification": "dominant_managerial", "confidence": 0.3906168797360257, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_029", "org_name": "VITO 98", "coordinates": {"a": 0.38979970128066155, "b": 0.29986892051778463, "c": 0.31033137820155376}, "raw_scores": {"a": 0.2795422135674146, "b": 0.21504896372728785, "c": 0.22255204433680942}, "classification": "interstitial", "confidence": 0.08993078076287692, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_030", "org_name": "Ministry of", "coordinates": {"a": 0.3168940633182022, "b": 0.2818153743670896, "c": 0.4012905623147082}, "raw_scores": {"a": 0.3908233917617028, "b": 0.3475610723263859, "c": 0.4949090462711322}, "classification": "dominant_managerial", "confidence": 0.11947518794761863, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_031", "org_name": "CEA 27", "coordinates": {"a": 0.3356785154492433, "b": 0.2968290106061526, "c": 0.36749247394460405}, "raw_scores": {"a": 0.2265237729857265, "b": 0.20030721157158132, "c": 0.24799258192137047}, "classification": "interstitial", "confidence": 0.07066346333845147, "kic_sectors": [], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_032", "org_name": "WWF 82", "coordinates": {"a": 0.6443328886267294, "b": 0.18314115104431106, "c": 0.17252596032895945}, "raw_scores": {"a": 0.6833221229811473, "b": 0.1942232072050995, "c": 0.18296568057018964}, "classification": "dominant_associational", "confidence": 0.47180692829777, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_033", "org_name": "Climate Action 21", "coordinates": {"a": 0.7375919388169793, "b": 0.15004078891318345, "c": 0.11236727226983734}, "raw_scores": {"a": 0.6712155214513353, "b": 0.1365385127864332, "c": 0.1022552624038071}, "classification": "dominant_associational", "confidence": 0.6252246665471419, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_034", "org_name": "GreenPeace", "coordinates": {"a": 0.5978265236661374, "b": 0.17496583199138716, "c": 0.2272076443424755}, "raw_scores": {"a": 0.706984831270246, "b": 0.2069131835267477, "c": 0.26869392999445096}, "classification": "dominant_associational", "confidence": 0.42286069167475027, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_035", "org_name": "Department of 31", "coordinates": {"a": 0.2753350439720665, "b": 0.3900390960267038, "c": 0.33462586000122974}, "raw_scores": {"a": 0.3068779990850991, "b": 0.4347227858353513, "c": 0.37296129427580604}, "classification": "interstitial", "confidence": 0.1147040520546373, "kic_sectors": [], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_036", "org_name": "EU Commission", "coordinates": {"a": 0.3373275467337802, "b": 0.44475480096500974, "c": 0.21791765230121002}, "raw_scores": {"a": 0.32251526351304877, "b": 0.4252253135588926, "c": 0.20834873919009125}, "classification": "dominant_scientific", "confidence": 0.22683714866379973, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_037", "org_name": "CarbonFree 13", "coordinates": {"a": 0.09921143504595029, "b": 0.31665563027703797, "c": 0.5841329346770118}, "raw_scores": {"a": 0.11409356191199488, "b": 0.3641552885618674, "c": 0.6717552983337007}, "classification": "dominant_managerial", "confidence": 0.48492149963106146, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_038", "org_name": "EU Commission 87", "coordinates": {"a": 0.41696466005597893, "b": 0.34967265905873673, "c": 0.23336268088528436}, "raw_scores": {"a": 0.4380261688428026, "b": 0.3673351482017947, "c": 0.24515017902318958}, "classification": "dominant_associational", "confidence": 0.18360197917069457, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_039", "org_name": "EU Commission", "coordinates": {"a": 0.31938211435626146, "b": 0.35206788969956077, "c": 0.3285499959441777}, "raw_scores": {"a": 0.33403810718062366, "b": 0.36822378645516113, "c": 0.343626689868343}, "classification": "interstitial", "confidence": 0.032685775343299306, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_040", "org_name": "NetZero 32", "coordinates": {"a": 0.15834751535535146, "b": 0.24981173090835793, "c": 0.5918407537362906}, "raw_scores": {"a": 0.1496395241333068, "b": 0.23607385598792113, "c": 0.5592937063335053}, "classification": "dominant_managerial", "confidence": 0.43349323838093917, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_041", "org_name": "GreenPeace", "coordinates": {"a": 0.593183223651893, "b": 0.22422990521075312, "c": 0.18258687113735395}, "raw_scores": {"a": 0.5955799028191243, "b": 0.225135876790968, "c": 0.183324589489486}, "classification": "dominant_associational", "confidence": 0.4105963525145391, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_042", "org_name": "CleanTech 1", "coordinates": {"a": 0.21324861191072766, "b": 0.3267062908187216, "c": 0.4600450972705507}, "raw_scores": {"a": 0.22295022152861382, "b": 0.34156958519063385, "c": 0.4809745556166138}, "classification": "dominant_managerial", "confidence": 0.24679648535982304, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_043", "org_name": "Oxford", "coordinates": {"a": 0.3207489322541816, "b": 0.4952195695552446, "c": 0.1840314981905738}, "raw_scores": {"a": 0.2880984924858423, "b": 0.4448089988505135, "c": 0.16529812531565835}, "classification": "dominant_scientific", "confidence": 0.3111880713646708, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_044", "org_name": "Department of 14", "coordinates": {"a": 0.3246604745024113, "b": 0.32055825462083426, "c": 0.35478127087675443}, "raw_scores": {"a": 0.3209976059921988, "b": 0.316941667974927, "c": 0.35077857499238685}, "classification": "interstitial", "confidence": 0.03422301625592017, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_045", "org_name": "Cambridge", "coordinates": {"a": 0.2821448322691437, "b": 0.3506136026091819, "c": 0.3672415651216744}, "raw_scores": {"a": 0.28815581540210894, "b": 0.35808328558909747, "c": 0.3750655002117361}, "classification": "interstitial", "confidence": 0.08509673285253067, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "University"}, "time_series": []}, {"org_id": "org_046", "org_name": "GreenEnergy", "coordinates": {"a": 0.18842978635550145, "b": 0.26653997242827815, "c": 0.5450302412162202}, "raw_scores": {"a": 0.20832449661030034, "b": 0.29468167775706444, "c": 0.6025753827717196}, "classification": "dominant_managerial", "confidence": 0.3566004548607188, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_047", "org_name": "Earth First 32", "coordinates": {"a": 0.6607524405067681, "b": 0.15468834026088157, "c": 0.18455921923235044}, "raw_scores": {"a": 0.7392371038227504, "b": 0.17306233566371665, "c": 0.20648129972016854}, "classification": "dominant_associational", "confidence": 0.5060641002458866, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_048", "org_name": "Earth First", "coordinates": {"a": 0.6053918414107976, "b": 0.21291268387908785, "c": 0.18169547471011438}, "raw_scores": {"a": 0.6061131530734736, "b": 0.2131663648696604, "c": 0.1819119610516852}, "classification": "dominant_associational", "confidence": 0.4236963667006832, "kic_sectors": [], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_049", "org_name": "Fraunhofer 81", "coordinates": {"a": 0.3411080692891936, "b": 0.33022927917180334, "c": 0.3286626515390029}, "raw_scores": {"a": 0.37457643576540045, "b": 0.3626302556703258, "c": 0.360909915849316}, "classification": "interstitial", "confidence": 0.012445417750190702, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_050", "org_name": "Fraunhofer 9", "coordinates": {"a": 0.4072932458890559, "b": 0.39654522569131195, "c": 0.19616152841963214}, "raw_scores": {"a": 0.4341417853099794, "b": 0.4226852617258212, "c": 0.20909238495064786}, "classification": "dominant_associational", "confidence": 0.21113171746942377, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_051", "org_name": "CEA", "coordinates": {"a": 0.40003580043815695, "b": 0.2940693160037808, "c": 0.30589488355806227}, "raw_scores": {"a": 0.36547812147604986, "b": 0.2686657071169404, "c": 0.27946970568505125}, "classification": "dominant_associational", "confidence": 0.10596648443437617, "kic_sectors": ["EIT Digital"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_052", "org_name": "TNO 11", "coordinates": {"a": 0.2698981218624816, "b": 0.4088365618153439, "c": 0.3212653163221746}, "raw_scores": {"a": 0.24864627642535367, "b": 0.37664466896040416, "c": 0.2959688051805832}, "classification": "dominant_scientific", "confidence": 0.1389384399528623, "kic_sectors": ["EIT InnoEnergy"], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_053", "org_name": "Ministry of 64", "coordinates": {"a": 0.2745855687828291, "b": 0.3937416767618258, "c": 0.3316727544553451}, "raw_scores": {"a": 0.3068923588640101, "b": 0.4400679631495029, "c": 0.3706962257227324}, "classification": "interstitial", "confidence": 0.11915610797899673, "kic_sectors": [], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_054", "org_name": "Earth First 88", "coordinates": {"a": 0.6177811486800905, "b": 0.24303163745141243, "c": 0.13918721386849703}, "raw_scores": {"a": 0.6642381264210093, "b": 0.2613075518193757, "c": 0.1496540552577569}, "classification": "dominant_associational", "confidence": 0.47859393481159346, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_055", "org_name": "Agency for", "coordinates": {"a": 0.41057270479843316, "b": 0.31158556104527896, "c": 0.2778417341562878}, "raw_scores": {"a": 0.34447422225800184, "b": 0.26142311106772154, "c": 0.23311173433043816}, "classification": "dominant_associational", "confidence": 0.13273097064214534, "kic_sectors": ["EIT Food"], "metadata": {"org_type": "Government"}, "time_series": []}, {"org_id": "org_056", "org_name": "Climate Action", "coordinates": {"a": 0.5966728144193161, "b": 0.2126007592858071, "c": 0.19072642629487688}, "raw_scores": {"a": 0.7813164692983836, "b": 0.2783912231312225, "c": 0.24974775855949813}, "classification": "dominant_associational", "confidence": 0.4059463881244392, "kic_sectors": ["Climate-KIC"], "metadata": {"org_type": "NGO"}, "time_series": []}, {"org_id": "org_057", "org_name": "CEA", "coordinates": {"a": 0.2906599689715582, "b": 0.36255739484885713, "c": 0.3467826361795846}, "raw_scores": {"a": 0.31173835288794693, "b": 0.3888497115630922, "c": 0.37193098243034023}, "classification": "interstitial", "confidence": 0.07189742587729891, "kic_sectors": [], "metadata": {"org_type": "Research"}, "time_series": []}, {"org_id": "org_058", "org_name": "SustainCorp 46", "coordinates": {"a": 0.2876889536977325, "b": 0.37173289444604224, "c": 0.3405781518562252}, "raw_scores": {"a": 0.2828994096993558, "b": 0.3655441582060547, "c": 0.334908090415788}, "classification": "interstitial", "confidence": 0.08404394074830973, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Company"}, "time_series": []}, {"org_id": "org_059", "org_name": "NetZero 97", "coordinates": {"a": 0.17664792673888235, "b": 0.149814813169947, "c": 0.6735372600911707}, "raw_scores": {"a": 0.1268296123236389, "b": 0.10756398348659718, "c": 0.48358602990660604}, "classification": "dominant_managerial", "confidence": 0.5237224469212236, "kic_sectors": ["EIT Health"], "metadata": {"org_type": "Company"}, "time_series": []}];
+const EDGES = [{"source_id": "org_000", "target_id": "org_014", "weight": 0.5459445599226513, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_000", "target_id": "org_016", "weight": 0.6999173288646807, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_000", "target_id": "org_040", "weight": 0.6473489857788783, "edge_type": "mention", "metadata": {}}, {"source_id": "org_000", "target_id": "org_047", "weight": 0.31048044971833255, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_001", "target_id": "org_011", "weight": 0.619130191614835, "edge_type": "mention", "metadata": {}}, {"source_id": "org_001", "target_id": "org_037", "weight": 0.7784105340746095, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_001", "target_id": "org_051", "weight": 0.4183413324721515, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_001", "target_id": "org_055", "weight": 0.6386464859380845, "edge_type": "mention", "metadata": {}}, {"source_id": "org_002", "target_id": "org_004", "weight": 0.6629681559022411, "edge_type": "mention", "metadata": {}}, {"source_id": "org_002", "target_id": "org_006", "weight": 0.78418793350156, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_002", "target_id": "org_015", "weight": 0.5001087914014101, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_002", "target_id": "org_024", "weight": 0.8589416327360841, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_002", "target_id": "org_025", "weight": 0.48494996731147944, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_002", "target_id": "org_038", "weight": 0.8169633951943571, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_002", "target_id": "org_058", "weight": 0.9422442652388208, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_003", "target_id": "org_013", "weight": 0.5157019117083332, "edge_type": "mention", "metadata": {}}, {"source_id": "org_003", "target_id": "org_016", "weight": 0.5319517706516845, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_003", "target_id": "org_035", "weight": 0.5214556269971152, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_003", "target_id": "org_056", "weight": 0.860827938127875, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_004", "target_id": "org_043", "weight": 0.5809182992702664, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_004", "target_id": "org_044", "weight": 0.5738406769702639, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_004", "target_id": "org_054", "weight": 0.9389865087031037, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_005", "target_id": "org_009", "weight": 0.6273931109687211, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_005", "target_id": "org_019", "weight": 0.37276558943691995, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_005", "target_id": "org_021", "weight": 0.45003676275976023, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_005", "target_id": "org_029", "weight": 0.9015239488823801, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_005", "target_id": "org_039", "weight": 0.8977605199823773, "edge_type": "mention", "metadata": {}}, {"source_id": "org_006", "target_id": "org_018", "weight": 0.5852697608447379, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_006", "target_id": "org_044", "weight": 0.7173550416184153, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_006", "target_id": "org_048", "weight": 0.37968401136901103, "edge_type": "mention", "metadata": {}}, {"source_id": "org_006", "target_id": "org_052", "weight": 0.438034136500991, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_007", "target_id": "org_018", "weight": 0.7744424524778735, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_007", "target_id": "org_040", "weight": 0.5512184451838417, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_007", "target_id": "org_047", "weight": 0.537358149771687, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_007", "target_id": "org_048", "weight": 0.4984791390863323, "edge_type": "mention", "metadata": {}}, {"source_id": "org_008", "target_id": "org_019", "weight": 0.960408358230926, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_008", "target_id": "org_023", "weight": 0.9023323579220983, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_008", "target_id": "org_033", "weight": 0.6994777220124961, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_008", "target_id": "org_037", "weight": 0.6179190001483894, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_008", "target_id": "org_041", "weight": 0.9712665694626339, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_008", "target_id": "org_046", "weight": 0.7977906069825969, "edge_type": "mention", "metadata": {}}, {"source_id": "org_008", "target_id": "org_047", "weight": 0.8024528689237884, "edge_type": "mention", "metadata": {}}, {"source_id": "org_008", "target_id": "org_054", "weight": 0.5741864195968485, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_008", "target_id": "org_057", "weight": 0.6806003776079077, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_009", "target_id": "org_025", "weight": 0.4689117260310617, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_009", "target_id": "org_029", "weight": 0.6136022741357678, "edge_type": "mention", "metadata": {}}, {"source_id": "org_009", "target_id": "org_044", "weight": 0.597351637812076, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_009", "target_id": "org_051", "weight": 0.4904685100864724, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_009", "target_id": "org_058", "weight": 0.8272598902324986, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_010", "target_id": "org_026", "weight": 0.9698669928991412, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_010", "target_id": "org_033", "weight": 0.7756536457138588, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_010", "target_id": "org_036", "weight": 0.4240573465959117, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_011", "target_id": "org_024", "weight": 0.8332525984038655, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_011", "target_id": "org_049", "weight": 0.6636603279201075, "edge_type": "mention", "metadata": {}}, {"source_id": "org_011", "target_id": "org_057", "weight": 0.58721247224368, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_013", "target_id": "org_016", "weight": 0.9782624302241438, "edge_type": "mention", "metadata": {}}, {"source_id": "org_013", "target_id": "org_019", "weight": 0.30340296015068163, "edge_type": "mention", "metadata": {}}, {"source_id": "org_013", "target_id": "org_044", "weight": 0.7888425625281212, "edge_type": "mention", "metadata": {}}, {"source_id": "org_013", "target_id": "org_047", "weight": 0.3875765740387958, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_013", "target_id": "org_059", "weight": 0.9800858091892228, "edge_type": "mention", "metadata": {}}, {"source_id": "org_014", "target_id": "org_016", "weight": 0.7841800667624059, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_014", "target_id": "org_024", "weight": 0.320223079042251, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_014", "target_id": "org_030", "weight": 0.7796662109066459, "edge_type": "mention", "metadata": {}}, {"source_id": "org_014", "target_id": "org_043", "weight": 0.4287690305452925, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_015", "target_id": "org_021", "weight": 0.39829466922410217, "edge_type": "mention", "metadata": {}}, {"source_id": "org_015", "target_id": "org_028", "weight": 0.8648251129185542, "edge_type": "mention", "metadata": {}}, {"source_id": "org_015", "target_id": "org_032", "weight": 0.8119727552716185, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_015", "target_id": "org_045", "weight": 0.7359780319712469, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_015", "target_id": "org_046", "weight": 0.4361102370132328, "edge_type": "mention", "metadata": {}}, {"source_id": "org_015", "target_id": "org_048", "weight": 0.6987195092205123, "edge_type": "mention", "metadata": {}}, {"source_id": "org_015", "target_id": "org_049", "weight": 0.4652344925171087, "edge_type": "mention", "metadata": {}}, {"source_id": "org_015", "target_id": "org_052", "weight": 0.6632757743798934, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_015", "target_id": "org_055", "weight": 0.536000265147357, "edge_type": "mention", "metadata": {}}, {"source_id": "org_015", "target_id": "org_058", "weight": 0.8993971081568524, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_016", "target_id": "org_025", "weight": 0.9000001316606654, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_016", "target_id": "org_040", "weight": 0.4461793563648843, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_016", "target_id": "org_045", "weight": 0.8119730729930454, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_016", "target_id": "org_055", "weight": 0.7829620934252203, "edge_type": "mention", "metadata": {}}, {"source_id": "org_016", "target_id": "org_059", "weight": 0.8944500466074272, "edge_type": "mention", "metadata": {}}, {"source_id": "org_017", "target_id": "org_025", "weight": 0.4630449976908497, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_017", "target_id": "org_042", "weight": 0.5150854449616817, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_017", "target_id": "org_043", "weight": 0.5837647577200358, "edge_type": "mention", "metadata": {}}, {"source_id": "org_017", "target_id": "org_050", "weight": 0.9425165379707876, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_018", "target_id": "org_022", "weight": 0.531987430411686, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_018", "target_id": "org_024", "weight": 0.7820530149496422, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_018", "target_id": "org_025", "weight": 0.5468218524414863, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_018", "target_id": "org_051", "weight": 0.5573890272874824, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_019", "target_id": "org_026", "weight": 0.9435732507693526, "edge_type": "mention", "metadata": {}}, {"source_id": "org_019", "target_id": "org_029", "weight": 0.338297407901646, "edge_type": "mention", "metadata": {}}, {"source_id": "org_019", "target_id": "org_046", "weight": 0.32113182375027466, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_019", "target_id": "org_048", "weight": 0.6853354532395861, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_019", "target_id": "org_055", "weight": 0.3196721695885666, "edge_type": "mention", "metadata": {}}, {"source_id": "org_019", "target_id": "org_059", "weight": 0.7572921306664571, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_020", "target_id": "org_030", "weight": 0.6752034200293773, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_020", "target_id": "org_034", "weight": 0.8031983809232495, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_020", "target_id": "org_042", "weight": 0.5675510429858053, "edge_type": "mention", "metadata": {}}, {"source_id": "org_020", "target_id": "org_044", "weight": 0.6312563277991656, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_021", "target_id": "org_036", "weight": 0.9033644013143454, "edge_type": "mention", "metadata": {}}, {"source_id": "org_021", "target_id": "org_037", "weight": 0.5110022006477006, "edge_type": "mention", "metadata": {}}, {"source_id": "org_021", "target_id": "org_043", "weight": 0.45917029051953395, "edge_type": "mention", "metadata": {}}, {"source_id": "org_021", "target_id": "org_048", "weight": 0.5722067323852429, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_022", "target_id": "org_029", "weight": 0.6695375822999243, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_023", "target_id": "org_024", "weight": 0.7195621265992458, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_023", "target_id": "org_025", "weight": 0.5565014550354394, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_023", "target_id": "org_029", "weight": 0.35097566416409987, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_023", "target_id": "org_036", "weight": 0.936818605787878, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_023", "target_id": "org_037", "weight": 0.8802202743462331, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_023", "target_id": "org_038", "weight": 0.7008132674300855, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_023", "target_id": "org_044", "weight": 0.870292995262065, "edge_type": "mention", "metadata": {}}, {"source_id": "org_023", "target_id": "org_052", "weight": 0.34789708832099686, "edge_type": "mention", "metadata": {}}, {"source_id": "org_024", "target_id": "org_036", "weight": 0.9417231409238087, "edge_type": "mention", "metadata": {}}, {"source_id": "org_024", "target_id": "org_042", "weight": 0.6131069380251715, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_024", "target_id": "org_050", "weight": 0.858786049460079, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_024", "target_id": "org_058", "weight": 0.4857303641222289, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_024", "target_id": "org_059", "weight": 0.9877198726114831, "edge_type": "mention", "metadata": {}}, {"source_id": "org_025", "target_id": "org_036", "weight": 0.91487411548381, "edge_type": "mention", "metadata": {}}, {"source_id": "org_025", "target_id": "org_041", "weight": 0.3284804529189488, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_026", "target_id": "org_034", "weight": 0.6201738571095747, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_026", "target_id": "org_035", "weight": 0.5187781252836997, "edge_type": "mention", "metadata": {}}, {"source_id": "org_026", "target_id": "org_041", "weight": 0.3554253576350867, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_026", "target_id": "org_045", "weight": 0.8774376614548169, "edge_type": "mention", "metadata": {}}, {"source_id": "org_026", "target_id": "org_059", "weight": 0.7320639042047676, "edge_type": "mention", "metadata": {}}, {"source_id": "org_027", "target_id": "org_041", "weight": 0.5922525511293936, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_027", "target_id": "org_044", "weight": 0.7282549684688789, "edge_type": "mention", "metadata": {}}, {"source_id": "org_027", "target_id": "org_054", "weight": 0.6359100929331013, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_029", "target_id": "org_043", "weight": 0.7247500681039566, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_029", "target_id": "org_057", "weight": 0.9890884947911607, "edge_type": "mention", "metadata": {}}, {"source_id": "org_030", "target_id": "org_038", "weight": 0.432909918606689, "edge_type": "mention", "metadata": {}}, {"source_id": "org_030", "target_id": "org_047", "weight": 0.35605168694269196, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_030", "target_id": "org_048", "weight": 0.9308801657934405, "edge_type": "mention", "metadata": {}}, {"source_id": "org_030", "target_id": "org_050", "weight": 0.3403633043761001, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_030", "target_id": "org_052", "weight": 0.8274371361194635, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_031", "target_id": "org_053", "weight": 0.6236175977595396, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_032", "target_id": "org_044", "weight": 0.6895392860838965, "edge_type": "mention", "metadata": {}}, {"source_id": "org_033", "target_id": "org_034", "weight": 0.6794531080136568, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_033", "target_id": "org_038", "weight": 0.9319163952195186, "edge_type": "mention", "metadata": {}}, {"source_id": "org_033", "target_id": "org_043", "weight": 0.7991433647453675, "edge_type": "mention", "metadata": {}}, {"source_id": "org_033", "target_id": "org_047", "weight": 0.677303035430589, "edge_type": "mention", "metadata": {}}, {"source_id": "org_033", "target_id": "org_058", "weight": 0.40122059088916784, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_035", "target_id": "org_051", "weight": 0.7204001439735106, "edge_type": "mention", "metadata": {}}, {"source_id": "org_036", "target_id": "org_048", "weight": 0.7382977379499405, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_036", "target_id": "org_054", "weight": 0.9136435552305935, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_037", "target_id": "org_038", "weight": 0.4039579504034275, "edge_type": "mention", "metadata": {}}, {"source_id": "org_037", "target_id": "org_047", "weight": 0.7558589756978986, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_038", "target_id": "org_052", "weight": 0.9254500603896134, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_039", "target_id": "org_040", "weight": 0.556737753863714, "edge_type": "mention", "metadata": {}}, {"source_id": "org_039", "target_id": "org_045", "weight": 0.6301300040412381, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_039", "target_id": "org_049", "weight": 0.6033026671398583, "edge_type": "mention", "metadata": {}}, {"source_id": "org_039", "target_id": "org_053", "weight": 0.8368982924689543, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_040", "target_id": "org_041", "weight": 0.9392353535360447, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_040", "target_id": "org_046", "weight": 0.852322821428116, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_041", "target_id": "org_051", "weight": 0.676354703007808, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_042", "target_id": "org_056", "weight": 0.5494263762820673, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_044", "target_id": "org_050", "weight": 0.3908664479981697, "edge_type": "mention", "metadata": {}}, {"source_id": "org_044", "target_id": "org_055", "weight": 0.5122507681617143, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_044", "target_id": "org_059", "weight": 0.43337740283289733, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_045", "target_id": "org_057", "weight": 0.5252520389651898, "edge_type": "mention", "metadata": {}}, {"source_id": "org_045", "target_id": "org_058", "weight": 0.7186523708516859, "edge_type": "mention", "metadata": {}}, {"source_id": "org_046", "target_id": "org_052", "weight": 0.3680375810964085, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_046", "target_id": "org_054", "weight": 0.8342267498295726, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_048", "target_id": "org_058", "weight": 0.7829800616904126, "edge_type": "mention", "metadata": {}}, {"source_id": "org_048", "target_id": "org_059", "weight": 0.3787489163951847, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_049", "target_id": "org_058", "weight": 0.6565567888550696, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_050", "target_id": "org_056", "weight": 0.8000245256676535, "edge_type": "co_membership", "metadata": {}}, {"source_id": "org_050", "target_id": "org_059", "weight": 0.3789357365986993, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_051", "target_id": "org_055", "weight": 0.8522355004857964, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_052", "target_id": "org_053", "weight": 0.3655995046485817, "edge_type": "hyperlink", "metadata": {}}, {"source_id": "org_056", "target_id": "org_057", "weight": 0.326559117666618, "edge_type": "hyperlink", "metadata": {}}];
+const STATS = {"total": 60, "by_classification": {"dominant_associational": 21, "dominant_scientific": 7, "dominant_managerial": 14, "interstitial": 18}, "avg_confidence": 0.2802692830938688, "centroid": {"a": 0.36673023078178696, "b": 0.2944290884054009, "c": 0.3388406808128122}, "dispersion": 0.2113962594604049};
+
+// State
+const state = {
+    screen: 'overview',
+    filteredPositions: POSITIONS,
+    selectedOrg: null,
+    showEdges: true,
+    edgeOpacity: 0.3
+};
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    renderStats();
+    renderLegend();
+    renderOverview();
+    setupNavigation();
+});
+
+function setupNavigation() {
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const screen = item.dataset.screen;
+            showScreen(screen);
+        });
+    });
+}
+
+function showScreen(screenId) {
+    state.screen = screenId;
+
+    // Update nav
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.screen === screenId);
+    });
+
+    // Update screens
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.toggle('active', screen.id === 'screen-' + screenId);
+    });
+
+    // Render screen content
+    if (screenId === 'overview') renderOverview();
+    else if (screenId === 'positions') renderPositions();
+    else if (screenId === 'network') renderNetwork();
+    else if (screenId === 'animation') renderAnimation();
+}
+
+function renderStats() {
+    const panel = document.getElementById('stats-panel');
+    panel.innerHTML = `
+        <div class="stat-row">
+            <span class="stat-label">Total Organizations</span>
+            <span class="stat-value">${STATS.total}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">${TRIAD_CONFIG.axis_a.name}</span>
+            <span class="stat-value">${STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_a.key] || 0}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">${TRIAD_CONFIG.axis_b.name}</span>
+            <span class="stat-value">${STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_b.key] || 0}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">${TRIAD_CONFIG.axis_c.name}</span>
+            <span class="stat-value">${STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_c.key] || 0}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Interstitial</span>
+            <span class="stat-value">${STATS.by_classification.interstitial || 0}</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Avg Confidence</span>
+            <span class="stat-value">${(STATS.avg_confidence * 100).toFixed(1)}%</span>
+        </div>
+    `;
+}
+
+function renderLegend() {
+    const panel = document.getElementById('legend-panel');
+    const items = [
+        { name: TRIAD_CONFIG.axis_a.name, color: TRIAD_CONFIG.axis_a.color, key: 'dominant_' + TRIAD_CONFIG.axis_a.key },
+        { name: TRIAD_CONFIG.axis_b.name, color: TRIAD_CONFIG.axis_b.color, key: 'dominant_' + TRIAD_CONFIG.axis_b.key },
+        { name: TRIAD_CONFIG.axis_c.name, color: TRIAD_CONFIG.axis_c.color, key: 'dominant_' + TRIAD_CONFIG.axis_c.key },
+        { name: 'Interstitial', color: TRIAD_CONFIG.color_palette.interstitial || '#f1c40f', key: 'interstitial' }
+    ];
+
+    panel.innerHTML = items.map(item => `
+        <div class="legend-item">
+            <span class="legend-color" style="background: ${item.color}"></span>
+            <span class="legend-label">${item.name}</span>
+        </div>
+    `).join('');
+}
+
+function renderOverview() {
+    // Render pie chart
+    const pieData = [{
+        type: 'pie',
+        values: [
+            STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_a.key] || 0,
+            STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_b.key] || 0,
+            STATS.by_classification['dominant_' + TRIAD_CONFIG.axis_c.key] || 0,
+            STATS.by_classification.interstitial || 0
+        ],
+        labels: [TRIAD_CONFIG.axis_a.name, TRIAD_CONFIG.axis_b.name, TRIAD_CONFIG.axis_c.name, 'Interstitial'],
+        marker: {
+            colors: [TRIAD_CONFIG.axis_a.color, TRIAD_CONFIG.axis_b.color, TRIAD_CONFIG.axis_c.color, '#f1c40f']
+        },
+        hole: 0.4,
+        textinfo: 'label+percent'
+    }];
+
+    Plotly.newPlot('overview-chart', pieData, {
+        margin: { t: 20, b: 20, l: 20, r: 20 },
+        showlegend: false,
+        font: { family: 'Inter, sans-serif' }
+    }, { responsive: true });
+
+    // Render key metrics
+    document.getElementById('key-metrics').innerHTML = `
+        <div class="metric-grid">
+            <div class="metric">
+                <div class="metric-value">${STATS.centroid.a.toFixed(2)}</div>
+                <div class="metric-label">Centroid ${TRIAD_CONFIG.axis_a.name}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">${STATS.centroid.b.toFixed(2)}</div>
+                <div class="metric-label">Centroid ${TRIAD_CONFIG.axis_b.name}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">${STATS.centroid.c.toFixed(2)}</div>
+                <div class="metric-label">Centroid ${TRIAD_CONFIG.axis_c.name}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">${STATS.dispersion.toFixed(3)}</div>
+                <div class="metric-label">Dispersion</div>
+            </div>
+        </div>
+    `;
+
+    // Render ternary
+    renderTernary('overview-ternary', state.filteredPositions);
+}
+
+function renderPositions() {
+    document.getElementById('position-count').textContent = `${state.filteredPositions.length} organizations`;
+    renderTernary('positions-ternary', state.filteredPositions);
+    renderTopByPole();
+}
+
+function renderNetwork() {
+    if (EDGES.length === 0) {
+        document.getElementById('network-ternary').innerHTML = '<p class="text-gray text-center">No network edges available.</p>';
+        return;
+    }
+    renderTernaryWithEdges('network-ternary', state.filteredPositions, EDGES);
+}
+
+function renderAnimation() {
+    // Check if time series data exists
+    const hasTimeSeries = POSITIONS.some(p => p.time_series && p.time_series.length > 0);
+    if (!hasTimeSeries) {
+        document.getElementById('animation-ternary').innerHTML = '<p class="text-gray text-center">No time-series data available.</p>';
+    }
+}
+
+function renderTernary(containerId, positions) {
+    const colorBy = document.getElementById('color-by').value;
+    const sizeBy = document.getElementById('size-by').value;
+
+    // Group by classification
+    const groups = {};
+    positions.forEach(p => {
+        const cls = p.classification;
+        if (!groups[cls]) groups[cls] = [];
+        groups[cls].push(p);
+    });
+
+    const traces = Object.entries(groups).map(([cls, grpPositions]) => ({
+        type: 'scatterternary',
+        mode: 'markers',
+        name: cls.replace('dominant_', '').replace('_', ' '),
+        a: grpPositions.map(p => p.coordinates.a),
+        b: grpPositions.map(p => p.coordinates.b),
+        c: grpPositions.map(p => p.coordinates.c),
+        text: grpPositions.map(p => p.org_name),
+        customdata: grpPositions,
+        hovertemplate: '<b>%{text}</b><br>' +
+            `${TRIAD_CONFIG.axis_a.name}: %{a:.2f}<br>` +
+            `${TRIAD_CONFIG.axis_b.name}: %{b:.2f}<br>` +
+            `${TRIAD_CONFIG.axis_c.name}: %{c:.2f}<extra></extra>`,
+        marker: {
+            size: sizeBy === 'fixed' ? 10 : grpPositions.map(p => 6 + p.confidence * 14),
+            color: TRIAD_CONFIG.color_palette[cls] || '#999',
+            opacity: 0.8,
+            line: { color: 'white', width: 1 }
+        }
+    }));
+
+    const layout = {
+        ternary: {
+            sum: 1,
+            aaxis: { title: { text: TRIAD_CONFIG.axis_a.name }, min: 0, linecolor: TRIAD_CONFIG.axis_a.color },
+            baxis: { title: { text: TRIAD_CONFIG.axis_b.name }, min: 0, linecolor: TRIAD_CONFIG.axis_b.color },
+            caxis: { title: { text: TRIAD_CONFIG.axis_c.name }, min: 0, linecolor: TRIAD_CONFIG.axis_c.color },
+            bgcolor: '#fafafa'
+        },
+        showlegend: true,
+        legend: { x: 1.02, y: 0.5 },
+        margin: { l: 50, r: 120, t: 50, b: 50 },
+        font: { family: 'Inter, sans-serif' },
+        paper_bgcolor: 'white'
+    };
+
+    Plotly.newPlot(containerId, traces, layout, { responsive: true });
+
+    // Add click handler
+    document.getElementById(containerId).on('plotly_click', data => {
+        if (data.points.length > 0) {
+            const point = data.points[0];
+            showInfoPanel(point.customdata);
+        }
+    });
+}
+
+function renderTernaryWithEdges(containerId, positions, edges) {
+    // Create position lookup
+    const posLookup = {};
+    positions.forEach(p => posLookup[p.org_id] = p);
+
+    // Create edge traces
+    const edgeA = [], edgeB = [], edgeC = [];
+    edges.forEach(e => {
+        const src = posLookup[e.source_id];
+        const tgt = posLookup[e.target_id];
+        if (src && tgt) {
+            edgeA.push(src.coordinates.a, tgt.coordinates.a, null);
+            edgeB.push(src.coordinates.b, tgt.coordinates.b, null);
+            edgeC.push(src.coordinates.c, tgt.coordinates.c, null);
+        }
+    });
+
+    const edgeTrace = {
+        type: 'scatterternary',
+        mode: 'lines',
+        a: edgeA,
+        b: edgeB,
+        c: edgeC,
+        line: { color: '#999', width: 0.5 },
+        opacity: state.showEdges ? state.edgeOpacity : 0,
+        hoverinfo: 'skip',
+        showlegend: false
+    };
+
+    // Node traces
+    const groups = {};
+    positions.forEach(p => {
+        const cls = p.classification;
+        if (!groups[cls]) groups[cls] = [];
+        groups[cls].push(p);
+    });
+
+    const nodeTraces = Object.entries(groups).map(([cls, grpPositions]) => ({
+        type: 'scatterternary',
+        mode: 'markers',
+        name: cls.replace('dominant_', '').replace('_', ' '),
+        a: grpPositions.map(p => p.coordinates.a),
+        b: grpPositions.map(p => p.coordinates.b),
+        c: grpPositions.map(p => p.coordinates.c),
+        text: grpPositions.map(p => p.org_name),
+        customdata: grpPositions,
+        hovertemplate: '<b>%{text}</b><extra></extra>',
+        marker: {
+            size: 10,
+            color: TRIAD_CONFIG.color_palette[cls] || '#999',
+            opacity: 0.9,
+            line: { color: 'white', width: 1 }
+        }
+    }));
+
+    const layout = {
+        ternary: {
+            sum: 1,
+            aaxis: { title: { text: TRIAD_CONFIG.axis_a.name }, min: 0 },
+            baxis: { title: { text: TRIAD_CONFIG.axis_b.name }, min: 0 },
+            caxis: { title: { text: TRIAD_CONFIG.axis_c.name }, min: 0 },
+            bgcolor: '#fafafa'
+        },
+        showlegend: true,
+        margin: { l: 50, r: 120, t: 50, b: 50 },
+        font: { family: 'Inter, sans-serif' }
+    };
+
+    Plotly.newPlot(containerId, [edgeTrace, ...nodeTraces], layout, { responsive: true });
+}
+
+function renderTopByPole() {
+    const container = document.getElementById('top-by-pole');
+    const poles = [
+        { key: 'dominant_' + TRIAD_CONFIG.axis_a.key, name: TRIAD_CONFIG.axis_a.name, color: TRIAD_CONFIG.axis_a.color },
+        { key: 'dominant_' + TRIAD_CONFIG.axis_b.key, name: TRIAD_CONFIG.axis_b.name, color: TRIAD_CONFIG.axis_b.color },
+        { key: 'dominant_' + TRIAD_CONFIG.axis_c.key, name: TRIAD_CONFIG.axis_c.name, color: TRIAD_CONFIG.axis_c.color }
+    ];
+
+    container.innerHTML = poles.map(pole => {
+        const polePositions = state.filteredPositions
+            .filter(p => p.classification === pole.key)
+            .sort((a, b) => b.confidence - a.confidence)
+            .slice(0, 5);
+
+        return `
+            <div class="pole-list">
+                <h4 style="color: ${pole.color}">${pole.name}</h4>
+                <ul>
+                    ${polePositions.map(p => `<li>${p.org_name} <span class="text-gray">${(p.confidence * 100).toFixed(0)}%</span></li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }).join('');
+}
+
+function applyFilters() {
+    const classification = document.getElementById('filter-classification').value;
+
+    if (classification === 'all') {
+        state.filteredPositions = POSITIONS;
+    } else {
+        state.filteredPositions = POSITIONS.filter(p => p.classification === classification);
+    }
+
+    updateVisualization();
+}
+
+function updateVisualization() {
+    if (state.screen === 'overview') renderOverview();
+    else if (state.screen === 'positions') renderPositions();
+    else if (state.screen === 'network') renderNetwork();
+}
+
+function searchOrganizations(query) {
+    const results = document.getElementById('search-results');
+    if (!query || query.length < 2) {
+        results.innerHTML = '';
+        return;
+    }
+
+    const matches = POSITIONS
+        .filter(p => p.org_name.toLowerCase().includes(query.toLowerCase()))
+        .slice(0, 10);
+
+    results.innerHTML = matches.map(p => `
+        <div class="search-result" onclick="highlightOrg('${p.org_id}')">
+            ${p.org_name}
+            <span class="tag" style="background: ${TRIAD_CONFIG.color_palette[p.classification] || '#999'}; color: white;">
+                ${p.classification.replace('dominant_', '')}
+            </span>
+        </div>
+    `).join('');
+}
+
+function highlightOrg(orgId) {
+    const pos = POSITIONS.find(p => p.org_id === orgId);
+    if (pos) {
+        showInfoPanel(pos);
+        toast(`Selected: ${pos.org_name}`);
+    }
+}
+
+function showInfoPanel(position) {
+    state.selectedOrg = position;
+    const panel = document.getElementById('info-panel');
+    document.getElementById('info-panel-title').textContent = position.org_name;
+
+    document.getElementById('info-panel-body').innerHTML = `
+        <div class="info-section">
+            <h4>Classification</h4>
+            <span class="tag" style="background: ${TRIAD_CONFIG.color_palette[position.classification] || '#999'}; color: white;">
+                ${position.classification.replace('dominant_', '').replace('_', ' ')}
+            </span>
+        </div>
+        <div class="info-section">
+            <h4>Coordinates</h4>
+            <div class="coord-bar">
+                <span>${TRIAD_CONFIG.axis_a.name}</span>
+                <div class="bar"><div class="bar-fill" style="width: ${position.coordinates.a * 100}%; background: ${TRIAD_CONFIG.axis_a.color}"></div></div>
+                <span>${position.coordinates.a.toFixed(2)}</span>
+            </div>
+            <div class="coord-bar">
+                <span>${TRIAD_CONFIG.axis_b.name}</span>
+                <div class="bar"><div class="bar-fill" style="width: ${position.coordinates.b * 100}%; background: ${TRIAD_CONFIG.axis_b.color}"></div></div>
+                <span>${position.coordinates.b.toFixed(2)}</span>
+            </div>
+            <div class="coord-bar">
+                <span>${TRIAD_CONFIG.axis_c.name}</span>
+                <div class="bar"><div class="bar-fill" style="width: ${position.coordinates.c * 100}%; background: ${TRIAD_CONFIG.axis_c.color}"></div></div>
+                <span>${position.coordinates.c.toFixed(2)}</span>
+            </div>
+        </div>
+        <div class="info-section">
+            <h4>Confidence</h4>
+            <div class="confidence-meter">
+                <div class="meter-fill" style="width: ${position.confidence * 100}%"></div>
+            </div>
+            <span class="text-sm text-gray">${(position.confidence * 100).toFixed(1)}%</span>
+        </div>
+        ${position.kic_sectors.length > 0 ? `
+        <div class="info-section">
+            <h4>KIC Sectors</h4>
+            <div class="tags">
+                ${position.kic_sectors.map(s => `<span class="tag tag-outline">${s}</span>`).join('')}
+            </div>
+        </div>` : ''}
+    `;
+
+    panel.classList.remove('hidden');
+}
+
+function closeInfoPanel() {
+    document.getElementById('info-panel').classList.add('hidden');
+    state.selectedOrg = null;
+}
+
+function toggleEdges() {
+    state.showEdges = document.getElementById('show-edges').checked;
+    renderNetwork();
+}
+
+function updateEdgeOpacity(value) {
+    state.edgeOpacity = value / 100;
+    renderNetwork();
+}
+
+function exportPNG() {
+    const containerId = state.screen === 'network' ? 'network-ternary' :
+                       state.screen === 'positions' ? 'positions-ternary' : 'overview-ternary';
+    Plotly.downloadImage(containerId, {
+        format: 'png',
+        width: 1200,
+        height: 800,
+        filename: 'triad-visualization'
+    });
+    toast('Image exported!');
+}
+
+function toast(message) {
+    const t = document.getElementById('toast');
+    t.textContent = message;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
