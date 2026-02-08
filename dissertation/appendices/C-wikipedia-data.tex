@@ -1,372 +1,434 @@
 % !TEX root = ../main.tex
-%************************************************
-\chapter{Wikipedia as a Data Source for Role Analysis}
-\label{app:wikipedia}
-%************************************************
+\documentclass[../main.tex]{subfiles}
 
-\noindent\textit{This appendix outlines preliminary work on leveraging Wikipedia and Wikidata as complementary data sources for understanding organizational role performance. While this analysis extends beyond the scope of the main dissertation, it demonstrates the potential of collaborative knowledge platforms for triangulating findings about how cities and organizations enact climate governance roles. The infrastructure developed here---including automated collection pipelines and analytical frameworks---provides a foundation for future research.}
+\begin{document}
+
+\chapter{Wikipedia: The Recognized Map}
+\label{app:wikipedia}
+
+\noindent\textit{Wikipedia articles emerge from collaborative editing, reflecting how organizations are \emph{recognized}
+by external observers---distinct from both their self-declarations and third-party attributions.
+This appendix documents the bridging workflow connecting Wikipedia data to role theory constructs,
+following the data--theory integration framework of \textcite{maass2018data}.}
 
 \bigskip
 
-\section{Rationale and Research Potential}
 
-Wikipedia represents a unique data source for organizational research. Unlike official communications that organizations carefully craft, Wikipedia articles emerge from collaborative editing by diverse contributors, reflecting how organizations are \emph{perceived} and \emph{understood} by external observers. This distinction is theoretically significant for role analysis: while organizational websites and press releases reveal how actors \emph{claim} roles, Wikipedia content illuminates how those roles are \emph{recognized} and \emph{legitimated} by broader publics.
+%===============================================================================
+\section{The Bridging Problem}
+%===============================================================================
 
-For climate governance specifically, Wikipedia offers several advantages:
+Collaborative knowledge platforms and role theory address complementary aspects
+of organizational identity from different epistemological traditions.
+Wikipedia represents how organizations are \emph{perceived} and \emph{categorized}
+by diverse contributors---external recognition distinct from the declared
+identity of websites (\cref{app:websites}) and attributed roles of news media
+(\cref{app:news-media}).
+The challenge is bridging these perspectives: using patterns of collaborative
+description to operationalize recognition-based constructs, and using
+theoretical expectations about role legitimation to guide what features to extract.
 
-\begin{description}
-    \item[Temporal depth] Article revision histories enable longitudinal analysis of how organizational representations evolve alongside policy developments and institutional changes.
-    \item[Cross-linguistic comparison] Articles in multiple language editions reveal how organizations are framed differently across national and cultural contexts.
-    \item[Structured metadata] Wikidata provides machine-readable attributes (founding dates, headquarters, organizational types) that enable systematic comparison.
-    \item[Network structure] Internal links between articles map perceived relationships between actors, potentially revealing role constellations.
+\Cref{fig:wikipedia-bridging} shows how the \RoleBox{} Wikipedia pipeline
+enacts this bridging workflow.
+The upper path (\textit{from patterns to theory}) extracts recognition patterns
+from collaborative editing and maps them to role constructs.
+The lower path (\textit{from theory to data requirements}) uses role theory
+to specify what aspects of Wikipedia content and structure to capture.
+The pipeline---crawling, NER, topic modeling, knowledge graph extraction---sits
+at the intersection as bridging knowledge.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    cloudstyle/.style={cloud, cloud puffs=12, cloud puff arc=120,
+        draw, minimum width=2.8cm, minimum height=1.6cm,
+        font=\small\bfseries, text=white, inner sep=0pt},
+    blockstyle/.style={rectangle, draw, rounded corners=3pt,
+        minimum width=2.6cm, minimum height=1.4cm,
+        font=\small\bfseries, text=white, inner sep=4pt},
+    bridgestyle/.style={rectangle, draw=AccentCyan, fill=AccentCyan!15,
+        rounded corners=3pt, minimum width=3cm, minimum height=1.8cm,
+        font=\small\bfseries, text=Slate, inner sep=4pt},
+    substyle/.style={font=\tiny, text=Slate, align=left},
+    arrowlabel/.style={font=\scriptsize\itshape, text=Slate},
+]
+
+% Left: Wikipedia Data
+\node[cloudstyle, fill=Azure!80, draw=Azure] (data) at (-4, 0) {Wikipedia};
+\node[substyle, below=0.15cm of data] {
+    Article text\\
+    Wikidata QIDs\\
+    Edit history
+};
+
+% Right: Role Theory
+\node[blockstyle, fill=AccentPurple!80, draw=AccentPurple] (theory) at (4, 0)
+    {Role Theory};
+\node[substyle, below=0.15cm of theory] {
+    External recognition\\
+    Legitimated categories\\
+    Knowledge triangle
+};
+
+% Center: Bridging Pipeline
+\node[bridgestyle] (bridge) at (0, 0) {
+    \begin{tabular}{c}
+    \textsc{RoleBox}\\[-1pt]
+    \textsc{Pipeline}
+    \end{tabular}
+};
+
+% Upper path: patterns to theory
+\draw[->, thick, PandaRose, bend left=20]
+    (data.north east) to
+    node[arrowlabel, above, pos=0.5] {recognition patterns}
+    (bridge.north west);
+\draw[->, thick, PandaRose, bend left=20]
+    (bridge.north east) to
+    node[arrowlabel, above, pos=0.5] {legitimated roles}
+    (theory.north west);
+
+% Lower path: theory to data requirements
+\draw[->, thick, CoverGold, bend left=20]
+    (theory.south west) to
+    node[arrowlabel, below, pos=0.5] {recognition constructs}
+    (bridge.south east);
+\draw[->, thick, CoverGold, bend left=20]
+    (bridge.south west) to
+    node[arrowlabel, below, pos=0.5] {extraction targets}
+    (data.south east);
+
+% Bottom label
+\node[font=\small\itshape, text=AccentCyan] at (0, -2.2)
+    {Bridging workflow for the recognized map};
+
+\end{tikzpicture}
+\captionof{figure}[Wikipedia bridging workflow]{%
+    Bridging workflow connecting Wikipedia data to role theory,
+    adapted from the data--theory integration framework
+    of \textcite{maass2018data}.
+    The upper path extracts recognition patterns from collaborative
+    knowledge production and maps them to legitimated role constructs;
+    the lower path uses theory to guide extraction of categorization
+    and framing features.}
+\label{fig:wikipedia-bridging}
+\end{center}
+
+
+%===============================================================================
+\section{From Patterns to Theory}
+\label{sec:wikipedia-patterns-theory}
+%===============================================================================
+
+The upper path in \cref{fig:wikipedia-bridging} traces how collaborative
+knowledge production yields role-relevant patterns.
+The workflow proceeds through three stages: data collection, pattern extraction,
+and theoretical mapping.
+
+\subsection{Stage 1: Data Collection}
+
+We collected Wikipedia and Wikidata content for \textbf{243 entities}---111
+NetZeroCities cities and 132 EIT KIC partner organizations---achieving 90\%
+coverage (218 articles found).
+Cities achieved 100\% Wikipedia coverage; organizations 81\%.
+\Cref{fig:wikipedia-collection} summarizes the parallel collection pipeline.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={rectangle, draw=Slate!40, fill=Slate!5,
+        rounded corners=2pt, minimum height=0.7cm,
+        font=\scriptsize, inner sep=4pt},
+    arrow/.style={->, thick, Slate!60},
+    statlabel/.style={font=\tiny\itshape, text=Slate!70},
+]
+
+% Pipeline stages
+\node[box] (seed) at (0,0) {Entity Lists};
+\node[box] (wikidata) at (3,0.6) {Wikidata SPARQL};
+\node[box] (wikipedia) at (3,-0.6) {Wikipedia API};
+\node[box] (metadata) at (6,0.6) {Structured Metadata};
+\node[box] (articles) at (6,-0.6) {Article Corpus};
+\node[box] (nlp) at (9,0) {NLP Pipeline};
+
+\draw[arrow] (seed) -- (wikidata);
+\draw[arrow] (seed) -- (wikipedia);
+\draw[arrow] (wikidata) -- (metadata);
+\draw[arrow] (wikipedia) -- (articles);
+\draw[arrow] (metadata) -- (nlp);
+\draw[arrow] (articles) -- (nlp);
+
+% Stats
+\node[statlabel] at (0, -0.4) {243 entities};
+\node[statlabel] at (6, 1.0) {QIDs, types, dates};
+\node[statlabel] at (6, -1.0) {218 articles, 90\%};
+
+\end{tikzpicture}
+\captionof{figure}[Wikipedia collection pipeline]{%
+    Parallel collection pipeline for Wikipedia and Wikidata.
+    Entity seed lists feed SPARQL queries for structured metadata
+    and API calls for article content, converging in NLP processing.}
+\label{fig:wikipedia-collection}
+\end{center}
+
+\subsection{Stage 2: Pattern Extraction}
+
+Three families of patterns emerge from Wikipedia content, each capturing
+a distinct dimension of external recognition.
+
+\paragraph{Recognition through vocabulary.}
+Named Entity Recognition (NER) using spaCy's \texttt{en\_core\_web\_sm}
+identified 172,774 entity mentions across the corpus (53,835 for organizations,
+118,939 for cities).
+These mentions reveal \emph{what organizations are associated with}---not
+what organizations claim about themselves (websites) or what journalists
+attribute to them (news), but what collaborative editors consider relevant
+context.
+High co-mention frequency signals perceived affiliation.
+
+\paragraph{Recognition through categorization.}
+BERTopic topic modeling discovered latent thematic clusters: 5 topics for
+organizations, 7 for cities.
+Organizational topics reflect institutional types (universities, companies)
+and sectoral positioning.\sidenote{%
+    For organizations: Topic 1 ``university, research, students'' (42 docs);
+    Topic 2 ``university, college, institute'' (28 docs);
+    Topic 3 ``company, industry, technology'' (19 docs).}
+City topics capture geographic clustering and urban characteristics.\sidenote{%
+    For cities: Topic 0 ``city, amsterdam, munich'' (35 docs);
+    Topic 2 ``city, italy, milan'' (22 docs);
+    Topic 3 ``city, helsinki, stockholm'' (18 docs).}
+Topic assignment reveals how editors \emph{categorize} actors---the
+recognized type, not the claimed type.
+
+\paragraph{Recognition through relationships.}
+Knowledge graph extraction using kg-gen with Llama~3.2 identified 1,311
+unique entities and 1,330 relations from organizational articles, yielding
+734 distinct predicates (relation types).
+These subject--predicate--object triples map perceived relationships:
+``located in,'' ``founded in,'' ``member of.''
+The resulting network captures \emph{how editors connect organizations
+to institutional contexts}---a collaborative representation of organizational
+embeddedness.
+
+\subsection{Stage 3: Mapping to Role Constructs}
+
+\Cref{fig:wikipedia-mapping} shows how extracted patterns map onto
+role theory constructs from \cref{ch:cas,ch:role-constellations}.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    databox/.style={rectangle, draw=Azure!60, fill=Azure!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    theorybox/.style={rectangle, draw=AccentPurple!60, fill=AccentPurple!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    mapstyle/.style={->, thick, PandaRose!70, dashed},
+    grouplabel/.style={font=\scriptsize\bfseries, text=Slate},
+]
+
+% Data patterns (left)
+\node[grouplabel] at (-3, 2.2) {Recognition Patterns};
+\node[databox] (d1) at (-3, 1.5) {Entity co-mentions};
+\node[databox] (d2) at (-3, 0.5) {Topic assignments};
+\node[databox] (d3) at (-3, -0.5) {KG predicates};
+\node[databox] (d4) at (-3, -1.5) {Triangle scores};
+
+% Explicit patterns (center)
+\node[grouplabel] at (0, 2.2) {Explicit Patterns};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e1) at (0, 1.5)
+    {Affiliation networks};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e2) at (0, 0.5)
+    {Recognized categories};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e3) at (0, -0.5)
+    {Relational context};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e4) at (0, -1.5)
+    {Ed--Res--Biz balance};
+
+% Theory constructs (right)
+\node[grouplabel] at (3, 2.2) {Role Constructs};
+\node[theorybox] (t1) at (3, 1.5) {Perceived ties};
+\node[theorybox] (t2) at (3, 0.5) {Legitimated sociotype};
+\node[theorybox] (t3) at (3, -0.5) {Institutional embedding};
+\node[theorybox] (t4) at (3, -1.5) {Knowledge triangle};
+
+% Arrows
+\draw[mapstyle] (d1) -- (e1);
+\draw[mapstyle] (d2) -- (e2);
+\draw[mapstyle] (d3) -- (e3);
+\draw[mapstyle] (d4) -- (e4);
+\draw[mapstyle] (e1) -- (t1);
+\draw[mapstyle] (e2) -- (t2);
+\draw[mapstyle] (e3) -- (t3);
+\draw[mapstyle] (e4) -- (t4);
+
+% Flow labels
+\node[font=\tiny\itshape, text=PandaRose] at (-1.5, -2.2) {explicate};
+\node[font=\tiny\itshape, text=PandaRose] at (1.5, -2.2) {embed};
+
+\end{tikzpicture}
+\captionof{figure}[Mapping Wikipedia patterns to role constructs]{%
+    From recognition patterns to role constructs, following the
+    abstraction pathway of \textcite{maass2018data} Figure~3.
+    Recognition patterns (entity mentions, topic clusters, knowledge
+    graph relations) are explicated into named categories, then
+    embedded in role theory.}
+\label{fig:wikipedia-mapping}
+\end{center}
+
+Four mappings operationalize external recognition:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Co-mention frequency $\rightarrow$ Perceived affiliation.]
+Organizations frequently mentioned together in Wikipedia articles are
+\emph{perceived as connected} by collaborative editors.
+This differs from declared partnerships (websites) and attributed
+relationships (news)---it captures public recognition of association.
+
+\item[Topic assignment $\rightarrow$ Legitimated sociotype.]
+BERTopic clusters reveal how editors \emph{categorize} organizations:
+university-focused articles cluster separately from company-focused articles.
+This is the recognized sociotype---the category assignment that external
+observers consider legitimate and appropriate.
+
+\item[Knowledge graph relations $\rightarrow$ Institutional embedding.]
+Extracted triples like ``located in,'' ``member of,'' and ``founded by''
+map how editors situate organizations within institutional contexts.
+This operationalizes \emph{embeddedness}---not structural position
+(network metrics) but relational context (symbolic associations).
+
+\item[Powell Triangle scores $\rightarrow$ Knowledge triangle positioning.]
+Keyword-based classification using dictionaries for associational,
+scientific, and managerial domains positions each entity on the knowledge
+triangle.\sidenote{%
+    Organizations: 56\% dominant scientific, 23\% dominant managerial,
+    9\% balanced. Cities: 28\% balanced, 36\% mixed, reflecting
+    multifaceted urban governance.}
+This measures how Wikipedia content emphasizes different integration logics---distinct
+from how organizations \emph{claim} positioning (websites).
 \end{description}
 
-\section{Data Collection Pipeline}
 
-We developed an automated pipeline for collecting Wikipedia and Wikidata content on entities relevant to the dissertation's empirical focus.
+%===============================================================================
+\section{From Theory to Data Requirements}
+\label{sec:wikipedia-theory-data}
+%===============================================================================
 
-The pipeline follows a straightforward flow: entity lists (NetZeroCities, KIC partners) feed into parallel Wikidata SPARQL queries and Wikipedia API calls. Results are processed into text corpora and feature matrices for role analysis.
+The lower path in \cref{fig:wikipedia-bridging} runs in reverse:
+role theory specifies what aspects of collaborative knowledge to extract.
+This is the \emph{theory-to-data-requirements} pathway that
+\textcite{maass2018data} identify as essential for bridging.
 
+\paragraph{CAS theory requires relational signals.}
+Complex adaptive systems theory predicts that role emergence depends on
+mutual recognition---actors claiming roles that others validate.
+This requirement guided extraction of entity co-mentions (who is
+associated with whom) and knowledge graph predicates (what relationships
+editors consider noteworthy).
+Wikipedia provides external validation signals: if editors consistently
+link two organizations, that linkage constitutes \emph{recognized affiliation}.
+
+\paragraph{Sociotype theory requires categorical boundaries.}
+Role constellation theory hypothesizes that sociotypes emerge when
+categorical distinctions become salient and stable.
+This guided topic modeling (how do editors cluster organizations into types?)
+and structured extraction via NuExtract (what organizational attributes
+do editors emphasize?).
+Wikipedia categorization reveals \emph{legitimated boundaries}---which
+distinctions matter enough for editors to encode them.
+
+\paragraph{Knowledge triangle theory requires domain vocabulary.}
+The knowledge triangle framework expects organizations to integrate
+education, research, and business logics.
+This guided construction of Powell Triangle scoring dictionaries and
+extraction of domain-specific vocabulary from article sections.
+Wikipedia emphasis reveals \emph{public-facing positioning}---how
+organizations are understood to relate to the knowledge triangle,
+not how they position themselves internally.
+
+
+%===============================================================================
+\section{The Claim--Recognition Gap}
+\label{sec:wikipedia-gap}
+%===============================================================================
+
+The most theoretically productive pattern is not a data finding
+but a \textbf{bridging gap}: many organizations use vocabulary
+associated with innovation and integration on their websites
+(\cref{app:websites}), but Wikipedia articles emphasize
+institutional type (university, company) over functional role.
+
+This \emph{claim--recognition gap} is not noise---it is signal.
+It indicates that external observers prioritize categorical
+membership (what \emph{kind} of actor) over functional positioning
+(what \emph{role} enacted).
+Wikipedia editors default to institutional taxonomies (public/private,
+education/business) rather than adopting actors' self-described roles.
+
+\begin{criticalbox}[The Gap as Bridge to Other Modalities]
+The claim--recognition gap cannot be resolved within Wikipedia data alone.
+Resolving it requires triangulation:
+Do organizations \emph{enact} the roles they claim through investment
+activity (\cref{app:crunchbase})?
+Do news media \emph{attribute} the roles Wikipedia categorizes
+(\cref{app:news-media})?
+Do visual registers \emph{perform} integration across categories
+(\cref{ch:visual-registers})?
+Each resolution path connects this modality's workflow to the next,
+creating the multimodal cartography that the dissertation argues for.
+\end{criticalbox}
+
+
+%===============================================================================
+\section{Workflow Challenges}
+\label{sec:wikipedia-challenges}
+%===============================================================================
+
+Wikipedia analysis faces six operational challenges,
+each of which shapes what patterns are detectable:
+
+\tableminimal
 \begin{center}
-\textbf{Pipeline Overview}
-
-\smallskip
-\fbox{Entity Lists} $\rightarrow$ \fbox{Wikidata SPARQL} $\rightarrow$ \fbox{Structured Metadata}
-
-\fbox{Entity Lists} $\rightarrow$ \fbox{Wikipedia API} $\rightarrow$ \fbox{Article Content}
-
-$\downarrow$
-
-\fbox{Data Processing} $\rightarrow$ \fbox{Text Corpus} + \fbox{Features} $\rightarrow$ \fbox{Role Analysis}
-\end{center}
-
-\subsection{Wikidata Collection}
-
-Wikidata queries retrieve structured attributes for each entity using SPARQL. For cities, key properties include:
-
-\begin{itemize}
-    \item Population time series (P1082)
-    \item Geographic coordinates (P625)
-    \item Administrative classification (P31)
-    \item Climate initiative memberships (P463)
-    \item Current mayor/leader (P6)
-\end{itemize}
-
-For organizations (EIT KIC partners), we collect:
-
-\begin{itemize}
-    \item Organization type (P31)
-    \item Founding date (P571)
-    \item Headquarters location (P159)
-    \item Official website (P856)
-    \item Member/partner relationships (P463)
-\end{itemize}
-
-\subsection{Wikipedia Article Collection}
-
-The Wikipedia API retrieves full article content including:
-
-\begin{itemize}
-    \item Article text (plain and sectioned)
-    \item Summary/lead paragraph
-    \item Category memberships
-    \item Internal wiki-links
-    \item Cross-language article links
-\end{itemize}
-
-Collection results for the dissertation's focal entities:
-
-\begin{center}
-\begin{tabular}{lrrr}
+\begin{tabular}{@{}p{3cm}p{4.5cm}p{4cm}@{}}
 \toprule
-\textbf{Entity Type} & \textbf{Total} & \textbf{Articles Found} & \textbf{Coverage} \\
+\textbf{Challenge} & \textbf{Constraint} & \textbf{Consequence} \\
 \midrule
-NetZeroCities (cities) & 111 & 111 & 100\% \\
-EIT KIC Partners (orgs) & 132 & 107 & 81\% \\
-\midrule
-\textbf{Total} & 243 & 218 & 90\% \\
+Snapshot-only data & No revision tracking yet & Cannot trace recognition evolution \\
+QID matching accuracy & Some Wikidata identifiers incorrect & Requires manual verification \\
+English-only limitation & Single language edition & Misses cultural framing variation \\
+Coverage gaps & Not all orgs have articles & Selection bias toward prominent actors \\
+NuExtract model limits & Template-based extraction & Misses non-standard information \\
+Collaborative dynamics & Edit wars, POV pushing & Text reflects dominant editor coalition \\
 \bottomrule
 \end{tabular}
+\captionof{table}{Wikipedia workflow challenges and consequences}
 \end{center}
 
-\section{Information Extraction Pipeline}
-\label{sec:wikipedia-pipeline}
-
-Beyond collection, the \texttt{rolebox-wikipedia} module implements a full NLP pipeline for extracting structured information from Wikipedia articles. The pipeline combines multiple extraction techniques:
-
-\begin{description}
-    \item[Named Entity Recognition (NER)] Using spaCy's \texttt{en\_core\_web\_sm} model to identify organizations, people, locations, and other named entities mentioned in articles.
-    \item[Topic Modeling] BERTopic with sentence transformers discovers latent thematic clusters across the corpus.
-    \item[Structured Extraction] NuExtract 1.5, a small language model fine-tuned for template-based extraction, identifies organizational attributes, partnerships, and relationships.
-    \item[Entity Linking] Fuzzy matching against known registries plus Wikidata API queries resolve entity mentions to canonical identifiers.
-    \item[Powell Triangle Scoring] Keyword-based classification positions each entity on the knowledge triangle (associational, scientific, managerial).
-\end{description}
-
-\subsection{Pipeline Results}
-
-Processing results for the dissertation's focal entities:
-
-\begin{center}
-\begin{tabular}{lrr}
-\toprule
-\textbf{Metric} & \textbf{Organizations} & \textbf{Cities} \\
-\midrule
-Documents processed & 108 & 111 \\
-NER entity mentions & 53,835 & 118,939 \\
-Topics discovered & 5 & 7 \\
-Triangle scores computed & 108 & 111 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\subsection{Topic Modeling Results}
-
-BERTopic identified distinct thematic clusters within each corpus. For organizations, the dominant topics reflect institutional types (universities, companies) and sectoral focus areas:
-
-\begin{center}
-\small
-\begin{tabular}{clr}
-\toprule
-\textbf{Topic} & \textbf{Representative Keywords} & \textbf{Documents} \\
-\midrule
-1 & university, research, students & 42 \\
-2 & university, college, institute & 28 \\
-3 & company, industry, technology & 19 \\
-4 & software, digital, innovation & 11 \\
-0 & (outlier topic) & 8 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-For cities, topics capture geographic clustering and urban characteristics:
-
-\begin{center}
-\small
-\begin{tabular}{clr}
-\toprule
-\textbf{Topic} & \textbf{Representative Keywords} & \textbf{Documents} \\
-\midrule
-0 & city, amsterdam, munich & 35 \\
-2 & city, italy, milan & 22 \\
-3 & city, helsinki, stockholm & 18 \\
-4 & city, warsaw, vilnius & 16 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\subsection{Powell Triangle Classifications}
-
-The keyword-based scoring positions entities on the knowledge triangle. Results show clear differentiation:
-
-\begin{center}
-\begin{tabular}{lrr}
-\toprule
-\textbf{Classification} & \textbf{Organizations} & \textbf{Cities} \\
-\midrule
-Dominant Scientific & 61 (56\%) & 24 (22\%) \\
-Dominant Managerial & 25 (23\%) & 6 (5\%) \\
-Dominant Associational & 5 (5\%) & 10 (9\%) \\
-Balanced & 10 (9\%) & 31 (28\%) \\
-Mixed & 7 (6\%) & 40 (36\%) \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-Organizations---predominantly universities and research institutes---cluster heavily in the scientific pole (56\%). Cities show more balanced distributions, with the majority classified as ``mixed'' or ``balanced,'' reflecting the multifaceted nature of urban governance that spans community engagement (associational), technical expertise (scientific), and administrative capacity (managerial).
-
-\subsection{Multilingual Capabilities}
-
-The NuExtract 1.5 model supports six European languages (English, French, German, Spanish, Portuguese, Italian), enabling future extension to non-English Wikipedia articles. This multilingual capability is particularly relevant for the EIT ecosystem, which spans organizations across Europe with varying linguistic contexts.
-
-\section{Analytical Possibilities}
-
-The collected Wikipedia data enables several analytical approaches relevant to understanding organizational roles in climate governance. We outline three promising directions below.
-
-\subsection{Role Recognition Through Content Analysis}
-
-Wikipedia article content reveals how external observers characterize organizations. By analyzing the vocabulary, themes, and framings used to describe cities and KIC partners, researchers can assess:
-
-\begin{kaobox}[title=Content Analysis Opportunities]
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Role vocabulary:} Which role-related terms (innovator, leader, pioneer, partner) appear in organizational descriptions?
-    \item \textbf{Domain positioning:} How are organizations situated within thematic fields (climate, energy, urban, technology)?
-    \item \textbf{Achievement framing:} What accomplishments and credentials are highlighted?
-    \item \textbf{Relationship mapping:} Which other actors are mentioned alongside the focal organization?
-\end{itemize}
-\end{kaobox}
-
-\subsection{Temporal Evolution of Role Representations}
-
-Wikipedia's revision history API enables longitudinal analysis of how organizational representations change over time. This is particularly valuable for studying:
-
-\begin{itemize}
-    \item How city articles incorporated climate commitments following NetZeroCities selection
-    \item Evolution of KIC partner descriptions as the EIT ecosystem matured
-    \item Response to major policy events (European Green Deal, Fit for 55)
-\end{itemize}
-
-\subsection{Cross-Linguistic Role Framing}
-
-Many cities and organizations have Wikipedia articles in multiple languages. Cross-linguistic comparison can reveal:
-
-\begin{itemize}
-    \item National vs. European framings of climate leadership
-    \item Local vs. international recognition of organizational roles
-    \item Cultural variation in how innovation and sustainability are conceptualized
-\end{itemize}
-
-\section{Sample Data and Illustrations}
-
-To illustrate the richness of Wikipedia data, we present examples from the collected corpus.
-
-\subsection{City Article Structure}
-
-Key metrics for selected NetZeroCities Wikipedia articles:
-
-\begin{center}
-\small
-\begin{tabular}{lrrrr}
-\toprule
-\textbf{City} & \textbf{Text Length} & \textbf{Sections} & \textbf{Categories} & \textbf{Links} \\
-\midrule
-Amsterdam & 156,234 & 42 & 89 & 1,247 \\
-Copenhagen & 98,451 & 35 & 67 & 892 \\
-Barcelona & 187,892 & 48 & 112 & 1,456 \\
-Stockholm & 112,567 & 38 & 78 & 1,034 \\
-Helsinki & 89,234 & 31 & 54 & 756 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\subsection{Organization Description Patterns}
-
-Excerpts from EIT KIC partner articles reveal characteristic patterns in how organizations are described. The following examples illustrate different role framings:
-
-\begin{kaobox}[title=Example: Research Institution Role]
-``\textit{ETH Zurich is a public research university in the city of Zurich, Switzerland. Founded in 1854, it is one of the world's leading universities for technology and natural sciences, particularly in the fields of engineering, mathematics, and physics.}''
-\end{kaobox}
-
-\begin{kaobox}[title=Example: Industry Partner Role]
-``\textit{Siemens AG is a German multinational conglomerate corporation and the largest industrial manufacturing company in Europe. The principal divisions of the company are Industry, Energy, Healthcare, and Infrastructure \& Cities.}''
-\end{kaobox}
-
-\section{Technical Implementation}
-
-The collection pipeline is implemented in Python and available in the \texttt{rolebox-wikipedia} repository. Key components include:
-
-\begin{lstlisting}[language=Python, caption={Wikidata SPARQL query for city attributes}, label={lst:sparql-city}]
-SELECT ?city ?cityLabel ?population ?coordinates
-WHERE {
-    BIND(wd:Q727 AS ?city)  # Amsterdam
-    OPTIONAL { ?city wdt:P1082 ?population. }
-    OPTIONAL { ?city wdt:P625 ?coordinates. }
-    SERVICE wikibase:label {
-        bd:serviceParam wikibase:language "en".
-    }
-}
-\end{lstlisting}
-
-\begin{lstlisting}[language=Python, caption={Wikipedia article content retrieval}, label={lst:wikipedia-api}]
-import wikipediaapi
-
-wiki = wikipediaapi.Wikipedia(
-    user_agent='RoleboxWikipedia/1.0',
-    language='en'
-)
-
-page = wiki.page("Amsterdam")
-print(page.summary)  # Lead paragraph
-print(page.text)     # Full article text
-print(page.sections) # Section structure
-\end{lstlisting}
-
-\begin{lstlisting}[language=Python, caption={Running the full NLP extraction pipeline}, label={lst:pipeline}]
-from rolebox_wikipedia import WikipediaPipeline, PipelineConfig
-
-config = PipelineConfig(
-    enable_nuextract=True,          # Structured extraction
-    nuextract_model="sroecker/nuextract-tiny-v1.5",
-    enable_topic_modeling=True,     # BERTopic
-    enable_triangle_scoring=True,   # Powell framework
-    enable_entity_linking=True,     # Wikidata linking
-)
-
-pipeline = WikipediaPipeline(config=config)
-results = pipeline.run(
-    corpus_path="data/orgs_text_corpus.json",
-    orgs_registry_path="data/orgs_wikidata.csv",
-)
-
-# Access results
-print(f"Entities: {results.processing_stats['ner_entities']}")
-print(f"Topics: {results.processing_stats['num_topics']}")
-results.save("pipeline_results.json")
-\end{lstlisting}
-
-\section{Knowledge Graph Extraction}
-\label{sec:wikipedia-kggen}
-
-Beyond topic modeling and structured extraction, we employed \textbf{kg-gen}, an LLM-based knowledge graph extraction library, to identify entities and relations directly from Wikipedia article text. Using Llama 3.2 via Ollama, the pipeline processes each article and extracts subject-predicate-object triples.
-
-\subsection{Extraction Results}
-
-Processing the 108 EIT partner organization Wikipedia articles yielded:
-
-\begin{center}
-\begin{tabular}{lr}
-\toprule
-\textbf{Metric} & \textbf{Value} \\
-\midrule
-Documents processed & 106 \\
-Unique entities extracted & 1,311 \\
-Unique relations & 1,330 \\
-Edge types (predicates) & 734 \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-The extracted knowledge graph captures institutional relationships, geographic associations, founding dates, organizational types, and research domains. Entity types include organizations (universities, companies), locations (cities, countries), persons (founders, notable alumni), and concepts (research fields, technologies).
-
-\subsection{Visualization}
-
-Figure~\ref{fig:kg-wikipedia} shows a network visualization of the aggregated knowledge graph. Organizations cluster around shared predicates such as ``located in,'' ``founded in,'' and ``member of.'' Central hub entities like ``Europe,'' ``university,'' and ``research'' connect disparate organizational nodes.
-
-\begin{center}
-\includegraphics[width=0.85\textwidth]{figures/kg_wikipedia_orgs.png}
-\captionof{figure}{Knowledge graph extracted from 106 EIT partner Wikipedia articles using kg-gen with Llama 3.2. Node colors: blue (organization), green (location), purple (person), gray (concept).}
-\label{fig:kg-wikipedia}
-\end{center}
-
-The interactive version of this visualization is available in the \texttt{rolebox-wikipedia} repository at \texttt{ui/rolebox\_wikipedia\_eit-kg.html}.
-
-\section{Limitations and Future Work}
-
-This preliminary analysis has several limitations that future research should address:
-
-\begin{enumerate}
-    \item \textbf{Snapshot data:} Current collection captures a single point in time; longitudinal tracking would require periodic re-collection or revision history analysis.
-
-    \item \textbf{English-only:} Articles were collected only from English Wikipedia; multi-language analysis requires additional collection and translation/alignment procedures.
-
-    \item \textbf{QID accuracy:} Some Wikidata entity identifiers returned incorrect matches, requiring manual verification for production use.
-
-    \item \textbf{Coverage gaps:} Not all organizations have Wikipedia articles, potentially introducing selection bias toward more prominent actors.
-\end{enumerate}
-
-Future work could extend this foundation in several directions:
-
-\begin{kaobox}[title=Research Extensions]
-\begin{description}[leftmargin=*]
-    \item[Revision history analysis] Track how organizational representations evolve over time in response to policy developments.
-    \item[Editor network analysis] Map the community of contributors editing climate governance articles.
-    \item[Cross-platform comparison] Compare Wikipedia representations with organizational self-presentations.
-    \item[Multilingual role framing] Analyze how roles are framed differently across language editions.
-    \item[Link network analysis] Use wiki-links to map perceived relationships between actors.
-\end{description}
-\end{kaobox}
-
-\section{Conclusion}
-
-Wikipedia and Wikidata offer valuable complementary data sources for studying organizational role performance in climate governance. While the analysis presented here is preliminary, the collection infrastructure and analytical frameworks developed provide a foundation for future research. The key insight is that Wikipedia captures \emph{external recognition} of organizational roles---how actors are perceived and categorized by diverse observers---complementing the \emph{internal claims} revealed through organizational communications analysis.
-
-The intersection of collaborative knowledge production and institutional role theory presents fertile ground for future scholarship. As Wikipedia continues to grow and evolve, its potential as a source for understanding how organizations are situated within complex governance fields will only increase.
+These challenges are not reasons to dismiss Wikipedia data---they are
+\emph{methodological constraints} that bound what claims are warranted.
+Future work should address revision history extraction, multilingual
+comparison, and editor network analysis to capture recognition dynamics
+rather than static snapshots.
+
+
+%===============================================================================
+\section{Summary}
+%===============================================================================
+
+\begin{summarybox}
+The Wikipedia modality produces the \textbf{recognized map}---how collaborative
+knowledge platforms characterize organizations through external categorization.
+The bridging workflow connects 243 entities (111 cities, 132 organizations)
+to role theory via two paths: entity co-mentions and topic clusters map to
+perceived affiliation and legitimated sociotypes; knowledge graph relations
+and triangle scores map to institutional embedding and knowledge triangle
+positioning.
+The most productive finding is not within either path but at their intersection:
+the \emph{claim--recognition gap} that motivates multimodal triangulation
+across websites, news media, and social platforms.
+\end{summarybox}
+
+\clearpage
+\end{document}

@@ -3,272 +3,176 @@
 
 \begin{document}
 
-\chapter{Social Media: Mapping Relational Sociotypes}
+\chapter{Social Media: The Relational Map}
 \label{app:social-media}
 
-\noindent\textit{Social media provides the fourth modality of multimodal cartography---the \textbf{relational map} of how organizations perform their roles through ongoing digital interactions. This appendix documents the methodological approach to social media data collection and analysis within \RoleBox, covering theoretical foundations, analytical methods from social network analysis to topic modeling, empirical applications in sustainability transitions, and ethical considerations for responsible research.}
+\noindent\textit{Organizations perform roles through digital interactions---who they engage,
+who engages them, and what conversations they join.
+This appendix documents the bridging workflow connecting social media data
+to role theory constructs, revealing the relational sociotype as performed
+rather than claimed or attributed.}
 
 \bigskip
 
 
 %===============================================================================
-\section{Theoretical Grounding: Social Media in Innovation Studies}
+\section{The Bridging Problem}
 %===============================================================================
 
-Twitter has emerged as a valuable data source in innovation studies. As a microblogging platform with hundreds of millions of active users---most with public profiles---Twitter provides researchers with abundant, openly accessible content on emerging technologies, policies, and innovations.\cite{kaur2021bharat}
+Social media research and role theory speak different languages.
+On the data side, network analysis of Twitter produces follow graphs,
+retweet cascades, mention patterns, and hashtag communities---rich structural
+signals about attention, endorsement, and conversation.
+On the theory side, role theory specifies mechanisms like proselytizing,
+convening, and strengthening \parencite{powell2017organizational}, and
+predicts that roles emerge from relational patterns rather than declarations.
+The challenge is bridging these perspectives: operationalizing field mechanisms
+through mention networks, and using theory to guide what network patterns to seek.
 
-A recent systematic review noted that Twitter is the most commonly analyzed social media platform in innovation studies since the late 2010s, more so than Facebook or others.\cite{social2023} This popularity stems from Twitter's rich streams of real-time discourse and its comparatively easy data access (via APIs), which enable capturing public conversations around innovations as they unfold.
-
-Why social media matters for role cartography:
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
-\item[Explicit relations.] Follow/follower networks, retweets, and mentions create explicit relational claims---who pays attention to whom, who endorses whom.
-
-\item[Real-time dynamics.] Social media streams capture positioning as it happens, revealing rapid shifts that static sources miss.
-
-\item[Community boundaries.] Clustering patterns in follow networks and hashtag co-occurrence reveal emergent ecosystem structure.
-
-\item[Discourse participation.] Hashtags and topical engagement show which conversations actors join and avoid.
-
-\item[Power dynamics.] Network centrality reveals who holds influence in public discourse, sometimes independent of formal authority.
-\end{description}
-
-\begin{insightbox}[Relational Performance]
-A website may claim ``strong industry partnerships,'' but Twitter reveals whether industry actors actually follow, retweet, or engage. Social media captures the relational sociotype as \emph{performed}---not just claimed or attributed.
-\end{insightbox}
-
-
-%===============================================================================
-\section{Twitter for Innovation Policy and Transitions}
-%===============================================================================
-
-A growing body of research leverages Twitter to examine innovation policy debates and systemic transition processes. Platforms like Twitter serve as public arenas where stakeholders discuss and contest policies---offering researchers a window into the political discourse and actor dynamics around innovation initiatives.\cite{labonte2021ontario}
-
-\subsection{Real-Time Policy Analysis}
-
-Researchers have tapped Twitter to track how actors respond to and shape policy-driven innovations in real time. Kaur et al. (2021) examined tweets by government and industry stakeholders during India's accelerated vehicular emissions transition (Bharat Stage IV to VI).\cite{kaur2021bharat}
-
-By harvesting thousands of tweets from official accounts of ministries, automaker CEOs, and industry associations, they mapped how incumbent firms and policymakers publicly positioned themselves over the transition timeline. The analysis showed that many incumbent actors did rhetorically align with the aggressive policy change---counter to expectations of uniform resistance---but their support fluctuated with events such as economic slowdowns or infrastructure delays.
-
-\begin{insightbox}[Twitter as Real-Time Transition Log]
-As the researchers note: ``The research method of Twitter data analysis provides an alternative to study the process of transitioning in real-time.'' Twitter provides a running log of actors' shifting stances, allowing identification of when and why support wavered.
-\end{insightbox}
-
-\subsection{Power Dynamics in Policy Debates}
-
-Twitter studies reveal that savvy use of social media can allow non-elite actors to punch above their weight in policy debates, injecting new frames or pressure points into the narrative.\cite{labonte2021ontario}
-
-In the Ontario energy policy case, researchers analyzed $\sim$6,900 tweets and found that users lacking traditional political power could still shape discourse if their tweets were amplified via retweets. The Twitter conversation was dominated by a minority of very active users (typical power-law participation), and their influence did not always align with formal authority.
-
-\subsection{Global Policy Diffusion}
-
-Kolleck et al. (2020) mapped the Twitter network around inclusive education discussions during United Nations policy events.\cite{kolleck2020inclusive} Using social network analysis, they identified the most central actors and found that international organizations (IOs) and NGOs held particularly central, influential positions---acting as brokers and amplifiers helping diffuse the innovative policy across countries.
-
-
-%===============================================================================
-\section{Data Anatomy: What Social Media Contains}
-%===============================================================================
-
-\subsection{Twitter/X Data Types}
-
-Twitter has been the dominant platform for social media research due to its public nature and (historically) accessible API:
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Follower networks] Directed ties showing attention flows
-\item[Retweet networks] Endorsement and amplification patterns
-\item[Mention networks] Direct engagement and conversation
-\item[Content streams] Tweets revealing discourse positioning
-\item[Hashtag co-occurrence] Topic communities and discourse alignment
-\end{description}
-
-\subsection{LinkedIn Data Types}
-
-LinkedIn offers complementary data on professional relationships:
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Employee flows] People moving between organizations
-\item[Advisory relationships] Board memberships and consulting ties
-\item[Institutional affiliations] Educational and organizational connections
-\item[Professional endorsements] Skill validations and recommendations
-\end{description}
-
-
-%===============================================================================
-\section{Analytical Methods for Twitter Data}
-%===============================================================================
-
-Researchers employ a toolkit of data collection and analysis techniques, often combining quantitative network analytics with computational content analysis.
-
-\subsection{Social Network Analysis (SNA)}
-
-SNA maps relationships among actors (retweet or @mention networks) to identify key nodes, clusters, and information flow structures. Standard centrality measures gauge influence or brokerage roles:
-
-\tableminimal
-\begin{center}
-\begin{tabular}{@{}p{3cm}p{4.5cm}p{4cm}@{}}
-\toprule
-\textbf{Metric} & \textbf{Interpretation} & \textbf{Role Signal} \\
-\midrule
-In-degree & Many others retweet/mention this actor & Perceived authority, opinion leader \\
-Out-degree & Actor actively engages others & Networker, active diffuser \\
-Betweenness & Bridges otherwise disconnected groups & Broker, intermediary \\
-Eigenvector & Connected to other central nodes & Influential insider \\
-\bottomrule
-\end{tabular}
-\captionof{table}{Network centrality metrics and role interpretation}
-\end{center}
-
-In the inclusive education study, international organizations had very high in-degree (frequently mentioned/retweeted) but low out-degree (less active themselves)---suggesting they acted as passive influencers or reference points. NGOs showed the opposite: high out-degree, taking an active diffuser role.\cite{kolleck2020inclusive}
-
-\subsection{Topic Modeling and Content Analysis}
-
-Topic modeling discovers dominant themes from tweet text using unsupervised methods (LDA, BERTopic). The technique reveals which aspects of a transition receive social media emphasis, how issues are framed (technical versus political versus economic), and which actor coalitions or discourse coalitions exist. For example, an analysis of 192,000 tweets about the European Green Deal yielded 16 key topics in public discussion, showing breadth from policy and economics to specific technologies like hydrogen \cite{greendeal2024}.
-
-\subsection{Hashtag Network Analysis}
-
-Hashtag network analysis treats hashtags as nodes and draws links when hashtags co-occur in tweets. Community detection reveals issue clusters or sub-communities within the broader conversation. During Rio+20, for instance, hashtag networks revealed distinct clusters corresponding to regional and thematic communities. More generally, hashtag networks help identify how innovation topics link to each other and to stakeholder groups.
-
-\subsection{Actor-Topic Mapping (Socio-Semantic Analysis)}
-
-Integrates actors and content in bipartite networks: linking user nodes to topic/hashtag nodes they use. This reveals which actors associate with which topics, enabling analysis of coalitions or alignments:
-
-\begin{quote}
-By automatically constructing an actor-topic network (who talks about what), researchers gain a holistic view of Twitter discussions---revealing which stakeholders drive certain innovation topics and bridge between topics.\cite{hellsten2019}
-\end{quote}
-
-\subsection{Sentiment Analysis}
-
-Sentiment analysis classifies tweet sentiment (positive, negative, or neutral) to gauge attitudes toward innovations or policies. A sustainability conversation analysis (2006--2022) found overall sentiment predominantly positive, though bots posted more neutral-tone messages than humans \cite{sustainability2024bots}. Green Deal analysis associated ``Industrial Plan'' topics with positive sentiment while political topics correlated with negative sentiment.
-
-
-%===============================================================================
-\section{Revealing Networks, Roles, and Influence}
-%===============================================================================
-
-One of Twitter's most powerful aspects is illuminating interorganizational dynamics and influence structures that remain hidden using traditional data.
-
-\subsection{Central Hubs vs. Peripheral Players}
-
-Twitter networks often have a few highly central nodes (by various centrality metrics) serving as information hubs. In innovation debates, these are frequently institutional actors---major NGOs, international agencies, or government bodies---that many others mention or retweet. Global organizations like UNICEF were among the most retweeted accounts in education policy networks, indicating others treated them as authoritative sources \cite{kolleck2020inclusive}. Hub status confers agenda-setting power: if an influential hub tweets about a certain aspect of innovation, that content spreads widely via retweets.
-
-\subsection{Different Actor Groups, Different Roles}
-
-Analyses that differentiate actor types find not all centrality is equal:
-
-\tableminimal
-\begin{center}
-\begin{tabular}{@{}p{3cm}p{4cm}p{4.5cm}@{}}
-\toprule
-\textbf{Actor Type} & \textbf{Network Signature} & \textbf{Role Interpretation} \\
-\midrule
-International orgs & High in-degree, low out-degree & Passive influencer, reference point \\
-NGOs & High out-degree, lower in-degree & Active networker, diffuser \\
-Government & Variable, often reciprocal & Formal authority (may or may not translate online) \\
-Activists & High out-degree, variable in-degree & Issue champions, narrative shapers \\
-\bottomrule
-\end{tabular}
-\captionof{table}{Actor types and typical network signatures}
-\end{center}
-
-\subsection{Bridging and Brokerage}
-
-High betweenness centrality identifies actors who bridge otherwise disconnected groups. These brokers are often critical intermediaries---cross-sector partnership organizations or activists linking NGOs and policymakers. Brokers might not have the most followers but connect otherwise siloed conversations, shaping information flow by transmitting ideas across network modules. They function analogously to system intermediaries or boundary spanners in transitions theory.
-
-\subsection{Coalitions and Constellations}
-
-By examining clusters within Twitter networks, researchers infer coalition structures. Tight clusters of NGO accounts indicate close-knit advocacy coalitions, while industry accounts forming echo chambers suggest coordinated messaging. Scattered governmental or research actors suggest less collective coordination, operating more independently in the network.
-
-\subsection{Influence vs. Activity Asymmetry}
-
-Those who talk most are not always those listened to most. High follower count or tweet volume alone does not guarantee influence---network position and content relevance matter more. Traditional power hierarchies can be partially subverted: voices from the margins can gain influence if their tweets resonate and the network amplifies them. Emergent influencers or unexpected champions can temporarily become key actors in innovation debates, challenging established actors' dominance.
-
-
-%===============================================================================
-\section{Data Collection Pipeline}
-%===============================================================================
-
-Social media data collection leverages platform APIs to extract network and content data.
+\Cref{fig:social-bridging} shows how the \RoleBox{} social media pipeline
+enacts this bridging workflow.
+The upper path (\textit{from patterns to theory}) extracts network structures
+and discourse patterns from Twitter data and maps them onto role constructs.
+The lower path (\textit{from theory to data requirements}) uses field theory
+to specify what relational signals and interaction types to capture.
+The pipeline---collection via TweetBinder, mention network construction,
+community detection, topic modeling---sits at the intersection as bridging knowledge.
 
 \begin{center}
-\textbf{Pipeline Overview}
+\begin{tikzpicture}[
+    >=stealth,
+    cloudstyle/.style={cloud, cloud puffs=12, cloud puff arc=120,
+        draw, minimum width=2.8cm, minimum height=1.6cm,
+        font=\small\bfseries, text=white, inner sep=0pt},
+    blockstyle/.style={rectangle, draw, rounded corners=3pt,
+        minimum width=2.6cm, minimum height=1.4cm,
+        font=\small\bfseries, text=white, inner sep=4pt},
+    bridgestyle/.style={rectangle, draw=AccentCyan, fill=AccentCyan!15,
+        rounded corners=3pt, minimum width=3cm, minimum height=1.8cm,
+        font=\small\bfseries, text=Slate, inner sep=4pt},
+    substyle/.style={font=\tiny, text=Slate, align=left},
+    arrowlabel/.style={font=\scriptsize\itshape, text=Slate},
+]
 
-\smallskip
-\fbox{EIT Actor Handles} $\rightarrow$ \fbox{API Collection} $\rightarrow$ \fbox{Profile + Timeline Data}
+% Left: Twitter Data
+\node[cloudstyle, fill=Azure!80, draw=Azure] (data) at (-4, 0) {Twitter Data};
+\node[substyle, below=0.15cm of data] {
+    Mention networks\\
+    Retweet cascades\\
+    Discourse streams
+};
 
-$\downarrow$
+% Right: Role Theory
+\node[blockstyle, fill=AccentPurple!80, draw=AccentPurple] (theory) at (4, 0)
+    {Field Theory};
+\node[substyle, below=0.15cm of theory] {
+    Field mechanisms\\
+    Community boundaries\\
+    Relational roles
+};
 
-\fbox{Profiles} $\rightarrow$ \fbox{Follower/Following Lists} $\rightarrow$ \fbox{Attention Network}
+% Center: Bridging Pipeline
+\node[bridgestyle] (bridge) at (0, 0) {
+    \begin{tabular}{c}
+    \textsc{RoleBox}\\[-1pt]
+    \textsc{Social}
+    \end{tabular}
+};
 
-\fbox{Timeline} $\rightarrow$ \fbox{Retweet/Mention Parsing} $\rightarrow$ \fbox{Engagement Network}
+% Upper path: patterns to theory
+\draw[->, thick, PandaRose, bend left=20]
+    (data.north east) to
+    node[arrowlabel, above, pos=0.5] {network structures}
+    (bridge.north west);
+\draw[->, thick, PandaRose, bend left=20]
+    (bridge.north east) to
+    node[arrowlabel, above, pos=0.5] {field mechanisms}
+    (theory.north west);
 
-$\downarrow$
+% Lower path: theory to data requirements
+\draw[->, thick, CoverGold, bend left=20]
+    (theory.south west) to
+    node[arrowlabel, below, pos=0.5] {mechanism definitions}
+    (bridge.south east);
+\draw[->, thick, CoverGold, bend left=20]
+    (bridge.south west) to
+    node[arrowlabel, below, pos=0.5] {relational signals}
+    (data.south east);
 
-\fbox{Network Analysis} $\rightarrow$ \fbox{Relational Sociotype Map}
+% Bottom label
+\node[font=\small\itshape, text=AccentCyan] at (0, -2.2)
+    {Bridging workflow for the relational map};
+
+\end{tikzpicture}
+\captionof{figure}[Social media bridging workflow]{%
+    Bridging workflow connecting social media data to field theory,
+    adapted from \textcite{maass2018data}.
+    The upper path extracts network patterns from Twitter mentions
+    and maps them to field mechanisms;
+    the lower path uses theory to guide what relational signals to capture.}
+\label{fig:social-bridging}
 \end{center}
 
-\subsection{Data Collection Strategies}
-
-Two primary strategies with different strengths:
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Keyword/hashtag filtering] Gather tweets containing specific terms (e.g., ``green deal'' or \#onpoli). May miss relevant tweets without those tags.
-
-\item[User-centric collection] Pull tweets from specific accounts of interest (e.g., all tweets by key innovation agencies or firms). May omit broader public discourse.
-\end{description}
-
-Data processing involves cleaning tweets (removing bots, handling duplicates/retweets), language detection, and categorizing accounts by actor type.
-
 
 %===============================================================================
-\section{Methodological Challenges and Limitations}
+\section{From Patterns to Theory}
+\label{sec:social-patterns-theory}
 %===============================================================================
 
-\begin{criticalbox}[What Social Media Cannot Tell Us]
-\begin{enumerate}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Platform access}: Twitter/X API access dramatically restricted in 2023; ongoing collection faces barriers
+The upper path in \cref{fig:social-bridging} traces how raw Twitter data
+yields role-relevant patterns.
+The workflow proceeds through three stages: data collection,
+pattern extraction, and theoretical mapping.
 
-\item \textbf{Representation bias}: Not everyone is on Twitter; demographic and sectoral skews mean Twitter discourse may over-emphasize certain viewpoints or sectors
+\subsection{Stage 1: Data Collection}
 
-\item \textbf{Data quality}: Standard API provided 1\% sample; completeness varies with collection method and rate limits
+We collected Twitter data for the EIT ecosystem via TweetBinder,
+capturing tweets mentioning eight Knowledge and Innovation Communities
+over the period \textbf{2015--2020}.
+\Cref{fig:social-collection} summarizes the collection pipeline.
 
-\item \textbf{Bot contamination}: Automated accounts distort authentic signals; bots constitute significant traffic, especially in politicized topics
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={rectangle, draw=Slate!40, fill=Slate!5,
+        rounded corners=2pt, minimum height=0.7cm,
+        font=\scriptsize, inner sep=4pt},
+    arrow/.style={->, thick, Slate!60},
+    statlabel/.style={font=\tiny\itshape, text=Slate!70},
+]
 
-\item \textbf{Performance vs. practice}: Social media shows public performance, not private relationships or offline actions
+% Pipeline stages
+\node[box] (seed) at (0,0) {KIC Handles};
+\node[box] (collect) at (3,0) {TweetBinder API};
+\node[box] (parse) at (6,0) {Parse Mentions};
+\node[box] (network) at (3,-1.3) {Mention Network};
+\node[box] (topics) at (6,-1.3) {BERTopic};
+\node[box] (community) at (3,-2.6) {Community Detection};
+\node[box] (mechanisms) at (6,-2.6) {Mechanism Assignment};
 
-\item \textbf{Platform ephemerality}: Tweets can be deleted, accounts go private; reproducibility suffers
+\draw[arrow] (seed) -- (collect);
+\draw[arrow] (collect) -- (parse);
+\draw[arrow] (parse) -- (network);
+\draw[arrow] (parse) -- (topics);
+\draw[arrow] (network) -- (community);
+\draw[arrow] (community) -- (mechanisms);
 
-\item \textbf{Discourse vs. action}: High Twitter activity about an innovation doesn't guarantee real-world implementation
-\end{enumerate}
-\end{criticalbox}
+% Stats
+\node[statlabel] at (0, -0.4) {8 KICs};
+\node[statlabel] at (6, -0.4) {268K tweets};
+\node[statlabel] at (3, -1.7) {147K unique};
+\node[statlabel] at (6, -1.7) {4 topics};
 
-\subsection{Bot Detection}
+\end{tikzpicture}
+\captionof{figure}[Social media collection pipeline]{%
+    Data collection pipeline for Twitter analysis.
+    Seed KIC handles feed TweetBinder collection,
+    yielding mention networks and discourse streams for topic modeling.}
+\label{fig:social-collection}
+\end{center}
 
-Best practice includes bot-detection steps (using tools like Botometer or anomaly patterns) and either excluding likely bots or analyzing them separately. Studies found bots post more neutral-tone messages while humans add more opinion.\cite{sustainability2024bots}
-
-\subsection{Ethical Considerations}
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Informed consent] Not feasible at scale; researchers should still respect user privacy and context
-
-\item[Anonymization] When reporting results, anonymize or aggregate data such that individuals aren't spotlighted for sensitive behavior
-
-\item[Terms of service] Twitter's terms forbid sharing full text of large datasets; sharing tweet IDs is allowed
-
-\item[Harm potential] Consider whether publishing about certain communities' tweets could put them at risk
-\end{description}
-
-These limitations motivate triangulation with other modalities---particularly investment data for behind-the-scenes relationships and news for external validation.
-
-
-%===============================================================================
-\section{Implementation: The ROLEBOX-SOCIAL Pipeline}
-%===============================================================================
-
-The \textsc{RoleBox-Social} module implements social media analysis through two complementary approaches: \textbf{network analysis} of mention/retweet graphs, and \textbf{topic modeling} using BERTopic with transformer embeddings.
-
-\subsection{Corpus Statistics}
-
-The EIT Twitter corpus was collected via TweetBinder, capturing tweets mentioning EIT Knowledge and Innovation Communities:
+\paragraph{Corpus statistics.}
+The EIT Twitter corpus comprises:
 
 \tableminimal
 \begin{center}
@@ -279,37 +183,51 @@ The EIT Twitter corpus was collected via TweetBinder, capturing tweets mentionin
 Total tweets collected & 268,309 \\
 Unique tweets (after deduplication) & 146,989 \\
 Date range & 2015--2020 \\
-KICs represented & Climate-KIC, EIT Digital, InnoEnergy, RawMaterials, Health, Food, Manufacturing, Urban Mobility \\
+KICs represented & 8 \\
+Actors in mention network & \textit{XXXX} \\
+Mention edges & \textit{XXXX} \\
 \bottomrule
 \end{tabular}
 \captionof{table}{EIT Twitter corpus statistics}
 \end{center}
 
-\subsection{Topic Modeling Pipeline}
+\subsection{Stage 2: Pattern Extraction}
 
-Topic discovery uses BERTopic, combining:
+Three families of patterns emerge from collected Twitter data.
 
-\begin{enumerate}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Sentence embeddings}: BAAI/bge-small-en-v1.5 transformer model encodes tweets as 384-dimensional vectors
-\item \textbf{Dimensionality reduction}: UMAP projects embeddings to 5 dimensions while preserving local structure
-\item \textbf{Clustering}: HDBSCAN identifies dense regions as topics, with outliers explicitly handled
-\item \textbf{Representation}: c-TF-IDF extracts characteristic keywords; optional LLM generates interpretable labels
-\end{enumerate}
+\paragraph{Network structures from mentions.}
+The \textbf{mention network} treats actors as nodes and @mentions as directed edges.
+Standard network metrics identify structural positions:
 
+\tableminimal
 \begin{center}
-\textbf{BERTopic Pipeline}
-
-\smallskip
-\fbox{Tweets} $\rightarrow$ \fbox{Preprocess} $\rightarrow$ \fbox{Embed (SBERT)} $\rightarrow$ \fbox{UMAP} $\rightarrow$ \fbox{HDBSCAN} $\rightarrow$ \fbox{c-TF-IDF}
-
-$\downarrow$
-
-\fbox{Topic Labels} $\leftarrow$ \fbox{KeyBERT / LLM}
+\begin{tabular}{@{}p{2.5cm}p{4cm}p{5cm}@{}}
+\toprule
+\textbf{Metric} & \textbf{Interpretation} & \textbf{Role Signal} \\
+\midrule
+In-degree & Many others mention this actor & Perceived authority, opinion leader \\
+Out-degree & Actor actively engages others & Networker, active diffuser \\
+Betweenness & Bridges disconnected groups & Broker, intermediary \\
+Reciprocity & Mutual mention patterns & Partnership, peer relationship \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Network centrality metrics and role interpretation}
 \end{center}
 
-\subsection{Discovered Topics}
+\paragraph{Community boundaries from clustering.}
+Louvain community detection on the mention network identifies
+\textbf{sub-regions}---clusters of actors who mention each other more
+frequently than expected by chance.
+These sub-regions correspond to thematic communities or discourse coalitions
+\parencite{benabdelkrim-opening-fields-2020}.
+In the EIT ecosystem, detected communities align with formal KIC boundaries
+(Climate-KIC, EIT Digital, InnoEnergy, RawMaterials), validating that
+Twitter interactions mirror organizational structure.
 
-Initial analysis of 5,000 sampled tweets with min\_cluster\_size=50 reveals four dominant topics corresponding to KIC communities:
+\paragraph{Discourse patterns from topic modeling.}
+BERTopic analysis reveals dominant themes in Twitter discourse.
+Using BAAI/bge-small-en-v1.5 sentence embeddings, UMAP dimensionality
+reduction, and HDBSCAN clustering, we identify four major topics:
 
 \tableminimal
 \begin{center}
@@ -320,81 +238,312 @@ Initial analysis of 5,000 sampled tweets with min\_cluster\_size=50 reveals four
 0 & climatekic, climatelaunch, climateaction & 2,027 & Climate-KIC activities \\
 1 & eit\_digital, eitdigitalaccel, digital & 1,837 & EIT Digital ecosystem \\
 2 & innoenergyeu, innoenergy, energy & 231 & InnoEnergy ventures \\
-3 & eitrawmaterials, rawmaterials, rawmaterialsweek & 227 & Raw materials focus \\
+3 & eitrawmaterials, rawmaterials & 227 & Raw materials focus \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Topics discovered from EIT Twitter sample (KeyBERT representation)}
+\captionof{table}{Topics discovered from EIT Twitter sample}
 \end{center}
 
-The topic structure largely mirrors formal KIC boundaries, suggesting strong community coherence in social media discourse. Climate-KIC dominates the conversation, consistent with network centrality metrics showing @climatekic as the most mentioned account.
+Climate-KIC dominates conversation volume, consistent with network
+centrality showing @climatekic as the most-mentioned KIC account.
 
-\begin{criticalbox}[The Augmentation Principle]
-Topic modeling exemplifies human-model collaboration: BERTopic identifies statistical patterns in embedding space, but human interpretation connects these patterns to substantive field dynamics. The pipeline outputs keywords and sample documents; the researcher determines whether ``climatekic, sustainable, climathon'' represents KIC-specific discourse versus generic sustainability talk.
+\subsection{Stage 3: Mapping to Role Constructs}
 
-Quantized LLMs (e.g., Mistral-7B via llama.cpp) can generate interpretable topic labels, but these require validation against field knowledge. Models augment human sense-making; they do not replace it.
+\Cref{fig:social-mapping} shows how extracted patterns map onto
+field mechanisms from \textcite{powell2017organizational} as operationalized
+by \textcite{benabdelkrim-opening-fields-2020}.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    databox/.style={rectangle, draw=Azure!60, fill=Azure!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    theorybox/.style={rectangle, draw=AccentPurple!60, fill=AccentPurple!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    mapstyle/.style={->, thick, PandaRose!70, dashed},
+    grouplabel/.style={font=\scriptsize\bfseries, text=Slate},
+]
+
+% Network patterns (left)
+\node[grouplabel] at (-3, 2.2) {Network Patterns};
+\node[databox] (d1) at (-3, 1.5) {High in-degree};
+\node[databox] (d2) at (-3, 0.5) {High out-degree};
+\node[databox] (d3) at (-3, -0.5) {High betweenness};
+\node[databox] (d4) at (-3, -1.5) {Reciprocal mentions};
+
+% Explicit patterns (center)
+\node[grouplabel] at (0, 2.2) {Explicit Patterns};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e1) at (0, 1.5)
+    {Authority position};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e2) at (0, 0.5)
+    {Active diffusion};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e3) at (0, -0.5)
+    {Bridging position};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e4) at (0, -1.5)
+    {Peer relationships};
+
+% Theory constructs (right)
+\node[grouplabel] at (3, 2.2) {Field Mechanisms};
+\node[theorybox] (t1) at (3, 1.5) {Convening};
+\node[theorybox] (t2) at (3, 0.5) {Proselytizing};
+\node[theorybox] (t3) at (3, -0.5) {Interfacing};
+\node[theorybox] (t4) at (3, -1.5) {Strengthening};
+
+% Arrows
+\draw[mapstyle] (d1) -- (e1);
+\draw[mapstyle] (d2) -- (e2);
+\draw[mapstyle] (d3) -- (e3);
+\draw[mapstyle] (d4) -- (e4);
+\draw[mapstyle] (e1) -- (t1);
+\draw[mapstyle] (e2) -- (t2);
+\draw[mapstyle] (e3) -- (t3);
+\draw[mapstyle] (e4) -- (t4);
+
+% Flow labels
+\node[font=\tiny\itshape, text=PandaRose] at (-1.5, -2.2) {explicate};
+\node[font=\tiny\itshape, text=PandaRose] at (1.5, -2.2) {embed};
+
+\end{tikzpicture}
+\captionof{figure}[Mapping Twitter patterns to field mechanisms]{%
+    From network patterns to field mechanisms, following
+    \textcite{maass2018data} and \textcite{powell2017organizational}.
+    Network metrics (in-degree, betweenness) are explicated
+    into named positions (authority, broker), then embedded
+    in field theory as mechanisms.}
+\label{fig:social-mapping}
+\end{center}
+
+Four key mappings operationalize field mechanisms:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[In-degree $\rightarrow$ Convening.]
+Actors with high in-degree relative to their community size perform
+\emph{convening}: they attract attention and are frequently mentioned
+as reference points, signaling authority within their sub-region.
+
+\item[Out-degree asymmetry $\rightarrow$ Proselytizing.]
+Actors whose out-degree exceeds $2\times$ their in-degree perform
+\emph{proselytizing}: they actively broadcast messages and engage
+others more than being engaged themselves, signaling diffusion effort.
+
+\item[Betweenness centrality $\rightarrow$ Interfacing.]
+Actors with high betweenness, connecting otherwise disconnected
+communities, perform \emph{interfacing}: they bridge sub-regions
+and mediate information flow across field boundaries.
+
+\item[Reciprocal mentions $\rightarrow$ Strengthening.]
+Actors whose reciprocal mentions exceed 50\% of their in-degree
+perform \emph{strengthening}: mutual engagement signals peer
+relationships and community cohesion.
+\end{description}
+
+\subsection{Mechanism Operationalization: Three Approaches}
+
+\Cref{tab:social-mechanism-ops} compares mechanism operationalization
+across three methodological approaches: the original Powell et al.\ (2017)
+network metrics, the co-classification adaptation by
+\textcite{benabdelkrim-opening-fields-2020}, and our mention-network adaptation.
+
+\tableminimal
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}p{2cm}p{2.8cm}p{2.8cm}p{2.8cm}@{}}
+\toprule
+\textbf{Mechanism} &
+\textbf{Powell et al.} &
+\textbf{Co-classification} \newline \parencite{benabdelkrim-opening-fields-2020} &
+\textbf{Mention network} \newline (this study) \\
+\midrule
+Proselytizing &
+Outdegree is twice indegree &
+Follows $>$ $2\times$ followers in region &
+Mentions made $>$ $2\times$ received \\[0.5em]
+Convening &
+Indegree above threshold &
+Followers $>$ $\frac{1}{3}$ of region &
+Mentions received $>$ $\frac{1}{3}$ of community \\[0.5em]
+Strengthening &
+Bidegree $>$ 50\% indegree &
+Reciprocal ties $>$ 50\% followers &
+Reciprocal mentions $>$ 50\% inbound \\[0.5em]
+Conforming &
+--- &
+High within-region follow ratio &
+High within-community mention ratio \\[0.5em]
+Interfacing &
+--- &
+Balanced within/cross ties &
+Balanced within/cross mentions \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Operationalization of field mechanisms across three approaches}
+\label{tab:social-mechanism-ops}
+\end{center}
+
+\begin{criticalbox}[Methodological Deviation]
+The \textcite{benabdelkrim-opening-fields-2020} approach discovers field members
+inductively through Twitter list co-memberships: external observers create lists,
+and co-listed accounts become network nodes.
+Our approach uses a direct seed search via TweetBinder, collecting all tweets
+mentioning the nine official EIT KIC accounts.
+This yields a mention network rather than a co-classification network.
+
+The trade-off: we lose the inductiveness of field discovery (our boundary is
+defined by who mentions EIT accounts), but gain richer temporal data and
+engagement metrics (retweets, likes, conversation threads).
+Community detection on the mention network still produces meaningful sub-regions,
+as validated by triangulation with internal sociotypes (\cref{ch:rolefield}).
 \end{criticalbox}
 
-\subsection{Technical Reproducibility}
-
-The pipeline is implemented in Python with the following dependencies:
-
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item \texttt{bertopic>=0.16} -- Topic modeling framework
-\item \texttt{sentence-transformers>=2.2} -- Transformer embeddings
-\item \texttt{umap-learn>=0.5} -- Dimensionality reduction
-\item \texttt{hdbscan>=0.8} -- Density-based clustering
-\item \texttt{llama-cpp-python>=0.2} -- Optional LLM labeling
-\end{itemize}
-
-\noindent\textbf{Usage}:
-\begin{verbatim}
-conda activate rolebox-social
-python -m rolebox_social.topic_modeling --mode tweets --sample 10000
-\end{verbatim}
-
 
 %===============================================================================
-\section{Multiple Network Types from Single Platform}
+\section{From Theory to Data Requirements}
+\label{sec:social-theory-data}
 %===============================================================================
 
-A single platform generates multiple complementary networks:
+The lower path in \cref{fig:social-bridging} runs in reverse:
+field theory specifies what to look for in Twitter data.
+This is the \emph{theory-to-data-requirements} pathway.
+
+\paragraph{Field theory requires community boundaries.}
+Field theory predicts that actors organize into sub-regions with
+distinct logics and practices \parencite{powell2017organizational}.
+This requirement guided the decision to apply community detection
+(Louvain algorithm) to the mention network, identifying clusters
+that correspond to thematic communities or discourse coalitions.
+
+\paragraph{CAS theory requires relational data.}
+Complex adaptive systems theory predicts roles emerge from interactions,
+not declarations \parencite{holland2012signals}.
+This guided the focus on \emph{mention networks} (who engages whom)
+over \emph{content analysis alone} (what actors say).
+Mentions reveal relational performance---actual engagement patterns
+rather than aspirational claims.
+
+\paragraph{Mechanism theory requires multiplex networks.}
+Powell et al.\ mechanisms (proselytizing, convening, strengthening)
+each require different network features: degree distribution,
+reciprocity, cross-community ties \parencite{powell2017organizational}.
+This guided extraction of multiple network types from single-platform data:
 
 \tableminimal
 \begin{center}
 \begin{tabular}{@{}p{2.5cm}p{4cm}p{4.5cm}@{}}
 \toprule
-\textbf{Network Type} & \textbf{Edge Meaning} & \textbf{Role Signal} \\
+\textbf{Network Type} & \textbf{Edge Meaning} & \textbf{Mechanism Signal} \\
 \midrule
-Follow network & Attention allocation & Who matters to whom \\
-Retweet network & Content endorsement & Whose voice gets amplified \\
-Mention network & Direct engagement & Active conversation partners \\
-Quote tweet network & Commentary relationship & Critical or supportive positioning \\
-Hashtag co-occurrence & Discourse alignment & Topical communities \\
+Follow network & Attention allocation & Authority, reference \\
+Retweet network & Content endorsement & Amplification, support \\
+Mention network & Direct engagement & Conversation, interaction \\
+Quote network & Commentary & Critical positioning \\
+Hashtag co-occurrence & Discourse alignment & Thematic community \\
 \bottomrule
 \end{tabular}
 \captionof{table}{Network types extractable from Twitter/X data}
 \end{center}
 
-\begin{insightbox}[Multiplex Analysis]
-Actors may cluster differently across network types. An organization central in the follow network may be peripheral in the retweet network---suggesting attention without endorsement. Multiplex analysis reveals these nuances.
-\end{insightbox}
+
+%===============================================================================
+\section{The Claim--Relation Gap}
+\label{sec:social-gap}
+%===============================================================================
+
+The most theoretically productive finding is a \textbf{bridging gap}:
+many organizations claim ``strong industry partnerships'' on their websites
+(\cref{app:websites}) but show no Twitter engagement with those partners.
+
+This \emph{claim--relation gap} is not noise---it is signal.
+It indicates:
+
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Aspirational claiming}: positioning for sought roles
+\item \textbf{Private relationships}: partnerships enacted offline or in closed channels
+\item \textbf{Platform preferences}: some sectors avoid Twitter
+\item \textbf{Performance selectivity}: public Twitter vs. private interaction
+\item \textbf{Temporal lag}: partnerships established but not yet publicly performed
+\end{itemize}
+
+\begin{criticalbox}[The Gap as Bridge to Other Modalities]
+The claim--relation gap cannot be resolved within social media data alone.
+Resolving it requires triangulation:
+
+Do investment flows confirm the partnership (\cref{app:crunchbase})?
+Do news media attribute the collaboration (\cref{app:news-media})?
+Do visual materials show co-appearance at events (\cref{app:visual})?
+
+Each resolution path connects this modality's workflow to the next,
+creating the multimodal cartography that Chapter~\ref{ch:rolefield} deploys.
+\end{criticalbox}
 
 
 %===============================================================================
-\section{Integration with Other Modalities}
+\section{Workflow Challenges}
+\label{sec:social-challenges}
 %===============================================================================
 
-Social media data connects to other cartographic modalities:
+Social media analysis faces six methodological challenges,
+each motivating cross-modal bridging:
 
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[With websites] Compare claimed partnerships (website) with performed relationships (Twitter mentions/retweets). Gaps reveal aspirational vs. actual positioning.
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3cm}p{4cm}p{4cm}@{}}
+\toprule
+\textbf{Challenge} & \textbf{What it misses} & \textbf{Bridging solution} \\
+\midrule
+API access restrictions & Post-2023 Twitter data & Archive data, alternative platforms \\
+Bot contamination & Authentic human signals & Bot detection, filter outliers \\
+Platform ephemerality & Deleted tweets, private accounts & Triangulate with news, Wikipedia \\
+Representation bias & Non-Twitter actors & Complement with LinkedIn, web \\
+Performance vs. practice & Offline relationships & Cross-check with Crunchbase \\
+Discourse vs. action & Talk without walk & Validate with news attribution \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Social media challenges and cross-modal bridges}
+\end{center}
 
-\item[With news] Compare social media discourse with news coverage. Lead-lag patterns reveal whether Twitter discussions precede news (early signal) or follow it (news as agenda-setter).
+\paragraph{API access crisis.}
+Twitter/X dramatically restricted API access in early 2023, making ongoing
+collection prohibitively expensive for academic researchers.
+Historical archives (2015--2020) remain accessible through services like
+TweetBinder, but real-time monitoring now requires alternative platforms
+or manual collection.
 
-\item[With Crunchbase] Cross-reference social media visibility with investment activity. Highly funded actors may or may not be social media prominent.
+\paragraph{Bot contamination.}
+Automated accounts distort network metrics and discourse patterns.
+Studies find bots post more neutral-tone messages while humans add more
+opinion \parencite{sustainability2024bots}.
+Best practice: use bot-detection tools (Botometer) and either exclude
+likely bots or analyze them separately.
 
-\item[With visual materials] Visual content in tweets (images, infographics) reinforces or complicates textual positioning.
-\end{description}
+\paragraph{Platform ephemerality.}
+Tweets can be deleted, accounts go private, platforms change policies.
+Reproducibility suffers when data sources disappear.
+Mitigation: archive collected data immediately, share tweet IDs (not
+full text) to comply with terms of service.
+
+\paragraph{Representation bias.}
+Not everyone is on Twitter. Demographic and sectoral skews mean Twitter
+discourse may over-emphasize certain viewpoints or sectors (especially
+digital natives, NGOs, activists) while under-representing others
+(traditional industry, SMEs, research labs).
+Cross-platform comparison (LinkedIn, institutional websites) provides
+corrective perspective.
+
+\paragraph{Performance vs. practice gap.}
+Twitter shows public performance, not private relationships or offline
+actions. High social media engagement does not guarantee substantive
+collaboration; conversely, absence of Twitter interaction does not mean
+absence of relationship.
+Triangulation with investment data (\cref{app:crunchbase}) reveals
+behind-the-scenes ties.
+
+\paragraph{Discourse vs. action.}
+High Twitter activity about an innovation does not guarantee real-world
+implementation. Actors may talk more than act, or act without broadcasting.
+News media coverage (\cref{app:news-media}) provides external validation
+of claimed activities.
 
 
 %===============================================================================
@@ -402,31 +551,23 @@ Social media data connects to other cartographic modalities:
 %===============================================================================
 
 \begin{summarybox}
-Social media analysis provides the fourth modality of multimodal cartography---the \textbf{relational map} of performed interactions. Key methodological insights:
+The social media modality produces the \textbf{relational map}---how
+organizations perform roles through digital interactions.
+The bridging workflow connects 268,309 tweets (146,989 unique) to
+field theory via two paths: mention network patterns map to field
+mechanisms (convening, proselytizing, interfacing, strengthening),
+and community detection reveals discourse coalitions.
 
-\begin{itemize}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Theoretical role}: Twitter serves as a public arena where stakeholders discuss and contest policies, offering a window into political discourse and actor dynamics.
+The most productive finding is not within either path but at their
+intersection: the \emph{claim--relation gap} that motivates multimodal
+triangulation with websites (claimed), news (attributed), and Crunchbase (enacted).
 
-\item \textbf{Real-time policy analysis}: Social media enables studying transition processes as they unfold, capturing actors' shifting stances over time.
-
-\item \textbf{Explicit relations} through follow, retweet, and mention networks reveal who pays attention to whom.
-
-\item \textbf{Multiple analytical methods} (SNA, topic modeling, hashtag networks, actor-topic mapping, sentiment analysis) extract different facets of social media roles.
-
-\item \textbf{Central hubs vs. peripheral players}: Network position reveals de facto influence, sometimes independent of formal authority.
-
-\item \textbf{Different actor groups play different roles}: IOs as passive influencers, NGOs as active networkers, with distinct centrality signatures.
-
-\item \textbf{Bridging and brokerage}: Betweenness centrality identifies intermediaries connecting otherwise disconnected groups.
-
-\item \textbf{Coalitions and constellations}: Cluster analysis reveals advocacy coalitions and echo chambers.
-
-\item \textbf{Inherent limitations} (platform access, bot contamination, representation bias) motivate multimodal complementarity.
-
-\item \textbf{Ethical considerations}: Privacy, informed consent, and terms of service require careful attention.
-\end{itemize}
-
-Relational sociotypes show how actors perform connections. The next appendix examines \emph{aesthetic} sociotypes through visual materials analysis.
+Key network findings: KICs exhibit predominantly \textbf{interfacing} patterns
+(mentions across multiple communities), while partner organizations show
+\textbf{conforming} behaviour (within-community mentions).
+This validates that KICs perform boundary-spanning roles through observable
+relational patterns, not merely self-description.
 \end{summarybox}
 
+\clearpage
 \end{document}

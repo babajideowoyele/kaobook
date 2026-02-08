@@ -29,27 +29,31 @@ Our analysis addresses three research questions:
     \item \textbf{RQ3}: What verb patterns characterize high-power versus low-power actor positions, and what do these reveal about implicit assumptions in innovation ecosystem discourse?
 \end{enumerate}
 
-Our findings reveal systematic asymmetries in how EIT discourse constructs power relations. Entrepreneurs and KICs themselves are consistently framed with high agency and power; students and ``society'' are more frequently positioned as beneficiaries or objects of action; researchers occupy an ambiguous middle position. These patterns persist across KICs but vary in intensity: Climate-KIC discourse emphasizes transformation and system change with corresponding power differentials; EIT Digital emphasizes enabling and connecting with more egalitarian framings. Crucially, the actors positioned as beneficiaries of sustainability transitions---citizens, communities, future generations---are rarely constructed as agents in their own right.
+Our findings reveal systematic asymmetries in how EIT discourse constructs power relations. Institutional actors---the EIT itself, the European Commission, and specific KICs---are consistently framed with high agency and power; actor categories like ``Startups'' and ``Partners'' carry negative power scores and more frequently appear as objects of institutional action than as autonomous agents. ``Partners'' show a particularly striking pattern: high agency (0.621) combined with negative power ($-0.224$)---they are constructed as active but subordinate. These patterns persist across all eight KICs with moderate variation, suggesting a shared institutional discourse template. Crucially, the actors positioned as beneficiaries of sustainability transitions---participants, communities, citizens---are rarely constructed as wielding power in their own right.
 
 \begin{center}
 \small
-\begin{tabular}{lrrrrrrr}
+\begin{tabular}{lrrrr}
 \toprule
-\textbf{KIC} & \textbf{Documents} & \textbf{Sentences} & \textbf{Verbs} & \textbf{Matched} & \textbf{Entities} & \textbf{Triples} & \textbf{Unique Verbs} \\
+\textbf{KIC} & \textbf{Documents} & \textbf{Sentences} & \textbf{Relations} & \textbf{Avg. Rels/Doc} \\
 \midrule
-Climate-KIC & 1,847 & 42,156 & 31,234 & 18,456 & 3,421 & 12,345 & 847 \\
-EIT Digital & 1,567 & 38,234 & 28,912 & 16,234 & 2,987 & 10,234 & 812 \\
-InnoEnergy & 1,234 & 31,456 & 24,567 & 14,123 & 2,456 & 8,967 & 756 \\
-EIT Health & 1,123 & 28,912 & 22,345 & 12,987 & 2,234 & 7,891 & 698 \\
-RawMaterials & 876 & 21,234 & 16,789 & 9,876 & 1,678 & 5,678 & 623 \\
-EIT Food & 987 & 24,567 & 19,234 & 11,234 & 1,923 & 6,789 & 687 \\
-Manufacturing & 654 & 16,789 & 13,456 & 7,891 & 1,345 & 4,567 & 534 \\
-Urban Mobility & 712 & 18,234 & 14,567 & 8,456 & 1,478 & 5,123 & 567 \\
+EIT Central & 385 & 7,564 & 2,588 & 6.7 \\
+InnoEnergy & 194 & 4,923 & 1,635 & 8.4 \\
+Climate-KIC & 131 & 2,934 & 862 & 6.6 \\
+EIT Digital & 125 & 3,371 & 932 & 7.5 \\
+EIT Health & 92 & 2,219 & 667 & 7.2 \\
+RawMaterials & 82 & 2,388 & 720 & 8.8 \\
+EIT Food & 64 & 1,571 & 443 & 6.9 \\
+Urban Mobility & 26 & 508 & 95 & 3.7 \\
+Manufacturing & 22 & 553 & 194 & 8.8 \\
+Unclassified & 152 & 5,161 & 1,587 & 10.4 \\
 \midrule
-\textbf{Total} & \textbf{9,000} & \textbf{221,582} & \textbf{171,104} & \textbf{99,257} & \textbf{17,522} & \textbf{61,594} & \textbf{1,187} \\
+\textbf{Total} & \textbf{1,273} & \textbf{31,192} & \textbf{9,723} & \textbf{7.6} \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Overview of Corpus and Extracted Verb-Entity Relations}
+\captionof{table}{Overview of corpus and quality-filtered verb-entity relations.
+From 23,781 raw extracted triples, a three-stage quality pipeline removed pronouns and noise tokens (4,599), non-entity actors via NER whitelist validation (9,459), yielding 9,723 clean relations across 795 unique verbs.
+Expanded lexicon covers 100\% of corpus verbs (2,354 lexicon entries).}
 \labtab{corpus-overview-power}
 \end{center}
 
@@ -197,6 +201,7 @@ We adapt the RIVETER framework \cite{antoniak2023riveter} for analysis of EIT co
     \item \textbf{Entity recognition}: Identification of people, organizations, and actor categories
     \item \textbf{Coreference resolution}: Linking pronouns and references to canonical entities
     \item \textbf{Triple extraction}: Identifying Agent-Verb-Theme relations via dependency parsing
+    \item \textbf{Entity quality filtering}: Removing pronoun/noise actors, NER whitelist validation, name normalization
     \item \textbf{Lexicon matching}: Scoring verbs for power and agency dimensions
 \end{enumerate}
 
@@ -249,7 +254,7 @@ We constructed a corpus from EIT KIC public communications spanning 2015--2024:\
     \item \textbf{Ecosystem narratives}: Startup profiles, alumni stories, partner descriptions
 \end{itemize}
 
-Table \ref{tab:corpus-overview-power} summarizes the corpus. After preprocessing (removing boilerplate, deduplication), the corpus comprises 9,423 documents containing 231,816 sentences.
+Table \ref{tab:corpus-overview-power} summarizes the corpus. After preprocessing (removing boilerplate, deduplication), the corpus comprises 1,273 documents containing 31,192 sentences. Raw triple extraction yielded 23,781 Agent-Verb-Theme relations; after a three-stage entity quality pipeline---removing pronoun and noise actors (4,599), filtering non-entity actors against a spaCy NER whitelist (9,459), and normalizing entity names---9,723 clean relations spanning 795 unique verbs and 925 distinct entity profiles remained for analysis.
 
 \subsection{Entity Recognition and Classification}
 
@@ -291,7 +296,7 @@ Each category includes synonyms, plural forms, and common referential expression
 
 \subsubsection{Coreference Resolution}
 
-We employ neuralcoref (spaCy add-on) to link pronouns and nominal references to their antecedents.\sidenote{Coreference resolution is essential because many power-relevant verbs appear with pronominal subjects or objects: ``They \textit{accelerate} startups''; ``We \textit{support} them.''} When coreference chains include both named entities and category terms, we assign the chain to the most specific category.
+We employ fastcoref \parencite{otmazgin2023lingmess} for coreference resolution, linking pronouns and nominal references to their antecedents.\sidenote{Coreference resolution is essential because many power-relevant verbs appear with pronominal subjects or objects: ``They \textit{accelerate} startups''; ``We \textit{support} them.'' Pronoun actors that cannot be resolved are removed during quality filtering.} When coreference chains include both named entities and category terms, we assign the chain to the most specific category.
 
 \subsection{Triple Extraction}
 
@@ -328,7 +333,7 @@ This triple is then matched against the connotation frames lexicon.
 
 \subsection{Connotation Frame Lexicon}
 
-We employ the power and agency lexicon from \cite{sap2017connotation}, which contains 1,700+ verbs annotated for:\sidenote{Annotations were collected via crowdsourcing using Agent-Theme placeholder prompts (``X [verb]s Y''); see \cite{sap2017connotation} for annotation methodology.}
+We employ an expanded lexicon combining the power and agency annotations from \cite{sap2017connotation} (2,148 verbs) with transition-specific dimensions and buildup/breakdown classifications, yielding 2,354 annotated verbs.\sidenote{The base Sap et al. lexicon was extended using sentence-transformer embeddings (BAAI/bge-small-en-v1.5) to classify additional verbs for transition-specific and buildup/breakdown dimensions.} The core dimensions are:
 
 \begin{itemize}
     \item \textbf{Agency(a)}: Agent's agency level ($+1$, $0$, $-1$)
@@ -358,12 +363,15 @@ where $T_e^{agent}$ and $T_e^{theme}$ are the sets of triples where $e$ appears 
 
 \subsection{Validation}
 
-We validated the pipeline through:\sidenote{\iconnews\ Data: \texttt{dissertation/data/rolebox-news/}}
+We validated the pipeline through multiple complementary strategies:\sidenote{\iconnews\ Data: \texttt{dissertation/data/rolebox-news/}}
 
 \begin{enumerate}
-    \item \textbf{Manual triple verification}: Two coders verified 500 randomly sampled triples for correct extraction (agreement: 91.2\%)
-    \item \textbf{Entity classification accuracy}: Manual verification of 300 entity classifications (accuracy: 87.3\%)
-    \item \textbf{Lexicon coverage}: 58.0\% of extracted verbs matched the lexicon (comparable to prior applications)
+    \item \textbf{Entity quality audit}: The three-stage quality pipeline removed all pronoun actors (zero remaining), reduced case duplicates to one (KONUX/Konux), and eliminated noise tokens from entity profiles
+    \item \textbf{Lexicon coverage}: The expanded lexicon achieves 100\% coverage of the 795 unique corpus verbs (2,354 lexicon entries total), compared to typical coverage rates of 50--60\% with the base lexicon
+    \item \textbf{NER whitelist validation}: A spaCy NER whitelist of 10,733 entities cross-validated actor extractions against independently recognized named entities
+    \item \textbf{LLM entity type classification}: All 925 entity profiles were classified into semantic types using Claude Sonnet in batches of 50, yielding: Organization (177), Actor Type (178), Concept (193), Person (139), Program (32), Institution (29), Technology (23), Event (22), GPE (12), Location (8), with 69 flagged as noise and 43 as date/number artifacts
+    \item \textbf{Relation quality validation}: A random sample of 100 Agent-Verb-Theme triples was assessed by Claude for correctness. Strict precision (fully correct triples) was 0.45; lenient precision (correct or partially correct) was 0.69, with 26\% incorrect and 5\% noise---consistent with dependency-parsed relation extraction on heterogeneous web corpora
+    \item \textbf{Gold standard comparison}: Claude-generated entity annotations for a stratified sample of 193 articles (4,767 entities, 1,664 relations) served as reference. Entity-level recall is limited (0.08) because the pipeline retains only entities appearing in verb relations, not all mentioned entities; precision (0.22) reflects the broader entity scope of LLM annotation
 \end{enumerate}
 
 \section{Findings: Power and Agency in EIT Discourse}[Findings]
@@ -371,147 +379,162 @@ We validated the pipeline through:\sidenote{\iconnews\ Data: \texttt{dissertatio
 
 \subsection{Overall Actor Positioning}
 
-Figure \ref{fig:actor-scores} presents mean power and agency scores by actor category across the full corpus.
+Figure \ref{fig:actor-scores} presents mean power and agency scores for key entities across the full corpus, distinguishing institutional actors, actor categories, and geopolitical references.
 
-% Figure 9.3: Power and agency scores by actor category
+% Figure 9.3: Power and agency scores by entity
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
     width=14cm,
-    height=8cm,
+    height=9cm,
     xlabel={Agency Score (as Agent)},
     ylabel={Power Score (as Agent)},
-    xmin=-0.3, xmax=0.5,
-    ymin=-0.3, ymax=0.5,
+    xmin=-0.1, xmax=1.0,
+    ymin=-0.15, ymax=0.7,
     grid=major,
     grid style={gray!20},
-    legend pos=south east,
 ]
 
-% Actor categories as points
-\addplot[only marks, mark=*, mark size=4pt, blue] coordinates {(0.42, 0.38)}; % KIC
-\addplot[only marks, mark=*, mark size=4pt, red] coordinates {(0.35, 0.31)}; % Entrepreneur
-\addplot[only marks, mark=*, mark size=4pt, green!60!black] coordinates {(0.18, 0.12)}; % Researcher
-\addplot[only marks, mark=*, mark size=4pt, orange] coordinates {(0.08, -0.05)}; % Student
-\addplot[only marks, mark=*, mark size=4pt, purple] coordinates {(0.28, 0.25)}; % Corporation
-\addplot[only marks, mark=*, mark size=4pt, brown] coordinates {(0.31, 0.29)}; % Investor
-\addplot[only marks, mark=*, mark size=4pt, cyan] coordinates {(0.22, 0.18)}; % Policymaker
-\addplot[only marks, mark=*, mark size=4pt, gray] coordinates {(-0.12, -0.21)}; % Society
-\addplot[only marks, mark=*, mark size=4pt, pink] coordinates {(0.15, 0.08)}; % Technology
+% Institutional actors (blue markers)
+\addplot[only marks, mark=*, mark size=5pt, blue] coordinates {(0.735, 0.391)}; % EIT
+\addplot[only marks, mark=*, mark size=4pt, blue!70] coordinates {(0.859, 0.500)}; % EIT RawMaterials
+\addplot[only marks, mark=*, mark size=4pt, blue!70] coordinates {(0.733, 0.391)}; % EIT InnoEnergy
+\addplot[only marks, mark=*, mark size=4pt, blue!70] coordinates {(0.672, 0.321)}; % EIT Digital
+\addplot[only marks, mark=*, mark size=4pt, blue!70] coordinates {(0.722, 0.456)}; % Institute
+
+% Policymakers (cyan markers)
+\addplot[only marks, mark=square*, mark size=4pt, cyan!70!black] coordinates {(0.718, 0.453)}; % European Commission
+\addplot[only marks, mark=square*, mark size=4pt, cyan!70!black] coordinates {(0.446, 0.310)}; % European Union
+\addplot[only marks, mark=square*, mark size=4pt, cyan!70!black] coordinates {(0.752, 0.248)}; % European Parliament
+
+% Actor categories (warm markers)
+\addplot[only marks, mark=triangle*, mark size=4pt, red] coordinates {(0.595, 0.310)}; % Entrepreneurs
+\addplot[only marks, mark=triangle*, mark size=4pt, red!60] coordinates {(0.222, -0.139)}; % Startups
+\addplot[only marks, mark=triangle*, mark size=4pt, green!60!black] coordinates {(0.549, 0.235)}; % Researchers
+\addplot[only marks, mark=triangle*, mark size=4pt, orange] coordinates {(0.431, 0.123)}; % Participants
+\addplot[only marks, mark=diamond*, mark size=4pt, purple] coordinates {(0.621, -0.224)}; % Partners
+\addplot[only marks, mark=diamond*, mark size=4pt, brown] coordinates {(0.125, 0.034)}; % Europe
 
 % Labels
-\node[font=\tiny, anchor=west] at (axis cs:0.43, 0.38) {KIC};
-\node[font=\tiny, anchor=west] at (axis cs:0.36, 0.31) {Entrepreneur};
-\node[font=\tiny, anchor=west] at (axis cs:0.19, 0.12) {Researcher};
-\node[font=\tiny, anchor=west] at (axis cs:0.09, -0.05) {Student};
-\node[font=\tiny, anchor=west] at (axis cs:0.29, 0.25) {Corporation};
-\node[font=\tiny, anchor=west] at (axis cs:0.32, 0.29) {Investor};
-\node[font=\tiny, anchor=west] at (axis cs:0.23, 0.18) {Policymaker};
-\node[font=\tiny, anchor=west] at (axis cs:-0.11, -0.21) {Society};
-\node[font=\tiny, anchor=west] at (axis cs:0.16, 0.08) {Technology};
+\node[font=\tiny, anchor=south west] at (axis cs:0.745, 0.391) {EIT (819)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.869, 0.500) {EIT RawMaterials (64)};
+\node[font=\tiny, anchor=south] at (axis cs:0.733, 0.420) {EIT InnoEnergy (202)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.682, 0.321) {EIT Digital (137)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.732, 0.456) {Institute (90)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.728, 0.453) {European Commission (422)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.456, 0.310) {European Union (184)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.762, 0.248) {European Parliament (105)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.605, 0.310) {Entrepreneurs (42)};
+\node[font=\tiny, anchor=north west] at (axis cs:0.232, -0.139) {Startups (36)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.559, 0.235) {Researchers (51)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.441, 0.123) {Participants (65)};
+\node[font=\tiny, anchor=south west] at (axis cs:0.631, -0.224) {Partners (58)};
+\node[font=\tiny, anchor=north west] at (axis cs:0.135, 0.034) {Europe (208)};
 
 % Quadrant labels
-\node[font=\scriptsize, gray] at (axis cs:0.4, -0.25) {High Agency, Low Power};
-\node[font=\scriptsize, gray] at (axis cs:-0.2, 0.4) {Low Agency, High Power};
-\node[font=\scriptsize, gray] at (axis cs:0.4, 0.45) {High Agency, High Power};
-\node[font=\scriptsize, gray] at (axis cs:-0.2, -0.25) {Low Agency, Low Power};
+\node[font=\scriptsize, gray] at (axis cs:0.85, -0.10) {High Agency, Low Power};
+\node[font=\scriptsize, gray] at (axis cs:0.15, 0.60) {Low Agency, High Power};
+\node[font=\scriptsize, gray] at (axis cs:0.85, 0.65) {High Agency, High Power};
+\node[font=\scriptsize, gray] at (axis cs:0.15, -0.10) {Low Agency, Low Power};
 
-% Reference lines
-\draw[gray, dashed] (axis cs:0, -0.3) -- (axis cs:0, 0.5);
-\draw[gray, dashed] (axis cs:-0.3, 0) -- (axis cs:0.5, 0);
+% Reference lines at median
+\draw[gray, dashed] (axis cs:0.5, -0.15) -- (axis cs:0.5, 0.7);
+\draw[gray, dashed] (axis cs:-0.1, 0.2) -- (axis cs:1.0, 0.2);
 
 \end{axis}
 \end{tikzpicture}
-\captionof{figure}{Mean power and agency scores by actor category (as Agent). Scores range from $-1$ to $+1$; positive values indicate high power/agency.}
+\captionof{figure}{Mean power and agency scores for key entities (as Agent). Circles: institutional actors; squares: policymakers; triangles: actor categories; diamonds: other. Numbers in parentheses indicate mentions after quality filtering ($n$=9,723 relations).}
 \labfig{actor-scores}
 \end{center}
 
 \subsubsection{High Power/High Agency: The Innovation Protagonists}
 
-\textsc{KIC} and \textsc{Entrepreneur} occupy the high-power, high-agency quadrant.\marginnote{These actors are constructed as the protagonists of innovation narratives---those who act upon the world and exercise power over others.} The verbs most frequently associated with these actors encode decisive action and authority:
+Institutional actors---EIT, the European Commission, and specific KICs---cluster in the high-power, high-agency quadrant.\marginnote{These institutional actors are constructed as the protagonists of innovation narratives---those who act upon the world and exercise power over others.} EIT alone accounts for 819 mentions, appearing as Agent in 95.8\% of cases. The verbs most frequently carrying high power scores across the corpus encode decisive action and provision:
 
 \begin{center}
 \small
-\begin{tabular}{llrr}
+\begin{tabular}{lrr}
 \toprule
-\textbf{Actor} & \textbf{Verb} & \textbf{Count} & \textbf{Power(a)} \\
+\textbf{Verb} & \textbf{Count} & \textbf{Power(a)} \\
 \midrule
-\multirow{5}{*}{\textsc{KIC}}
-    & support & 1,234 & +1 \\
-    & accelerate & 987 & +1 \\
-    & fund & 876 & +1 \\
-    & enable & 765 & 0 \\
-    & connect & 654 & 0 \\
-\midrule
-\multirow{5}{*}{\textsc{Entrepreneur}}
-    & develop & 876 & +1 \\
-    & create & 765 & +1 \\
-    & launch & 654 & +1 \\
-    & transform & 543 & +1 \\
-    & disrupt & 432 & +1 \\
+publish & 200 & +1 \\
+develop & 183 & +1 \\
+provide & 155 & +1 \\
+add & 126 & +1 \\
+launch & 122 & +1 \\
+offer & 106 & +1 \\
+make & 96 & +1 \\
+use & 75 & +1 \\
+propose & 75 & +1 \\
+lead & 69 & +1 \\
+bring & 67 & +1 \\
+create & 65 & +1 \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Top Verbs by Frequency for High-Power Actors (as Agent)}
+\captionof{table}{Most Frequent High-Power Verbs in Corpus (Power(a) = +1)}
 \labtab{high-power-verbs}
 \end{center}
 
-KICs ``\textit{support},'' ``\textit{accelerate},'' and ``\textit{fund}''---verbs that position them as powerful patrons distributing resources. Entrepreneurs ``\textit{develop},'' ``\textit{create},'' and ``\textit{transform}''---verbs that position them as agents of change. Both actor types are rarely positioned as Themes (objects of others' actions).
+Institutional actors ``\textit{publish},'' ``\textit{develop},'' and ``\textit{provide}''---verbs that position them as powerful producers and distributors of resources. They ``\textit{launch}'' and ``\textit{create}''---verbs encoding decisive capability. These actors are rarely positioned as Themes: ``EIT'' appears as Agent in 95.8\% of its 819 mentions; the European Commission in 97.4\% of 422 mentions.
 
 \subsubsection{Low Power/Low Agency: The Beneficiaries}
 
-\textsc{Society} and \textsc{Student} occupy the low-power, low-agency quadrant.\sidenote{These actors are constructed as beneficiaries of innovation rather than agents of it---recipients of benefits delivered by entrepreneurs and intermediaries.} When these actors appear as Agents, the verbs encode reception rather than action:
+Actor categories like ``people'' and ``entrepreneurs'' occupy positions with markedly lower power and agency than institutional actors.\sidenote{These actor categories are constructed as objects of institutional action rather than agents in their own right---recipients of support delivered by KICs and policymakers.} The most frequent low-power verbs in the corpus encode need, reception, and dependency:
 
 \begin{center}
 \small
-\begin{tabular}{llrr}
+\begin{tabular}{lrr}
 \toprule
-\textbf{Actor} & \textbf{Verb} & \textbf{Count} & \textbf{Agency(a)} \\
+\textbf{Verb} & \textbf{Count} & \textbf{Power(a)} \\
 \midrule
-\multirow{5}{*}{\textsc{Student}}
-    & learn & 543 & 0 \\
-    & receive & 432 & $-1$ \\
-    & participate & 387 & 0 \\
-    & benefit & 321 & $-1$ \\
-    & gain & 298 & 0 \\
-\midrule
-\multirow{5}{*}{\textsc{Society}}
-    & benefit & 456 & $-1$ \\
-    & need & 387 & $-1$ \\
-    & face & 345 & $-1$ \\
-    & require & 298 & $-1$ \\
-    & depend & 234 & $-1$ \\
+announce & 126 & $-1$ \\
+receive & 126 & $-1$ \\
+need & 92 & $-1$ \\
+explain & 80 & $-1$ \\
+join & 75 & $-1$ \\
+want & 72 & $-1$ \\
+become & 62 & $-1$ \\
+call & 42 & $-1$ \\
+represent & 38 & $-1$ \\
+believe & 32 & $-1$ \\
+recognise & 31 & $-1$ \\
+benefit & 30 & $-1$ \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Top Verbs by Frequency for Low-Power Actors (as Agent)}
+\captionof{table}{Most Frequent Low-Power Verbs in Corpus (Power(a) = $-1$)}
 \labtab{low-power-verbs}
 \end{center}
 
-Students ``\textit{learn},'' ``\textit{receive},'' and ``\textit{benefit}''---verbs encoding passive reception. Society ``\textit{benefits},'' ``\textit{needs},'' and ``\textit{faces}'' challenges---verbs encoding dependency rather than agency. Crucially, these actors appear far more frequently as Themes (recipients of action) than as Agents:
+Actors positioned with these verbs ``\textit{receive},'' ``\textit{need},'' and ``\textit{want}''---verbs encoding dependency and reception rather than decisive action. ``Startups'' appear as Themes (22.2\% of 36 mentions) far more often than institutional actors, and with negative power ($-0.139$)---they are linguistically positioned as recipients of institutional support. ``Partners'' show the starkest contrast: high agency (0.621) but negative power ($-0.224$), appearing as Themes in 25.9\% of cases:
 
 \begin{margintable}
 \centering
 \small
 \begin{tabular}{lrr}
 \toprule
-\textbf{Actor} & \textbf{Agent} & \textbf{Theme} \\
+\textbf{Entity} & \textbf{Agent} & \textbf{Theme} \\
 \midrule
-\textsc{KIC} & 78.3\% & 21.7\% \\
-\textsc{Entrepreneur} & 71.2\% & 28.8\% \\
-\textsc{Student} & 34.5\% & 65.5\% \\
-\textsc{Society} & 28.9\% & 71.1\% \\
+EIT & 95.8\% & 4.2\% \\
+Eur. Commission & 97.4\% & 2.6\% \\
+EIT InnoEnergy & 93.6\% & 6.4\% \\
+Institute & 98.9\% & 1.1\% \\
+Researchers & 92.2\% & 7.8\% \\
+Entrepreneurs & 76.2\% & 23.8\% \\
+Partners & 74.1\% & 25.9\% \\
+Startups & 77.8\% & 22.2\% \\
 \bottomrule
 \end{tabular}
-\caption{Agent vs. Theme position by actor}
+\caption{Agent vs. Theme position by entity}
 \labtab{agent-theme-ratio}
 \end{margintable}
 
 \subsubsection{Middle Position: Researchers and Technology}
 
-\textsc{Researcher} and \textsc{Technology} occupy intermediate positions with moderate agency but lower power.\marginnote{Researchers are constructed as having expertise (agency) but not as exercising power over others; technology is portrayed as having transformative capability but not autonomous agency.} Researchers ``\textit{discover},'' ``\textit{develop},'' and ``\textit{investigate}''---verbs with high agency but neutral power (they act, but not necessarily \textit{upon} others). Technology ``\textit{enables},'' ``\textit{transforms},'' and ``\textit{disrupts}''---verbs encoding capability but with ambiguous agency (technology as tool or autonomous actor).
+``Researchers'' (power: 0.235, agency: 0.549, $n$=51) and ``Participants'' (power: 0.123, agency: 0.431, $n$=65) occupy intermediate positions with moderate agency but lower power.\marginnote{Researchers and participants are constructed as having expertise and involvement (moderate agency) but not as exercising power over others---an important asymmetry relative to institutional actors.} ``Entrepreneurs'' (power: 0.310, agency: 0.595, $n$=42) cluster near institutional actors when appearing as Agents, but they appear as Themes in 23.8\% of mentions---substantially higher than EIT (4.2\%) or the Commission (2.6\%). ``Startups'' (power: $-0.139$, agency: 0.222, $n$=36) are positioned lower still, and ``Partners'' (power: $-0.224$, agency: 0.621, $n$=58) show the striking combination of high agency but negative power---they are constructed as active but subordinate.
 
 \subsection{Cross-KIC Variation}
 
-% Figure 9.4: Agency and power scores by KIC
+% Figure 9.4: Agency, power, and buildup scores by KIC
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
@@ -522,71 +545,67 @@ Students ``\textit{learn},'' ``\textit{receive},'' and ``\textit{benefit}''---ve
     symbolic x coords={Climate, Digital, InnoEnergy, Health, RawMat, Food, Manuf, Mobility},
     xtick=data,
     x tick label style={rotate=45, anchor=east, font=\small},
-    ymin=-0.1, ymax=0.5,
-    legend style={at={(0.5,-0.3)}, anchor=north, legend columns=2, font=\small},
-    bar width=0.3cm,
+    ymin=0, ymax=0.7,
+    legend style={at={(0.5,-0.3)}, anchor=north, legend columns=3, font=\small},
+    bar width=0.25cm,
     enlarge x limits=0.08,
 ]
 
 % Agency scores
 \addplot[fill=blue!60] coordinates {
-    (Climate, 0.38)
-    (Digital, 0.32)
-    (InnoEnergy, 0.41)
-    (Health, 0.29)
-    (RawMat, 0.35)
-    (Food, 0.33)
-    (Manuf, 0.37)
-    (Mobility, 0.34)
+    (Climate, 0.700)
+    (Digital, 0.693)
+    (InnoEnergy, 0.750)
+    (Health, 0.672)
+    (RawMat, 0.725)
+    (Food, 0.756)
+    (Manuf, 0.660)
+    (Mobility, 0.747)
 };
 
 % Power scores
 \addplot[fill=red!60] coordinates {
-    (Climate, 0.35)
-    (Digital, 0.24)
-    (InnoEnergy, 0.38)
-    (Health, 0.22)
-    (RawMat, 0.31)
-    (Food, 0.28)
-    (Manuf, 0.33)
-    (Mobility, 0.29)
+    (Climate, 0.326)
+    (Digital, 0.294)
+    (InnoEnergy, 0.352)
+    (Health, 0.367)
+    (RawMat, 0.328)
+    (Food, 0.361)
+    (Manuf, 0.273)
+    (Mobility, 0.368)
 };
 
-\legend{Mean Agency (Agent), Mean Power (Agent)}
+% Buildup scores
+\addplot[fill=green!60] coordinates {
+    (Climate, 0.113)
+    (Digital, 0.100)
+    (InnoEnergy, 0.133)
+    (Health, 0.148)
+    (RawMat, 0.118)
+    (Food, 0.113)
+    (Manuf, 0.062)
+    (Mobility, 0.063)
+};
+
+\legend{Mean Agency, Mean Power, Mean Buildup}
 
 \end{axis}
 \end{tikzpicture}
-\captionof{figure}{Mean agency and power scores (for Agent position) by KIC}
+\captionof{figure}{Mean agency, power, and buildup scores by KIC (all relations within KIC-attributed documents)}
 \labfig{kic-comparison}
 \end{center}
 
-\subsubsection{High Power Differential: Climate-KIC and InnoEnergy}
+\subsubsection{High Power: EIT Health and EIT RawMaterials}
 
-Climate-KIC and InnoEnergy show the highest power scores, reflecting discourse emphasizing \textit{transformation} and \textit{system change}.\sidenote{Climate and energy transitions involve confronting incumbent systems, which may explain why discourse emphasizes power differentials.} Characteristic verb patterns:
+EIT Urban Mobility (mean power: 0.368), EIT Health (0.367), and EIT Food (0.361) show the highest power scores.\sidenote{Health discourse emphasises institutional authority over clinical and regulatory processes; food and mobility discourse position KICs as powerful coordinators of complex supply chains and urban systems.} These KICs' discourse frames institutional actors as decisive authorities directing resource flows and shaping sectoral outcomes.
 
-\begin{itemize}
-    \item ``[KIC] \textit{transforms} industries''
-    \item ``Entrepreneurs \textit{disrupt} incumbents''
-    \item ``Innovation \textit{replaces} fossil fuels''
-\end{itemize}
+\subsubsection{Moderate Power: Climate-KIC and InnoEnergy}
 
-These verbs encode power \textit{over}---the capacity to change others, often against their interests.
-
-\subsubsection{Lower Power Differential: EIT Digital and EIT Health}
-
-EIT Digital and EIT Health show lower power scores, reflecting discourse emphasizing \textit{enabling} and \textit{connecting}.\marginnote{Digital and health innovation may be framed more as enhancement than transformation, reducing confrontational power language.} Characteristic verb patterns:
-
-\begin{itemize}
-    \item ``[KIC] \textit{connects} partners''
-    \item ``Technology \textit{enables} new possibilities''
-    \item ``Entrepreneurs \textit{collaborate} with industry''
-\end{itemize}
-
-These verbs encode power \textit{with}---facilitation rather than domination.
+EIT Food (agency: 0.756) and EIT InnoEnergy (0.750) show the highest agency scores, reflecting discourse emphasizing \textit{transformation} and \textit{system change}.\marginnote{EIT Health shows the highest buildup score (0.148), followed by InnoEnergy (0.133), reflecting constructive framing around building new infrastructure.} Climate-KIC (power: 0.326, agency: 0.700) and InnoEnergy (power: 0.352) encode both power \textit{over}---the capacity to change others---and constructive agency through ``develop,'' ``launch,'' and ``create.''
 
 \subsubsection{Cross-Sectoral Patterns}
 
-Comparing across all eight KICs reveals that power and agency scores correlate with sectoral characteristics.\sidenote{KICs addressing sectors with incumbent resistance show higher power differentials; KICs in collaborative sectors show lower differentials.} EIT Food and Urban Mobility show moderate scores reflecting their hybrid nature---addressing both established industries (food production, automotive) and emerging sectors (alternative proteins, micromobility).
+Comparing across all eight KICs reveals moderately homogeneous power scores (range: 0.273--0.368) with somewhat wider variation in agency (0.660--0.756).\sidenote{The modest cross-KIC power variation suggests a shared institutional discourse template underlying all KIC communications, with sectoral differences manifesting in agency and buildup framing.} The most notable variation appears in buildup scores: EIT Health (0.148), InnoEnergy (0.133), and RawMaterials (0.118) show the highest constructive framing, while EIT Manufacturing (0.062) and Urban Mobility (0.063) show the lowest---the two newest KICs, possibly reflecting their still-emerging institutional identities.
 
 \subsection{Verb Pattern Analysis}
 
@@ -661,31 +680,32 @@ Beyond individual actor scores, we examine \textit{dyadic} power relations: when
 
 \begin{center}
 \small
-\begin{tabular}{llrrr}
+\begin{tabular}{llrrl}
 \toprule
-\textbf{Agent} & \textbf{Theme} & \textbf{Count} & \textbf{Power(a)} & \textbf{Power(t)} \\
+\textbf{Agent} & \textbf{Theme} & \textbf{Count} & \textbf{Power Flow} & \textbf{Top Verb} \\
 \midrule
-\textsc{KIC} & \textsc{Entrepreneur} & 3,456 & +0.42 & $-0.31$ \\
-\textsc{KIC} & \textsc{Student} & 2,345 & +0.38 & $-0.28$ \\
-\textsc{KIC} & \textsc{Society} & 1,234 & +0.35 & $-0.24$ \\
-\textsc{Entrepreneur} & \textsc{Society} & 1,876 & +0.41 & $-0.33$ \\
-\textsc{Entrepreneur} & \textsc{Corporation} & 987 & +0.28 & $-0.15$ \\
-\textsc{Corporation} & \textsc{Entrepreneur} & 765 & +0.32 & $-0.22$ \\
-\textsc{Researcher} & \textsc{Technology} & 654 & +0.25 & $-0.08$ \\
+EIT Digital & 2010 & 12 & 0.00 & publish \\
+EIT & Winners & 10 & $-1.00$ & announce \\
+EIT & KIC & 8 & +0.12 & establish \\
+Innovation Activities & New Products & 8 & +1.00 & develop \\
+EIT & Communities & 7 & +0.86 & support \\
+EIT InnoEnergy & Investors & 7 & 0.00 & attract \\
+EIT RawMaterials & Partners & 5 & +1.00 & bring \\
+European Commission & EIT & 5 & +1.00 & propose \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Power Differential by Actor Dyad (Agent $\rightarrow$ Theme)}
+\captionof{table}{Top Actor Dyads (Agent $\rightarrow$ Theme). 761 unique dyad pairs identified from 9,723 quality-filtered relations.}
 \labtab{dyad-power}
 \end{center}
 
-The most frequent dyads show consistent patterns:\sidenote{Power differentials are largest when institutional actors (KICs) or heroic individuals (entrepreneurs) act upon collective beneficiaries (society, students).}
+The dyad analysis reveals that actor-category interactions are sparse when measured by exact entity co-occurrence in individual relations.\sidenote{After quality filtering removed pronoun agents, the remaining dyads reflect named entity interactions---a cleaner picture of institutional power flows.} Institutional actors dominate as Agents: ``EIT'' \textit{announces} winners (10), \textit{establishes} KICs (8), and \textit{supports} communities (7). The European Commission \textit{proposes} EIT-related policy (5). Power flows consistently from institutional agents to other entities:
 \begin{itemize}
-    \item \textbf{KIC $\rightarrow$ Entrepreneur}: KICs ``support,'' ``fund,'' ``accelerate'' entrepreneurs
-    \item \textbf{KIC $\rightarrow$ Student}: KICs ``train,'' ``educate,'' ``prepare'' students
-    \item \textbf{Entrepreneur $\rightarrow$ Society}: Entrepreneurs ``transform,'' ``serve,'' ``benefit'' society
+    \item \textbf{KIC $\rightarrow$ Actor Category}: ``announce winners,'' ``support communities''---patronage and gatekeeping
+    \item \textbf{KIC $\rightarrow$ KIC}: ``EIT $\rightarrow$ KIC,'' ``establish''---hierarchical governance
+    \item \textbf{Policy $\rightarrow$ KIC}: ``Commission $\rightarrow$ EIT,'' ``propose''---regulatory authority
 \end{itemize}
 
-Notably absent are dyads where beneficiaries act upon powerful actors: \textsc{Society} $\rightarrow$ \textsc{KIC} or \textsc{Student} $\rightarrow$ \textsc{Entrepreneur} are rare and, when present, involve low-power verbs (``need,'' ``depend on'').
+Reverse dyads where beneficiaries act upon institutional actors are rare, confirming the asymmetric power construction.
 
 \subsection{Bootstrapping and Stability}
 
@@ -703,45 +723,49 @@ Following \cite{antoniak2023riveter}, we assess score stability via bootstrappin
     legend style={font=\small},
 ]
 
-% KIC distribution
+% European Institute distribution (mean=0.53, sd~0.035)
 \addplot[blue, thick, smooth, fill=blue, fill opacity=0.2] coordinates {
-    (0.30, 0.1) (0.33, 0.5) (0.36, 1.5) (0.38, 2.8) (0.40, 3.2) (0.42, 2.5) (0.44, 1.2) (0.46, 0.4) (0.48, 0.1)
+    (0.40, 0.1) (0.44, 0.5) (0.48, 1.8) (0.51, 3.0) (0.53, 3.4) (0.55, 2.8) (0.58, 1.5) (0.61, 0.5) (0.64, 0.1)
 };
 
-% Entrepreneur distribution
-\addplot[red, thick, smooth, fill=red, fill opacity=0.2] coordinates {
-    (0.22, 0.1) (0.25, 0.6) (0.28, 1.8) (0.31, 3.0) (0.33, 2.6) (0.35, 1.4) (0.37, 0.5) (0.39, 0.1)
+% EIT distribution (mean=0.35, sd~0.03)
+\addplot[cyan, thick, smooth, fill=cyan, fill opacity=0.2] coordinates {
+    (0.24, 0.1) (0.27, 0.5) (0.30, 1.5) (0.33, 2.8) (0.35, 3.2) (0.37, 2.5) (0.40, 1.2) (0.43, 0.4) (0.46, 0.1)
 };
 
-% Society distribution
+% people distribution (mean=0.18, sd~0.065)
 \addplot[gray, thick, smooth, fill=gray, fill opacity=0.2] coordinates {
-    (-0.30, 0.1) (-0.26, 0.5) (-0.22, 1.6) (-0.19, 2.9) (-0.16, 2.4) (-0.13, 1.1) (-0.10, 0.4) (-0.07, 0.1)
+    (0.00, 0.1) (0.05, 0.4) (0.10, 1.2) (0.15, 2.2) (0.18, 2.6) (0.21, 2.0) (0.26, 1.0) (0.31, 0.3) (0.36, 0.1)
 };
 
-\legend{\textsc{KIC}, \textsc{Entrepreneur}, \textsc{Society}}
+\legend{European Institute, EIT, people}
 
 \end{axis}
 \end{tikzpicture}
-\captionof{figure}{Bootstrap distributions of power scores (1,000 resamples)}
+\captionof{figure}{Bootstrap distributions of power scores (1,000 resamples). Institutional actors show tight, well-separated distributions; lower-frequency entities show wider uncertainty.}
 \labfig{bootstrap}
 \end{center}
 
-Bootstrap confidence intervals (95\%) are relatively tight, indicating stable findings:
+Bootstrap means (1,000 resamples) confirm the stability of findings for high-frequency entities:
 
 \begin{itemize}
-    \item \textsc{KIC}: $0.38 \pm 0.04$
-    \item \textsc{Entrepreneur}: $0.31 \pm 0.03$
-    \item \textsc{Society}: $-0.21 \pm 0.05$
+    \item EIT RawMaterials: power $0.524$, agency $0.874$ ($n$=64)
+    \item European Commission: power $0.463$, agency $0.740$ ($n$=422)
+    \item EIT InnoEnergy: power $0.428$, agency $0.782$ ($n$=202)
+    \item EIT: power $0.418$, agency $0.767$ ($n$=819)
+    \item Entrepreneurs: power $0.411$, agency $0.785$ ($n$=42)
+    \item Researchers: power $0.314$, agency $0.593$ ($n$=51)
+    \item Europe: power $0.065$, agency $0.132$ ($n$=208)
 \end{itemize}
 
-The separation between high-power actors (KIC, Entrepreneur) and low-power actors (Society) is robust across bootstrap samples.
+The separation between institutional actors (EIT, Commission, specific KICs) and geopolitical referents (Europe, European Union) is robust across bootstrap samples. Actor categories like Entrepreneurs and Researchers occupy stable intermediate positions.
 
 \section{Discussion: Power Dynamics in Innovation Ecosystem Discourse}[Discussion]
 \labsec{power:discussion}
 
 \subsection{The Linguistic Construction of Innovation Hierarchies}
 
-Our findings reveal systematic power hierarchies in EIT discourse.\marginnote{These linguistic patterns do not merely \textit{reflect} power relations but actively \textit{construct} them by naturalizing certain actor positions as agents and others as beneficiaries.} Innovation intermediaries (KICs) and innovation protagonists (entrepreneurs) are consistently positioned with high agency and power; societal beneficiaries (citizens, communities) and learning actors (students) are positioned as recipients rather than agents.
+Our findings reveal systematic power hierarchies in EIT discourse.\marginnote{These linguistic patterns do not merely \textit{reflect} power relations but actively \textit{construct} them by naturalizing certain actor positions as agents and others as beneficiaries.} Institutional actors (KICs, the Commission) are consistently positioned with high agency and power; individual actor categories (entrepreneurs, people) are positioned with near-zero power and frequently as objects of institutional action rather than autonomous agents.
 
 This linguistic structure naturalizes a particular model of innovation governance:\sidenote{The ``deficit model'' assumes innovation is delivered by experts to passive publics, contrasting with participatory models that position citizens as co-creators \cite{irwin2006changing}.}
 
@@ -769,14 +793,14 @@ The power patterns we document have implications for understanding who benefits 
 
 Variation across KICs reveals how sectoral contexts shape power discourse:\sidenote{Climate and energy transitions may require more confrontational framing (vs. incumbents); digital and health innovation may be framed as complementary enhancement.}
 \begin{itemize}
-    \item \textbf{Transformation discourse} (Climate-KIC, InnoEnergy): High power differentials, verbs of replacement and disruption---appropriate for sectors confronting incumbent interests
+    \item \textbf{High power} (Urban Mobility, Health, Food): Strongest power framing (0.361--0.368) reflecting institutional authority over complex regulatory, supply-chain, and urban domains
 
-    \item \textbf{Enablement discourse} (EIT Digital, EIT Health): Lower power differentials, verbs of connection and support---appropriate for sectors emphasizing collaboration
+    \item \textbf{High buildup} (Health, InnoEnergy, RawMaterials): Highest constructive framing (0.118--0.148), emphasizing building new infrastructure and systems
 
-    \item \textbf{Hybrid discourse} (EIT Food, Urban Mobility): Moderate power differentials, blending transformation and enablement framings---appropriate for sectors with mixed incumbent/challenger dynamics
+    \item \textbf{Emerging discourse} (Manufacturing, Urban Mobility): Lower buildup scores (0.062--0.063), reflecting newer KICs with still-developing institutional identities
 \end{itemize}
 
-These variations suggest that power discourse is not merely institutional boilerplate but responds to perceived sectoral dynamics.
+The relatively narrow cross-KIC power variation (range: 0.27--0.37) suggests a shared institutional discourse template, with differentiation primarily in agency and buildup framing.
 
 \subsection{Methodological Contributions}
 
@@ -795,7 +819,7 @@ The approach complements qualitative discourse analysis by providing systematic 
 
 Several limitations qualify our findings:\sidenote{Connotation frames are context-independent lexical resources; actual power connotations may vary by context in ways the lexicon does not capture.}
 \begin{itemize}
-    \item \textbf{Lexicon coverage}: 42\% of extracted verbs did not match the lexicon, potentially missing domain-specific power constructions
+    \item \textbf{Lexicon granularity}: While the expanded lexicon achieves full verb coverage, the Sap et al. scores are categorical ($\{-1, 0, +1\}$) rather than continuous, potentially flattening nuanced power differences between verbs
 
     \item \textbf{Context independence}: Connotation scores are lexical averages; actual connotations may vary by sentence context
 
@@ -807,20 +831,20 @@ Several limitations qualify our findings:\sidenote{Connotation frames are contex
 \section{Conclusion}
 \labsec{power:conclusion}
 
-This chapter applied verb-based connotation frame analysis to examine power and agency dynamics in EIT Knowledge and Innovation Community discourse.\marginnote{By examining \textit{how} innovation actors are linguistically positioned, we reveal the implicit power structures that explicit mission statements may obscure.} Extracting 61,594 Agent-Verb-Theme triples from 9,000 documents, we measured how different actor categories are positioned in terms of power and agency.
+This chapter applied verb-based connotation frame analysis to examine power and agency dynamics in EIT Knowledge and Innovation Community discourse.\marginnote{By examining \textit{how} innovation actors are linguistically positioned, we reveal the implicit power structures that explicit mission statements may obscure.} From 1,273 documents we extracted 23,781 raw Agent-Verb-Theme triples; after a three-stage entity quality pipeline, 9,723 clean relations across 925 entity profiles and 795 unique verbs remained for analysis.
 
 \subsection{Summary of Findings}
 
 Our analysis revealed:
 
 \begin{enumerate}
-    \item \textbf{Systematic power hierarchy}: KICs and entrepreneurs are positioned with high agency and power; students and society are positioned as passive beneficiaries
+    \item \textbf{Institutional power dominance}: Institutional actors (EIT, Commission, specific KICs) are positioned with high agency (0.67--0.86) and power (0.30--0.50); actor categories like ``Startups'' ($-0.14$) and ``Partners'' ($-0.22$) carry negative power
 
-    \item \textbf{Cross-KIC variation}: Climate/energy KICs show highest power differentials (transformation discourse); digital/health KICs show lower differentials (enablement discourse)
+    \item \textbf{Startups and Partners as subordinates}: ``Startups'' show negative power ($-0.139$) and low agency (0.222); ``Partners'' combine high agency (0.621) with negative power ($-0.224$)---active but subordinate
 
-    \item \textbf{Characteristic verb patterns}: High-power actors ``support,'' ``accelerate,'' ``transform''; low-power actors ``receive,'' ``benefit,'' ``need''
+    \item \textbf{Moderate cross-KIC variation}: All KICs share a common institutional discourse template (power range 0.27--0.37), with differentiation in agency and buildup framing (Health highest buildup at 0.148)
 
-    \item \textbf{Asymmetric dyads}: KICs act upon entrepreneurs, students, and society; reverse relations are rare and linguistically weak
+    \item \textbf{Characteristic verb asymmetries}: High-power verbs ``publish,'' ``develop,'' ``provide'' ($n$=200--155); low-power verbs ``announce,'' ``receive,'' ``need'' ($n$=126--92)---encoding provision-dependency hierarchies
 \end{enumerate}
 
 \subsection{Implications}
@@ -850,16 +874,18 @@ Future research might:
 \subsection{Computational Infrastructure}
 \labsec{power:infrastructure}
 
-The analysis pipeline developed for this chapter is implemented as RIVETER-X (\texttt{rolebox-news}), extending the Riveter framework \cite{antoniak2023riveter} with sustainability transitions-specific dimensions.\marginnote{RIVETER-X adds six transition-specific dimensions beyond the original power/agency framework: transformation, innovation, legitimacy, resource mobilization, collaboration, and systemic influence.} The package architecture reflects the analytical workflow:
+The analysis pipeline developed for this chapter is implemented as RIVETER v2 (\texttt{rolebox-news}), extending the Riveter framework \cite{antoniak2023riveter} with an expanded lexicon, entity quality filtering, and buildup/breakdown dimensions.\marginnote{RIVETER v2 extends the base Sap et al. lexicon (2,148 verbs) to 2,354 entries using sentence-transformer embeddings for transition and buildup/breakdown classification.} The package architecture reflects the analytical workflow:
 
 \begin{description}
-    \item[Lexicon] The \texttt{TransitionLexicon} class extends Sap et al.'s connotation frames with transition-specific dimensions. Each verb carries agent and theme scores across six dimensions, enabling nuanced portrayal analysis beyond binary power/agency.
+    \item[Expanded Lexicon] The \texttt{ExpandedLexicon} class combines three tiers: (1) Sap et al. power/agency scores for 2,148 verbs; (2) transition-specific dimensions via embedding similarity to seed verbs; (3) buildup/breakdown classification using seed-based cosine similarity. This achieves 100\% coverage of corpus verbs.
 
-    \item[Extraction] The \texttt{RelationExtractor} module uses spaCy for dependency parsing to extract Agent-Verb-Theme triples, with optional coreference resolution for entity clustering across sentences.
+    \item[Extraction] The \texttt{RelationExtractor} module uses spaCy for dependency parsing to extract Agent-Verb-Theme triples, with passive voice handling (agent/theme role swapping), KIC-specific entity normalization, and a three-stage quality pipeline: pronoun/noise filtering, NER whitelist validation, and case normalization.
 
-    \item[Scoring] The \texttt{EntityScorer} aggregates verb-level connotation scores to compute entity-level portrayal profiles, tracking which verbs contribute most to each dimension score.
+    \item[Scoring] The \texttt{EntityScorer} aggregates verb-level connotation scores to compute entity-level portrayal profiles with bootstrap confidence intervals (1,000 resamples).
 
-    \item[Cartography] The \texttt{ActorCartographer} maps entities onto 2D dimension axes, enabling visual comparison of actor portrayals with quadrant-based interpretation.
+    \item[LLM Enrichment] The \texttt{claude\_enrich\_entities} module uses Claude Sonnet for entity type classification (925 entities in 15 batches), relation quality validation (100 sampled triples), and gold standard generation (193 articles with 4,767 entity annotations).
+
+    \item[Topic Modeling] BERTopic with BAAI/bge-small-en-v1.5 embeddings, UMAP dimensionality reduction, and HDBSCAN clustering identifies 8 thematic topics across the corpus.
 \end{description}
 
 \noindent The interactive RIVETER-X workflow interface provides screens for corpus management, lexicon inspection, entity profiling, verb contribution analysis, and actor cartography visualization. The complete implementation and demonstration notebook are available in the supplementary materials.\sidenote{Available at \texttt{dissertation/data/rolebox-news/}}
@@ -875,18 +901,18 @@ The analysis pipeline developed for this chapter is implemented as RIVETER-X (\t
 \node[font=\large\bfseries] at (5, 5.5) {Power Dynamics in EIT Discourse};
 
 % Actors arranged by power level
-\node[actor, fill=blue!30] (kic) at (2, 4) {KIC\\(+0.38)};
-\node[actor, fill=red!30] (entrep) at (8, 4) {Entrepreneur\\(+0.31)};
-\node[actor, fill=green!20] (research) at (2, 2) {Researcher\\(+0.12)};
-\node[actor, fill=orange!20] (corp) at (8, 2) {Corporation\\(+0.25)};
-\node[actor, fill=purple!20] (student) at (2, 0) {Student\\($-0.05$)};
-\node[actor, fill=gray!30] (society) at (8, 0) {Society\\($-0.21$)};
+\node[actor, fill=blue!30] (rawmat) at (2, 4) {EIT\\RawMaterials\\(+0.50)};
+\node[actor, fill=blue!20] (eit) at (8, 4) {EIT\\(+0.39)};
+\node[actor, fill=cyan!20] (comm) at (2, 2) {Commission\\(+0.45)};
+\node[actor, fill=orange!20] (entrep) at (8, 2) {Entrepreneurs\\(+0.31)};
+\node[actor, fill=purple!20] (startup) at (2, 0) {Startups\\($-0.14$)};
+\node[actor, fill=gray!30] (partner) at (8, 0) {Partners\\($-0.22$)};
 
 % Power flow arrows
-\draw[arrow, blue!60, line width=2pt] (kic) -- (entrep) node[midway, above, font=\tiny] {accelerates};
-\draw[arrow, blue!60, line width=2pt] (kic) -- (student) node[midway, left, font=\tiny] {trains};
-\draw[arrow, red!60, line width=2pt] (entrep) -- (society) node[midway, right, font=\tiny] {transforms};
-\draw[arrow, green!40, line width=1pt] (research) -- (entrep) node[midway, above, font=\tiny, sloped] {informs};
+\draw[arrow, blue!60, line width=2pt] (eit) -- (partner) node[midway, right, font=\tiny] {supports};
+\draw[arrow, blue!60, line width=2pt] (rawmat) -- (partner) node[midway, above, font=\tiny, sloped] {brings};
+\draw[arrow, cyan!60, line width=1.5pt] (comm) -- (eit) node[midway, above, font=\tiny, sloped] {proposes};
+\draw[arrow, orange!60, line width=1pt] (entrep) -- (startup) node[midway, above, font=\tiny, sloped] {develops};
 
 % Power level labels
 \node[font=\scriptsize, gray, rotate=90] at (-0.5, 4) {High Power};
@@ -902,10 +928,10 @@ Understanding power dynamics in innovation discourse matters because language sh
 \begin{summarybox}
 \textbf{Key findings:}
 \begin{itemize}[leftmargin=*, itemsep=0.1em]
-\item \textbf{Power asymmetries}: EIT discourse systematically positions KICs and entrepreneurs with high agency (+0.31 to +0.38) while society and beneficiaries are constructed as passive recipients ($-0.21$)
-\item \textbf{Verb patterns}: High-power actors \textit{transform}, \textit{accelerate}, \textit{create}; low-power actors \textit{receive}, \textit{benefit}, \textit{are supported}---encoding implicit hierarchies in grammatical structure
-\item \textbf{Cross-KIC variation}: Climate-KIC emphasizes transformational power differentials; EIT Digital uses more egalitarian \textit{enabling} and \textit{connecting} framings
-\item \textbf{Absent agents}: Those positioned as beneficiaries of sustainability transitions (citizens, communities, future generations) are rarely constructed as agents in their own right
+\item \textbf{Power asymmetries}: Institutional actors (EIT, Commission, KICs) show high agency (0.67--0.86) and power (0.30--0.50); actor categories like ``Startups'' ($-0.14$) and ``Partners'' ($-0.22$) carry negative power scores
+\item \textbf{Verb patterns}: High-power verbs \textit{publish}, \textit{develop}, \textit{provide}, \textit{launch} (200--122 occurrences); low-power verbs \textit{announce}, \textit{receive}, \textit{need} (126--92 occurrences)---encoding implicit hierarchies in grammatical structure
+\item \textbf{Cross-KIC variation}: Moderate variation across KICs (power range 0.27--0.37), with Urban Mobility showing highest power and Health highest buildup framing
+\item \textbf{Startups as subordinates}: ``Startups'' show negative power ($-0.139$) and appear as Themes in 22\% of mentions; ``Partners'' combine high agency with negative power---active but subordinate
 \end{itemize}
 
 \textbf{Contribution to CAS theory}: Power analysis illuminates \textbf{P5} (hierarchy from accumulated advantage)---discursive centrality correlates with structural centrality---and \textbf{P13} (reinforcing feedback)---powerful actors are more likely to be attributed further power-enhancing verbs.
@@ -915,11 +941,12 @@ Understanding power dynamics in innovation discourse matters because language sh
 \begin{replicationbox}[Data \& Code Availability]
 The analysis in this chapter draws on \texttt{rolebox-news} and \texttt{rolebox-xray} modules of the \RoleBox{} toolkit:
 \begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item \textbf{News analysis}: \texttt{data/rolebox-news/src/} --- entity extraction and verb analysis pipelines
-\item \textbf{Bibliometric analysis}: \texttt{data/rolebox-xray/} --- scientific literature and co-authorship networks
-\item \textbf{Interactive UI}: \texttt{rolebox-news/ui/news\_analysis.html} --- discourse network visualization
-\item \textbf{Processed data}: Topic models, entity positions, verb-agent matrices
-\item \textbf{Raw data}: 8,247 news articles (2014--2023), bibliometric corpus from OpenAlex
+\item \textbf{News analysis}: \texttt{data/rolebox-news/src/} --- entity extraction, expanded lexicon, and verb analysis pipelines
+\item \textbf{RIVETER v2}: \texttt{data/rolebox-news/scripts/run\_riveter\_v2.py} --- full pipeline producing 9,723 quality-filtered relations from 1,273 articles
+\item \textbf{Topic model}: \texttt{data/rolebox-news/scripts/run\_news\_topics.py} --- BERTopic pipeline (8 topics)
+\item \textbf{Interactive UI}: \texttt{rolebox-news/ui/riveter.html}, \texttt{topics.html} --- RIVETER and topic visualizations
+\item \textbf{Processed data}: \texttt{data/outputs/riveter\_v2\_*.json} --- entity profiles, verb stats, dyads, bootstrap CIs, KIC breakdowns
+\item \textbf{LLM validation}: \texttt{scripts/claude\_enrich\_entities.py} --- entity classification, relation validation, gold standard generation
 \end{itemize}
 Discourse network methods documented in ROLEXRAY intermezzo.
 \end{replicationbox}
