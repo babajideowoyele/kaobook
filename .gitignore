@@ -2,6 +2,56 @@
 article-template.pdf
 book-template.pdf
 
+## Claude Code temp files
+tmpclaude-*
+
+## Build output directory (latexmk)
+build/
+
+## Dissertation output PDFs (keep source, ignore compiled)
+main.pdf
+dissertation/main.pdf
+dissertation/*.pdf
+
+## Large data files (keep locally, never commit)
+*.npy
+*.npz
+*.parquet
+*.db
+*.sqlite
+*.pickle
+*.pkl
+dissertation/data/rolebox-visual/data/raw/
+dissertation/data/rolebox-visual/data/processed/dinov2/
+dissertation/data/rolebox-social/data/processed/twitter_consolidated.json
+dissertation/data/rolebox-social/data/processed/tweet_images/
+dissertation/data/rolebox-knowgen/eit_Documents/
+dissertation-backup-*.zip
+main-backup-*.pdf
+dissertation/extras/*.pdf
+
+## Local folders
+.backups/
+.claude/
+.vscode/
+fonts/
+fonts_temp/
+Fira_Mono,Fira_Sans,MuseoModerno/
+Fira_Mono,Fira_Sans,MuseoModerno.zip
+eur_ci/
+dividers/
+
+## Test and temporary files
+nul
+*_test.tex
+*_test.pdf
+rolebox_test.tex
+main_rolebox.tex
+main-ebgaramond.tex
+main-ebgaramond.pdf
+test-compile.pdf
+backup-dissertation.ps1
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
@@ -244,3 +294,4 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+dissertation_backup_*
