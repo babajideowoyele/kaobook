@@ -1142,16 +1142,21 @@
 	\RequirePackage{amssymb} % Must be loaded before unicode-math
 	\RequirePackage[force]{filehook} % Fixes an error
 	\RequirePackage{unicode-math} % Math fonts in xetexorluatex
-	\setromanfont[ % Libertinus Serif font
-		Scale=1.04
-	]{Libertinus Serif}
-	\setsansfont[ % Libertinus Sans font
-		Scale=1
-	]{Libertinus Sans}
-	\setmonofont[ % Libertinus Mono font
-		Scale=.89
-	]{Liberation Mono}
-	\setmathfont{Libertinus Math} % Libertinus Math font
+	% Defer font setting to allow kaofonts package to override
+	\AtBeginDocument{%
+		\@ifpackageloaded{kaofonts}{}{%
+			\setromanfont[ % Libertinus Serif font
+				Scale=1.04
+			]{Libertinus Serif}
+			\setsansfont[ % Libertinus Sans font
+				Scale=1
+			]{Libertinus Sans}
+			\setmonofont[ % Libertinus Mono font
+				Scale=.89
+			]{Liberation Mono}
+			\setmathfont{Libertinus Math} % Libertinus Math font
+		}%
+	}%
 	\ifluatex
 	\else
 		\RequirePackage{morewrites} % Fix some errors related to floats (not necessary with LuaLaTeX
@@ -1321,6 +1326,7 @@
 	colback=RoyalBlue!25!White,
 	colbacktitle=RoyalBlue!25!White,
 	coltitle=black,
+	coltext=black,
 	colframe=black,
 	fonttitle=\bfseries,
 	#1

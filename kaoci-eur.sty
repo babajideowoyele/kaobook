@@ -1,0 +1,362 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% kaoci-eur.sty
+% Erasmus University Rotterdam Corporate Identity
+%
+% Provides EUR branding elements for kaobook dissertations and reports.
+%
+% OVERVIEW
+% --------
+% This package implements the EUR corporate identity:
+%   - Official EUR color palette
+%   - Logo inclusion commands
+%   - EUR-branded title pages
+%   - EUR-styled chapter headings
+%   - EUR-styled tcolorbox variants
+%   - Dissertation-specific commands (committee, defense info)
+%
+% USAGE
+% -----
+%   \usepackage{kaoci-eur}
+%   \setupeur              % Apply all EUR styling at once
+%
+% Or selectively:
+%   \useeurcolors          % Apply EUR hyperref colors
+%   \chapterstyleeur       % Apply EUR chapter style
+%
+% COLORS
+% ------
+%   Primary:   EURgreen, EURgreenlight, EURgreendark
+%   Secondary: EURgold, EURcyan, EURblue
+%   Neutral:   EURgray, EURlightgray, EURwhite
+%   Boxes:     EURboxbg, EURboxbgalt
+%
+% LOGO COMMANDS
+% -------------
+%   \eurlogo[width]        % Main EUR logo (default 3cm)
+%   \eurlogowhite[width]   % White variant for dark backgrounds
+%   \seteurlogopath{path}  % Override logo directory
+%
+% ENVIRONMENTS
+% ------------
+%   eurbox      - Teal left border on light teal background
+%   eurboxgold  - Gold left border on warm background
+%
+% TITLE PAGES
+% -----------
+%   \eurtitlepage          % Full green background with logo
+%   \eurtitlepageminimal   % White background with green strip
+%
+% CHAPTER/PART STYLES
+% -------------------
+%   \chapterstyleeur       % EUR-colored chapter numbers and rules
+%   \eurpartpage{num}{title} % Full-page green part divider
+%
+% DISSERTATION COMMANDS
+% ---------------------
+%   \promotor{name}        % Set promotor
+%   \copromotor{name}      % Set co-promotor
+%   \committee{names}      % Set committee members
+%   \defensedate{date}     % Set defense date
+%   \defensetime{time}     % Set defense time
+%   \defenselocation{loc}  % Set defense location
+%   \committeepage         % Print formatted committee page
+%
+% DEPENDENCIES
+% ------------
+%   xcolor, graphicx, tikz, eso-pic, (tcolorbox loaded by kaoci-rolebox)
+%
+% NOTE: Logo files should be placed in eur_ci/Erasmus University/ directory
+%       or use \seteurlogopath to specify custom location.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{kaoci-eur}[2024/01/01 v1.0 EUR Corporate Identity for kaobook]
+
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage{eso-pic}
+
+%----------------------------------------------------------------------------------------
+%	EUR OFFICIAL COLORS
+%----------------------------------------------------------------------------------------
+
+% Primary EUR colors
+\definecolor{EURgreen}{RGB}{0,68,69}        % Primary dark green/teal - #004445
+\definecolor{EURgreenlight}{RGB}{0,102,102} % Lighter variant
+\definecolor{EURgreendark}{RGB}{0,51,51}    % Darker variant
+
+% Secondary EUR colors (from brand guidelines)
+\definecolor{EURwhite}{RGB}{255,255,255}
+\definecolor{EURgold}{RGB}{183,153,98}      % Accent gold
+\definecolor{EURcyan}{RGB}{0,159,159}       % Accent cyan
+\definecolor{EURblue}{RGB}{0,92,132}        % Accent blue
+
+% Neutral colors
+\definecolor{EURgray}{RGB}{88,89,91}
+\definecolor{EURlightgray}{RGB}{200,200,200}
+
+% Background colors for boxes
+\definecolor{EURboxbg}{RGB}{240,248,248}    % Very light teal for boxes
+\definecolor{EURboxbgalt}{RGB}{248,248,240} % Warm neutral alternative
+
+%----------------------------------------------------------------------------------------
+%	LOGO PATHS
+%----------------------------------------------------------------------------------------
+
+% Set default logo path - users can override this
+\newcommand{\eurlogopath}{eur_ci/Erasmus University/}
+\newcommand{\seteurlogopath}[1]{\renewcommand{\eurlogopath}{#1}}
+
+% Logo file names (without extension)
+\newcommand{\eurlogomain}{Erasmus University_idGwfU3Hwj_0}
+\newcommand{\eurlogoalt}{Erasmus University_idqRAdVG3H_1}
+\newcommand{\eurlogosecond}{Erasmus University_idwOt3sHx0_2}
+
+% Commands to include logos
+\newcommand{\eurlogo}[1][3cm]{%
+  \includegraphics[width=#1]{\eurlogopath\eurlogomain}%
+}
+\newcommand{\eurlogowhite}[1][3cm]{%
+  \includegraphics[width=#1]{\eurlogopath\eurlogoalt}%
+}
+
+%----------------------------------------------------------------------------------------
+%	HYPERREF COLORS FOR EUR THEME
+%----------------------------------------------------------------------------------------
+
+\newcommand{\useeurcolors}{%
+  \hypersetup{%
+    citecolor=EURgreen,%
+    filecolor=EURgreen,%
+    linkcolor=EURgreendark,%
+    urlcolor=EURcyan,%
+  }%
+  % Also set heading colors
+  \addtokomafont{chapter}{\color{EURgreen}}%
+  \addtokomafont{section}{\color{EURgreen}}%
+  \addtokomafont{subsection}{\color{EURgreendark}}%
+}
+
+%----------------------------------------------------------------------------------------
+%	EUR-STYLED KAOBOX
+%----------------------------------------------------------------------------------------
+
+\newtcolorbox{eurbox}[1][]{%
+  breakable,
+  before skip=1.5\topskip,
+  after skip=1.5\topskip,
+  left=4pt,
+  right=4pt,
+  top=2pt,
+  bottom=2pt,
+  sharp corners,
+  boxrule=0pt,
+  frame hidden,
+  borderline west={2pt}{0pt}{EURgreen},
+  colback=EURboxbg,
+  coltext=black,
+  colbacktitle=EURgreen,
+  coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  #1
+}
+
+% Accent box with gold border
+\newtcolorbox{eurboxgold}[1][]{%
+  breakable,
+  before skip=1.5\topskip,
+  after skip=1.5\topskip,
+  left=4pt,
+  right=4pt,
+  top=2pt,
+  bottom=2pt,
+  sharp corners,
+  boxrule=0pt,
+  frame hidden,
+  borderline west={2pt}{0pt}{EURgold},
+  colback=EURboxbgalt,
+  coltext=black,
+  fonttitle=\bfseries\sffamily,
+  #1
+}
+
+%----------------------------------------------------------------------------------------
+%	EUR TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\newcommand{\eurtitlepage}[1][]{%
+  \begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+      % Full page EUR green background
+      \fill[EURgreen] (current page.south west) rectangle (current page.north east);
+
+      % Logo at top
+      \node[anchor=north west, inner sep=0pt] at ([xshift=2cm, yshift=-2cm]current page.north west) {%
+        \eurlogo[4cm]%
+      };
+
+      % Title and author
+      \node[anchor=center, text width=0.7\paperwidth, align=center] at ([yshift=-2cm]current page.center) {%
+        \color{white}%
+        {\Huge\bfseries\sffamily \@title\par}%
+        \vspace{1cm}%
+        {\Large\sffamily \@author\par}%
+        \vspace{0.5cm}%
+        {\large\sffamily \@date\par}%
+      };
+
+      % Optional subtitle or additional content
+      #1
+    \end{tikzpicture}
+  \end{titlepage}
+}
+
+% Alternative minimal title page
+\newcommand{\eurtitlepageminimal}{%
+  \begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+      % White background with green accent strip
+      \fill[white] (current page.south west) rectangle (current page.north east);
+      \fill[EURgreen] ([yshift=-3cm]current page.north west) rectangle (current page.north east);
+    \end{tikzpicture}
+
+    \vspace*{2cm}
+    \noindent\eurlogo[5cm]
+
+    \vspace{3cm}
+    {\Huge\bfseries\sffamily\color{EURgreen} \@title\par}
+
+    \vspace{1cm}
+    {\Large\sffamily \@author\par}
+
+    \vfill
+    {\large\sffamily \@date\par}
+  \end{titlepage}
+}
+
+%----------------------------------------------------------------------------------------
+%	EUR CHAPTER STYLE
+%----------------------------------------------------------------------------------------
+
+\DeclareDocumentCommand{\chapterstyleeur}{}{%
+  \renewcommand*{\chapterformat}{%
+    \mbox{\color{EURgreen}\chapappifchapterprefix{\nobreakspace}\scalebox{2.85}{\thechapter\autodot}}%
+  }%
+  \renewcommand\chapterlinesformat[3]{%
+    \vspace{3.5\vscale}%
+    \if@twoside%
+      \Ifthispageodd{%
+        \smash{\makebox[0pt][l]{%
+          \parbox[b]{\textwidth}{\flushright{\color{EURgreen}##3}}%
+          \makebox[\marginparsep][c]{\color{EURgreen}\rule[-2\vscale]{2pt}{27.4\vscale+\f@size mm}}%
+          \parbox[b]{\marginparwidth}{##2}%
+        }}%
+      }{%
+        \smash{\makebox[\textwidth][r]{%
+          \parbox[b]{\marginparwidth}{\flushright{##2}}%
+          \makebox[\marginparsep][c]{\color{EURgreen}\rule[-2\vscale]{2pt}{27.4\vscale+\f@size mm}}%
+          \parbox[b]{\textwidth}{\flushleft{\color{EURgreen}##3}}%
+        }}%
+      }%
+    \else%
+      \smash{\makebox[0pt][l]{%
+        \parbox[b]{\textwidth}{\flushright{\color{EURgreen}##3}}%
+        \makebox[\marginparsep][c]{\color{EURgreen}\rule[-2\vscale]{2pt}{27.4\vscale+\f@size mm}}%
+        \parbox[b]{\marginparwidth}{##2}%
+      }}%
+    \fi%
+  }%
+  \RedeclareSectionCommand[beforeskip=0cm,afterskip=10\vscale]{chapter}%
+  \setlength{\mtocshift}{-3.5\vscale}%
+}
+
+%----------------------------------------------------------------------------------------
+%	EUR PART STYLE
+%----------------------------------------------------------------------------------------
+
+\newcommand{\eurpartpage}[2]{%
+  % #1 = part number, #2 = part title
+  \thispagestyle{empty}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[EURgreen] (current page.south west) rectangle (current page.north east);
+    \node[anchor=center, text width=0.8\paperwidth, align=center] at (current page.center) {%
+      \color{white}%
+      {\huge\sffamily Part #1\par}%
+      \vspace{1cm}%
+      {\Huge\bfseries\sffamily #2\par}%
+    };
+  \end{tikzpicture}%
+  \cleardoublepage%
+}
+
+%----------------------------------------------------------------------------------------
+%	DISSERTATION-SPECIFIC COMMANDS
+%----------------------------------------------------------------------------------------
+
+% Committee members
+\newcommand{\@promotor}{}
+\newcommand{\@copromotor}{}
+\newcommand{\@committee}{}
+
+\newcommand{\promotor}[1]{\renewcommand{\@promotor}{#1}}
+\newcommand{\copromotor}[1]{\renewcommand{\@copromotor}{#1}}
+\newcommand{\committee}[1]{\renewcommand{\@committee}{#1}}
+
+% Dissertation defense information
+\newcommand{\@defensedate}{}
+\newcommand{\@defensetime}{}
+\newcommand{\@defenselocation}{}
+
+\newcommand{\defensedate}[1]{\renewcommand{\@defensedate}{#1}}
+\newcommand{\defensetime}[1]{\renewcommand{\@defensetime}{#1}}
+\newcommand{\defenselocation}[1]{\renewcommand{\@defenselocation}{#1}}
+
+% Print committee page
+\newcommand{\committeepage}{%
+  \thispagestyle{empty}%
+  \vspace*{2cm}%
+
+  {\large\bfseries\sffamily Doctoral Committee\par}
+  \vspace{1cm}
+
+  \ifx\@promotor\empty\else
+    {\bfseries Promotor:}\par
+    \@promotor\par
+    \vspace{0.5cm}
+  \fi
+
+  \ifx\@copromotor\empty\else
+    {\bfseries Co-promotor:}\par
+    \@copromotor\par
+    \vspace{0.5cm}
+  \fi
+
+  \ifx\@committee\empty\else
+    {\bfseries Committee members:}\par
+    \@committee\par
+  \fi
+
+  \vfill
+
+  \ifx\@defensedate\empty\else
+    {\small This dissertation will be defended on \@defensedate%
+    \ifx\@defensetime\empty\else\ at \@defensetime\fi%
+    \ifx\@defenselocation\empty\else\ in \@defenselocation\fi%
+    .\par}
+  \fi
+
+  \cleardoublepage
+}
+
+%----------------------------------------------------------------------------------------
+%	CONVENIENCE COMMAND TO APPLY EUR STYLING
+%----------------------------------------------------------------------------------------
+
+\newcommand{\setupeur}{%
+  \useeurcolors%
+  \chapterstyleeur%
+}
+
+\endinput

@@ -1,0 +1,129 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Software and Reproducibility}
+\labch{appendix-software}
+
+This appendix documents the software tools, code repositories, and reproducibility materials associated with this dissertation. All code is available under the \RoleBox\ umbrella repository.
+
+\section{Repository Structure}
+
+The dissertation materials are organized as a collection of Git repositories with the main \RoleBox\ repository serving as an umbrella:
+
+\begin{kaobox}[title=Repository Architecture]
+\begin{verbatim}
+rolebox/                     # Main umbrella repository
+├── dissertation/            # LaTeX source (kaobook)
+└── projects/                # Analysis repositories
+    ├── rolesim/             # Agent-based simulation
+    ├── rolexray/            # Role extraction & NLP
+    ├── rolebox-wikipedia/   # Wikipedia/Wikidata data
+    ├── rolebox-websites/    # Website corpus
+    ├── rolebox-twitter/     # Twitter/X data
+    ├── rolebox-images/      # Visual corpus
+    ├── rolebox-crunchbase/  # Investment data
+    ├── rolebox-news/        # News media corpus
+    └── rolebox-video/       # Video content
+\end{verbatim}
+\end{kaobox}
+
+\section{Core Tools}
+
+\begin{description}[leftmargin=0.5cm]
+
+\item[\RoleBox] Main umbrella repository containing all dissertation materials\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolebox}
+
+\item[\RoleSim] Agent-based role dynamics simulation framework (Python)\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolesim}\\
+Features: Influence typology, adaptive agent strategies, network metrics
+
+\item[RoleXray] Role extraction and classification toolkit (Python)\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolexray}\\
+Features: BERTopic integration, spaCy NLP, discourse network analysis
+
+\end{description}
+
+\section{Data Repositories}
+
+Each data modality has a dedicated repository with collection scripts, processed data, and interactive exploration UIs:
+
+\begin{description}[leftmargin=0.5cm]
+
+\item[rolebox-wikipedia] Wikipedia and Wikidata entity collection\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolebox-wikipedia}\\
+Content: 112 NetZeroCities, 133 EIT KIC partner organizations
+
+\item[rolebox-websites] KIC partner website corpus\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolebox-websites}
+
+\item[rolebox-twitter] Twitter/X social media data\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolebox-twitter}
+
+\item[rolebox-images] Visual materials corpus\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolebox-images}
+
+\item[rolebox-crunchbase] Venture and investment data\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolebox-crunchbase}
+
+\item[rolebox-news] News media corpus\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolebox-news}
+
+\item[rolebox-video] Video content analysis\\
+\faGithub\ \texttt{github.com/babajideowoyele/rolebox-video}
+
+\end{description}
+
+\section{Software Dependencies}
+
+The toolkit is built on the following major dependencies:
+
+\begin{itemize}
+\item \textbf{Python 3.11+} -- Primary programming language
+\item \textbf{BERTopic} -- Topic modeling and document clustering
+\item \textbf{sentence-transformers} -- Text embeddings
+\item \textbf{NetworkX} -- Network analysis
+\item \textbf{Plotly} -- Interactive visualizations
+\item \textbf{Pandas/NumPy} -- Data manipulation
+\item \textbf{Carbon Design System} -- UI components
+\end{itemize}
+
+\section{Interactive UIs}
+
+Each data repository includes an interactive HTML/JavaScript interface for exploring the data:
+
+\begin{itemize}
+\item Built with IBM Carbon Design System for consistent styling
+\item Plotly.js for interactive charts and maps
+\item Sigma.js for network visualizations
+\item All UIs can be run locally via \texttt{python -m http.server}
+\end{itemize}
+
+\section{Reproducibility}
+
+To reproduce the analyses:
+
+\begin{enumerate}
+\item Clone the umbrella repository with submodules:\\
+\texttt{git clone --recurse-submodules github.com/babajideowoyele/rolebox}
+
+\item Create conda environments for each project:\\
+\texttt{conda env create -f environment.yml}
+
+\item Follow the notebooks in each project's \texttt{notebooks/} folder
+\end{enumerate}
+
+\section{Data Availability}
+
+Raw data is available in each repository's \texttt{data/} folder, subject to the following:
+
+\begin{itemize}
+\item Wikipedia/Wikidata: CC BY-SA 4.0
+\item Twitter data: Subject to Twitter Terms of Service
+\item Crunchbase: Subject to Crunchbase licensing
+\item News media: Subject to publisher agreements
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,512 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% kaofonts.sty
+% Font Configuration for Kaobook
+%
+% Provides easy switching between font families:
+% - museomoderno: MuseoModerno (display/modern)
+% - museosans: Museo Sans (clean, modern) - falls back to Source Sans Pro
+% - firasans: Fira Sans (excellent for technical docs)
+% - firasanslight: Fira Sans Light (lighter weight, easier on eyes)
+% - ibmplex: IBM Plex (professional, readable)
+% - helvetica: Helvetica/TeX Gyre Heros (classic)
+% - ebgaramond: EB Garamond (elegant serif, classic scholarly)
+% - libertinus: Libertinus (default kaobook font)
+%
+% Usage: \usepackage[firasans]{kaofonts}
+%        \usepackage[firasanslight]{kaofonts}  % for lighter weight
+%        \usepackage[ebgaramond]{kaofonts}     % for classic serif
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{kaofonts}[2024/01/01 v1.0 Font configuration for kaobook]
+
+\RequirePackage{iftex}
+\RequirePackage{xkeyval}
+
+%----------------------------------------------------------------------------------------
+%	FONT FOLDER PATH
+%----------------------------------------------------------------------------------------
+
+% Default path to local fonts folder (relative to main .tex file)
+\newcommand{\kaofontpath}{fonts/}
+\newcommand{\setkaofontpath}[1]{\renewcommand{\kaofontpath}{#1}}
+
+%----------------------------------------------------------------------------------------
+%	FONT FAMILY OPTIONS
+%----------------------------------------------------------------------------------------
+
+\newif\if@museomoderno\@museomodernofalse
+\newif\if@museosans\@museosansfalse
+\newif\if@firasans\@firasansfalse
+\newif\if@firasanslight\@firasanslightfalse
+\newif\if@ibmplex\@ibmplexfalse
+\newif\if@helvetica\@helveticafalse
+\newif\if@ebgaramond\@ebgaramondfalse
+\newif\if@libertinus\@libertinusfalse
+
+\DeclareOption{museomoderno}{\@museomodernotrue}
+\DeclareOption{museosans}{\@museosanstrue}
+\DeclareOption{firasans}{\@firasanstrue}
+\DeclareOption{firasanslight}{\@firasanslighttrue}
+\DeclareOption{ibmplex}{\@ibmplextrue}
+\DeclareOption{helvetica}{\@helveticatrue}
+\DeclareOption{ebgaramond}{\@ebgaramondtrue}
+\DeclareOption{libertinus}{\@libertinustrue}
+
+% Default to libertinus if no option specified
+\DeclareOption*{\PackageWarning{kaofonts}{Unknown option '\CurrentOption'}}
+
+\ProcessOptions\relax
+
+% If no font option was specified, default to libertinus
+\if@museomoderno\else
+\if@museosans\else
+\if@firasans\else
+\if@firasanslight\else
+\if@ibmplex\else
+\if@helvetica\else
+\if@ebgaramond\else
+\if@libertinus\else
+  \@libertinustrue
+\fi\fi\fi\fi\fi\fi\fi\fi
+
+%----------------------------------------------------------------------------------------
+%	FONT SCALING SETTINGS
+%----------------------------------------------------------------------------------------
+
+% Define scaling factors that can be customized
+\newcommand{\kaofont@sanscale}{1.0}
+\newcommand{\kaofont@serifscale}{1.0}
+\newcommand{\kaofont@monoscale}{0.88}
+
+% Commands to adjust scaling
+\newcommand{\setsansscale}[1]{\renewcommand{\kaofont@sanscale}{#1}}
+\newcommand{\setserifscale}[1]{\renewcommand{\kaofont@serifscale}{#1}}
+\newcommand{\setmonoscale}[1]{\renewcommand{\kaofont@monoscale}{#1}}
+
+%----------------------------------------------------------------------------------------
+%	MUSEOMODERNO CONFIGURATION (from local fonts folder)
+%----------------------------------------------------------------------------------------
+
+\if@museomoderno
+  \ifxetex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setsansfont[
+      Path=\kaofontpath,
+      Scale=\kaofont@sanscale,
+      Extension=.ttf,
+      UprightFont=*-Regular,
+      BoldFont=*-Bold,
+      ItalicFont=*-Italic,
+      BoldItalicFont=*-BoldItalic,
+    ]{MuseoModerno}
+    \setmainfont[
+      Path=\kaofontpath,
+      Scale=\kaofont@serifscale,
+      Extension=.ttf,
+      UprightFont=*-Regular,
+      BoldFont=*-Bold,
+      ItalicFont=*-Italic,
+      BoldItalicFont=*-BoldItalic,
+    ]{MuseoModerno}
+    \setmonofont[
+      Path=\kaofontpath,
+      Scale=\kaofont@monoscale,
+      Extension=.ttf,
+      UprightFont=*-Regular,
+      BoldFont=*-Bold,
+    ]{FiraMono}
+    \setmathfont{Latin Modern Math}
+  \else\ifluatex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setsansfont[
+      Path=\kaofontpath,
+      Scale=\kaofont@sanscale,
+      Extension=.ttf,
+      UprightFont=*-Regular,
+      BoldFont=*-Bold,
+      ItalicFont=*-Italic,
+      BoldItalicFont=*-BoldItalic,
+    ]{MuseoModerno}
+    \setmainfont[
+      Path=\kaofontpath,
+      Scale=\kaofont@serifscale,
+      Extension=.ttf,
+      UprightFont=*-Regular,
+      BoldFont=*-Bold,
+      ItalicFont=*-Italic,
+      BoldItalicFont=*-BoldItalic,
+    ]{MuseoModerno}
+    \setmonofont[
+      Path=\kaofontpath,
+      Scale=\kaofont@monoscale,
+      Extension=.ttf,
+      UprightFont=*-Regular,
+      BoldFont=*-Bold,
+    ]{FiraMono}
+    \setmathfont{Latin Modern Math}
+  \else
+    % pdfLaTeX fallback - MuseoModerno not available, use Source Sans Pro
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{sourcesanspro}
+    \renewcommand{\familydefault}{\sfdefault}
+    \RequirePackage[scaled=\kaofont@monoscale]{beramono}
+  \fi\fi
+\fi
+
+%----------------------------------------------------------------------------------------
+%	MUSEO SANS CONFIGURATION
+%----------------------------------------------------------------------------------------
+
+\if@museosans
+  \ifxetex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    % Museo Sans - you need to have the font installed
+    % If not available, falls back to a similar font
+    \IfFontExistsTF{Museo Sans}{%
+      \setsansfont[Scale=\kaofont@sanscale]{Museo Sans}%
+      \setmainfont[Scale=\kaofont@serifscale]{Museo Sans}%
+    }{%
+      \PackageWarning{kaofonts}{Museo Sans not found, using Source Sans Pro as fallback}%
+      \IfFontExistsTF{Source Sans Pro}{%
+        \setsansfont[Scale=\kaofont@sanscale]{Source Sans Pro}%
+        \setmainfont[Scale=\kaofont@serifscale]{Source Sans Pro}%
+      }{%
+        \setsansfont[Scale=\kaofont@sanscale]{Latin Modern Sans}%
+        \setmainfont[Scale=\kaofont@serifscale]{Latin Modern Sans}%
+      }%
+    }%
+    \setmonofont[Scale=\kaofont@monoscale]{Liberation Mono}%
+    \setmathfont{Latin Modern Math}%
+  \else\ifluatex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \IfFontExistsTF{Museo Sans}{%
+      \setsansfont[Scale=\kaofont@sanscale]{Museo Sans}%
+      \setmainfont[Scale=\kaofont@serifscale]{Museo Sans}%
+    }{%
+      \PackageWarning{kaofonts}{Museo Sans not found, using Source Sans Pro as fallback}%
+      \IfFontExistsTF{Source Sans Pro}{%
+        \setsansfont[Scale=\kaofont@sanscale]{Source Sans Pro}%
+        \setmainfont[Scale=\kaofont@serifscale]{Source Sans Pro}%
+      }{%
+        \setsansfont[Scale=\kaofont@sanscale]{Latin Modern Sans}%
+        \setmainfont[Scale=\kaofont@serifscale]{Latin Modern Sans}%
+      }%
+    }%
+    \setmonofont[Scale=\kaofont@monoscale]{Liberation Mono}%
+    \setmathfont{Latin Modern Math}%
+  \else
+    % pdfLaTeX fallback
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{sourcesanspro}
+    \renewcommand{\familydefault}{\sfdefault}
+    \RequirePackage[scaled=\kaofont@monoscale]{beramono}
+  \fi\fi
+\fi
+
+%----------------------------------------------------------------------------------------
+%	FIRA SANS CONFIGURATION
+%----------------------------------------------------------------------------------------
+
+\if@firasans
+  \ifxetex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setsansfont[Scale=\kaofont@sanscale]{Fira Sans}
+    \setmainfont[Scale=\kaofont@serifscale]{Fira Sans}
+    \setmonofont[Scale=\kaofont@monoscale]{Fira Mono}
+    \setmathfont{Fira Math}[Scale=MatchLowercase]
+  \else\ifluatex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setsansfont[Scale=\kaofont@sanscale]{Fira Sans}
+    \setmainfont[Scale=\kaofont@serifscale]{Fira Sans}
+    \setmonofont[Scale=\kaofont@monoscale]{Fira Mono}
+    \setmathfont{Fira Math}[Scale=MatchLowercase]
+  \else
+    % pdfLaTeX
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage[sfdefault,scaled=\kaofont@sanscale]{FiraSans}
+    \RequirePackage[scaled=\kaofont@monoscale]{FiraMono}
+    \renewcommand{\familydefault}{\sfdefault}
+  \fi\fi
+\fi
+
+%----------------------------------------------------------------------------------------
+%	FIRA SANS LIGHT CONFIGURATION (thinner weight for body text)
+%----------------------------------------------------------------------------------------
+
+\if@firasanslight
+  \ifxetex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setsansfont[
+      Path=\kaofontpath,
+      Scale=\kaofont@sanscale,
+      Extension=.ttf,
+      UprightFont=FiraSans-Light,
+      BoldFont=FiraSans-Regular,
+      ItalicFont=FiraSans-LightItalic,
+      BoldItalicFont=FiraSans-Italic,
+    ]{FiraSans}
+    \setmainfont[
+      Path=\kaofontpath,
+      Scale=\kaofont@serifscale,
+      Extension=.ttf,
+      UprightFont=FiraSans-Light,
+      BoldFont=FiraSans-Regular,
+      ItalicFont=FiraSans-LightItalic,
+      BoldItalicFont=FiraSans-Italic,
+    ]{FiraSans}
+    \setmonofont[
+      Path=\kaofontpath,
+      Scale=\kaofont@monoscale,
+      Extension=.ttf,
+      UprightFont=FiraMono-Regular,
+      BoldFont=FiraMono-Bold,
+    ]{FiraMono}
+    \setmathfont{Latin Modern Math}
+  \else\ifluatex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setsansfont[
+      Path=\kaofontpath,
+      Scale=\kaofont@sanscale,
+      Extension=.ttf,
+      UprightFont=FiraSans-Light,
+      BoldFont=FiraSans-Regular,
+      ItalicFont=FiraSans-LightItalic,
+      BoldItalicFont=FiraSans-Italic,
+    ]{FiraSans}
+    \setmainfont[
+      Path=\kaofontpath,
+      Scale=\kaofont@serifscale,
+      Extension=.ttf,
+      UprightFont=FiraSans-Light,
+      BoldFont=FiraSans-Regular,
+      ItalicFont=FiraSans-LightItalic,
+      BoldItalicFont=FiraSans-Italic,
+    ]{FiraSans}
+    \setmonofont[
+      Path=\kaofontpath,
+      Scale=\kaofont@monoscale,
+      Extension=.ttf,
+      UprightFont=FiraMono-Regular,
+      BoldFont=FiraMono-Bold,
+    ]{FiraMono}
+    \setmathfont{Latin Modern Math}
+  \else
+    % pdfLaTeX - use light weight
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage[sfdefault,light,scaled=\kaofont@sanscale]{FiraSans}
+    \RequirePackage[scaled=\kaofont@monoscale]{FiraMono}
+    \renewcommand{\familydefault}{\sfdefault}
+  \fi\fi
+\fi
+
+%----------------------------------------------------------------------------------------
+%	IBM PLEX CONFIGURATION (from local fonts folder)
+%----------------------------------------------------------------------------------------
+
+\if@ibmplex
+  \ifxetex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    % IBM Plex Sans from local fonts folder, TeX Gyre for serif/mono
+    \setsansfont[
+      Path=\kaofontpath IBM_Plex_Sans/static/,
+      Scale=\kaofont@sanscale,
+      Extension=.ttf,
+      UprightFont=IBMPlexSans-Regular,
+      BoldFont=IBMPlexSans-Bold,
+      ItalicFont=IBMPlexSans-Italic,
+      BoldItalicFont=IBMPlexSans-BoldItalic,
+    ]{IBMPlexSans}
+    \setmainfont[
+      Path=\kaofontpath IBM_Plex_Sans/static/,
+      Scale=\kaofont@serifscale,
+      Extension=.ttf,
+      UprightFont=IBMPlexSans-Regular,
+      BoldFont=IBMPlexSans-Bold,
+      ItalicFont=IBMPlexSans-Italic,
+      BoldItalicFont=IBMPlexSans-BoldItalic,
+    ]{IBMPlexSans}
+    \setmonofont[
+      Path=\kaofontpath,
+      Scale=\kaofont@monoscale,
+      Extension=.ttf,
+      UprightFont=FiraMono-Regular,
+      BoldFont=FiraMono-Bold,
+    ]{FiraMono}
+    \setmathfont{Latin Modern Math}
+  \else\ifluatex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    % IBM Plex Sans from local fonts folder, Fira Mono for mono
+    \setsansfont[
+      Path=\kaofontpath IBM_Plex_Sans/static/,
+      Scale=\kaofont@sanscale,
+      Extension=.ttf,
+      UprightFont=IBMPlexSans-Regular,
+      BoldFont=IBMPlexSans-Bold,
+      ItalicFont=IBMPlexSans-Italic,
+      BoldItalicFont=IBMPlexSans-BoldItalic,
+    ]{IBMPlexSans}
+    \setmainfont[
+      Path=\kaofontpath IBM_Plex_Sans/static/,
+      Scale=\kaofont@serifscale,
+      Extension=.ttf,
+      UprightFont=IBMPlexSans-Regular,
+      BoldFont=IBMPlexSans-Bold,
+      ItalicFont=IBMPlexSans-Italic,
+      BoldItalicFont=IBMPlexSans-BoldItalic,
+    ]{IBMPlexSans}
+    \setmonofont[
+      Path=\kaofontpath,
+      Scale=\kaofont@monoscale,
+      Extension=.ttf,
+      UprightFont=FiraMono-Regular,
+      BoldFont=FiraMono-Bold,
+    ]{FiraMono}
+    \setmathfont{Latin Modern Math}
+  \else
+    % pdfLaTeX
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{plex-sans}
+    \RequirePackage{plex-serif}
+    \RequirePackage{plex-mono}
+  \fi\fi
+\fi
+
+%----------------------------------------------------------------------------------------
+%	HELVETICA / TEX GYRE HEROS CONFIGURATION
+%----------------------------------------------------------------------------------------
+
+\if@helvetica
+  \ifxetex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    % Try Helvetica first, then TeX Gyre Heros (free alternative)
+    \IfFontExistsTF{Helvetica}{%
+      \setsansfont[Scale=\kaofont@sanscale]{Helvetica}%
+      \setmainfont[Scale=\kaofont@serifscale]{Helvetica}%
+    }{%
+      \setsansfont[Scale=\kaofont@sanscale]{TeX Gyre Heros}%
+      \setmainfont[Scale=\kaofont@serifscale]{TeX Gyre Heros}%
+    }%
+    \setmonofont[Scale=\kaofont@monoscale]{TeX Gyre Cursor}
+    \setmathfont{TeX Gyre Termes Math}
+  \else\ifluatex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \IfFontExistsTF{Helvetica}{%
+      \setsansfont[Scale=\kaofont@sanscale]{Helvetica}%
+      \setmainfont[Scale=\kaofont@serifscale]{Helvetica}%
+    }{%
+      \setsansfont[Scale=\kaofont@sanscale]{TeX Gyre Heros}%
+      \setmainfont[Scale=\kaofont@serifscale]{TeX Gyre Heros}%
+    }%
+    \setmonofont[Scale=\kaofont@monoscale]{TeX Gyre Cursor}
+    \setmathfont{TeX Gyre Termes Math}
+  \else
+    % pdfLaTeX - use helvet package
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{tgheros} % TeX Gyre Heros (Helvetica clone)
+    \renewcommand{\familydefault}{\sfdefault}
+    \RequirePackage[scaled=\kaofont@monoscale]{beramono}
+  \fi\fi
+\fi
+
+%----------------------------------------------------------------------------------------
+%	EB GARAMOND CONFIGURATION
+%----------------------------------------------------------------------------------------
+
+\if@ebgaramond
+  \ifxetex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setmainfont[
+      Scale=\kaofont@serifscale,
+      Numbers=OldStyle,
+      Ligatures=TeX,
+    ]{EB Garamond}
+    \setsansfont[Scale=\kaofont@sanscale]{EB Garamond}
+    \setmonofont[Scale=\kaofont@monoscale]{Fira Mono}
+    \setmathfont{Garamond-Math}[StylisticSet={7,9}]
+  \else\ifluatex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setmainfont[
+      Scale=\kaofont@serifscale,
+      Numbers=OldStyle,
+      Ligatures=TeX,
+    ]{EB Garamond}
+    \setsansfont[Scale=\kaofont@sanscale]{EB Garamond}
+    \setmonofont[Scale=\kaofont@monoscale]{Fira Mono}
+    \setmathfont{Garamond-Math}[StylisticSet={7,9}]
+  \else
+    % pdfLaTeX
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{ebgaramond}
+    \RequirePackage[scaled=\kaofont@monoscale]{beramono}
+  \fi\fi
+\fi
+
+%----------------------------------------------------------------------------------------
+%	LIBERTINUS CONFIGURATION (DEFAULT)
+%----------------------------------------------------------------------------------------
+
+\if@libertinus
+  \ifxetex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setromanfont[Scale=1.04]{Libertinus Serif}
+    \setsansfont[Scale=1]{Libertinus Sans}
+    \setmonofont[Scale=.89]{Liberation Mono}
+    \setmathfont{Libertinus Math}
+  \else\ifluatex
+    \RequirePackage{fontspec}
+    \RequirePackage{unicode-math}
+    \setromanfont[Scale=1.04]{Libertinus Serif}
+    \setsansfont[Scale=1]{Libertinus Sans}
+    \setmonofont[Scale=.89]{Liberation Mono}
+    \setmathfont{Libertinus Math}
+  \else
+    % pdfLaTeX - use libertinus package
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{libertinus}
+    \RequirePackage[scaled=.85]{beramono}
+  \fi\fi
+\fi
+
+%----------------------------------------------------------------------------------------
+%	HELPER COMMANDS
+%----------------------------------------------------------------------------------------
+
+% Command to use sans-serif for headings only (keeps serif for body)
+\newcommand{\usesansheadings}{%
+  \addtokomafont{disposition}{\sffamily}%
+  \addtokomafont{part}{\sffamily}%
+  \addtokomafont{chapter}{\sffamily}%
+  \addtokomafont{section}{\sffamily}%
+  \addtokomafont{subsection}{\sffamily}%
+  \addtokomafont{subsubsection}{\sffamily}%
+  \addtokomafont{paragraph}{\sffamily}%
+}
+
+% Command to use sans-serif throughout (body and headings)
+\newcommand{\usesansbody}{%
+  \renewcommand{\familydefault}{\sfdefault}%
+}
+
+% Command to switch to serif body with sans headings
+\newcommand{\useserifbody}{%
+  \renewcommand{\familydefault}{\rmdefault}%
+}
+
+\endinput

@@ -1,0 +1,403 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Websites: The Declared Map}
+\label{app:websites}
+
+\noindent\textit{Organizations curate websites to project who they want to be seen as---their claimed sociotype.
+This appendix documents the bridging workflow that connects website data
+to role theory constructs, following the data--theory integration framework
+of \textcite{maass2018data}.}
+
+\bigskip
+
+
+%===============================================================================
+\section{The Bridging Problem}
+%===============================================================================
+
+Website data and role theory have developed largely in parallel.
+On the data side, hyperlink network analysis and web mining produce
+rich structural and textual patterns from organizational websites.
+On the theory side, role theory, complex adaptive systems, and the
+knowledge triangle framework specify what roles \emph{are}, how they emerge,
+and how they relate to innovation system functions.
+The challenge is bridging between these perspectives---using
+computational patterns to operationalize theoretical constructs, and using
+theoretical constructs to guide what patterns to seek.
+
+\Cref{fig:websites-bridging} shows how the \RoleBox{} website pipeline
+enacts this bridging workflow.
+The upper path (\textit{from patterns to theory}) extracts implicit
+patterns from web data and maps them onto role constructs.
+The lower path (\textit{from theory to data requirements}) uses role
+theory to specify what data dimensions and features to extract.
+The pipeline itself---the crawling, parsing, embedding, and
+clustering machinery---sits at the intersection as bridging knowledge.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    cloudstyle/.style={cloud, cloud puffs=12, cloud puff arc=120,
+        draw, minimum width=2.8cm, minimum height=1.6cm,
+        font=\small\bfseries, text=white, inner sep=0pt},
+    blockstyle/.style={rectangle, draw, rounded corners=3pt,
+        minimum width=2.6cm, minimum height=1.4cm,
+        font=\small\bfseries, text=white, inner sep=4pt},
+    bridgestyle/.style={rectangle, draw=AccentCyan, fill=AccentCyan!15,
+        rounded corners=3pt, minimum width=3cm, minimum height=1.8cm,
+        font=\small\bfseries, text=Slate, inner sep=4pt},
+    substyle/.style={font=\tiny, text=Slate, align=left},
+    arrowlabel/.style={font=\scriptsize\itshape, text=Slate},
+]
+
+% Left: Web Data
+\node[cloudstyle, fill=Azure!80, draw=Azure] (data) at (-4, 0) {Web Data};
+\node[substyle, below=0.15cm of data] {
+    HTML pages\\
+    Hyperlinks\\
+    Text content
+};
+
+% Right: Role Theory
+\node[blockstyle, fill=AccentPurple!80, draw=AccentPurple] (theory) at (4, 0)
+    {Role Theory};
+\node[substyle, below=0.15cm of theory] {
+    Claimed sociotypes\\
+    Knowledge triangle\\
+    Network positions
+};
+
+% Center: Bridging Pipeline
+\node[bridgestyle] (bridge) at (0, 0) {
+    \begin{tabular}{c}
+    \textsc{RoleBox}\\[-1pt]
+    \textsc{Pipeline}
+    \end{tabular}
+};
+
+% Upper path: patterns to theory
+\draw[->, thick, PandaRose, bend left=20]
+    (data.north east) to
+    node[arrowlabel, above, pos=0.5] {identified patterns}
+    (bridge.north west);
+\draw[->, thick, PandaRose, bend left=20]
+    (bridge.north east) to
+    node[arrowlabel, above, pos=0.5] {role constructs}
+    (theory.north west);
+
+% Lower path: theory to data requirements
+\draw[->, thick, CoverGold, bend left=20]
+    (theory.south west) to
+    node[arrowlabel, below, pos=0.5] {constructs \& hypotheses}
+    (bridge.south east);
+\draw[->, thick, CoverGold, bend left=20]
+    (bridge.south west) to
+    node[arrowlabel, below, pos=0.5] {data requirements}
+    (data.south east);
+
+% Bottom label
+\node[font=\small\itshape, text=AccentCyan] at (0, -2.2)
+    {Bridging workflow for the declared map};
+
+\end{tikzpicture}
+\captionof{figure}[Website bridging workflow]{%
+    Bridging workflow connecting website data to role theory,
+    adapted from the data--theory integration framework
+    of \textcite{maass2018data}.
+    The upper path extracts patterns from web data and maps them
+    to role constructs;
+    the lower path uses theory to guide data collection
+    and feature extraction.}
+\label{fig:websites-bridging}
+\end{center}
+
+
+%===============================================================================
+\section{From Patterns to Theory}
+\label{sec:websites-patterns-theory}
+%===============================================================================
+
+The upper path in \cref{fig:websites-bridging} traces how raw web data
+yields role-relevant patterns.
+The workflow proceeds through three stages:
+data collection, pattern extraction, and theoretical mapping.
+
+\subsection{Stage 1: Data Collection}
+
+We collected website data for \textbf{6,487 organizations} connected to
+EIT Knowledge and Innovation Communities, achieving 94.7\% coverage
+(6,142 accessible websites).
+\Cref{fig:websites-collection} summarizes the collection pipeline.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={rectangle, draw=Slate!40, fill=Slate!5,
+        rounded corners=2pt, minimum height=0.7cm,
+        font=\scriptsize, inner sep=4pt},
+    arrow/.style={->, thick, Slate!60},
+    statlabel/.style={font=\tiny\itshape, text=Slate!70},
+]
+
+% Pipeline stages
+\node[box] (seed) at (0,0) {EIT Partner Lists};
+\node[box] (resolve) at (3,0) {Domain Resolution};
+\node[box] (crawl) at (6,0) {Web Crawler};
+\node[box] (text) at (3,-1.3) {Text Extraction};
+\node[box] (links) at (6,-1.3) {Link Extraction};
+\node[box] (vocab) at (3,-2.6) {Role Vocabulary};
+\node[box] (network) at (6,-2.6) {Hyperlink Network};
+
+\draw[arrow] (seed) -- (resolve);
+\draw[arrow] (resolve) -- (crawl);
+\draw[arrow] (crawl) -- (text);
+\draw[arrow] (crawl) -- (links);
+\draw[arrow] (text) -- (vocab);
+\draw[arrow] (links) -- (network);
+
+% Stats
+\node[statlabel] at (0, -0.4) {6,487 orgs};
+\node[statlabel] at (6, -0.4) {127,400 pages};
+\node[statlabel] at (3, -1.7) {48.3M words};
+\node[statlabel] at (6, -1.7) {892K links};
+
+\end{tikzpicture}
+\captionof{figure}[Website collection pipeline]{%
+    Data collection pipeline for website analysis.
+    Seed URLs from EIT partner lists feed domain resolution and web crawling,
+    yielding text corpora and hyperlink networks.}
+\label{fig:websites-collection}
+\end{center}
+
+\subsection{Stage 2: Pattern Extraction}
+
+Two families of patterns emerge from the collected data.
+
+\paragraph{Structural patterns from hyperlinks.}
+Hyperlink Network Analysis treats organizations as nodes and hyperlinks
+as directed edges.
+Standard network metrics---in-degree, out-degree, betweenness
+centrality, reciprocity---identify structural positions that correspond
+to role archetypes:
+high in-degree signals authority, high betweenness signals brokerage,
+reciprocal links signal partnership.\footnote{%
+    Park's Hyperlink Network Analysis (HNA) posits that online link
+    patterns correspond to offline organizational ties.
+    This aligns with actor-network theory's treatment of websites as
+    socio-technical actants.}
+
+\paragraph{Semantic patterns from text.}
+Topic modeling (LDA, BERTopic) and TF-IDF analysis of website text
+reveal vocabulary clusters, discourse coalitions, and thematic positioning.
+A critical finding: \textbf{vocabulary convergence} across the ecosystem.
+Terms like ``innovation,'' ``sustainable,'' and ``solutions'' appear
+near-universally, carrying little distinctive information.
+The analytical response: weight \emph{distinctive} vocabulary
+(terms that differentiate actors) over \emph{common} vocabulary
+(terms everyone uses).
+
+\subsection{Stage 3: Mapping to Role Constructs}
+
+\Cref{fig:websites-mapping} shows how extracted patterns map onto
+the theoretical constructs from \cref{ch:cas,ch:cas}.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    databox/.style={rectangle, draw=Azure!60, fill=Azure!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    theorybox/.style={rectangle, draw=AccentPurple!60, fill=AccentPurple!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    mapstyle/.style={->, thick, PandaRose!70, dashed},
+    grouplabel/.style={font=\scriptsize\bfseries, text=Slate},
+]
+
+% Data patterns (left)
+\node[grouplabel] at (-3, 2.2) {Implicit Patterns};
+\node[databox] (d1) at (-3, 1.5) {Network centrality};
+\node[databox] (d2) at (-3, 0.5) {Vocabulary clusters};
+\node[databox] (d3) at (-3, -0.5) {Link reciprocity};
+\node[databox] (d4) at (-3, -1.5) {Page structure};
+
+% Explicit patterns (center)
+\node[grouplabel] at (0, 2.2) {Explicit Patterns};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e1) at (0, 1.5)
+    {Hub / broker / peripheral};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e2) at (0, 0.5)
+    {Discourse coalitions};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e3) at (0, -0.5)
+    {Partnership clusters};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e4) at (0, -1.5)
+    {Knowledge triangle};
+
+% Theory constructs (right)
+\node[grouplabel] at (3, 2.2) {Role Constructs};
+\node[theorybox] (t1) at (3, 1.5) {Orchestrator / Niche};
+\node[theorybox] (t2) at (3, 0.5) {Claimed sociotype};
+\node[theorybox] (t3) at (3, -0.5) {Alliance constellation};
+\node[theorybox] (t4) at (3, -1.5) {Ed--Res--Biz balance};
+
+% Arrows
+\draw[mapstyle] (d1) -- (e1);
+\draw[mapstyle] (d2) -- (e2);
+\draw[mapstyle] (d3) -- (e3);
+\draw[mapstyle] (d4) -- (e4);
+\draw[mapstyle] (e1) -- (t1);
+\draw[mapstyle] (e2) -- (t2);
+\draw[mapstyle] (e3) -- (t3);
+\draw[mapstyle] (e4) -- (t4);
+
+% Flow labels
+\node[font=\tiny\itshape, text=PandaRose] at (-1.5, -2.2) {explicate};
+\node[font=\tiny\itshape, text=PandaRose] at (1.5, -2.2) {embed};
+
+\end{tikzpicture}
+\captionof{figure}[Mapping website patterns to role constructs]{%
+    From implicit patterns to role constructs, following the
+    abstraction pathway of \textcite{maass2018data} Figure~3.
+    Implicit patterns (network metrics, vocabulary clusters) are
+    explicated into named role positions, then embedded in
+    domain theory.}
+\label{fig:websites-mapping}
+\end{center}
+
+Three mappings deserve emphasis:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Network position $\rightarrow$ Structural role.]
+High in-degree maps to \emph{knowledge hub} or \emph{authority};
+high betweenness to \emph{broker} or \emph{boundary spanner};
+tight clustering to \emph{community of practice}.
+These structural roles operationalize the CAS mechanisms
+of \cref{ch:cas}: convening, proselytizing, strengthening.
+
+\item[Vocabulary profile $\rightarrow$ Claimed sociotype.]
+TF-IDF signatures distinguish actor types:
+orchestrators emphasize ``ecosystem,'' ``platform,'' ``orchestrate'';
+research anchors emphasize ``research,'' ``scientific,'' ``knowledge'';
+innovation engines emphasize ``solution,'' ``develop,'' ``market.''
+The vocabulary profile is the empirical fingerprint of the claimed sociotype.
+
+\item[Knowledge triangle balance $\rightarrow$ Positioning.]
+Constructing keyword dictionaries for Education, Research, and Business
+enables systematic measurement of how organizations position themselves
+relative to EIT's integrative mission---a direct operationalization of
+\textcite{maassen2011knowledge}.
+\end{description}
+
+
+%===============================================================================
+\section{From Theory to Data Requirements}
+\label{sec:websites-theory-data}
+%===============================================================================
+
+The lower path in \cref{fig:websites-bridging} runs in reverse:
+role theory specifies what to look for in website data.
+This is the \emph{theory-to-data-requirements} pathway that
+\textcite{maass2018data} identify as essential for bridging.
+
+\paragraph{CAS theory requires relational data.}
+Complex adaptive systems theory predicts that roles emerge from
+interactions, not declarations.
+This requirement guided the decision to extract hyperlink networks
+(relational structure) alongside page text (declarations).
+Websites give us one input to emergence---actors' \textbf{role claims}---but
+emergence requires testing claims against responses.
+
+\paragraph{Knowledge triangle theory requires vocabulary features.}
+The knowledge triangle framework hypothesizes that organizations position
+themselves along Education--Research--Business dimensions.
+This guided the construction of domain-specific keyword dictionaries
+and the extraction of page-type distributions
+(About pages signal self-categorization; Partner pages signal relational claims;
+Services pages signal functional positioning).
+
+\paragraph{Role constellation theory requires multi-actor coverage.}
+The theoretical expectation of \emph{constellations}---complementary roles
+interacting together---required collecting data across the full
+ecosystem (6,487 organizations) rather than sampling.
+Near-universal coverage (94.7\%) makes websites the most
+comprehensive single data source for ecosystem mapping.
+
+
+%===============================================================================
+\section{The Claim--Position Gap}
+\label{sec:websites-gap}
+%===============================================================================
+
+The most theoretically productive pattern is not a data finding
+but a \textbf{bridging gap}: many organizations use vocabulary
+associated with intermediary roles
+(``bridge,'' ``facilitate,'' ``connect'')
+but few occupy high-betweenness bridging positions in the hyperlink network.
+
+This \emph{claim--position gap} is not noise---it is signal.
+It indicates aspirational claiming (positioning for sought roles),
+legitimacy performance (strategic use of valued vocabulary),
+invisible bridging (intermediation through non-web channels),
+or temporal lag (evolved positions with outdated websites).
+
+\begin{criticalbox}[The Gap as Bridge to Other Modalities]
+The claim--position gap cannot be resolved within website data alone.
+Resolving it requires triangulation:
+Do news media attribute the bridging role (\cref{app:news-media})?
+Do investment flows confirm the intermediary position (\cref{app:crunchbase})?
+Do social media interactions show performed bridging (\cref{app:social-media})?
+Each resolution path connects this modality's workflow to the next,
+creating the multimodal cartography that the dissertation argues for.
+\end{criticalbox}
+
+
+%===============================================================================
+\section{Limitations as Bridging Gaps}
+\label{sec:websites-limitations}
+%===============================================================================
+
+Website analysis faces six limitations,
+each of which motivates a specific cross-modal bridge:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3cm}p{4cm}p{4cm}@{}}
+\toprule
+\textbf{Limitation} & \textbf{What it misses} & \textbf{Bridging modality} \\
+\midrule
+Curation bias & Ground truth of actual roles & Crunchbase (enacted) \\
+Coverage bias & Digitally invisible actors & News, Wikipedia \\
+English bias & Non-English positioning & Wikipedia (multilingual) \\
+Link ambiguity & Relationship semantics & Social media (explicit ties) \\
+Temporal stability & Dynamic role evolution & News, social media \\
+Absence $\neq$ evidence & Unpublicized partnerships & Investment, visual co-occurrence \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Website limitations and cross-modal bridges}
+\end{center}
+
+These limitations are not reasons to dismiss website data---they are
+\emph{bridging gaps} that connect this modality's workflow to the others,
+creating the multimodal architecture of \RoleBox{}.
+
+
+%===============================================================================
+\section{Summary}
+%===============================================================================
+
+\begin{summarybox}
+The website modality produces the \textbf{declared map}---how organizations
+claim their roles through curated web presence.
+The bridging workflow connects 6,487 organizational websites to role theory
+via two paths: hyperlink network patterns map to structural role positions,
+and vocabulary profiles map to claimed sociotypes and knowledge triangle
+positioning.
+The most productive finding is not within either path but at
+their intersection: the \emph{claim--position gap} that motivates
+the multimodal triangulation developed in subsequent appendices.
+\end{summarybox}
+
+\clearpage
+\end{document}

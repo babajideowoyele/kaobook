@@ -1,0 +1,450 @@
+% !TEX root = ../main.tex
+%************************************************
+\chapter{RoleBox Platform Design Specifications}
+\labch{rolebox-design}
+%************************************************
+
+\begin{abstract}
+This appendix documents the design requirements, technical specifications, and user experience guidelines for the RoleBox multimodal analysis platform. RoleBox provides interactive browser-based tools for exploring, coding, and visualizing organizational role data across eight modalities: websites, social media, Crunchbase, visual materials, news media, Wikipedia, role simulation, and cross-modal schema integration.
+\end{abstract}
+
+\section{Design System Foundation}
+
+The RoleBox platform adopts IBM's Carbon Design System\sidecite{ibm-carbon-2024} as its foundational design language, ensuring visual consistency and accessibility across all tools.
+
+\subsection{Typography}
+
+All RoleBox interfaces use IBM Plex, an open-source typeface family designed for optimal screen legibility:
+
+\begin{itemize}
+    \item \textbf{IBM Plex Sans}: Primary typeface for UI elements, headings, and body text
+    \item \textbf{IBM Plex Mono}: Monospace typeface for code, identifiers, and technical labels
+\end{itemize}
+
+\begin{marginfigure}
+\begin{lstlisting}[language=CSS,basicstyle=\tiny\ttfamily]
+:root {
+  --font-sans: 'IBM Plex Sans',
+    -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono',
+    monospace;
+}
+\end{lstlisting}
+\caption{CSS custom property definitions for RoleBox typography.}
+\end{marginfigure}
+
+\subsection{Color Palette}
+
+The platform employs a semantic color system derived from Carbon's palette, with specific assignments for the EIT Knowledge Innovation Communities (KICs):
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Variable} & \textbf{Hex Code} & \textbf{Application} \\
+\midrule
+\texttt{--blue-60} & \texttt{\#0f62fe} & Primary actions, links \\
+\texttt{--purple-60} & \texttt{\#8a3ffc} & Crunchbase, ventures \\
+\texttt{--green-60} & \texttt{\#198038} & Websites, success states \\
+\texttt{--teal-60} & \texttt{\#007d79} & Social media, RoleSim \\
+\texttt{--magenta-60} & \texttt{\#d02670} & Visual materials \\
+\texttt{--orange-50} & \texttt{\#eb6200} & News media \\
+\texttt{--cyan-50} & \texttt{\#1192e8} & Twitter/social \\
+\bottomrule
+\end{tabular}
+\caption{RoleBox semantic color assignments by modality.}
+\labtab{rolebox-colors}
+\end{table}
+
+\subsubsection{KIC Sector Colors}
+
+Each EIT Knowledge Innovation Community receives a distinct color for data visualization consistency:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{KIC Sector} & \textbf{Color} \\
+\midrule
+Climate-KIC & Blue (\texttt{\#0f62fe}) \\
+EIT Digital & Purple (\texttt{\#8a3ffc}) \\
+EIT Health & Red (\texttt{\#da1e28}) \\
+EIT InnoEnergy & Yellow (\texttt{\#f1c21b}) \\
+EIT Food & Green (\texttt{\#198038}) \\
+EIT Manufacturing & Gray (\texttt{\#525252}) \\
+EIT RawMaterials & Brown (\texttt{\#8a3800}) \\
+EIT Urban Mobility & Teal (\texttt{\#007d79}) \\
+\bottomrule
+\end{tabular}
+\caption{Color assignments for EIT KIC sectors.}
+\labtab{kic-colors}
+\end{table}
+
+\subsection{Navigation Architecture}
+
+The platform implements a hierarchical navigation structure with three levels:
+
+\begin{enumerate}
+    \item \textbf{Master Hub} (\texttt{data/index.html}): Central landing page linking all modalities
+    \item \textbf{Modality Index Pages}: Hub pages for each data source (e.g., \texttt{rolebox-websites/ui/index.html})
+    \item \textbf{Individual Tools}: Specialized analysis interfaces within each modality
+\end{enumerate}
+
+All pages feature breadcrumb navigation allowing users to traverse upward through the hierarchy. Tool pages include a ``back arrow'' link to their parent modality index.
+
+%------------------------------------------------
+\section{Modality-Specific Tools}
+%------------------------------------------------
+
+\subsection{RoleBox Websites}
+\labsec{design-websites}
+
+The websites modality provides tools for analyzing organizational self-presentation through website content.
+
+\subsubsection{Design Requirements}
+
+\begin{description}
+    \item[Primary Color:] Green (\texttt{\#198038})
+    \item[Chapter Reference:] Chapter 5: Interstitial Pluralism
+    \item[Data Volume:] 847 sites, 10.9K hyperlinks
+\end{description}
+
+\subsubsection{Tool Suite}
+
+\paragraph{RoleBox Triplets} validates and codes Subject-Predicate-Object triplets extracted from website text. Features include:
+\begin{itemize}
+    \item Human-AI collaborative coding with Model Assist integration
+    \item Codebook management for predicate categories
+    \item Network visualization of triplet relationships
+    \item Import/export in JSON format
+\end{itemize}
+
+\paragraph{RoleBox Triads} provides per-sector Knowledge Triangle analysis using ternary plots\sidecite{powell2012-triple-helix}. Features include:
+\begin{itemize}
+    \item Ternary coordinate visualization (Education--Research--Business)
+    \item X-Curve dynamics overlay\sidecite{hebinck2022-xcurve}
+    \item Sector comparison views
+    \item PNG export with transparent backgrounds
+\end{itemize}
+
+\paragraph{RoleBox Sociotypes} implements the Watch-Complexity role typology for website-based actor classification.
+
+\paragraph{Network Layouts} visualizes inter-organizational hyperlink networks with force-directed and geographic layout options.
+
+\subsection{RoleBox Social}
+\labsec{design-social}
+
+The social media modality analyzes Twitter/X network structures and influence patterns.
+
+\subsubsection{Design Requirements}
+
+\begin{description}
+    \item[Primary Color:] Cyan (\texttt{\#1192e8})
+    \item[Chapter Reference:] Chapter 6: Role Configurations
+    \item[Data Volume:] 2,847 accounts, 156K connections
+\end{description}
+
+\subsubsection{Tool Suite}
+
+\paragraph{RoleBox NetCodes} annotates network actors using the Watch-Complexity typology\sidecite{bruns2017-twitter-follower}. The 19-role classification includes:
+
+\begin{margintable}
+\small
+\begin{tabular}{ll}
+\toprule
+\textbf{Category} & \textbf{Roles} \\
+\midrule
+High Influence & TopHub, Hub, \\
+ & MegAmplifier, \\
+ & Amplifier, Vulcano \\
+Bridging & Bridge, Connector, \\
+ & Transceiver, \\
+ & Channeler, Chain \\
+Flow Regulation & Dam, Reducer \\
+Peripheral & Receiver, \\
+ & ReceiverBranch, \\
+ & BlackHole, Idle \\
+Emitters & Emitter, \\
+ & EmitterBranch, \\
+ & LowEmitter \\
+\bottomrule
+\end{tabular}
+\caption{Watch-Complexity role categories.}
+\end{margintable}
+
+\paragraph{RoleBox RoleField} maps actors in two-dimensional Watch-Complexity space, visualizing the distribution of network roles across the field.
+
+\paragraph{Twitter Workflow} documents the data collection and processing pipeline for Twitter/X data.
+
+\subsection{RoleBox Crunchbase}
+\labsec{design-crunchbase}
+
+The Crunchbase modality analyzes venture data, funding patterns, and startup ecosystem positioning.
+
+\subsubsection{Design Requirements}
+
+\begin{description}
+    \item[Primary Color:] Purple (\texttt{\#8a3ffc})
+    \item[Chapter Reference:] Chapter 7: Venture Positioning
+    \item[Data Volume:] 847 ventures, \$2.4B total funding
+\end{description}
+
+\subsubsection{Tool Suite}
+
+\paragraph{RoleBox Ventures} classifies ventures by role typology using a codebook of positioning strategies:
+\begin{itemize}
+    \item Technology-push vs. market-pull orientation
+    \item Deep-tech vs. application focus
+    \item B2B vs. B2C market positioning
+    \item Climate/sustainability emphasis
+\end{itemize}
+
+\paragraph{RoleBox Network Viewer} visualizes co-investment networks, founder connections, and sector linkages using Sigma.js\sidecite{sigmajs} for WebGL-accelerated rendering.
+
+\subsection{RoleBox Visual}
+\labsec{design-visual}
+
+The visual modality analyzes organizational imagery through semiotic register coding.
+
+\subsubsection{Design Requirements}
+
+\begin{description}
+    \item[Primary Color:] Magenta (\texttt{\#d02670})
+    \item[Chapter Reference:] Chapter 8: Visual Registers
+    \item[Data Volume:] 3,456 images, 12 register types
+\end{description}
+
+\subsubsection{Tool Suite}
+
+\paragraph{RoleBox VizReg} codes visual registers from organizational images. The coding schema captures:
+
+\begin{itemize}
+    \item \textbf{Gaze Types}: Demand, Offer, Absent, Group, Object
+    \item \textbf{Setting}: Office, Lab, Outdoor, Studio, Event
+    \item \textbf{Composition}: Close-up, Medium shot, Long shot
+    \item \textbf{Register}: Professional, Innovation, Academic, Corporate, Startup, Community, Tech, Green
+\end{itemize}
+
+The tool supports batch processing with Ollama/LLaVA integration for AI-assisted coding.
+
+\subsection{RoleBox News}
+\labsec{design-news}
+
+The news modality analyzes media coverage of EIT actors and innovation narratives.
+
+\subsubsection{Design Requirements}
+
+\begin{description}
+    \item[Primary Color:] Orange (\texttt{\#eb6200})
+    \item[Chapter Reference:] Appendix E: News Sources
+    \item[Data Volume:] 12,456 articles, 287 sources, 8 languages
+\end{description}
+
+\subsubsection{Tool Suite}
+
+\paragraph{News Knowledge Graph} visualizes entity co-occurrence networks extracted from news articles, supporting temporal filtering and sentiment overlay.
+
+\subsection{RoleBox Wikipedia}
+\labsec{design-wikipedia}
+
+The Wikipedia modality provides Wikidata entity linking and knowledge graph construction.
+
+\subsubsection{Design Requirements}
+
+\begin{description}
+    \item[Primary Color:] Blue (\texttt{\#0f62fe})
+    \item[Chapter Reference:] Appendix G: Wikipedia Data
+    \item[Data Volume:] 847 entities, 5.2K relations
+\end{description}
+
+\subsubsection{Tool Suite}
+
+\paragraph{RoleBox Wikipedia KG} visualizes the knowledge graph using vis-network\sidecite{visjs}, with cluster-based navigation and entity search.
+
+%------------------------------------------------
+\section{Cross-Modal Platforms}
+%------------------------------------------------
+
+\subsection{RoleSim}
+\labsec{design-rolesim}
+
+RoleSim provides agent-based simulation of role constellation dynamics.
+
+\subsubsection{Design Requirements}
+
+\begin{description}
+    \item[Primary Color:] Teal (\texttt{\#007d79})
+    \item[Chapter Reference:] Intermezzo: Role Simulation
+    \item[Capabilities:] 19 role types, configurable scenarios, temporal dynamics
+\end{description}
+
+\subsubsection{Workflow Screens}
+
+The RoleSim interface provides eight workflow screens:
+
+\begin{enumerate}
+    \item \textbf{Dashboard}: Overview statistics and quick actions
+    \item \textbf{Roles}: Watch-Complexity role definitions and visual reference
+    \item \textbf{Agents}: Actor listing with role assignments
+    \item \textbf{Scenarios}: Predefined simulation configurations
+    \item \textbf{Simulate}: Runtime controls and progress monitoring
+    \item \textbf{Results}: Role stability metrics and transition analysis
+    \item \textbf{Cartography}: Spatial network visualization
+    \item \textbf{Export}: Data export in multiple formats
+\end{enumerate}
+
+\subsubsection{Data Integration}
+
+RoleSim supports multiple data sources:
+\begin{itemize}
+    \item Hyphe CSV import for web crawl networks
+    \item Pre-generated EIT network datasets
+    \item Synthetic network generation for testing
+\end{itemize}
+
+\subsection{RoleBox PyDNA}
+\labsec{design-pydna}
+
+PyDNA provides discourse network analysis and cross-modal schema integration.
+
+\subsubsection{Design Requirements}
+
+\begin{description}
+    \item[Primary Color:] Blue (\texttt{\#0f62fe})
+    \item[Reference:] Cross-Modal Schema Documentation
+    \item[Data Volume:] 847 actors, 12.4K statements, 287 concepts
+\end{description}
+
+\subsubsection{Tool Suite}
+
+\paragraph{RoleDNA} implements qualitative discourse network analysis\sidecite{leifeld2013-dna}:
+\begin{itemize}
+    \item Document annotation interface
+    \item Statement coding (Actor--Concept--Polarity)
+    \item Actor-concept network visualization
+    \item Coalition detection algorithms
+\end{itemize}
+
+\paragraph{CARTALOG} provides actor catalog management:
+\begin{itemize}
+    \item Entity resolution across data sources
+    \item Name variant tracking
+    \item Cross-corpus linking (Crunchbase, Wikidata, etc.)
+    \item Annotation and moderation workflow
+    \item REST API for programmatic access
+\end{itemize}
+
+%------------------------------------------------
+\section{Technical Specifications}
+%------------------------------------------------
+
+\subsection{Browser Requirements}
+
+RoleBox tools are designed for modern browsers supporting:
+\begin{itemize}
+    \item ES6+ JavaScript (async/await, modules)
+    \item CSS Custom Properties (variables)
+    \item CSS Grid and Flexbox layout
+    \item Canvas and WebGL (for network visualization)
+\end{itemize}
+
+Minimum supported versions: Chrome 80+, Firefox 75+, Safari 13+, Edge 80+.
+
+\subsection{Visualization Libraries}
+
+The platform integrates several JavaScript visualization libraries:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Library} & \textbf{Version} & \textbf{Application} \\
+\midrule
+Plotly.js & 2.27.0 & Charts, scatter plots \\
+Sigma.js & 2.4.0 & Large network graphs \\
+Graphology & 0.25.4 & Graph data structures \\
+vis-network & 9.1.6 & Interactive networks \\
+D3.js & 7.x & Custom visualizations \\
+\bottomrule
+\end{tabular}
+\caption{JavaScript visualization libraries used in RoleBox.}
+\labtab{viz-libraries}
+\end{table}
+
+\subsection{AI/ML Integration}
+
+Several tools support AI-assisted coding through:
+\begin{itemize}
+    \item \textbf{Ollama (Local)}: Self-hosted LLM inference for privacy-sensitive data
+    \item \textbf{OpenAI API}: GPT-4 integration for high-accuracy suggestions
+    \item \textbf{Anthropic API}: Claude integration for nuanced classification
+    \item \textbf{LLaVA}: Multimodal vision-language model for image analysis
+\end{itemize}
+
+\subsection{Data Formats}
+
+All tools support JSON as the primary data interchange format. Export options include:
+\begin{itemize}
+    \item JSON (structured data)
+    \item CSV (tabular data)
+    \item PNG (visualizations with transparency)
+    \item GraphML/GEXF (network data)
+\end{itemize}
+
+%------------------------------------------------
+\section{User Experience Guidelines}
+%------------------------------------------------
+
+\subsection{Demo Data Loading}
+
+All tools auto-load demonstration data on page initialization, ensuring users immediately see a populated interface rather than empty states. This supports:
+\begin{itemize}
+    \item Rapid onboarding and feature discovery
+    \item Visual documentation of expected data structures
+    \item Testing and development workflows
+\end{itemize}
+
+\subsection{Keyboard Shortcuts}
+
+Tools implement consistent keyboard shortcuts where applicable:
+\begin{itemize}
+    \item \texttt{Ctrl+S}: Save/export current state
+    \item \texttt{Ctrl+Z}: Undo last action
+    \item \texttt{Arrow keys}: Navigate between items
+    \item \texttt{Enter}: Confirm selection
+    \item \texttt{Escape}: Close modal/panel
+\end{itemize}
+
+\subsection{Responsive Design}
+
+While optimized for desktop use (1280px+ viewport), tools implement responsive breakpoints for tablet viewing. Mobile support is limited due to the data-intensive nature of analysis tasks.
+
+\subsection{Accessibility}
+
+The platform follows WCAG 2.1 AA guidelines where feasible:
+\begin{itemize}
+    \item Sufficient color contrast ratios (4.5:1 minimum)
+    \item Keyboard navigation support
+    \item Focus indicators for interactive elements
+    \item Screen reader compatibility for core workflows
+\end{itemize}
+
+%------------------------------------------------
+\section{Deployment Architecture}
+%------------------------------------------------
+
+RoleBox tools are implemented as static HTML/CSS/JavaScript files, deployable via:
+\begin{itemize}
+    \item Local file system (development/research use)
+    \item Static web hosting (GitHub Pages, Netlify)
+    \item Institutional web servers
+\end{itemize}
+
+The CARTALOG tool additionally requires a Python backend (FastAPI) for database operations and REST API functionality.
+
+\begin{kaobox}[title=Platform Access]
+The complete RoleBox platform is accessible from the dissertation data directory at \texttt{data/index.html}. Individual modality hubs are located at \texttt{data/rolebox-[modality]/ui/index.html}.
+\end{kaobox}

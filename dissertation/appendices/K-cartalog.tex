@@ -1,0 +1,444 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{CARTALOG: Actor Catalog for Transitions Research}
+\label{app:cartalog}
+
+\noindent\textit{This appendix documents \textsc{CARTALOG}---an implementation of de Haan, Martínez Arranz \& Spekkink's vision for standardized actor catalogs in data-driven transitions research. \textsc{CARTALOG} provides an interactive interface for exploring organizational actors extracted from news corpora, with cross-validation against other data sources and export functionality for downstream analysis.}
+
+\bigskip
+
+
+%===============================================================================
+\section{Responding to the Data-Driven Transitions Call}
+%===============================================================================
+
+De Haan, Martínez Arranz \& Spekkink \citeyear{dehaan2019datadriven} issue a compelling call for ``data-driven transitions research''---a ``thorough-going empiricism'' where ``data, as many as can be mustered, lead rather than just support inference.'' They envision:
+
+\begin{quote}
+``Not only is there no such database but moreover it seems contrary to the way data are used in transitions research... What is clear, at least to us, is that computational tools are opening up new ways of doing research on complex societal issues such as transitions.'' (p. 208)
+\end{quote}
+
+Their vision includes shared databases, standardized event catalogs, and---crucially for multimodal cartography---\textbf{actor catalogs} that enable cumulative analysis across cases. Yet this vision remains largely unrealized in transitions research. \textsc{CARTALOG} responds directly to this call.
+
+\begin{insightbox}[From Events to Actors]
+While de Haan et al. focus primarily on event-based analysis of historical transitions, \textsc{CARTALOG} extends their vision to actor-level analysis of contemporary innovation ecosystems. Events occur; actors persist. Both deserve systematic cataloging.
+\end{insightbox}
+
+
+%===============================================================================
+\section{Design Requirements}
+\label{sec:cartalog-design}
+%===============================================================================
+
+Following de Haan et al.'s methodology, \textsc{CARTALOG} implements six design requirements that they identify as essential for data-driven transitions research:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
+
+\item[1. Actor Catalog] Central repository of organizational actors with normalized names. Name variants (``EIT InnoEnergy,'' ``InnoEnergy,'' ``EIT-InnoEnergy'') are resolved to canonical forms. This addresses the entity resolution challenge that undermines cumulative analysis when the same actor appears under different names.
+
+\item[2. Event-Actor Linkage] Each actor entry maintains connections to the documents/events where it appears. This enables provenance tracking---users can trace back from catalog entry to source text---and supports context retrieval for qualitative follow-up.
+
+\item[3. Temporal Tracking] Actor prominence tracked year-by-year reveals dynamics that cross-sectional snapshots miss: which actors emerge, which persist, which fade from discourse. The timeline view visualizes activity intensity over the corpus timespan.
+
+\item[4. Cross-Corpus Validation] Linking actors across different data sources (news $\leftrightarrow$ websites $\leftrightarrow$ Crunchbase) validates corpus coverage and identifies gaps. If an actor appears frequently in news but is absent from the website corpus, this suggests either a data collection gap or a legitimacy signal (talked about but not formally part of the ecosystem).
+
+\item[5. Export/Interoperability] Machine-readable exports (CSV, JSON) enable downstream analysis with other tools. Researchers can import the catalog into network analysis software, merge with other datasets, or build upon it for new research questions.
+
+\item[6. Provenance] Tracking name variants, extraction methods, and data sources ensures methodological transparency. Future researchers can understand how the catalog was constructed and assess its reliability for their purposes.
+
+\end{description}
+
+
+%===============================================================================
+\section{Ontology Alignment}
+\label{sec:cartalog-ontology}
+%===============================================================================
+
+To ensure interoperability with the broader Semantic Web ecosystem and established authority control systems, \textsc{CARTALOG} aligns with standard Linked Data ontologies.
+
+\subsection{Core Ontologies}
+
+\textsc{CARTALOG} draws on five established vocabularies:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
+
+\item[W3C Organization Ontology (ORG)] The primary vocabulary for organizational structures. \textsc{CARTALOG} actors map to \texttt{org:Organization}, with entity types expressed via \texttt{org:classification} and KIC membership via \texttt{org:memberOf}.
+
+\item[FOAF (Friend of a Friend)] Provides agent descriptions. Actors are typed as \texttt{foaf:Organization}, with \texttt{foaf:homepage} linking to official websites.
+
+\item[SKOS (Simple Knowledge Organization System)] Enables concept labeling and controlled vocabularies. Canonical names map to \texttt{skos:prefLabel}, name variants to \texttt{skos:altLabel}, and normalized identifiers to \texttt{skos:notation}. Transition roles link to a custom SKOS ConceptScheme.
+
+\item[Dublin Core Terms] Provides standard metadata: \texttt{dcterms:created} and \texttt{dcterms:modified} for timestamps, \texttt{dcterms:source} for provenance, and \texttt{dcterms:hasVersion} for archival snapshots.
+
+\item[PROV-O (Provenance Ontology)] Tracks extraction provenance: \texttt{prov:wasGeneratedBy} links to the NER pipeline, \texttt{prov:wasDerivedFrom} references source documents, and \texttt{prov:wasAttributedTo} credits human validators.
+
+\end{description}
+
+\subsection{Field Mappings}
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}llp{5cm}@{}}
+\toprule
+\textbf{CARTALOG Field} & \textbf{Ontology Property} & \textbf{Notes} \\
+\midrule
+\texttt{canonical\_name} & \texttt{skos:prefLabel} & Preferred name \\
+\texttt{name\_variants} & \texttt{skos:altLabel} & Alternative labels \\
+\texttt{normalized\_key} & \texttt{skos:notation} & Normalized identifier \\
+\texttt{entity\_type} & \texttt{org:classification} & Controlled vocabulary \\
+\texttt{transition\_role} & Custom SKOS scheme & MLP/TIS roles \\
+\texttt{homepage\_url} & \texttt{foaf:homepage} & Current website \\
+\texttt{wayback\_url} & \texttt{dcterms:hasVersion} & Archived snapshot \\
+\texttt{created\_at} & \texttt{dcterms:created} & Creation timestamp \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Mapping \textsc{CARTALOG} fields to Linked Data ontologies}
+\end{center}
+
+\subsection{Controlled Vocabularies}
+
+\textsc{CARTALOG} defines two SKOS ConceptSchemes:
+
+\paragraph{Entity Types} Based on organization classification:
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item \texttt{cartalog:Startup} -- Early-stage ventures
+\item \texttt{cartalog:Corporate} -- Established corporations
+\item \texttt{cartalog:University} -- Higher education institutions
+\item \texttt{cartalog:ResearchInstitute} -- Research organizations
+\item \texttt{cartalog:NGO} -- Non-governmental organizations
+\item \texttt{cartalog:Government} -- Government agencies
+\item \texttt{cartalog:Intermediary} -- Innovation intermediaries
+\end{itemize}
+
+\paragraph{Transition Roles} Based on Multi-Level Perspective (MLP) and Technological Innovation Systems (TIS) frameworks:
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item \texttt{cartalog:NicheActor} -- Actors developing novel solutions outside the mainstream
+\item \texttt{cartalog:RegimeActor} -- Incumbents maintaining existing socio-technical configurations
+\item \texttt{cartalog:IntermediaryActor} -- Organizations bridging between levels
+\item \texttt{cartalog:LandscapeActor} -- External forces shaping context
+\end{itemize}
+
+\subsection{External Identifiers}
+
+\textsc{CARTALOG} supports linking to external authority files via \texttt{owl:sameAs} (exact matches) and \texttt{skos:closeMatch} (approximate):
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{System} & \textbf{Property} & \textbf{Example} \\
+\midrule
+Wikidata & \texttt{owl:sameAs} & \texttt{wd:Q16954024} \\
+ROR (Research Organizations) & \texttt{owl:sameAs} & \texttt{ror:02mhbdp94} \\
+ISNI (International Standard) & \texttt{owl:sameAs} & \texttt{isni:0000000123456789} \\
+Crunchbase & \texttt{skos:closeMatch} & \texttt{crunchbase:company/xyz} \\
+\bottomrule
+\end{tabular}
+\captionof{table}{External identifier mappings}
+\end{center}
+
+\subsection{Archival Provenance}
+
+Following de Haan et al.'s emphasis on provenance, \textsc{CARTALOG} stores Wayback Machine archive links for organizational websites. This addresses a critical challenge in longitudinal transitions research: organizations rebrand, pivot, or disappear, but archived snapshots preserve their historical self-presentation.
+
+Each actor can store:
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \texttt{homepage\_url} -- Current live website (if available)
+\item \texttt{wayback\_url} -- Internet Archive snapshot URL
+\item \texttt{wayback\_date} -- Date of archived snapshot
+\end{itemize}
+
+This enables researchers to examine how organizations presented themselves at specific points in time, rather than relying solely on contemporary descriptions that may reflect post-hoc rationalization.
+
+
+%===============================================================================
+\section{Extraction Pipeline}
+%===============================================================================
+
+\textsc{CARTALOG} builds on the NER pipeline described in Appendix~\ref{app:news-media}. The extraction process proceeds through six stages:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}clp{6.5cm}@{}}
+\toprule
+\textbf{Stage} & \textbf{Task} & \textbf{Method} \\
+\midrule
+1 & Named Entity Recognition & spaCy extracts ORG entities from news text \\
+2 & Name Normalization & Standardize suffixes (GmbH, Ltd, Inc, etc.) and whitespace \\
+3 & Entity Resolution & Group variant spellings into canonical entries \\
+4 & Temporal Indexing & Track year of appearance for each mention \\
+5 & Document Linkage & Maintain references to source documents \\
+6 & Cross-Validation & Match actors against curated website corpus \\
+\bottomrule
+\end{tabular}
+\captionof{table}{\textsc{CARTALOG} extraction pipeline stages}
+\end{center}
+
+\subsection{Name Normalization}
+
+Organization names in news text exhibit significant variation:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item \textbf{Legal suffixes}: ``Siemens AG'' vs. ``Siemens'' vs. ``Siemens Corporation''
+\item \textbf{Abbreviations}: ``European Institute of Innovation and Technology'' vs. ``EIT''
+\item \textbf{Stylization}: ``Climate-KIC'' vs. ``ClimateKIC'' vs. ``Climate KIC''
+\item \textbf{Whitespace}: Inconsistent spacing and punctuation
+\end{itemize}
+
+The normalization pipeline removes common legal suffixes and standardizes whitespace, then groups variants by Levenshtein distance and manual gazetteer matching.
+
+
+%===============================================================================
+\section{Catalog Statistics}
+%===============================================================================
+
+Processing the EIT news corpus (170 documents spanning 2008--2025) yields:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Documents processed & 170 \\
+Unique actors extracted & 1,130 \\
+Total actor mentions & 3,107 \\
+EIT/KIC-related actors & 243 \\
+Matched to website corpus & 268 \\
+Year coverage & 2008--2025 \\
+Avg. mentions per actor & 2.7 \\
+Actors with 10+ mentions & 89 \\
+\bottomrule
+\end{tabular}
+\captionof{table}{\textsc{CARTALOG} statistics for EIT news corpus}
+\end{center}
+
+\subsection{Top Actors by Mention Frequency}
+
+The most frequently mentioned actors reveal the discourse structure:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}rlrr@{}}
+\toprule
+\textbf{Rank} & \textbf{Actor} & \textbf{Mentions} & \textbf{Documents} \\
+\midrule
+1 & European Institute of Innovation and Technology & 187 & 98 \\
+2 & Climate-KIC & 128 & 45 \\
+3 & EIT Health & 114 & 38 \\
+4 & EIT Digital & 111 & 42 \\
+5 & EIT InnoEnergy & 89 & 35 \\
+6 & European Commission & 76 & 44 \\
+7 & EIT Food & 54 & 28 \\
+8 & EIT RawMaterials & 47 & 25 \\
+9 & EIT Urban Mobility & 38 & 19 \\
+10 & EIT Manufacturing & 31 & 17 \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Top 10 actors by mention frequency in EIT news corpus}
+\end{center}
+
+The dominance of KIC hubs in the news corpus reflects its composition (EIT official communications) rather than ecosystem-wide actor importance---a limitation noted in the cross-validation analysis.
+
+
+%===============================================================================
+\section{Cross-Validation Results}
+%===============================================================================
+
+Following de Haan et al.'s emphasis on validation, we cross-referenced the news actor catalog against the curated website corpus (1,149 entities compiled from Crunchbase, Hyphe crawls, and KIC partner lists).
+
+\subsection{Coverage by Entity Type}
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Entity Type} & \textbf{Total in Corpus} & \textbf{Found in News} & \textbf{Coverage} \\
+\midrule
+KIC hubs & 8 & 7 & 87.5\% \\
+Partners & 1,037 & 38 & 3.7\% \\
+Startups & 104 & 1 & 1.0\% \\
+\midrule
+\textbf{Total} & \textbf{1,149} & \textbf{46} & \textbf{4.0\%} \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Cross-validation coverage by entity type}
+\end{center}
+
+\subsection{Interpretation}
+
+The high coverage for KIC hubs (87.5\%) validates that our news corpus captures core EIT ecosystem actors. The one missing KIC hub (EIT Culture and Creativity) is the newest, established in 2022, explaining its absence from earlier coverage.
+
+Lower coverage for partners (3.7\%) and startups (1.0\%) is \textbf{expected and informative}:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[News source composition] The news corpus comprises EIT official communications, which naturally emphasize institutional actors (KICs, European Commission, umbrella organizations) over individual portfolio companies.
+
+\item[Legitimacy signal] Partners and startups that \emph{do} appear in news (38 of 1,037) may have achieved unusual prominence---worth investigating as potential outliers.
+
+\item[Corpus complementarity] This coverage pattern confirms the value of multimodal analysis: website and Crunchbase data capture the ``long tail'' of ecosystem actors that news misses.
+\end{description}
+
+\begin{criticalbox}[The Coverage Paradox]
+Low cross-validation coverage is not necessarily a problem---it can be diagnostic. If the website corpus contains 1,000 startups but news mentions only 1, we learn something important: the news discourse is dominated by institutional actors while startups operate below the media visibility threshold. This shapes our interpretation of news-derived role attributions.
+\end{criticalbox}
+
+
+%===============================================================================
+\section{System Architecture}
+%===============================================================================
+
+\textsc{CARTALOG} is implemented as a database-backed web application with three tiers:
+
+\subsection{Database Layer}
+
+A relational database (SQLite for portability, PostgreSQL for production) stores:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.2em]
+\item[Actors] Canonical entries with normalized keys, entity types, and aggregate statistics
+\item[ActorVariants] Name variants with provenance (source, confidence, occurrence count)
+\item[Documents] Source texts with metadata (title, year, URL, word count)
+\item[ActorMentions] Individual mentions preserving position and context
+\item[Annotations] User-contributed tags, corrections, and notes (with moderation workflow)
+\item[CorpusLinks] Cross-references to external corpora (Crunchbase, Wikipedia, website corpus)
+\item[AuditLog] Change history for reproducibility
+\end{description}
+
+\subsection{API Layer}
+
+A RESTful API (FastAPI/Python) exposes endpoints for:
+
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+\item Actor listing with filtering, search, and pagination
+\item Actor detail retrieval with variants, documents, and annotations
+\item Annotation creation (with moderation queue)
+\item Catalog statistics and timeline data
+\item Export in CSV and JSON formats with JSON-LD context
+\end{itemize}
+
+\subsection{Frontend Layer}
+
+A browser-based viewer provides the interactive interface described below.
+
+
+%===============================================================================
+\section{Interactive Viewer}
+%===============================================================================
+
+The \textsc{CARTALOG} viewer provides a browser-based interface for exploring the actor catalog:
+
+\subsection{Features}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+
+\item[Searchable Actor List] Filter by name, with real-time search highlighting matches. Sort by mention count, document count, year range, or alphabetically.
+
+\item[Actor Detail View] For each actor: canonical name, total mentions, document count, year range, name variants found in the corpus, and years active.
+
+\item[Timeline Visualization] Interactive bar chart showing actor counts by year. Click a year bar to see which actors were active. Reveals temporal dynamics---actor emergence, persistence, or decline.
+
+\item[Cross-Validation Panel] Summary statistics for corpus overlap, with breakdown by entity type and KIC. Progress bars visualize coverage rates.
+
+\item[Filter Options] Toggle views to show only EIT/KIC-related actors or only actors matched to the website corpus.
+
+\item[Export Functionality] Download filtered actor list as CSV (for spreadsheet analysis) or JSON with JSON-LD context (for Semantic Web interoperability).
+
+\item[Annotation Interface] Researchers can contribute annotations: entity type corrections, transition role tags, relationship notes, and verification flags. Annotations enter a moderation queue before publication.
+
+\end{description}
+
+\subsection{Design System}
+
+The viewer implements the \textsc{Cartography UI} design system used across all \RoleBox{} tools:
+
+\begin{itemize}[leftmargin=*, itemsep=0.2em]
+\item Inter typeface with systematic weight hierarchy
+\item Minimalist black/white/gray palette with accent colors for semantic highlighting
+\item Consistent component patterns (stat boxes, data tables, filter controls)
+\item Responsive layout adapting to screen size
+\end{itemize}
+
+This ensures visual consistency across modality viewers---researchers moving between news (CARTALOG), websites, and Crunchbase UIs encounter familiar interaction patterns.
+
+\subsection{Access}
+
+Two access modes are available:
+
+\paragraph{Static Viewer} A self-contained HTML file for quick exploration:
+\begin{verbatim}
+rolebox-pydna/cartalog/frontend/index.html
+\end{verbatim}
+Open directly in any modern browser---no server required.
+
+\paragraph{Dynamic Application} For full annotation and API access:
+\begin{verbatim}
+cd rolebox-pydna/cartalog
+pip install -r requirements.txt
+python -m uvicorn backend.app:app --port 8765
+\end{verbatim}
+Access at \texttt{http://localhost:8765} with API documentation at \texttt{/api/docs}.
+
+\begin{insightbox}[Integration with ROLEDNA]
+\textsc{CARTALOG} resides within the \texttt{rolebox-pydna} project, reflecting its role as shared infrastructure for both multimodal network analysis (\RoleBox{}) and discourse network analysis (ROLEDNA). The same actor registry serves both tools, ensuring consistent entity identification across analytical approaches.
+\end{insightbox}
+
+
+%===============================================================================
+\section{Methodological Contribution}
+%===============================================================================
+
+\begin{summarybox}
+\textsc{CARTALOG} contributes to data-driven transitions research by:
+
+\begin{enumerate}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Implementing de Haan et al.'s vision} for standardized actor catalogs---moving from aspiration to artifact.
+
+\item \textbf{Making actors explicit} rather than leaving them implicit in case narratives. Other researchers can query, extend, and build upon the catalog.
+
+\item \textbf{Enabling cross-corpus validation} that reveals what each data modality captures and misses---informing multimodal integration strategies.
+
+\item \textbf{Providing export interoperability} so the catalog serves as infrastructure for downstream research rather than a one-time analysis.
+
+\item \textbf{Documenting provenance} transparently---future researchers can assess limitations and adapt the approach.
+\end{enumerate}
+
+The catalog itself is not the contribution---the \textbf{cataloging practice} is. By demonstrating how actor catalogs can be constructed from news corpora and validated against other sources, we provide a template for cumulative transitions research.
+\end{summarybox}
+
+
+%===============================================================================
+\section{Limitations and Future Work}
+%===============================================================================
+
+\begin{criticalbox}[Current Limitations]
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+\item \textbf{Corpus specificity}: The EIT news corpus represents official communications; general media coverage would yield different actor distributions.
+
+\item \textbf{English-language bias}: Non-English sources underrepresented, missing actors prominent in national-language discourse.
+
+\item \textbf{Entity resolution imperfections}: Some actors may be incorrectly split (different canonical entries for the same organization) or incorrectly merged (different organizations collapsed).
+
+\item \textbf{Static snapshot}: The catalog represents extraction at a point in time; news continues to be published.
+\end{itemize}
+\end{criticalbox}
+
+\subsection{Future Directions}
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+
+\item[Event-Actor Integration] Link actors not just to documents but to extracted events (investments, partnerships, policy announcements), enabling de Haan et al.'s full event-actor-concept model.
+
+\item[Cross-Case Comparison] Apply the same extraction pipeline to other transition domains (e.g., energy transitions in specific countries) to enable meta-analysis.
+
+\item[Continuous Updates] Automate periodic re-extraction as new articles are added, maintaining a living catalog.
+
+\item[User Corrections] Allow researchers to flag entity resolution errors, feeding improvements back into the pipeline.
+
+\end{description}
+
+
+\clearpage
+\end{document}

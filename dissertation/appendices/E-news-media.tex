@@ -1,0 +1,518 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{News Media: The Attributed Map}
+\label{app:news-media}
+
+\noindent\textit{News media reveal how others see organizations---their attributed sociotype.
+Unlike websites, where organizations curate their own narrative,
+news articles reflect how journalists, editors, and sources position actors
+in transition discourse.
+This appendix documents the bridging workflow that connects news data
+to role theory constructs, following the data--theory integration framework
+of \textcite{maass2018data}.}
+
+\bigskip
+
+
+%===============================================================================
+\section{The Bridging Problem}
+%===============================================================================
+
+News data and role theory address the same phenomenon---who does what
+in innovation ecosystems---but from different starting points.
+On the data side, NLP pipelines extract entities, verbs, and
+semantic relations from news text, producing actor--action--target triples.
+On the theory side, role theory specifies how actors are positioned
+through attribution: an organization \emph{is} what others \emph{say} it does.
+The challenge is bridging between computational extraction
+and theoretical attribution---using verb connotation patterns
+to operationalize attributed roles, and using role theory
+to guide what linguistic features to extract.
+
+\Cref{fig:news-bridging} shows how the \RoleBox{} news pipeline
+enacts this bridging workflow.
+The upper path (\textit{from patterns to theory}) extracts verb--actor
+patterns from news text and maps them onto attributed role constructs.
+The lower path (\textit{from theory to data requirements}) uses role
+theory to specify what linguistic dimensions and actor features to extract.
+The pipeline itself---NER, coreference resolution, dependency parsing,
+and RIVETER-X scoring---sits at the intersection as bridging knowledge.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    cloudstyle/.style={cloud, cloud puffs=12, cloud puff arc=120,
+        draw, minimum width=2.8cm, minimum height=1.6cm,
+        font=\small\bfseries, text=white, inner sep=0pt},
+    blockstyle/.style={rectangle, draw, rounded corners=3pt,
+        minimum width=2.6cm, minimum height=1.4cm,
+        font=\small\bfseries, text=white, inner sep=4pt},
+    bridgestyle/.style={rectangle, draw=AccentCyan, fill=AccentCyan!15,
+        rounded corners=3pt, minimum width=3cm, minimum height=1.8cm,
+        font=\small\bfseries, text=Slate, inner sep=4pt},
+    substyle/.style={font=\tiny, text=Slate, align=left},
+    arrowlabel/.style={font=\scriptsize\itshape, text=Slate},
+]
+
+% Left: News Data
+\node[cloudstyle, fill=Azure!80, draw=Azure] (data) at (-4, 0) {News Data};
+\node[substyle, below=0.15cm of data] {
+    1{,}273 articles\\
+    Entity mentions\\
+    Verb relations
+};
+
+% Right: Role Theory
+\node[blockstyle, fill=AccentPurple!80, draw=AccentPurple] (theory) at (4, 0)
+    {Role Theory};
+\node[substyle, below=0.15cm of theory] {
+    Attributed sociotypes\\
+    Power \& agency\\
+    Narrative positions
+};
+
+% Center: Bridging Pipeline
+\node[bridgestyle] (bridge) at (0, 0) {
+    \begin{tabular}{c}
+    \textsc{RoleBox}\\[-1pt]
+    \textsc{News Pipeline}
+    \end{tabular}
+};
+
+% Upper path: patterns to theory
+\draw[->, thick, PandaRose, bend left=20]
+    (data.north east) to
+    node[arrowlabel, above, pos=0.5] {verb--actor patterns}
+    (bridge.north west);
+\draw[->, thick, PandaRose, bend left=20]
+    (bridge.north east) to
+    node[arrowlabel, above, pos=0.5] {attributed roles}
+    (theory.north west);
+
+% Lower path: theory to data requirements
+\draw[->, thick, CoverGold, bend left=20]
+    (theory.south west) to
+    node[arrowlabel, below, pos=0.5] {role dimensions}
+    (bridge.south east);
+\draw[->, thick, CoverGold, bend left=20]
+    (bridge.south west) to
+    node[arrowlabel, below, pos=0.5] {extraction targets}
+    (data.south east);
+
+% Bottom label
+\node[font=\small\itshape, text=AccentCyan] at (0, -2.2)
+    {Bridging workflow for the attributed map};
+
+\end{tikzpicture}
+\captionof{figure}[News media bridging workflow]{%
+    Bridging workflow connecting news data to role theory,
+    adapted from the data--theory integration framework
+    of \textcite{maass2018data}.
+    The upper path extracts verb--actor patterns from news text
+    and maps them to attributed role constructs;
+    the lower path uses theory to guide entity extraction
+    and connotation scoring.}
+\label{fig:news-bridging}
+\end{center}
+
+
+%===============================================================================
+\section{From Patterns to Theory}
+\label{sec:news-patterns-theory}
+%===============================================================================
+
+The upper path in \cref{fig:news-bridging} traces how raw news text
+yields role-relevant patterns.
+The workflow proceeds through three stages:
+data collection, pattern extraction, and theoretical mapping.
+
+\subsection{Stage 1: Data Collection}
+
+We collected news articles mentioning EIT Knowledge and Innovation
+Communities and their partner organizations from GDELT and targeted
+web scraping, building a corpus of \textbf{1,273 articles} spanning
+2008--2025.\footnote{%
+    The initial GDELT queries returned a larger candidate set;
+    filtering for relevance, deduplication, and full-text
+    availability produced the final 1,273-article corpus
+    (\texttt{corpus\_final.json}).}
+\Cref{fig:news-collection} summarizes the collection pipeline.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={rectangle, draw=Slate!40, fill=Slate!5,
+        rounded corners=2pt, minimum height=0.7cm,
+        font=\scriptsize, inner sep=4pt},
+    arrow/.style={->, thick, Slate!60},
+    statlabel/.style={font=\tiny\itshape, text=Slate!70},
+]
+
+% Pipeline stages
+\node[box] (seed) at (0,0) {GDELT Queries};
+\node[box] (fetch) at (3,0) {Article Fetching};
+\node[box] (dedup) at (6,0) {Deduplication};
+\node[box] (ner) at (1.5,-1.3) {NER + Coref};
+\node[box] (svo) at (4.5,-1.3) {SVO Extraction};
+\node[box] (rivet) at (1.5,-2.6) {RIVETER-X Scoring};
+\node[box] (agg) at (4.5,-2.6) {Actor Aggregation};
+
+\draw[arrow] (seed) -- (fetch);
+\draw[arrow] (fetch) -- (dedup);
+\draw[arrow] (dedup) -- (ner);
+\draw[arrow] (dedup) -- (svo);
+\draw[arrow] (ner) -- (rivet);
+\draw[arrow] (svo) -- (rivet);
+\draw[arrow] (rivet) -- (agg);
+
+% Stats
+\node[statlabel] at (0, -0.4) {partner n-grams};
+\node[statlabel] at (6, -0.4) {1{,}273 articles};
+\node[statlabel] at (1.5, -1.7) {9{,}269 mentions};
+\node[statlabel] at (4.5, -1.7) {2{,}474 relations};
+
+\end{tikzpicture}
+\captionof{figure}[News collection pipeline]{%
+    Data collection pipeline for news analysis.
+    GDELT queries seeded by EIT partner n-grams feed article fetching
+    and deduplication, yielding entity mentions and verb relations
+    scored on RIVETER-X connotation dimensions.}
+\label{fig:news-collection}
+\end{center}
+
+The pipeline processes text through six stages:
+sentence splitting and cleaning (spaCy),
+named entity recognition (spaCy NER + domain gazetteer),
+coreference resolution (fastcoref),
+dependency-parsed subject--verb--object extraction,
+verb connotation scoring (RIVETER-X lexicon),
+and cross-document aggregation.\footnote{%
+    Coreference resolution is critical for news text.
+    A sentence like ``EIT InnoEnergy launched a new accelerator.
+    \emph{They} invested 50M euros'' requires linking ``They''
+    to EIT InnoEnergy for accurate verb attribution.}
+
+\subsection{Stage 2: Pattern Extraction}
+
+Two families of patterns emerge from the processed corpus.
+
+\paragraph{Verb connotation patterns.}
+The RIVETER-X framework scores each verb on six transition-specific
+dimensions: Transformation Agency, Innovation Positioning, Legitimacy
+Dynamics, Resource Mobilization, Collaboration Capacity, and Systemic
+Influence.\footnote{%
+    RIVETER-X extends \textcite{antoniak2023riveter}'s verb
+    connotation framework with domain-specific dimensions
+    calibrated for sustainability transition discourse.}
+Aggregating scores by actor reveals systematic differences:
+KICs and policy bodies cluster high on legitimacy and resource
+mobilization; startups score high on innovation and transformation.
+
+\paragraph{Agent--theme positioning.}
+A critical distinction: actors appear as \textbf{agents} (performing
+actions) or \textbf{themes} (receiving actions) of verbs.
+The agent-to-theme ratio reveals whether news discourse positions
+an actor as \emph{acting upon} the world or \emph{being acted upon}.
+High agent ratios signal powerful, autonomous positioning
+(``X launched,'' ``X transformed'');
+high theme ratios signal dependent positioning
+(``X was supported by,'' ``X received'').
+
+\subsection{Stage 3: Mapping to Role Constructs}
+
+\Cref{fig:news-mapping} shows how extracted patterns map onto
+the theoretical constructs from \cref{ch:cas}.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    databox/.style={rectangle, draw=Azure!60, fill=Azure!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    theorybox/.style={rectangle, draw=AccentPurple!60, fill=AccentPurple!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    mapstyle/.style={->, thick, PandaRose!70, dashed},
+    grouplabel/.style={font=\scriptsize\bfseries, text=Slate},
+]
+
+% Data patterns (left)
+\node[grouplabel] at (-3, 2.2) {Implicit Patterns};
+\node[databox] (d1) at (-3, 1.5) {Verb connotations};
+\node[databox] (d2) at (-3, 0.5) {Agent/theme ratios};
+\node[databox] (d3) at (-3, -0.5) {Entity co-occurrence};
+\node[databox] (d4) at (-3, -1.5) {Temporal frequency};
+
+% Explicit patterns (center)
+\node[grouplabel] at (0, 2.2) {Explicit Patterns};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e1) at (0, 1.5)
+    {Power/agency profiles};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e2) at (0, 0.5)
+    {Active / passive actors};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e3) at (0, -0.5)
+    {Discourse coalitions};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e4) at (0, -1.5)
+    {Narrative trajectories};
+
+% Theory constructs (right)
+\node[grouplabel] at (3, 2.2) {Role Constructs};
+\node[theorybox] (t1) at (3, 1.5) {Attributed sociotype};
+\node[theorybox] (t2) at (3, 0.5) {Orchestrator / Niche};
+\node[theorybox] (t3) at (3, -0.5) {Alliance constellation};
+\node[theorybox] (t4) at (3, -1.5) {Role emergence};
+
+% Arrows
+\draw[mapstyle] (d1) -- (e1);
+\draw[mapstyle] (d2) -- (e2);
+\draw[mapstyle] (d3) -- (e3);
+\draw[mapstyle] (d4) -- (e4);
+\draw[mapstyle] (e1) -- (t1);
+\draw[mapstyle] (e2) -- (t2);
+\draw[mapstyle] (e3) -- (t3);
+\draw[mapstyle] (e4) -- (t4);
+
+% Flow labels
+\node[font=\tiny\itshape, text=PandaRose] at (-1.5, -2.2) {explicate};
+\node[font=\tiny\itshape, text=PandaRose] at (1.5, -2.2) {embed};
+
+\end{tikzpicture}
+\captionof{figure}[Mapping news patterns to role constructs]{%
+    From implicit patterns to role constructs, following the
+    abstraction pathway of \textcite{maass2018data} Figure~3.
+    Implicit patterns (verb connotations, agent/theme ratios) are
+    explicated into named role positions, then embedded in
+    domain theory.}
+\label{fig:news-mapping}
+\end{center}
+
+Three mappings deserve emphasis:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Verb connotations $\rightarrow$ Attributed sociotype.]
+RIVETER-X dimension profiles distinguish how news positions actors:
+KICs score high on legitimacy and resource mobilization
+(``fund,'' ``authorize,'' ``support'');
+startups score high on transformation and innovation
+(``launch,'' ``disrupt,'' ``pioneer'').
+The connotation profile is the empirical fingerprint
+of the attributed sociotype---what others \emph{say} an actor does.
+
+\item[Agent/theme ratio $\rightarrow$ Structural position.]
+Actors with high agent ratios map to orchestrator or
+authority positions; those with high theme ratios map to
+beneficiary or dependent positions.
+This operationalizes the power dimension of role theory:
+who acts and who is acted upon.
+
+\item[Co-occurrence networks $\rightarrow$ Discourse coalitions.]
+Actors frequently mentioned together in news coverage form
+discourse coalitions visible through co-occurrence analysis
+\parencite{leifeld2013dna}.
+These coalitions map onto the alliance constellations
+that CAS theory predicts will emerge around shared functions.
+\end{description}
+
+
+%===============================================================================
+\section{From Theory to Data Requirements}
+\label{sec:news-theory-data}
+%===============================================================================
+
+The lower path in \cref{fig:news-bridging} runs in reverse:
+role theory specifies what to look for in news data.
+This is the \emph{theory-to-data-requirements} pathway that
+\textcite{maass2018data} identify as essential for bridging.
+
+\paragraph{Role attribution theory requires verb-level analysis.}
+If roles are attributed through discourse, then the \emph{verbs}
+used to describe actors carry the attributional payload.
+This requirement guided the adoption of RIVETER-X:
+a framework that scores verbs on connotation dimensions
+rather than treating all mentions equally.
+Not all verbs are equal---``leads'' attributes more agency
+than ``participates in.''
+
+\paragraph{Power dynamics theory requires agent--theme parsing.}
+The theoretical expectation that intermediaries exercise power
+\emph{through} others (enabling, connecting, facilitating) rather
+than \emph{over} others required extracting subject--verb--object
+triples and distinguishing agent from theme positions.
+This guided the dependency parsing and coreference resolution
+stages of the pipeline.
+
+\paragraph{Narrative theory requires temporal coverage.}
+The Narrative Policy Framework \parencite{jones2014npf} posits
+that policy narratives assign hero, villain, and victim roles
+that shift over time.
+This required building a corpus spanning 2008--2025
+to capture how actor portrayals evolve across the EIT's
+institutional lifecycle---from establishment through
+maturation.
+
+
+%===============================================================================
+\section{The Declared--Attributed Gap}
+\label{sec:news-gap}
+%===============================================================================
+
+The most theoretically productive pattern is not a data finding
+but a \textbf{bridging gap}: the divergence between how organizations
+describe themselves on websites (\cref{app:websites}) and how
+news media describe them.
+
+This \emph{declared--attributed gap} takes several forms.
+Organizations claiming ``disruptive innovation'' on their websites
+may be portrayed in news as ``supporting'' or ``participating''---a
+downgrade from active to passive positioning.
+Conversely, organizations with modest self-descriptions may receive
+news coverage attributing them leadership roles they do not claim.
+
+The gap reveals legitimacy dynamics:
+successful positioning (claimed roles confirmed by media),
+aspirational claiming (claimed roles not yet attributed),
+invisible contribution (attributed roles not claimed),
+or contested positioning (media attributing roles the actor rejects).
+
+\begin{criticalbox}[The Gap as Bridge to Other Modalities]
+The declared--attributed gap cannot be resolved within
+website and news data alone.
+Resolving it requires triangulation:
+Do investment flows confirm the attributed position (\cref{app:crunchbase})?
+Does social media discourse reinforce or contest the attribution
+(\cref{app:social-media})?
+Each resolution path connects this modality's workflow to the next,
+creating the multimodal cartography that the dissertation argues for.
+\end{criticalbox}
+
+
+%===============================================================================
+\section{Workflow Challenges}
+\label{sec:news-challenges}
+%===============================================================================
+
+News data presents four categories of methodological challenge,
+each requiring specific mitigation strategies.
+
+\paragraph{Curation challenges.}
+News corpora are subject to selection bias:
+journalists cover ``newsworthy'' actors, leaving routine
+activities of peripheral organizations unreported.
+Well-resourced PR operations gain disproportionate coverage
+\parencite{hager2024media}.
+Mitigation: GDELT queries cast a wide net using partner-name
+n-grams rather than relying on manually curated outlet lists.
+
+\paragraph{Preprocessing challenges.}
+Entity resolution across articles is non-trivial.
+The same organization may appear as ``EIT InnoEnergy,''
+``InnoEnergy,'' ``the Swedish innovation platform,'' or simply
+``the KIC.''
+The pipeline combines transformer-based NER with a domain
+gazetteer of known EIT organizations and applies coreference
+resolution to link pronominal references.
+
+\paragraph{Analysis challenges.}
+Verb connotation lexicons do not cover all verbs;
+domain adaptation is required for transition-specific
+terminology.
+The RIVETER-X lexicon extends the base RIVETER lexicon
+with 473 unique verbs scored on six dimensions, but gaps
+remain for highly technical or neologistic terms.
+
+\paragraph{Archiving challenges.}
+News articles are ephemeral: URLs break, paywalls change,
+outlets restructure.
+The pipeline stores full-text snapshots at collection time
+and maintains provenance metadata (URL, date, outlet, fetch
+timestamp) to ensure reproducibility even when original
+sources become unavailable.
+
+
+%===============================================================================
+\section{Limitations as Bridging Gaps}
+\label{sec:news-limitations}
+%===============================================================================
+
+News analysis faces six limitations,
+each of which motivates a specific cross-modal bridge:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3cm}p{4cm}p{4cm}@{}}
+\toprule
+\textbf{Limitation} & \textbf{What it misses} & \textbf{Bridging modality} \\
+\midrule
+Selection bias & Peripheral actors & Crunchbase (enacted) \\
+Source bias & Unpublicized activities & Websites (declared) \\
+Framing effects & Ground truth of actions & Investment data \\
+Language coverage & Non-English discourse & Wikipedia (multilingual) \\
+Temporal lag & Real-time dynamics & Social media \\
+Lexicon gaps & Uncovered verb domains & Human-in-the-loop validation \\
+\bottomrule
+\end{tabular}
+\captionof{table}{News limitations and cross-modal bridges}
+\label{tab:news-limitations}
+\end{center}
+
+These limitations are not reasons to dismiss news data---they are
+\emph{bridging gaps} that connect this modality's workflow to the others,
+creating the multimodal architecture of \RoleBox{}.
+
+
+%===============================================================================
+\section{Corpus Statistics}
+\label{sec:news-corpus-stats}
+%===============================================================================
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Articles (corpus\_final) & 1{,}273 \\
+Time span & 2008--2025 \\
+Entity mentions & 9{,}269 \\
+Unique actors (filtered) & 1{,}200+ \\
+Verb relations extracted & 2{,}474 \\
+Unique verbs & 473 \\
+RIVETER-X dimensions & 6 \\
+\bottomrule
+\end{tabular}
+\captionof{table}{EIT news corpus statistics}
+\label{tab:news-corpus-stats}
+\end{center}
+
+Top extracted actors include EIT (1,457 mentions),
+Europe (266), Climate-KIC (128), EIT Health (114),
+and EIT Digital (111)---reflecting the corpus focus
+on EIT innovation communities.\footnote{%
+    The knowledge graph extraction complement
+    (kg-gen, 30 articles, 131 entities, 178 relations)
+    captures dynamic relationships---investments, launches,
+    partnerships---that co-occurrence analysis alone cannot
+    reveal. See \texttt{figures/kg\_news\_eit.png}.}
+
+
+%===============================================================================
+\section{Summary}
+%===============================================================================
+
+\begin{summarybox}
+The news modality produces the \textbf{attributed map}---how others
+position organizations through journalistic discourse.
+The bridging workflow connects 1,273 news articles to role theory
+via two paths: verb connotation patterns map to attributed sociotypes
+and power profiles, while agent--theme ratios map to structural
+positioning (orchestrator vs.\ beneficiary).
+The most productive finding is not within either path but at their
+intersection: the \emph{declared--attributed gap} between website
+claims and news portrayals that motivates the multimodal
+triangulation developed in \cref{app:crunchbase,app:social-media}.
+\end{summarybox}
+
+\clearpage
+\end{document}

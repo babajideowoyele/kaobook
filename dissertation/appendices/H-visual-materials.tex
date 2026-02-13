@@ -1,0 +1,417 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Visual Materials: The Aesthetic Map}
+\label{app:visual-materials}
+
+\noindent\textit{Organizations materialize their roles through visual choices---color palettes, composition, imagery types, logo placement.
+This appendix documents the bridging workflow that connects visual data
+to role theory constructs, following the data--theory integration framework
+of \textcite{maass2018data}.}
+
+\bigskip
+
+
+%===============================================================================
+\section{The Bridging Problem}
+%===============================================================================
+
+Visual communication and role theory have developed in separate domains.
+On the data side, computer vision, social semiotics, and visual culture
+studies produce methods for analyzing imagery---CLIP embeddings, logo detection,
+visual similarity clustering, compositional analysis.
+On the theory side, role theory and the knowledge triangle framework specify
+how actors claim and perform identities through symbolic presentation.
+The challenge is bridging between these perspectives---using
+visual patterns to operationalize role constructs, and using
+role theory to guide what visual features to extract.
+
+\Cref{fig:visual-bridging} shows how the \RoleBox{} visual pipeline
+enacts this bridging workflow.
+The upper path (\textit{from patterns to theory}) extracts implicit
+patterns from visual data and maps them onto role constructs.
+The lower path (\textit{from theory to data requirements}) uses role
+theory to specify what visual features and dimensions to extract.
+The pipeline itself---the image collection, embedding, clustering, and
+logo detection machinery---sits at the intersection as bridging knowledge.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    cloudstyle/.style={cloud, cloud puffs=12, cloud puff arc=120,
+        draw, minimum width=2.8cm, minimum height=1.6cm,
+        font=\small\bfseries, text=white, inner sep=0pt},
+    blockstyle/.style={rectangle, draw, rounded corners=3pt,
+        minimum width=2.6cm, minimum height=1.4cm,
+        font=\small\bfseries, text=white, inner sep=4pt},
+    bridgestyle/.style={rectangle, draw=AccentCyan, fill=AccentCyan!15,
+        rounded corners=3pt, minimum width=3cm, minimum height=1.8cm,
+        font=\small\bfseries, text=Slate, inner sep=4pt},
+    substyle/.style={font=\tiny, text=Slate, align=left},
+    arrowlabel/.style={font=\scriptsize\itshape, text=Slate},
+]
+
+% Left: Visual Data
+\node[cloudstyle, fill=Azure!80, draw=Azure] (data) at (-4, 0) {Visual Data};
+\node[substyle, below=0.15cm of data] {
+    Imagery\\
+    Logos\\
+    Composition
+};
+
+% Right: Role Theory
+\node[blockstyle, fill=AccentPurple!80, draw=AccentPurple] (theory) at (4, 0)
+    {Role Theory};
+\node[substyle, below=0.15cm of theory] {
+    Visual registers\\
+    Aesthetic sociotypes\\
+    Symbolic claims
+};
+
+% Center: Bridging Pipeline
+\node[bridgestyle] (bridge) at (0, 0) {
+    \begin{tabular}{c}
+    \textsc{RoleBox}\\[-1pt]
+    \textsc{Pipeline}
+    \end{tabular}
+};
+
+% Upper path: patterns to theory
+\draw[->, thick, PandaRose, bend left=20]
+    (data.north east) to
+    node[arrowlabel, above, pos=0.5] {visual patterns}
+    (bridge.north west);
+\draw[->, thick, PandaRose, bend left=20]
+    (bridge.north east) to
+    node[arrowlabel, above, pos=0.5] {role constructs}
+    (theory.north west);
+
+% Lower path: theory to data requirements
+\draw[->, thick, CoverGold, bend left=20]
+    (theory.south west) to
+    node[arrowlabel, below, pos=0.5] {constructs \& hypotheses}
+    (bridge.south east);
+\draw[->, thick, CoverGold, bend left=20]
+    (bridge.south west) to
+    node[arrowlabel, below, pos=0.5] {visual requirements}
+    (data.south east);
+
+% Bottom label
+\node[font=\small\itshape, text=AccentCyan] at (0, -2.2)
+    {Bridging workflow for the aesthetic map};
+
+\end{tikzpicture}
+\captionof{figure}[Visual materials bridging workflow]{%
+    Bridging workflow connecting visual data to role theory,
+    adapted from the data--theory integration framework
+    of \textcite{maass2018data}.
+    The upper path extracts patterns from visual materials and maps them
+    to role constructs;
+    the lower path uses theory to guide visual feature extraction
+    and analysis dimensions.}
+\label{fig:visual-bridging}
+\end{center}
+
+
+%===============================================================================
+\section{From Patterns to Theory}
+\label{sec:visual-patterns-theory}
+%===============================================================================
+
+The upper path in \cref{fig:visual-bridging} traces how raw visual data
+yields role-relevant patterns.
+The workflow proceeds through three stages:
+data collection, pattern extraction, and theoretical mapping.
+
+\subsection{Stage 1: Data Collection}
+
+We collected visual materials from \textbf{9,500 images} across EIT ecosystem
+sources: organizational websites, Twitter posts, news articles, and partnership
+announcements.
+\Cref{fig:visual-collection} summarizes the collection pipeline.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    box/.style={rectangle, draw=Slate!40, fill=Slate!5,
+        rounded corners=2pt, minimum height=0.7cm,
+        font=\scriptsize, inner sep=4pt},
+    arrow/.style={->, thick, Slate!60},
+    statlabel/.style={font=\tiny\itshape, text=Slate!70},
+]
+
+% Pipeline stages
+\node[box] (sources) at (0,0) {Web Sources};
+\node[box] (extract) at (3,0) {Image Extraction};
+\node[box] (filter) at (6,0) {Quality Filter};
+\node[box] (embed) at (3,-1.3) {CLIP Embeddings};
+\node[box] (logos) at (6,-1.3) {Logo Detection};
+\node[box] (cluster) at (3,-2.6) {Visual Clustering};
+\node[box] (register) at (6,-2.6) {Register Coding};
+
+\draw[arrow] (sources) -- (extract);
+\draw[arrow] (extract) -- (filter);
+\draw[arrow] (filter) -- (embed);
+\draw[arrow] (filter) -- (logos);
+\draw[arrow] (embed) -- (cluster);
+\draw[arrow] (logos) -- (register);
+
+% Stats
+\node[statlabel] at (0, -0.4) {6,487 orgs};
+\node[statlabel] at (6, -0.4) {9,500 images};
+\node[statlabel] at (3, -1.7) {512-dim vectors};
+\node[statlabel] at (6, -1.7) {2,847 logos};
+
+\end{tikzpicture}
+\captionof{figure}[Visual collection pipeline]{%
+    Data collection pipeline for visual materials analysis.
+    Images from web sources undergo quality filtering, embedding extraction,
+    logo detection, and register coding.}
+\label{fig:visual-collection}
+\end{center}
+
+\subsection{Stage 2: Pattern Extraction}
+
+Three families of patterns emerge from the visual corpus,
+grounded in \textcite{kress2006reading}'s social semiotics framework.
+
+\paragraph{Compositional patterns.}
+Visual composition reveals organizational priorities through
+spatial arrangement, salience, and framing.
+CLIP embeddings capture semantic similarity---images with similar
+subjects cluster together.
+Dimensionality reduction (UMAP) reveals visual themes:
+technology demonstrations, partnership events, infrastructure shots,
+team portraits.\footnote{%
+    \textcite{kress2006reading} identify compositional metafunctions:
+    information value (left--right, top--bottom positioning),
+    salience (size, contrast, focus), and framing
+    (connection or separation of elements).
+    These compositional choices construct meaning.}
+
+\paragraph{Interpersonal patterns.}
+Gaze, social distance, and angle construct viewer relationships.
+Direct gaze demands engagement (common in talent-focused imagery);
+absence of human figures offers detachment (common in impact-focused imagery);
+oblique angles suggest observation rather than involvement.\footnote{%
+    The interpersonal metafunction addresses \emph{how} images engage viewers.
+    Strong interpersonal features (faces, gaze, close distance) create
+    intimacy and demand; weak features create objectivity and offer.}
+
+\paragraph{Symbolic patterns.}
+Color palettes, logo placement, and visual metaphors signal identity.
+Logo co-occurrence analysis constructs partnership networks:
+logos appearing together indicate collaboration or shared platforms.
+Color analysis reveals field conventions---sustainability actors favor
+green and blue; technology actors favor blue and orange.
+
+\subsection{Stage 3: Mapping to Role Constructs}
+
+\Cref{fig:visual-mapping} shows how extracted patterns map onto
+the theoretical constructs from \cref{ch:cas,ch:cas}.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    databox/.style={rectangle, draw=Azure!60, fill=Azure!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    theorybox/.style={rectangle, draw=AccentPurple!60, fill=AccentPurple!10,
+        rounded corners=2pt, font=\scriptsize, inner sep=3pt,
+        minimum width=2.2cm, text=Slate},
+    mapstyle/.style={->, thick, PandaRose!70, dashed},
+    grouplabel/.style={font=\scriptsize\bfseries, text=Slate},
+]
+
+% Visual patterns (left)
+\node[grouplabel] at (-3, 2.2) {Visual Patterns};
+\node[databox] (d1) at (-3, 1.5) {CLIP clusters};
+\node[databox] (d2) at (-3, 0.5) {Gaze \& distance};
+\node[databox] (d3) at (-3, -0.5) {Logo co-occurrence};
+\node[databox] (d4) at (-3, -1.5) {Color palettes};
+
+% Explicit patterns (center)
+\node[grouplabel] at (0, 2.2) {Explicit Patterns};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e1) at (0, 1.5)
+    {Partnership / Impact / Talent};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e2) at (0, 0.5)
+    {Strong / weak interpersonal};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e3) at (0, -0.5)
+    {Visual networks};
+\node[databox, draw=Marigold!60, fill=Marigold!10] (e4) at (0, -1.5)
+    {Field conventions};
+
+% Theory constructs (right)
+\node[grouplabel] at (3, 2.2) {Role Constructs};
+\node[theorybox] (t1) at (3, 1.5) {Visual registers};
+\node[theorybox] (t2) at (3, 0.5) {Engagement mode};
+\node[theorybox] (t3) at (3, -0.5) {Alliance patterns};
+\node[theorybox] (t4) at (3, -1.5) {Field positioning};
+
+% Arrows
+\draw[mapstyle] (d1) -- (e1);
+\draw[mapstyle] (d2) -- (e2);
+\draw[mapstyle] (d3) -- (e3);
+\draw[mapstyle] (d4) -- (e4);
+\draw[mapstyle] (e1) -- (t1);
+\draw[mapstyle] (e2) -- (t2);
+\draw[mapstyle] (e3) -- (t3);
+\draw[mapstyle] (e4) -- (t4);
+
+% Flow labels
+\node[font=\tiny\itshape, text=PandaRose] at (-1.5, -2.2) {explicate};
+\node[font=\tiny\itshape, text=PandaRose] at (1.5, -2.2) {embed};
+
+\end{tikzpicture}
+\captionof{figure}[Mapping visual patterns to role constructs]{%
+    From visual patterns to role constructs, following the
+    abstraction pathway of \textcite{maass2018data} Figure~3.
+    Visual patterns (CLIP clusters, gaze patterns, logo networks, color) are
+    explicated into visual registers and engagement modes, then embedded in
+    domain theory.}
+\label{fig:visual-mapping}
+\end{center}
+
+Three mappings deserve emphasis:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[CLIP clusters $\rightarrow$ Visual registers.]
+Semantic clustering reveals three dominant registers:
+\emph{Partnership} (groups, collaboration, events),
+\emph{Impact} (technology, infrastructure, products),
+and \emph{Talent} (individuals, portraits, teams).
+These registers correspond to the three knowledge triangle vertices:
+partnership to education (human development),
+impact to research (knowledge creation),
+talent to business (innovation deployment).
+
+\item[Interpersonal features $\rightarrow$ Engagement mode.]
+Strong interpersonal features (direct gaze, close distance, frontal angle)
+signal \emph{demand} and intimacy, typical of talent-recruitment messaging.
+Weak interpersonal features (no gaze, distant framing, oblique angle)
+signal \emph{offer} and objectivity, typical of impact-demonstration messaging.
+The interpersonal dimension operationalizes how organizations
+invite viewer identification.
+
+\item[Logo co-occurrence $\rightarrow$ Alliance networks.]
+Logo detection and co-occurrence analysis construct visual partnership networks
+that complement hyperlink networks (\cref{app:websites}) and
+mention networks (\cref{app:social-media}).
+Visual co-presence indicates alliance claims not always made explicit in text.
+\end{description}
+
+
+%===============================================================================
+\section{From Theory to Data Requirements}
+\label{sec:visual-theory-data}
+%===============================================================================
+
+The lower path in \cref{fig:visual-bridging} runs in reverse:
+role theory specifies what to look for in visual data.
+This is the \emph{theory-to-data-requirements} pathway that
+\textcite{maass2018data} identify as essential for bridging.
+
+\paragraph{CAS theory requires multi-actor visual presence.}
+Complex adaptive systems theory predicts that role emergence involves
+coordination and mutual recognition.
+This requirement guided the decision to extract logo co-occurrence patterns
+and visual partnership markers---images function as coordination devices
+that make alliances visible and legible.
+
+\paragraph{Knowledge triangle theory requires register features.}
+The knowledge triangle framework hypothesizes that organizations position
+themselves along Education--Research--Business dimensions.
+This guided the visual register coding framework:
+Partnership register (collaboration, convening) signals education orientation;
+Impact register (technology, infrastructure) signals research orientation;
+Talent register (individual portraits) signals business orientation.
+
+\paragraph{Social semiotics requires compositional coding.}
+\textcite{kress2006reading}'s visual grammar specifies that meaning emerges
+from compositional choices---information value, salience, framing.
+This requirement guided the extraction of spatial features
+(center vs. periphery, foreground vs. background, connected vs. separated)
+to operationalize how organizations construct visual hierarchies.
+
+
+%===============================================================================
+\section{The Visual--Textual Gap}
+\label{sec:visual-gap}
+%===============================================================================
+
+The most theoretically productive pattern is not a data finding
+but a \textbf{bridging gap}: organizations whose websites emphasize
+community impact and partnership (text claims) often feature
+predominantly product shots and technology demonstrations (visual claims),
+with minimal partnership or human-centered imagery.
+
+This \emph{visual--textual gap} is not noise---it is signal.
+It indicates aspirational claiming (textual positioning for sought roles),
+visual conservatism (technology imagery as safe default),
+audience differentiation (text for stakeholders, visuals for customers),
+or authentic tension (struggling to visually represent abstract partnership work).
+
+\begin{criticalbox}[The Gap as Bridge to Other Modalities]
+The visual--textual gap cannot be resolved within visual data alone.
+Resolving it requires triangulation:
+Do news media photos show partnerships in practice (\cref{app:news-media})?
+Do investment portfolios confirm technology focus (\cref{app:crunchbase})?
+Do social media images show community engagement (\cref{app:social-media})?
+Each resolution path connects this modality's workflow to the next,
+creating the multimodal cartography that the dissertation argues for.
+\end{criticalbox}
+
+
+%===============================================================================
+\section{Workflow Challenges}
+\label{sec:visual-challenges}
+%===============================================================================
+
+Visual analysis faces seven methodological challenges,
+each of which motivates a specific analytical response or cross-modal bridge:
+
+\tableminimal
+\begin{center}
+\begin{tabular}{@{}p{3cm}p{4cm}p{4cm}@{}}
+\toprule
+\textbf{Challenge} & \textbf{What it threatens} & \textbf{Analytical response} \\
+\midrule
+Interpretation ambiguity & Context-free meaning & Manual coding validation \\
+Stock image noise & Authentic signal & Filter generic stock photos \\
+Copyright \& fair use & Legal access & Focus on public web imagery \\
+Privacy (GDPR, faces) & Ethical compliance & Blur faces, aggregate analysis \\
+Cultural bias & Vision model generalizability & Domain-specific fine-tuning \\
+Environmental impact & Carbon footprint of deep learning & Batch processing, efficient models \\
+Temporal stability & Outdated visuals & Cross-validate with recent text \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Visual analysis challenges and responses}
+\end{center}
+
+These challenges are not reasons to dismiss visual data---they are
+\emph{bridging gaps} that connect this modality's workflow to the others,
+and methodological constraints that discipline analytical claims.
+
+
+%===============================================================================
+\section{Summary}
+%===============================================================================
+
+\begin{summarybox}
+The visual materials modality produces the \textbf{aesthetic map}---how
+organizations materialize their roles through visual choices.
+The bridging workflow connects 9,500 images to role theory
+via two paths: CLIP embeddings and compositional analysis map to
+visual registers (Partnership, Impact, Talent), and logo co-occurrence
+patterns map to alliance networks and field positioning.
+The most productive finding is not within either path but at
+their intersection: the \emph{visual--textual gap} that reveals
+tensions between declared roles (website text) and aesthetic performance
+(website imagery), motivating the multimodal triangulation developed
+across appendices.
+\end{summarybox}
+
+\clearpage
+\end{document}
