@@ -46,6 +46,17 @@ Our analysis addresses three research questions:
     \item \textbf{RQ3}: How do external classifications (outside-in) compare with organizational self-presentations (inside-out), and what does convergence or divergence reveal about field structure?
 \end{enumerate}
 
+\begin{replicationbox}[Computational Artifacts]
+\faLaptopCode\ \textbf{Interactive UIs} (\texttt{rolebox-social/ui/}):
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+    \item \texttt{rolefield.html} --- Interactive field map with community detection and actor search
+    \item \texttt{rolebox-netcodes.html} --- Network coding interface for relational analysis
+    \item \texttt{twitter\_workflow.html} --- Complete Twitter data collection and analysis workflow
+\end{itemize}
+\faGithub\ \textbf{Code \& Data:} \texttt{github.com/jpjagt/rolebox-social}\\
+\faBook\ \textbf{Documentation:} \texttt{README.md} for pipeline details and UI usage instructions
+\end{replicationbox}
+
 
 %═══════════════════════════════════════════════════════════════════════════════
 \section{Methodology: Social Curation as Field Identification}[Social Curation]
@@ -419,7 +430,7 @@ To complement the co-classification methodology, we analyze a corpus of 268,309 
 
 \subsection{Network Construction}
 
-From the tweet corpus, we extract mention edges (actor A mentioned actor B) and retweet edges (actor A amplified actor B's content). Applying a minimum threshold of 3 interactions yields a mention network with the properties shown in Table \ref{tab:rolefield:network-stats}.
+From the deduplicated tweet corpus,\sidenote{\textbf{Deduplication}---retweets and duplicate tweets were consolidated to ensure each unique message and actor interaction is counted once.} we extract mention edges (actor A mentioned actor B) and retweet edges (actor A amplified actor B's content). Applying a minimum threshold of 3 interactions yields a mention network with the properties shown in Table \ref{tab:rolefield:network-stats}.
 
 \begin{center}
 \small

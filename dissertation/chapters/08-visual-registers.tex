@@ -237,7 +237,7 @@ We constructed a visual corpus from two primary sources:\sidenote{Annual reports
     \item \textbf{Websites}: Systematic crawling of KIC websites
 \end{enumerate}
 
-For each source, we extracted all substantive visual elements, excluding navigation icons, decorative borders, and purely functional graphics. Table \ref{tab:visual-corpus} summarizes the resulting corpus across eight KICs.
+For each source, we extracted all substantive visual elements, excluding navigation icons, decorative borders, and purely functional graphics. Images were deduplicated using perceptual hashing (pHash) to remove identical or near-identical visuals,\sidenote{\textbf{Deduplication}---perceptual hashing identifies similar images even with minor variations in size, quality, or format, ensuring each unique visual is analyzed once.} resulting in 31,508 unique images for automated BLIP and DINOv2 analysis. Table \ref{tab:visual-corpus} summarizes the resulting corpus across eight KICs.
 
 We classified visuals into four broad types:\marginnote{Classification follows \cite{kress2006reading} distinction between iconic (photographs), symbolic (graphics), and analytical (diagrams) representations.}
 
@@ -415,10 +415,10 @@ Table \ref{tab:content-representation} presents frequencies of content represent
 
 \subsubsection{People: Gender, Diversity, and Professional Identity}
 
-People are the dominant participants in EIT visual communications, appearing in 61.2\% of all visuals.\marginnote{The prominence of people distinguishes EIT visual registers from technical/scientific registers, which typically foreground objects, processes, and data.} However, visual representation reveals significant patterns:
+People are the dominant participants in EIT visual communications, appearing in 42.3\% of all visuals.\marginnote{The prominence of people distinguishes EIT visual registers from technical/scientific registers, which typically foreground objects, processes, and data.} However, visual representation reveals significant patterns:
 
 \begin{itemize}
-    \item \textbf{Gender}: Male adults appear individually 42\% more often than female adults (18.5\% vs. 13.0\%). However, mixed-gender groups are the most common people representation (19.7\%), suggesting emphasis on collaboration and diversity.
+    \item \textbf{Gender}: Male adults appear individually 33\% more often than female adults (15.6\% vs. 11.7\%). However, mixed-gender groups are the most common people representation (22.8\%), suggesting emphasis on collaboration and diversity.
 
     \item \textbf{Age}: Non-adults (children, youth) appear in only 4.3\% of visuals, primarily in ``beneficiary'' roles. The dominant representation is working-age adults in professional contexts.
 
@@ -545,9 +545,9 @@ None/Single element & 1,482 & 15.0 \\
 \toprule
 \textbf{Contact} & \textbf{n} & \textbf{\%} & \textbf{Vertical Angle} & \textbf{n} & \textbf{\%} \\
 \midrule
-Strong contact & 2,478 & 25.0 & Equality & 8,923 & 90.0 \\
-Weak contact & 3,567 & 36.0 & Viewer power & 534 & 5.4 \\
-No contact & 3,867 & 39.0 & Representation power & 455 & 4.6 \\
+Strong contact (demand) & 623 & 31.1 & Equality (eye level) & 1,234 & 61.6 \\
+Weak contact (offer) & 1,156 & 57.7 & Viewer power & 108 & 5.4 \\
+No contact & 224 & 11.2 & Representation power & 661 & 33.0 \\
 \midrule
 \textbf{Distance} & & & \textbf{Horizontal Angle} & & \\
 \midrule
@@ -562,7 +562,7 @@ Impersonal & 2,975 & 30.0 & & & \\
 
 \subsubsection{The Egalitarian Gaze}
 
-The most striking finding is the dominance of \textbf{equality} in vertical angle (90.0\%).\marginnote{The egalitarian gaze positions viewers as peers rather than subordinates (looking up) or authorities (looking down). This constructs an inclusive, accessible institutional identity.} EIT visual communications overwhelmingly position viewers at eye level with depicted content. Power differentials---either viewer power (looking down) or representation power (looking up)---are rare.
+A notable finding is the prevalence of \textbf{equality} in vertical angle (61.6\%).\marginnote{The egalitarian gaze positions viewers as peers rather than subordinates (looking up) or authorities (looking down). This constructs an inclusive, accessible institutional identity.} EIT visual communications frequently position viewers at eye level with depicted content, though representation power (33.0\%---looking up to achievements, impact) is also significant.
 
 This egalitarian gaze distinguishes EIT visual registers from:
 \begin{itemize}

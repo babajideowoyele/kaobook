@@ -617,13 +617,13 @@ Figure \ref{fig:umap-embedding} presents the UMAP projection of Sentence-BERT em
 \begin{center}
 \fbox{\parbox{0.9\textwidth}{\centering\vspace{6cm}
 \textbf{[UMAP EMBEDDING VISUALIZATION]}\\[0.5cm]
-\textit{2D UMAP projection of 384-dimensional Sentence-BERT embeddings. Points colored by HDBSCAN cluster assignment (27 clusters + noise). Point shape indicates KIC affiliation. Cluster labels from KeyBERT extraction.}
+\textit{2D UMAP projection of 384-dimensional Sentence-BERT embeddings. Points colored by HDBSCAN cluster assignment (23 clusters + noise). Point shape indicates KIC affiliation. Cluster labels from KeyBERT extraction.}
 \vspace{6cm}}}
 \captionof{figure}{UMAP projection of venture description embeddings with HDBSCAN clusters}
 \labfig{umap-embedding}
 \end{center}
 
-The embedding approach identifies 27 clusters (versus 23 from TF-IDF), with 8.3\% of ventures classified as noise (not belonging to any cluster).\marginnote{Transformer embeddings identify more clusters than TF-IDF, particularly distinguishing ventures with similar keywords but different semantic frames.} Key differences from TF-IDF results:
+The embedding approach identifies 23 clusters (matching the TF-IDF Louvain results), with 5.0\% of ventures classified as noise (not belonging to any cluster).\marginnote{Both methods converge on similar cluster granularity, though they identify partially overlapping groupings based on different similarity principles.} Key differences from TF-IDF results:
 
 \begin{itemize}
     \item \textbf{Finer granularity}: The embedding approach distinguishes sub-clusters within TF-IDF clusters. For example, the TF-IDF ``HealthTech-Digital'' cluster splits into separate clusters for (a) patient-facing apps, (b) clinical decision support, and (c) health data platforms.
