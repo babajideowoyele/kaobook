@@ -29,6 +29,15 @@ Our analysis addresses three research questions:
     \item \textbf{RQ3}: How do visual and verbal registers interact in EIT communications, and what does multimodal analysis reveal that monomodal approaches miss?
 \end{enumerate}
 
+\begin{replicationbox}[Computational Artifacts]
+\faLaptopCode\ \textbf{Interactive UI} (\texttt{rolebox-visual/ui/}):
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+    \item \texttt{rolebox-vizreg.html} --- Visual register analysis interface with DINOv2 embeddings, metafunction coding, and interactive image browsing by KIC/cluster
+\end{itemize}
+\faGithub\ \textbf{Code \& Data:} \texttt{github.com/jpjagt/rolebox-visual}\\
+\faBook\ \textbf{Documentation:} \texttt{README.md} for DINOv2 pipeline and \texttt{ANNOTATION\_GUIDE.md} for visual metafunction coding scheme (Kress \& van Leeuwen framework)
+\end{replicationbox}
+
 Our findings reveal that EIT Communities employ a distinctive visual register characterized by specific configurations of participants (entrepreneurs, students, technologies), embodied positions (egalitarian viewer relationships), and coding orientations (blending naturalistic and technological aesthetics). However, we also identify significant variation across KICs: some emphasize technological imagery aligned with research registers; others foreground human interaction aligned with educational registers; still others privilege entrepreneurial action aligned with market registers. Crucially, visual registers often diverge from verbal positioning---revealing taken-for-granted assumptions about innovation, gender, and institutional identity that remain implicit in verbal text.
 
 \begin{center}
@@ -400,7 +409,7 @@ Table \ref{tab:content-representation} presents frequencies of content represent
 \quad Plants/agriculture & 387 & 3.9 & \quad Dynamic action & 534 & 5.4 \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Content Representations in EIT Visual Corpus (n = 9,912)}
+\captionof{table}{Content Representations in EIT Visual Corpus (n = 2,003 manually coded)}
 \labtab{content-representation}
 \end{center}
 
@@ -908,7 +917,7 @@ For EIT Communities and similar innovation intermediaries, our findings suggest:
 \section{Conclusion}
 \labsec{visual:conclusion}
 
-This chapter developed and applied a methodology for analyzing the visual registers through which EIT Knowledge and Innovation Communities construct and communicate institutional identity.\marginnote{Our methodology enables systematic analysis of large visual corpora while preserving interpretive depth through attention to metafunctions and their visual realization.} Building on the social semiotic framework of \cite{jancsary2018institutions}, we analyzed 9,500 visual artifacts across eight KICs, coding ideational metafunctions (content, conjunctions), interpersonal metafunctions (embodied positions, coding orientations), and their configurations.
+This chapter developed and applied a methodology for analyzing the visual registers through which EIT Knowledge and Innovation Communities construct and communicate institutional identity.\marginnote{Our dual workflow enables systematic analysis of large visual corpora (31,508 images via automated BLIP and DINOv2 analysis) while preserving interpretive depth through focused theory-driven manual coding (2,003 images using Kress \& van Leeuwen's framework).} Building on the social semiotic framework of \cite{jancsary2018institutions}, we analyzed 2,003 manually coded visual artifacts across nine KICs, coding ideational metafunctions (content, conjunctions), interpersonal metafunctions (embodied positions, coding orientations), and their configurations.
 
 \subsection{Summary of Findings}
 
@@ -1020,7 +1029,7 @@ Talent & Strong & 2,478 & 25.0 & Individual portraits, intimate distance, sensor
 \textit{Other} & \textit{Mixed} & \textit{991} & \textit{10.0} & \textit{Hybrid configurations} \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Gaze Detection Summary (n = 9,912)}
+\captionof{table}{Gaze Detection Summary (n = 2,003)}
 \labtab{visual:gaze-summary}
 \end{center}
 

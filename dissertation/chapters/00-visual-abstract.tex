@@ -20,21 +20,21 @@
 %========================================================================================
 \centering
 \begin{tikzpicture}[
-    x=1.4cm, y=1.2cm,
+    x=1.5cm, y=1.2cm,
     % Workflow stage styles (Maass bridging types)
     curation/.style={draw=DarkGreen, fill=DarkGreen!10, rounded corners=2pt,
-                     minimum width=2.2cm, minimum height=0.7cm, font=\tiny, align=center},
+                     minimum width=2.3cm, minimum height=0.75cm, font=\tiny, align=center},
     annotation/.style={draw=MidnightBlue, fill=MidnightBlue!10, rounded corners=2pt,
-                       minimum width=2.2cm, minimum height=0.7cm, font=\tiny, align=center},
+                       minimum width=2.3cm, minimum height=0.75cm, font=\tiny, align=center},
     unsupervised/.style={draw=BurntOrange, fill=BurntOrange!10, rounded corners=2pt,
-                        minimum width=2.2cm, minimum height=0.7cm, font=\tiny, align=center},
+                        minimum width=2.3cm, minimum height=0.75cm, font=\tiny, align=center},
     output/.style={draw=Slate, fill=Slate!10, rounded corners=2pt,
-                   minimum width=2.2cm, minimum height=0.7cm, font=\tiny\bfseries, align=center},
+                   minimum width=2.3cm, minimum height=0.75cm, font=\tiny\bfseries, align=center},
     % Input/theory styles
     inputbox/.style={draw=DarkGreen!70, fill=DarkGreen!5, rounded corners=3pt,
-                     minimum width=2.2cm, minimum height=1.2cm, font=\scriptsize, align=center},
+                     minimum width=2.3cm, minimum height=1.3cm, font=\scriptsize, align=center},
     theorybox/.style={draw=Goldenrod, fill=Goldenrod!8, rounded corners=3pt,
-                      minimum width=2.2cm, minimum height=1cm, font=\tiny, align=center},
+                      minimum width=2.3cm, minimum height=1.1cm, font=\tiny, align=center},
     % Labels
     chlabel/.style={font=\small\bfseries, align=center},
     arrow/.style={->, thick, PandaCharcoal!60},
@@ -45,24 +45,24 @@
 %========================================================================================
 \node[font=\Large\bfseries, text=PandaCharcoal] at (8, 13.5)
     {Multimodal Cartography of Role Constellations};
-\node[font=\small\itshape, text=Slate, text width=14cm, align=center] at (8, 12.7)
+\node[font=\small\itshape, text=Slate, text width=15cm, align=center] at (8, 12.75)
     {How do intermediary role constellations emerge in sustainability transitions,\\
      and how can multimodal cartography reveal mechanisms across data modalities?};
 
 %========================================================================================
 % LEGEND (top-right)
 %========================================================================================
-\node[font=\scriptsize\bfseries, text=Slate] at (14.5, 13.3) {\faLayerGroup\ Maass Bridging:};
-\node[curation, minimum width=1.6cm, minimum height=0.5cm] at (14.5, 12.8) {\faDownload\ Curation};
-\node[annotation, minimum width=1.6cm, minimum height=0.5cm] at (14.5, 12.3) {\faTags\ Annotation};
-\node[unsupervised, minimum width=1.6cm, minimum height=0.5cm] at (14.5, 11.8) {\faProjectDiagram\ Unsupervised};
-\node[output, minimum width=1.6cm, minimum height=0.5cm] at (14.5, 11.3) {\faChartBar\ Output};
+\node[font=\scriptsize\bfseries, text=Slate] at (14.5, 13.25) {\faLayerGroup\ Maass Bridging:};
+\node[curation, minimum width=1.7cm, minimum height=0.5cm] at (14.5, 12.75) {\faDownload\ Curation};
+\node[annotation, minimum width=1.7cm, minimum height=0.5cm] at (14.5, 12.25) {\faTags\ Annotation};
+\node[unsupervised, minimum width=1.7cm, minimum height=0.5cm] at (14.5, 11.75) {\faProjectDiagram\ Unsupervised};
+\node[output, minimum width=1.7cm, minimum height=0.5cm] at (14.5, 11.25) {\faChartBar\ Output};
 
 %========================================================================================
 % LEFT: COMMON INPUTS
 %========================================================================================
 \node[inputbox] (entities) at (0.5, 9.5)
-    {\faDatabase\\[0.1em]\textbf{Entity Master}\\704 orgs\\8 KICs};
+    {\faDatabase\\[0.1em]\textbf{Entity Master}\\2,192 orgs\\8 KICs};
 \node[inputbox] (vocab) at (0.5, 7.5)
     {\faBook\\[0.1em]\textbf{Role Vocab}\\343 KT terms};
 \node[theorybox] (theory) at (0.5, 5.5)
@@ -82,7 +82,7 @@
 \node[curation] (ch5-c) at (3.5, 10.2) {\faSpider\ Web crawl\\675 sites};
 \node[annotation] (ch5-a) at (3.5, 9.2) {\faTag\ KT vocab\\classify};
 \node[unsupervised] (ch5-u) at (3.5, 8.2) {\faProjectDiagram\ TF-IDF\\network};
-\node[output] (ch5-o) at (3.5, 7.2) {\faUsers\ 5 Sociotypes\\KT profiles};
+\node[output] (ch5-o) at (3.5, 7.2) {\faUsers\ 3 Sociotypes\\KT profiles};
 
 \draw[arrow] (ch5-c) -- (ch5-a);
 \draw[arrow] (ch5-a) -- (ch5-u);
@@ -94,10 +94,10 @@
 \node[chlabel, text=RoyalPurple] at (6, 11.2) {\faTwitter\ Ch.6: Social};
 \node[font=\tiny\itshape, text=Slate] at (6, 10.8) {\faUserFriends\ Relational Roles};
 
-\node[curation] (ch6-c) at (6, 10.2) {\faCloudDownloadAlt\ Twitter API\\268K tweets};
+\node[curation] (ch6-c) at (6, 10.2) {\faCloud\ Twitter API\\268K tweets};
 \node[unsupervised] (ch6-u) at (6, 9.2) {\faSitemap\ Louvain\\clustering};
 \node[annotation] (ch6-a) at (6, 8.2) {\faIdCard\ Bio analysis\\sociotypes};
-\node[output] (ch6-o) at (6, 7.2) {\faCodeBranch\ 13 Communities\\bridging};
+\node[output] (ch6-o) at (6, 7.2) {\faCodeBranch\ 96 Communities\\8 major};
 
 \draw[arrow] (ch6-c) -- (ch6-u);
 \draw[arrow] (ch6-u) -- (ch6-a);
@@ -109,10 +109,10 @@
 \node[chlabel, text=BrickRed] at (8.5, 11.2) {\faMoneyBillWave\ Ch.7: Investment};
 \node[font=\tiny\itshape, text=Slate] at (8.5, 10.8) {\faHandshake\ Enacted Roles};
 
-\node[curation] (ch7-c) at (8.5, 10.2) {\faDatabase\ Crunchbase\\6,393 ventures};
+\node[curation] (ch7-c) at (8.5, 10.2) {\faDatabase\ Crunchbase\\7,341 ventures};
 \node[unsupervised] (ch7-u) at (8.5, 9.2) {\faRandom\ Dual pipeline\\BERT+TF-IDF};
 \node[annotation] (ch7-a) at (8.5, 8.2) {\faCheckDouble\ Topic labels\\validation};
-\node[output] (ch7-o) at (8.5, 7.2) {\faIndustry\ 25 Clusters\\KIC domains};
+\node[output] (ch7-o) at (8.5, 7.2) {\faIndustry\ 23 Communities\\KIC domains};
 
 \draw[arrow] (ch7-c) -- (ch7-u);
 \draw[arrow] (ch7-u) -- (ch7-a);
@@ -124,9 +124,9 @@
 \node[chlabel, text=RedViolet] at (11, 11.2) {\faImage\ Ch.8: Visual};
 \node[font=\tiny\itshape, text=Slate] at (11, 10.8) {\faPalette\ Symbolic Roles};
 
-\node[curation] (ch8-c) at (11, 10.2) {\faCamera\ Screenshots\\2,003 images};
-\node[unsupervised] (ch8-u) at (11, 9.2) {\faBrain\ DINOv2\\embeddings};
-\node[annotation] (ch8-a) at (11, 8.2) {\faEye\ Metafunction\\coding};
+\node[curation] (ch8-c) at (11, 10.2) {\faCamera\ Screenshots\\31,508 images};
+\node[unsupervised] (ch8-u) at (11, 9.2) {\faBrain\ BLIP+DINOv2\\31,508 auto};
+\node[annotation] (ch8-a) at (11, 8.2) {\faEye\ Metafunction\\2,003 coded};
 \node[output] (ch8-o) at (11, 7.2) {\faTheaterMasks\ 3 Registers\\gaze patterns};
 
 \draw[arrow] (ch8-c) -- (ch8-u);
@@ -139,7 +139,7 @@
 \node[chlabel, text=DarkOrange] at (13.5, 11.2) {\faNewspaper\ Ch.9: News};
 \node[font=\tiny\itshape, text=Slate] at (13.5, 10.8) {\faQuoteLeft\ Attributed Roles};
 
-\node[curation] (ch9-c) at (13.5, 10.2) {\faFileAlt\ LexisNexis\\1,273 articles};
+\node[curation] (ch9-c) at (13.5, 10.2) {\faFile\ LexisNexis\\1,273 articles};
 \node[annotation] (ch9-a) at (13.5, 9.2) {\faLanguage\ RIVETER\\connotations};
 \node[unsupervised] (ch9-u) at (13.5, 8.2) {\faFistRaised\ Verb clustering\\power/agency};
 \node[output] (ch9-o) at (13.5, 7.2) {\faArrowUp\ Build-up bias\\no breakdown};
@@ -152,13 +152,13 @@
 % BOTTOM: INTEGRATION & FINDINGS
 %========================================================================================
 \node[draw=AccentPurple, fill=AccentPurple!5, rounded corners=4pt,
-      minimum width=11cm, minimum height=1.5cm, font=\small, align=center] at (8.5, 5) {
+      minimum width=13cm, minimum height=1.5cm, font=\small, align=center] at (8.5, 5) {
     \faObjectGroup\ \textbf{Cross-Modal Triangulation} (Ch.10 Synthesis)\\[0.2em]
-    \scriptsize \faLinkSlash\ Connector gap $\cdot$ \faBalanceScale\ KT imbalance $\cdot$ \faUsersCog\ 5 Sociotypes $\cdot$ \faArrowUp\ Build-up bias
+    \scriptsize \faUnlink\ Connector gap $\cdot$ \faBalanceScale\ KT imbalance $\cdot$ \faUsersCog\ 5 Sociotypes $\cdot$ \faArrowUp\ Build-up bias
 };
 
 \node[draw=PandaCharcoal, fill=PandaCharcoal!5, rounded corners=4pt,
-      minimum width=11cm, minimum height=1.5cm, font=\small, align=center] at (8.5, 3) {
+      minimum width=13cm, minimum height=1.5cm, font=\small, align=center] at (8.5, 3) {
     \faServer\ \textbf{\RoleBox{} Infrastructure} (Open-source)\\[0.2em]
     \scriptsize \faCogs\ 6 pipelines $\cdot$ \faAddressBook\ CARTALOG (8,600+ entities) $\cdot$ \faDesktop\ Interactive UIs $\cdot$ \faCodeBranch\ Replication packages
 };
@@ -178,16 +178,16 @@
 
 \end{tikzpicture}
 
-\vspace{0.3cm}
+\vspace{0.2cm}
 
 %========================================================================================
 % EXPLANATORY TEXT
 %========================================================================================
 \section*{Reading the Metaframework}
 
-\begin{description}[leftmargin=2cm, style=nextline, itemsep=0.3em]
+\begin{description}[leftmargin=2cm, style=nextline, itemsep=0.2em]
 \item[\textcolor{DarkGreen}{\faDatabase\ Common Inputs}]
-All empirical chapters begin with the same entity master list (704 EIT organizations across 8 KICs) and theoretical anchors (Knowledge Triangle, X-Curve, role theory).
+All empirical chapters begin with the same entity master list (2,192 EIT organizations across 8 KICs) and theoretical anchors (Knowledge Triangle, X-Curve, role theory).
 
 \item[\textcolor{Slate}{\faStream\ Workflow Stages}]
 Each lane follows Maass et al.'s bridging framework: curation (data collection), annotation (theory-guided coding), unsupervised learning (pattern discovery), and outputs. Stage ordering varies by modality.

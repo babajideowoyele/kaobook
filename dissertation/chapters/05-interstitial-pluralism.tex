@@ -34,6 +34,17 @@ Second, we develop the concept of \textit{interstitial sociotypes}: how do EIT C
 
 Together, these analyses reveal that interstitial positioning is not a passive condition but an active accomplishment, achieved through distinctive configurations of role identities that create interfaces between institutional domains while preserving productive ambiguity.
 
+\begin{replicationbox}[Computational Artifacts]
+\faLaptopCode\ \textbf{Interactive UIs} (\texttt{rolebox-websites/ui/}):
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+    \item \texttt{rolebox-triads.html} --- Knowledge Triangle positioning with X-Curve dynamics
+    \item \texttt{rolebox-sociotypes.html} --- Role configuration networks and community clusters
+    \item \texttt{network-layouts.html} --- Hyperlink network visualization (6 layout algorithms)
+\end{itemize}
+\faGithub\ \textbf{Code \& Data:} \texttt{github.com/jpjagt/rolebox-websites}\\
+\faBook\ \textbf{Documentation:} \texttt{README.md} and \texttt{ui/README.md} in repository
+\end{replicationbox}
+
 Our analysis addresses three research questions:
 
 \begin{enumerate}
@@ -93,7 +104,7 @@ For each of the eight KICs, we extracted:
     \item News items and press releases
 \end{itemize}
 
-After preprocessing, the corpus comprised approximately 3,500 documents totaling 1.2 million words.
+After preprocessing, the corpus comprised 2,190 crawled websites (1,700 with extractable text) totaling approximately 583,000 words.
 
 \subsection{Discourse Classification}
 
@@ -539,11 +550,11 @@ where $|B_s|$ is the number of bridging nodes in configuration $s$, $|M_s|$ is t
 
 \subsection{Aggregate Constellation Structure}
 
-Analysis of the aggregate network reveals a modular constellation comprising five primary sociotype configurations.\sidenote{\textbf{Five configurations}---the number emerged from the data through model selection; we did not impose it.} The constellation exhibits moderate differentiation ($D = 0.64$) and substantial interconnectedness ($I = 0.38$), indicating that EIT Communities instantiate plural relational structure with significant overlap between configurations.
+Analysis of the aggregate network reveals a modular constellation comprising three primary sociotype configurations.\sidenote{\textbf{Three configurations}---the number emerged from community detection on 3,774 extracted role triplets using Louvain clustering.} The constellation exhibits low differentiation ($D = 0.00$) and moderate-to-high interconnectedness ($I = 0.56$), indicating that EIT Communities instantiate plural relational structure with substantial overlap between configurations.
 
 \subsection{Sociotype Profiles}
 
-We present profiles of the five configurations, proceeding from highest to lowest permeability.
+We present profiles of the three configurations, proceeding from highest to lowest permeability.
 
 \subsubsection{Sociotype 1: The Connective Configuration}
 
@@ -727,8 +738,8 @@ Cross-KIC prevalence & All KICs; highest in Climate-KIC, EIT Food \\
     \draw[dashed, thick, opacity=0.4] (conn) -- (dev);
 
 \end{tikzpicture}
-\captionof{figure}{The five sociotypes of EIT innovation intermediation. Permeability scores ($P$) indicate boundary porosity; dashed lines indicate interface density between configurations.}
-\labfig{five-sociotypes}
+\captionof{figure}{The three sociotypes of EIT innovation intermediation. Permeability scores ($P$) indicate boundary porosity; dashed lines indicate interface density between configurations.}
+\labfig{three-sociotypes}
 \end{center}
 \end{wideblock}
 
@@ -763,7 +774,7 @@ The category ``partners'' exhibits the highest multivocality, appearing across t
 
 \subsection{Connecting Positioning and Configuration}
 
-The positioning analysis revealed that EIT Communities occupy interstitial positions in the knowledge triangle, though tilted toward business. The sociotype analysis reveals \textit{how} they navigate this interstitiality: through a constellation of five sociotypes with varying permeability and interconnection.
+The positioning analysis revealed that EIT Communities occupy interstitial positions in the knowledge triangle, though tilted toward business. The sociotype analysis reveals \textit{how} they navigate this interstitiality: through a constellation of three sociotypes with varying permeability and interconnection.
 
 The connection between positioning and sociotypes is not coincidental:\marginnote{The entrepreneurial tilt in discourse corresponds to the centrality of the Acceleration sociotype.}
 
@@ -841,7 +852,7 @@ The analysis in this chapter is supported by the \texttt{rolebox-websites} modul
 \item \textbf{Analysis notebook}: \texttt{notebooks/sociotype\_extraction\_demo.ipynb}
 \item \textbf{Interactive UI}: \texttt{websites\_workflow.html} --- web interface for exploring sociotype clusters
 \item \textbf{Processed data}: \texttt{data/outputs/sociotype\_analysis.json}
-\item \textbf{Raw data}: EIT website corpus (675 websites, 1.2M words)
+\item \textbf{Raw data}: EIT website corpus (2,190 websites, 583K words; 3,774 role triplets)
 \end{itemize}
 Field mapping visualization available at \texttt{outputs/climate/eit\_field\_map.html}.
 \end{replicationbox}
