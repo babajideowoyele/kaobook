@@ -72,6 +72,9 @@
 \pgfplotsset{compat=1.18}
 \usepgfplotslibrary{fillbetween,statistics}
 
+% Landscape pages
+\usepackage{pdflscape}
+
 %----------------------------------------------------------------------------------------
 % TABLES
 %----------------------------------------------------------------------------------------
@@ -260,6 +263,10 @@
     \subfile{dissertation/chapters/09-power-agency}
 \else
     % FULL MODE: Compile all chapters
+
+    % Visual Abstract (unnumbered, before Part I)
+    \subfile{dissertation/chapters/00-visual-abstract}
+
     \part{Foundations}
 
     \chapterdivider{ch1-introduction}
