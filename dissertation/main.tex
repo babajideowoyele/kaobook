@@ -40,8 +40,8 @@
 % Subfiles for modular chapters
 \usepackage{subfiles}
 
-% Font configuration (Fira Sans Light - lighter weight for easier reading)
-\usepackage[firasanslight]{kaofonts}
+% Font configuration (EB Garamond - classic serif font)
+\usepackage[ebgaramond]{kaofonts}
 
 % Custom RoleBox styling (colors, environments, icons)
 \usepackage{kaoci-rolebox}
@@ -164,30 +164,10 @@
 \makeatother
 
 %========================================================================================
-% INTERMEZZO PAGE NUMBERING (stealth mode - separate roman numerals)
+% INTERMEZZO PAGE NUMBERING
 %========================================================================================
-% Intermezzos use roman numerals and don't count toward dissertation page total.
-% This makes them "bonus content" - readable and in TOC but officially separate.
-
-\newcounter{savedpage}           % Counter to save main page number
-\newcounter{intermezzopage}      % Counter for intermezzo pages (persists across all)
-\setcounter{intermezzopage}{0}
-
-\newcommand{\beginintermezzo}{%
-    \clearpage
-    \setcounter{savedpage}{\value{page}}%           % Save current page number
-    \pagenumbering{roman}%                          % Switch to roman
-    \setcounter{page}{\value{intermezzopage}}%      % Continue from last intermezzo
-    \stepcounter{page}%                             % Start at next roman page
-}
-
-\newcommand{\endintermezzo}{%
-    \clearpage
-    \setcounter{intermezzopage}{\value{page}}%      % Save intermezzo position
-    \addtocounter{intermezzopage}{-1}%              % Adjust for next start
-    \pagenumbering{arabic}%                         % Back to arabic
-    \setcounter{page}{\value{savedpage}}%           % Restore main page number
-}
+% Intermezzo commands (\intermezzo / \closeintermezzo) defined in kaoci-rolebox.sty
+% They use roman numeral page numbers for "bonus" content between main chapters.
 
 %========================================================================================
 % BEGIN DOCUMENT

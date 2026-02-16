@@ -25,15 +25,16 @@ The dissertation posed one overarching question and four sub-questions.\sidenote
 ]
     % Main research question at top
     \node[rqbox=PandaCharcoal, fill=PandaCharcoal!20, minimum width=10cm, minimum height=1.6cm] (main) at (0,4) {
-        \textbf{Main RQ: How can multimodal cartography map intermediary role constellations?}
+        \textbf{Main RQ: What role constellations characterize interstitial actors,}\\
+        \textbf{and how does multimodal cartography reveal their emergence?}
     };
     \node[font=\scriptsize, fill=PandaBamboo!30, rounded corners=2pt, inner sep=3pt] at (4.2,4) {\faCheck\ Answered};
 
     % Four sub-questions in a row
-    \node[rqbox=Azure] (rq1) at (-5.5,1.2) {\textbf{RQ1: Theory}\\[0.1em]\scriptsize How to reconceptualize\\for computation?};
-    \node[rqbox=PandaBamboo] (rq2) at (-1.8,1.2) {\textbf{RQ2: Artifacts}\\[0.1em]\scriptsize What tools enable\\multimodal mapping?};
-    \node[rqbox=Marigold] (rq3) at (1.8,1.2) {\textbf{RQ3: Patterns}\\[0.1em]\scriptsize Build-up vs.\\breakdown?};
-    \node[rqbox=AccentPurple] (rq4) at (5.5,1.2) {\textbf{RQ4: Infrastructure}\\[0.1em]\scriptsize Break down barriers,\\build up resources?};
+    \node[rqbox=Azure] (rq1) at (-5.5,1.2) {\textbf{RQ1: Theory}\\[0.1em]\scriptsize Theory-guided,\\empirically open?};
+    \node[rqbox=PandaBamboo] (rq2) at (-1.8,1.2) {\textbf{RQ2: Method}\\[0.1em]\scriptsize Cross-modal mapping\\of roles?};
+    \node[rqbox=Marigold] (rq3) at (1.8,1.2) {\textbf{RQ3: Empirics}\\[0.1em]\scriptsize Build-up vs.\\breakdown?};
+    \node[rqbox=AccentPurple] (rq4) at (5.5,1.2) {\textbf{RQ4: Implications}\\[0.1em]\scriptsize Break down barriers,\\build up resources?};
 
     % Answer boxes below each
     \node[ansbox=Azure] (a1) at (-5.5,-0.8) {CAS framing\\15 propositions};
@@ -81,7 +82,7 @@ What do such maps reveal? Across eight intermediation domains (climate, energy, 
 
 \begin{itemize}[leftmargin=*, itemsep=0.3em]
 \item A persistent \textbf{connector gap}: 34\% of organizations claim intermediary roles, but only 13\% occupy structural bridging positions---revealing systematic aspiration-reality divergence.\sidenote{\textbf{21-point gap}---This finding is robust across all eight domains, suggesting a universal feature of innovation ecosystems.}
-\item \textbf{Knowledge triangle imbalance}: Business vocabulary (43\%) dominates over research (32\%) and education (25\%) across all domains, despite the EIT's founding mission of balanced integration.
+\item \textbf{Knowledge triangle imbalance}: Business vocabulary (49\%) dominates over research (37\%) and education (14\%) across all domains, despite the EIT's founding mission of balanced integration.
 \item \textbf{Recurring sociotypes}: Five role configurations (Entrepreneurial, Research, Connective, Public, Accountability) emerge across domains, suggesting universal features of innovation intermediary ecosystems.
 \item \textbf{Cross-modal signal value}: Convergence across modalities validates role attributions; divergence reveals aspiration gaps, perception gaps, and strategic positioning.
 \end{itemize}
@@ -93,8 +94,8 @@ These findings demonstrate that multimodal cartography yields insights inaccessi
 %-------------------------------------------------------------------------------
 
 \begin{subrq}
-\textbf{Theoretical Foundation}\\
-How can role constellations be reconceptualized to enable computational operationalization while preserving theoretical depth?
+\textbf{Theory}\\
+What conceptual framework enables theory-guided but empirically open analysis of role constellations?
 \end{subrq}
 
 \noindent\textbf{Answer.} Chapter~\ref{ch:cas} developed a reconceptualization through three moves:\sidenote{\textbf{Three theoretical moves}---Each addresses a specific gap in existing approaches to role analysis in transitions.}
@@ -117,8 +118,8 @@ This reconceptualization succeeds where previous approaches struggled: it mainta
 %-------------------------------------------------------------------------------
 
 \begin{subrq}
-\textbf{Methodological Artifacts}\\
-What artifacts and design principles enable systematic multimodal cartography of role constellations?
+\textbf{Method}\\
+What methodology enables systematic cross-modal mapping of claimed, attributed, and enacted roles?
 \end{subrq}
 
 \noindent\textbf{Answer.} Following Design Science Research principles \sidecite{hevner2004design,peffers2007dsr}, Chapter~\ref{ch:method} developed \RoleBox{} as the primary methodological artifact---an open-source computational infrastructure for multimodal role constellation cartography.\sidenote{\textbf{Open infrastructure}---All code available at \texttt{github.com/babajideowoyele/rolebox} for replication, critique, and extension.} The infrastructure comprises:

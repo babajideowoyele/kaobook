@@ -36,33 +36,34 @@ Our analysis addresses three research questions:
     \item \texttt{network-viewer.html} --- Network visualization of semantic similarity clusters
     \item \texttt{cartography.html} --- Full cartography interface with KIC filtering and search
 \end{itemize}
-\faGithub\ \textbf{Code \& Data:} \texttt{github.com/jpjagt/rolebox-crunchbase}\\
+\faGithub\ \textbf{Code \& Data:} \texttt{github.com/babajideowoyele/rolebox-crunchbase}\\
 \faBook\ \textbf{Documentation:} \texttt{README.md} for TF-IDF + BERT dual pipeline details
 \end{replicationbox}
 
 Our findings reveal substantial heterogeneity both within and across KIC portfolios. While each KIC operates under a sectoral mandate, portfolio positioning does not cluster neatly around mandate-derived categories. Instead, we observe emergent configurations that blend sectoral focus with cross-cutting themes---platform business models, sustainability narratives, B2B versus B2C orientations---that transcend official categorizations. We also find that transformer embeddings reveal finer-grained semantic structure than TF-IDF, particularly for distinguishing ventures with similar keyword profiles but different underlying value propositions.
 
-% Table 7.1: Portfolio summary
+% Table 7.1: Portfolio summary (verified against kic_comparison.json + venture_analysis.json)
 \begin{center}
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{lrrrrrll}
+\begin{tabular}{lrrll}
 \toprule
-\textbf{KIC} & \textbf{Vent.} & \textbf{w/Desc.} & \textbf{Words} & \textbf{Rounds} & \textbf{Fund.(\$M)} & \textbf{Top Cat.} & \textbf{Share} \\
+\textbf{KIC} & \textbf{Vent.} & \textbf{Avg.~Fund.} & \textbf{Top Cluster} & \textbf{Share} \\
 \midrule
-Climate-KIC & 1,847 & 1,612 & 84.3 & 2.14 & 8.72 & CleanTech & 31.2\% \\
-EIT Digital & 1,423 & 1,289 & 91.7 & 2.31 & 12.45 & Software & 28.7\% \\
-InnoEnergy & 1,156 & 1,034 & 78.2 & 1.98 & 15.83 & Energy & 42.1\% \\
-EIT Health & 892 & 814 & 102.4 & 2.47 & 18.92 & HealthTech & 35.6\% \\
-RawMaterials & 423 & 367 & 71.8 & 1.76 & 6.21 & Manufact. & 29.4\% \\
-EIT Food & 687 & 598 & 88.9 & 1.89 & 7.34 & FoodTech & 38.3\% \\
-Manufacturing & 312 & 278 & 76.4 & 1.67 & 9.45 & Industrial & 33.8\% \\
-Urban Mobility & 445 & 401 & 93.2 & 2.08 & 11.23 & Transport. & 36.2\% \\
+Climate-KIC        & 1,247 & \$2.3M & Energy / CleanTech    & 19\% \\
+EIT Digital        & 1,089 & \$3.1M & Software / SaaS       & 29\% \\
+EIT InnoEnergy     &   987 & \$4.6M & Energy / Storage      & 20\% \\
+EIT Health         &   876 & \$5.2M & Digital Health        & 44\% \\
+EIT Food           &   743 & \$1.9M & Food / AgriTech       & 48\% \\
+EIT Urban Mobility &   654 & \$2.8M & Mobility / Transport  & 44\% \\
+EIT Manufacturing  &   621 & \$3.5M & Manufact. / Automation & 38\% \\
+EIT RawMaterials   &   587 & \$2.1M & Mining / Circular     & 25\% \\
+EIT Culture        &   537 & \$1.2M & Creative / Media      & 25\% \\
 \midrule
-\textbf{Total/Avg.} & \textbf{7,341} & \textbf{7,341} & \textbf{100.0} & \textbf{2.06} & \textbf{11.89} & --- & --- \\
+\textbf{Total}     & \textbf{7,341} & \textbf{\$3.0M} & --- & --- \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Summary of EIT KIC Venture Portfolios (Crunchbase Data, November 2024)}
+\captionof{table}{European ventures in EIT-relevant sectors (Crunchbase, January 2025).}\marginnote{This table describes 7,341 European ventures operating in EIT-relevant sectors. Of these, 654 have confirmed direct EIT KIC affiliation via investor fields. ``Top Cluster'' and ``Share'' refer to the largest embedding-based cluster per KIC sector. Average funding is across all ventures in each sector.}
 \labtab{portfolio-summary}
 \end{center}
 
@@ -163,9 +164,9 @@ After deduplication & 7,341 \\
 \labtab{corpus-funnel}
 \end{margintable}
 
-Table \ref{tab:corpus-funnel} summarizes the corpus construction process. From an initial identification of 8,234 ventures with EIT affiliations, we retained 7,341 ventures with substantive descriptions (minimum 20 words) after removing inactive ventures, those lacking descriptions, and duplicates.
+Table \ref{tab:corpus-funnel} summarizes the corpus construction process. From an initial identification of 8,234 ventures in EIT-relevant sectors across Europe, we retained 7,341 ventures with substantive descriptions (minimum 20 words) after removing inactive ventures, those lacking descriptions, and duplicates.\marginnote{The 7,341-venture corpus includes both direct EIT portfolio companies (654) and the broader ecosystem of European ventures operating in KIC-relevant sectors, enabling positioning analysis within each sectoral landscape.}
 
-The final corpus exhibits substantial variation in description length, industry composition, and funding characteristics across KICs (see Table \ref{tab:portfolio-summary}). Climate-KIC has the largest portfolio (1,612 ventures with descriptions), reflecting its status as one of the original 2010 KICs and its broad sectoral scope. EIT Health ventures have the longest average descriptions (102.4 words) and highest average funding (\$18.92M), consistent with the capital-intensive nature of healthcare innovation. Manufacturing, the newest KIC in our sample, has a smaller portfolio (278 ventures) reflecting its more recent establishment.
+The final corpus exhibits substantial variation in description length, industry composition, and funding characteristics across the nine KIC sectors (see Table \ref{tab:portfolio-summary}). Climate-KIC has the largest sector pool (1,247 ventures), reflecting its broad sectoral scope spanning energy, circularity, and building efficiency. EIT Health ventures have the highest average funding (\$5.2M), consistent with the capital-intensive nature of healthcare innovation. EIT Culture \& Creativity, the newest KIC, has the smallest sector pool (537 ventures) reflecting its more recent establishment.
 
 \subsection{Descriptive Statistics}
 
@@ -218,48 +219,57 @@ Table \ref{tab:top-categories} presents the most frequent Crunchbase categories 
 \textbf{KIC} & \textbf{Category} & \textbf{Share (\%)} \\
 \midrule
 \multirow{5}{*}{Climate-KIC}
-    & CleanTech & 31.2 \\
-    & Sustainability & 18.7 \\
-    & Energy & 14.3 \\
-    & Software & 8.9 \\
-    & AgTech & 6.2 \\
+    & CleanTech & 35.7 \\
+    & Sustainability & 28.6 \\
+    & GreenTech & 16.1 \\
+    & Manufacturing & 14.3 \\
+    & Environ.\ Consulting & 12.5 \\
 \midrule
 \multirow{5}{*}{EIT Digital}
-    & Software & 28.7 \\
-    & SaaS & 19.4 \\
-    & Artificial Intelligence & 15.2 \\
-    & Cybersecurity & 9.8 \\
-    & FinTech & 7.3 \\
+    & Software & 56.7 \\
+    & Artificial Intelligence & 29.9 \\
+    & Information Technology & 25.5 \\
+    & Machine Learning & 17.3 \\
+    & Health Care & 16.5 \\
 \midrule
 \multirow{5}{*}{EIT Health}
-    & HealthTech & 35.6 \\
-    & Biotechnology & 21.3 \\
-    & Medical Device & 14.8 \\
-    & Digital Health & 11.2 \\
-    & Therapeutics & 8.4 \\
+    & Health Care & 76.6 \\
+    & Medical & 44.2 \\
+    & Medical Device & 41.6 \\
+    & Biotechnology & 40.3 \\
+    & Health Diagnostics & 13.0 \\
 \midrule
 \multirow{5}{*}{InnoEnergy}
-    & Energy & 42.1 \\
-    & CleanTech & 22.4 \\
-    & Energy Storage & 12.7 \\
-    & Solar & 8.9 \\
-    & Smart Grid & 6.3 \\
+    & Energy & 58.4 \\
+    & Renewable Energy & 55.1 \\
+    & Manufacturing & 29.2 \\
+    & Solar & 21.3 \\
+    & Energy Efficiency & 18.0 \\
 \midrule
 \multirow{5}{*}{EIT Food}
-    & FoodTech & 38.3 \\
-    & AgTech & 21.7 \\
-    & Sustainability & 14.2 \\
-    & Supply Chain & 9.8 \\
-    & E-Commerce & 6.4 \\
+    & Food \& Beverage & 53.3 \\
+    & Agriculture & 35.0 \\
+    & Biotechnology & 31.7 \\
+    & Farming & 25.0 \\
+    & Food Processing & 23.3 \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Top 5 Crunchbase Categories by KIC Portfolio}
+\captionof{table}{Top 5 Crunchbase Industry Tags by KIC Portfolio (n = 654, tags non-exclusive)}
 \labtab{top-categories}
 \end{center}
 
 \subsection{Validation}
 
 To assess the quality of Crunchbase descriptions, we followed \cite{basole2019visual} in comparing Crunchbase entries against corporate website descriptions for a random sample of 100 ventures.\marginnote{Validation against corporate websites addresses concerns about Crunchbase data quality and currency.\\\iconinvest\ Data: \texttt{dissertation/data/rolebox-crunchbase/}} Using TF-IDF cosine similarity with a threshold of 0.15, we found that 87\% of sampled ventures had descriptions substantially similar to their corporate websites (mean similarity: 0.62). The 13\% with lower similarity primarily reflected outdated Crunchbase entries for ventures that had pivoted or rebranded; we flagged these cases for manual review.
+
+We additionally validated KIC assignments for a stratified sample of
+117 ventures (10 per KIC plus all unclassified cases).
+Of 78 ventures with investor-based KIC assignments,
+47 (60.3\%) were confirmed correct; the remaining
+assignments reflected multi-KIC investors or ambiguous affiliations.
+Of 39 initially unclassified ventures, 36 (92.3\%) could be resolved
+to a specific KIC through description and industry analysis,
+reducing unclassified cases from 6.0\% to 0.5\% of the corpus.
 
 \section{Methods: Dual Text Representation Approach}[Methods]
 \labsec{venture:methods}
@@ -617,13 +627,13 @@ Figure \ref{fig:umap-embedding} presents the UMAP projection of Sentence-BERT em
 \begin{center}
 \fbox{\parbox{0.9\textwidth}{\centering\vspace{6cm}
 \textbf{[UMAP EMBEDDING VISUALIZATION]}\\[0.5cm]
-\textit{2D UMAP projection of 384-dimensional Sentence-BERT embeddings. Points colored by HDBSCAN cluster assignment (23 clusters + noise). Point shape indicates KIC affiliation. Cluster labels from KeyBERT extraction.}
+\textit{2D UMAP projection of 384-dimensional Sentence-BERT embeddings. Points colored by HDBSCAN cluster assignment (25 clusters + noise). Point shape indicates KIC affiliation. Cluster labels from KeyBERT extraction.}
 \vspace{6cm}}}
 \captionof{figure}{UMAP projection of venture description embeddings with HDBSCAN clusters}
 \labfig{umap-embedding}
 \end{center}
 
-The embedding approach identifies 23 clusters (matching the TF-IDF Louvain results), with 5.0\% of ventures classified as noise (not belonging to any cluster).\marginnote{Both methods converge on similar cluster granularity, though they identify partially overlapping groupings based on different similarity principles.} Key differences from TF-IDF results:
+The embedding approach identifies 25 clusters, with 39.6\% of ventures classified as noise (not belonging to any cluster).\marginnote{The higher noise ratio compared to Louvain reflects HDBSCAN's conservative density-based approach---only assigning ventures to clusters when local density warrants it.} Key differences from TF-IDF results:
 
 \begin{itemize}
     \item \textbf{Finer granularity}: The embedding approach distinguishes sub-clusters within TF-IDF clusters. For example, the TF-IDF ``HealthTech-Digital'' cluster splits into separate clusters for (a) patient-facing apps, (b) clinical decision support, and (c) health data platforms.
@@ -643,17 +653,17 @@ Table \ref{tab:method-comparison} presents agreement metrics between TF-IDF and 
 \toprule
 \textbf{Metric} & \textbf{Aggregate} & \textbf{Mean (by KIC)} \\
 \midrule
-Adjusted Rand Index & 0.412 & 0.387 \\
-Normalized Mutual Information & 0.534 & 0.498 \\
-Similarity Matrix Correlation & 0.623 & 0.589 \\
-Cluster Count Ratio (Embed/TFIDF) & 1.17 & 1.24 \\
+Adjusted Rand Index & 0.042 & 0.039 \\
+Normalized Mutual Information & 0.210 & 0.196 \\
+Similarity Matrix Correlation & 0.254 & 0.241 \\
+Cluster Count Ratio (Embed/TFIDF) & 1.09 & 1.14 \\
 \bottomrule
 \end{tabular}
 \captionof{table}{Agreement Between TF-IDF and Transformer Embedding Approaches}
 \labtab{method-comparison}
 \end{center}
 
-The moderate agreement (ARI = 0.412, NMI = 0.534) indicates that methods capture overlapping but non-identical structure.\marginnote{Moderate agreement suggests the methods are complementary: TF-IDF captures keyword-based positioning while embeddings capture semantic positioning.} The similarity matrix correlation (0.623) is higher than cluster agreement, suggesting that venture-level similarity assessments converge more than cluster boundaries.
+The low cluster-level agreement (ARI = 0.042, NMI = 0.210) indicates that TF-IDF and embedding methods partition ventures into substantially different groupings.\marginnote{Low cluster agreement with moderate similarity correlation suggests the methods identify related venture-level relationships but draw cluster boundaries differently.} The similarity matrix correlation (0.254) is higher than cluster agreement, confirming that venture-level similarity assessments converge more than cluster boundaries---the methods agree on which ventures resemble each other but disagree on how to group them.
 
 Figure \ref{fig:method-sankey} visualizes the mapping between TF-IDF and embedding clusters for EIT Health.
 
@@ -867,7 +877,7 @@ The comparison between TF-IDF and transformer embedding approaches reveals compl
 
     \item \textbf{Transformer strengths}: Finer semantic granularity, ability to detect similarity despite vocabulary differences, and sensitivity to stylistic/narrative dimensions of positioning.
 
-    \item \textbf{Complementarity}: Moderate agreement (ARI = 0.412) indicates that methods capture overlapping but non-identical structure. Using both provides richer understanding than either alone.
+    \item \textbf{Complementarity}: Low cluster agreement (ARI = 0.042) combined with moderate similarity correlation indicates that methods capture related but structurally distinct patterns. Using both provides richer understanding than either alone.
 \end{itemize}
 
 For practitioners, this suggests that keyword-based analysis (accessible via standard tools) provides a useful first approximation, while transformer-based analysis reveals additional nuance for ventures whose positioning involves semantic sophistication beyond keyword choice.
@@ -919,7 +929,7 @@ Several limitations qualify our findings:\sidenote{Limitations primarily concern
 The analysis pipeline developed for this chapter is implemented in the \texttt{rolebox-crunchbase} Python package, providing reproducible tools for venture positioning analysis.\marginnote{The package combines traditional TF-IDF approaches with state-of-the-art transformer models, enabling both methodological comparison and practical application.} The package architecture reflects the analytical workflow presented in this chapter:
 
 \begin{description}
-    \item[EIT Sector Classification] The \texttt{eit\_sector\_analysis.py} module implements EIT KIC sector mapping, classifying Crunchbase organizations into eight KIC domains based on category matching and keyword analysis. From the full Crunchbase Academic Research dataset (2,811,656 organizations), the pipeline identified 1,350,854 organizations (48.0\%) as EIT-relevant across at least one KIC sector.
+    \item[EIT Sector Classification] The \texttt{eit\_sector\_analysis.py} module implements EIT KIC sector mapping, classifying Crunchbase organizations into nine KIC domains based on category matching and keyword analysis. From the full Crunchbase Academic Research dataset (2,811,656 organizations), the pipeline identified 1,350,854 organizations (48.0\%) as EIT-relevant across at least one KIC sector.
 
     \item[Text Analysis] The \texttt{text\_analysis.py} module provides dual vectorization: \texttt{TFIDFAnalyzer} implements document vectorization following \cite{basole2019visual} with configurable n-gram ranges (1,2) and document frequency thresholds, while \texttt{EmbeddingAnalyzer} wraps Sentence-BERT models for dense semantic representations. Available models include all-MiniLM-L6-v2 (384 dimensions, 80MB) and all-mpnet-base-v2 (768 dimensions, 420MB).
 

@@ -29,6 +29,17 @@ Our analysis addresses three research questions:
     \item \textbf{RQ3}: What verb patterns characterize high-power versus low-power actor positions, and what do these reveal about implicit assumptions in innovation ecosystem discourse?
 \end{enumerate}
 
+\begin{replicationbox}[Computational Artifacts]
+\faLaptopCode\ \textbf{Interactive UIs} (\texttt{rolebox-news/ui/}):
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+    \item \texttt{rolebox\_news\_eit-kg.html} --- Knowledge graph explorer for Actor-Verb-Theme relations
+    \item \texttt{riveter.html} --- RIVETER pipeline interface for connotation frame extraction
+    \item \texttt{topics.html} --- Topic modeling and discourse pattern analysis
+\end{itemize}
+\faGithub\ \textbf{Code \& Data:} \texttt{github.com/babajideowoyele/rolebox-news}\\
+\faBook\ \textbf{Documentation:} \texttt{README.md} for RIVETER-X pipeline and \texttt{ANNOTATION\_GUIDE.md} for verb coding scheme (Antoniak et al. framework)
+\end{replicationbox}
+
 Our findings reveal systematic asymmetries in how EIT discourse constructs power relations. Institutional actors---the EIT itself, the European Commission, and specific KICs---are consistently framed with high agency and power; actor categories like ``Startups'' and ``Partners'' carry negative power scores and more frequently appear as objects of institutional action than as autonomous agents. ``Partners'' show a particularly striking pattern: high agency (0.621) combined with negative power ($-0.224$)---they are constructed as active but subordinate. These patterns persist across all eight KICs with moderate variation, suggesting a shared institutional discourse template. Crucially, the actors positioned as beneficiaries of sustainability transitions---participants, communities, citizens---are rarely constructed as wielding power in their own right.
 
 \begin{center}
@@ -254,7 +265,7 @@ We constructed a corpus from EIT KIC public communications spanning 2015--2024:\
     \item \textbf{Ecosystem narratives}: Startup profiles, alumni stories, partner descriptions
 \end{itemize}
 
-Table \ref{tab:corpus-overview-power} summarizes the corpus. After preprocessing (removing boilerplate, deduplication), the corpus comprises 1,273 documents containing 31,192 sentences. Raw triple extraction yielded 23,781 Agent-Verb-Theme relations; after a three-stage entity quality pipeline---removing pronoun and noise actors (4,599), filtering non-entity actors against a spaCy NER whitelist (9,459), and normalizing entity names---9,723 clean relations spanning 795 unique verbs and 925 distinct entity profiles remained for analysis.
+Table \ref{tab:corpus-overview-power} summarizes the corpus. After preprocessing (removing boilerplate, deduplication), the corpus comprises 1,273 documents containing 31,192 sentences. Raw triple extraction yielded 23,781 Agent-Verb-Theme relations; after a three-stage entity quality pipeline---removing pronoun and noise actors (4,599), filtering non-entity actors against a spaCy NER whitelist (9,459), and normalizing entity names---9,723 clean relations spanning 795 unique verbs remained for analysis. Entity type classification identified 925 initial profiles, of which 813 are substantive entities after removing 69 noise tokens and 43 date/number artifacts.
 
 \subsection{Entity Recognition and Classification}
 
@@ -370,7 +381,7 @@ We validated the pipeline through multiple complementary strategies:\sidenote{\i
     \item \textbf{Lexicon coverage}: The expanded lexicon achieves 100\% coverage of the 795 unique corpus verbs (2,354 lexicon entries total), compared to typical coverage rates of 50--60\% with the base lexicon
     \item \textbf{NER whitelist validation}: A spaCy NER whitelist of 10,733 entities cross-validated actor extractions against independently recognized named entities
     \item \textbf{LLM entity type classification}: All 925 entity profiles were classified into semantic types using Claude Sonnet in batches of 50, yielding: Organization (177), Actor Type (178), Concept (193), Person (139), Program (32), Institution (29), Technology (23), Event (22), GPE (12), Location (8), with 69 flagged as noise and 43 as date/number artifacts
-    \item \textbf{Relation quality validation}: A random sample of 100 Agent-Verb-Theme triples was assessed by Claude for correctness. Strict precision (fully correct triples) was 0.45; lenient precision (correct or partially correct) was 0.69, with 26\% incorrect and 5\% noise---consistent with dependency-parsed relation extraction on heterogeneous web corpora
+    \item \textbf{Relation quality validation}: A stratified sample of 300 Agent-Verb-Theme triples (100 KIC-stratified, 50 high-power verbs, 150 systematic) was assessed for correctness. Strict precision (fully correct triples) was 0.33; lenient precision (correct or partially correct) was 0.74, with the dominant error type being vague or generic agents (31\% of triples)---consistent with dependency-parsed relation extraction on heterogeneous web corpora where subject noun phrases often lack specificity
     \item \textbf{Gold standard comparison}: Claude-generated entity annotations for a stratified sample of 193 articles (4,767 entities, 1,664 relations) served as reference. Entity-level recall is limited (0.08) because the pipeline retains only entities appearing in verb relations, not all mentioned entities; precision (0.22) reflects the broader entity scope of LLM annotation
 \end{enumerate}
 
@@ -831,7 +842,7 @@ Several limitations qualify our findings:\sidenote{Connotation frames are contex
 \section{Conclusion}
 \labsec{power:conclusion}
 
-This chapter applied verb-based connotation frame analysis to examine power and agency dynamics in EIT Knowledge and Innovation Community discourse.\marginnote{By examining \textit{how} innovation actors are linguistically positioned, we reveal the implicit power structures that explicit mission statements may obscure.} From 1,273 documents we extracted 23,781 raw Agent-Verb-Theme triples; after a three-stage entity quality pipeline, 9,723 clean relations across 925 entity profiles and 795 unique verbs remained for analysis.
+This chapter applied verb-based connotation frame analysis to examine power and agency dynamics in EIT Knowledge and Innovation Community discourse.\marginnote{By examining \textit{how} innovation actors are linguistically positioned, we reveal the implicit power structures that explicit mission statements may obscure.} From 1,273 documents we extracted 23,781 raw Agent-Verb-Theme triples; after a three-stage entity quality pipeline, 9,723 clean relations across 813 substantive entity profiles and 795 unique verbs remained for analysis.
 
 \subsection{Summary of Findings}
 
@@ -883,7 +894,7 @@ The analysis pipeline developed for this chapter is implemented as RIVETER v2 (\
 
     \item[Scoring] The \texttt{EntityScorer} aggregates verb-level connotation scores to compute entity-level portrayal profiles with bootstrap confidence intervals (1,000 resamples).
 
-    \item[LLM Enrichment] The \texttt{claude\_enrich\_entities} module uses Claude Sonnet for entity type classification (925 entities in 15 batches), relation quality validation (100 sampled triples), and gold standard generation (193 articles with 4,767 entity annotations).
+    \item[LLM Enrichment] The \texttt{claude\_enrich\_entities} module uses Claude Sonnet for entity type classification (925 initial profiles in 15 batches, yielding 813 substantive entities), relation quality validation (100 sampled triples), and gold standard generation (193 articles with 4,767 entity annotations).
 
     \item[Topic Modeling] BERTopic with BAAI/bge-small-en-v1.5 embeddings, UMAP dimensionality reduction, and HDBSCAN clustering identifies 8 thematic topics across the corpus.
 \end{description}

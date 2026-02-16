@@ -53,7 +53,7 @@ Our analysis addresses three research questions:
     \item \texttt{rolebox-netcodes.html} --- Network coding interface for relational analysis
     \item \texttt{twitter\_workflow.html} --- Complete Twitter data collection and analysis workflow
 \end{itemize}
-\faGithub\ \textbf{Code \& Data:} \texttt{github.com/jpjagt/rolebox-social}\\
+\faGithub\ \textbf{Code \& Data:} \texttt{github.com/babajideowoyele/rolebox-social}\\
 \faBook\ \textbf{Documentation:} \texttt{README.md} for pipeline details and UI usage instructions
 \end{replicationbox}
 
@@ -89,7 +89,7 @@ This operationalization has several advantages over hyperlink-based field mappin
 
 \subsection{Six-Step Procedure}
 
-We implement the six-step procedure developed by \citet{benabdelkrim-opening-fields-2020}:\sidenote{\textbf{Iterative expansion}---the procedure iteratively expands from seed actors, enabling field discovery without predetermined boundaries.}
+We implement the six-step procedure developed by \textcite{benabdelkrim-opening-fields-2020}:\sidenote{\textbf{Iterative expansion}---the procedure iteratively expands from seed actors, enabling field discovery without predetermined boundaries.}
 
 \begin{enumerate}
     \item \textbf{Seed selection}: Identify a small number of Twitter accounts that are core participants in the field of interest
@@ -249,7 +249,7 @@ Louvain community detection identified ten primary sub-regions.\sidenote{\textbf
 
 \subsection{Actor Heterogeneity}
 
-A key advantage of curation-based field mapping is capturing actor heterogeneity.\sidenote{\textbf{Actor heterogeneity}---the presence of diverse organizational forms---is theoretically expected in fields but often empirically obscured by data source limitations.} Manual coding of a random sample reveals substantial diversity:
+A key advantage of curation-based field mapping is capturing actor heterogeneity.\sidenote{\textbf{Actor heterogeneity}---the presence of diverse organizational forms---is theoretically expected in fields but often empirically obscured by data source limitations.} Classification of a stratified sample of 202 actors (based on handle names and tweet content) reveals substantial diversity:
 
 \begin{itemize}
     \item \textbf{Individuals} (professionals, researchers, entrepreneurs)
@@ -756,25 +756,22 @@ Sectoral & Domain-specific & KIC subnetwork separation & Strong \\
     width=10cm,
     height=6cm,
     xlabel={Percentage (\%)},
-    symbolic y coords={Associations, Media, NGOs, Government, Corporations, Universities, Research, Startups, Individuals},
+    symbolic y coords={Research, Government, KIC/EIT, Startups/SMEs, Corporations, Individuals},
     ytick=data,
     y tick label style={font=\small},
     xmin=0,
-    xmax=40,
+    xmax=50,
     bar width=0.4cm,
     nodes near coords,
     nodes near coords style={font=\tiny},
 ]
 \addplot[fill=black!70] coordinates {
-    (33,Individuals)
-    (22,Startups)
-    (12,Research)
-    (11,Universities)
-    (8,Corporations)
-    (6,Government)
-    (4,NGOs)
-    (3,Media)
-    (1,Associations)
+    (42,Individuals)
+    (26,Corporations)
+    (12,Startups/SMEs)
+    (14,KIC/EIT)
+    (4,Government)
+    (2,Research)
 };
 \end{axis}
 \end{tikzpicture}
@@ -782,7 +779,7 @@ Sectoral & Domain-specific & KIC subnetwork separation & Strong \\
 \labfig{rolefield:actor-types}
 \end{center}
 
-The actor heterogeneity (33\% individuals, 22\% startups) confirms that fields are constituted by diverse actor types, not just organizations. The pipeline outputs are available in JSON format for further analysis and visualization.
+The actor heterogeneity (42\% individuals, 26\% corporations, 12\% startups/SMEs) confirms that fields are constituted by diverse actor types, not just organizations. The prominence of corporate actors alongside individuals underscores that EIT fields bridge personal and institutional participation.
 
 %═══════════════════════════════════════════════════════════════════════════════
 \section{Chapter Summary}

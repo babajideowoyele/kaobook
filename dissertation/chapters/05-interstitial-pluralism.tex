@@ -41,7 +41,7 @@ Together, these analyses reveal that interstitial positioning is not a passive c
     \item \texttt{rolebox-sociotypes.html} --- Role configuration networks and community clusters
     \item \texttt{network-layouts.html} --- Hyperlink network visualization (6 layout algorithms)
 \end{itemize}
-\faGithub\ \textbf{Code \& Data:} \texttt{github.com/jpjagt/rolebox-websites}\\
+\faGithub\ \textbf{Code \& Data:} \texttt{github.com/babajideowoyele/rolebox-websites}\\
 \faBook\ \textbf{Documentation:} \texttt{README.md} and \texttt{ui/README.md} in repository
 \end{replicationbox}
 
@@ -181,14 +181,14 @@ Analysis of the aggregate corpus reveals systematic imbalance in knowledge trian
     \node[below] at (6,0) {\textbf{Business}};
     \node[above] at (3,5.2) {\textbf{Research}};
 
-    % Percentage labels at vertices (computed from field_positions.json)
-    \node[font=\small, text=DarkBlue] at (0.6,0.5) {25\%};
-    \node[font=\small, text=DarkBlue] at (5.4,0.5) {43\%};
-    \node[font=\small, text=DarkBlue] at (3,4.2) {32\%};
+    % Percentage labels at vertices (computed from field_positions_full.csv, n=1,298)
+    \node[font=\small, text=DarkBlue] at (0.6,0.5) {14\%};
+    \node[font=\small, text=DarkBlue] at (5.4,0.5) {49\%};
+    \node[font=\small, text=DarkBlue] at (3,4.2) {37\%};
 
-    % Center point (actual position)
-    \fill[AccentRed] (3.9,1.5) circle (4pt);
-    \node[font=\scriptsize, right] at (4.0,1.5) {EIT aggregate};
+    % Center point (actual position: x = 0.49*6 + 0.37*3 = 4.05, y = 0.37*5.2 = 1.92)
+    \fill[AccentRed] (4.05,1.92) circle (4pt);
+    \node[font=\scriptsize, right] at (4.15,1.92) {EIT aggregate};
 
     % Balanced center (for reference)
     \draw[dashed, gray] (3,1.73) circle (3pt);
@@ -203,7 +203,7 @@ Analysis of the aggregate corpus reveals systematic imbalance in knowledge trian
 \end{center}
 
 \begin{insightbox}[The Business Tilt]
-Despite mandated knowledge triangle ``integration,'' EIT website discourse tilts toward business/entrepreneurship (43\%), with research (32\%) and education (25\%) receiving less emphasis. While not as extreme as a pure startup accelerator, the knowledge triangle leans toward its business vertex.
+Despite mandated knowledge triangle ``integration,'' EIT website discourse tilts strongly toward business/entrepreneurship (49\%), with research (37\%) and education (14\%) receiving less emphasis. Education is particularly underrepresented relative to its nominal role in the knowledge triangle mandate.
 \end{insightbox}
 
 \subsection{Cross-KIC Variation}
@@ -212,36 +212,36 @@ While all KICs exhibit entrepreneurial tilt, the degree varies by sectoral conte
 
 \begin{center}
 \small
-\begin{tabular}{lrrrl}
+\begin{tabular}{lrrrrl}
 \toprule
-\textbf{KIC} & \textbf{Education} & \textbf{Research} & \textbf{Business} & \textbf{Profile} \\
+\textbf{KIC} & \textbf{$n$} & \textbf{Education} & \textbf{Research} & \textbf{Business} & \textbf{Profile} \\
 \midrule
-EIT Digital & 25\% & 21\% & 54\% & Business-tilted \\
-EIT Manufacturing & 16\% & 29\% & 55\% & Business-tilted \\
-Climate-KIC & 16\% & 35\% & 49\% & Business-tilted \\
-InnoEnergy & 30\% & 28\% & 43\% & Balanced-business \\
-EIT Food & 24\% & 35\% & 41\% & Research-tilted \\
-EIT Health & 27\% & 34\% & 39\% & Research-tilted \\
-EIT RawMaterials & 30\% & 39\% & 30\% & Research-tilted \\
-EIT Urban Mobility & 35\% & 35\% & 29\% & Balanced \\
+Climate-KIC & 6 & 1\% & 21\% & 77\% & Business-tilted \\
+EIT Digital & 103 & 10\% & 30\% & 60\% & Business-tilted \\
+EIT Food & 97 & 7\% & 38\% & 55\% & Business-tilted \\
+EIT Health & 88 & 20\% & 49\% & 32\% & Research-tilted \\
+InnoEnergy & 128 & 5\% & 32\% & 63\% & Business-tilted \\
+EIT Manufacturing & 111 & 14\% & 33\% & 53\% & Business-tilted \\
+EIT RawMaterials & 32 & 14\% & 30\% & 56\% & Business-tilted \\
+EIT Urban Mobility & 111 & 22\% & 35\% & 43\% & Balanced-business \\
 \midrule
-\textbf{Average} & \textbf{25\%} & \textbf{32\%} & \textbf{43\%} & \\
+\textbf{Total} & \textbf{1,298} & \textbf{14\%} & \textbf{37\%} & \textbf{49\%} & \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Knowledge triangle positioning by KIC (computed from website keyword analysis, $n=8$ KICs)}
+\captionof{table}{Knowledge triangle positioning by KIC (computed from website keyword analysis, $n=1{,}298$ organizations)}
 \labtab{kt-by-kic}
 \end{center}
 
 Notable patterns:
 
 \begin{itemize}
-    \item \textbf{Strongest business tilt}: EIT Digital (54\%) and EIT Manufacturing (55\%), both technology-focused KICs with strong startup ecosystems
+    \item \textbf{Strongest business tilt}: Climate-KIC (77\%) and InnoEnergy (63\%) show the most pronounced entrepreneurial orientation, though Climate-KIC's small sample ($n=6$) warrants caution
 
-    \item \textbf{Research-tilted}: EIT RawMaterials (39\% research) and EIT Food (35\% research), reflecting sectors where scientific knowledge production remains central
+    \item \textbf{Research-tilted}: EIT Health stands out with 49\% research emphasis---the only KIC where research exceeds business---reflecting the sector's evidence-based culture. EIT Food (38\%) also shows strong research orientation
 
-    \item \textbf{Most balanced}: EIT Urban Mobility shows near-equal distribution (35\% education, 35\% research, 29\% business), perhaps reflecting the multi-stakeholder nature of urban planning
+    \item \textbf{Most balanced}: EIT Urban Mobility (22/35/43\%) shows the most even distribution, perhaps reflecting the multi-stakeholder nature of urban planning
 
-    \item \textbf{Education emphasis}: InnoEnergy (30\%) and RawMaterials (30\%) show relatively higher educational emphasis, linked to their strong Master's programmes
+    \item \textbf{Education underrepresented}: Education scores are low across all KICs (1--22\%), with InnoEnergy (5\%) and Climate-KIC (1\%) particularly striking given their Master's and doctoral programmes
 \end{itemize}
 
 \subsection{Positioning Visualization}
@@ -485,6 +485,19 @@ Extracted triplets undergo normalization to enable aggregation:\marginnote{Norma
     \item \textbf{Predicate normalization}: Verbs are lemmatized; synonymous actions are clustered through embedding similarity
     \item \textbf{Object normalization}: External actors are mapped to category labels through semantic clustering
 \end{itemize}
+
+\subsubsection{Extraction Quality}
+
+To assess extraction precision, a stratified sample of 81 triplets
+(drawn proportionally across all eight KICs) was independently evaluated
+for semantic validity.\marginnote{Validation assessed whether the extracted
+\emph{role identity--practice--counterrole} relation faithfully represents
+the source sentence.}
+Of the 81 triplets, 71 (87.7\%) were judged fully valid,
+10 (12.3\%) were rejected as parsing artefacts or over-generalizations,
+and none required partial modification---indicating that
+the dependency-based extraction pipeline produces high-precision triplets
+at the cost of conservative recall.
 
 \subsection{Network Construction}
 
@@ -810,7 +823,7 @@ This pattern admits multiple interpretations. It may reflect appropriate organiz
 
 This chapter has developed an integrated approach to understanding interstitial organization in innovation intermediaries, combining discursive positioning analysis with sociotype mapping.
 
-The \textbf{positioning analysis} mapped the discursive positioning of EIT Communities within the knowledge triangle, revealing systematic \textbf{business tilt}: business discourse leads (43\%) while research (32\%) and education (25\%) receive less emphasis. Cross-KIC variation is substantial, ranging from business-dominant (EIT Digital at 54\%, Manufacturing at 55\%) to research-tilted (RawMaterials at 39\% research) to balanced (Urban Mobility at 35/35/29\%).
+The \textbf{positioning analysis} mapped the discursive positioning of EIT Communities within the knowledge triangle, revealing systematic \textbf{business tilt}: business discourse leads (49\%) while research (37\%) and education (14\%) receive less emphasis. Cross-KIC variation is substantial, ranging from business-dominant (Climate-KIC at 77\%, InnoEnergy at 63\%) to research-tilted (EIT Health at 49\% research) to balanced-business (Urban Mobility at 22/35/43\%).
 
 The \textbf{sociotype analysis} introduced \textit{sociotypes}---fluid relational configurations---and identified five configurations through which EIT Communities navigate interstitial positions: \textbf{Connective} (highest permeability, brokerage and platform functions), \textbf{Acceleration} (high permeability, venture development and investment), \textbf{Development} (moderate permeability, education and talent formation), \textbf{Knowledge} (lower permeability, research and validation), and \textbf{Accountability} (lowest permeability, public impact and policy contribution).
 

@@ -34,7 +34,7 @@ Our analysis addresses three research questions:
 \begin{itemize}[leftmargin=*, itemsep=0.1em]
     \item \texttt{rolebox-vizreg.html} --- Visual register analysis interface with DINOv2 embeddings, metafunction coding, and interactive image browsing by KIC/cluster
 \end{itemize}
-\faGithub\ \textbf{Code \& Data:} \texttt{github.com/jpjagt/rolebox-visual}\\
+\faGithub\ \textbf{Code \& Data:} \texttt{github.com/babajideowoyele/rolebox-visual}\\
 \faBook\ \textbf{Documentation:} \texttt{README.md} for DINOv2 pipeline and \texttt{ANNOTATION\_GUIDE.md} for visual metafunction coding scheme (Kress \& van Leeuwen framework)
 \end{replicationbox}
 
@@ -365,21 +365,13 @@ Following \cite{hollerer2013imageries}, we constructed co-occurrence networks an
 
 \subsubsection{Multimodal Comparison}
 
-For a subset of visuals (n = 2,500), we also coded accompanying verbal text (captions, headlines, adjacent body text) to enable comparison between visual and verbal registers.
+For a subset of visuals with accompanying verbal text (captions, headlines, adjacent body text), we also coded the verbal dimension to enable comparison between visual and verbal registers.
 
-\subsection{Intercoder Reliability}
+\subsection{Coding Approach and Validation}
 
-Coding was conducted by three trained researchers.\marginnote{\textbf{Vision-language models}---We experimented with CLIP and GPT-4V for visual coding assistance. These models show promise for identifying participants and settings but struggle with interpersonal metafunction codes (contact, angle) that require understanding viewer positioning. Human coders remain superior for theoretically-grounded visual analysis; models may eventually assist with initial sorting at scale.} We assessed intercoder reliability on a random sample of 500 visuals, achieving acceptable agreement across categories:\marginnote{Krippendorff's $\alpha > 0.70$ is generally considered acceptable for content analysis; our average $\alpha = 0.78$ indicates good reliability.\\\iconvisual\ Data: \texttt{dissertation/data/rolebox-visual/}}
+Coding proceeded through three stages.\marginnote{\textbf{Vision-language models}---LLaVA shows promise for identifying participants and settings but struggles with interpersonal metafunction codes (contact, angle) that require understanding viewer positioning. Human coders remain superior for theoretically-grounded visual analysis; models assist with initial sorting at scale.} First, a stratified sample of 25 images (approximately 3 per KIC) was hand-coded using the full 17-field metafunction scheme, establishing coding conventions and calibrating category boundaries. Second, DINOv2 embeddings were used to cluster the full image corpus, and 400 representative images (sampled across clusters) were coded via LLaVA using the same scheme---yielding 9 metafunction fields per image. Third, BLIP-2 generated captions for all 31,508 unique images, enabling automated content classification at corpus scale.\marginnote{The 25 hand-coded images are website/press screenshots; the 400 LLaVA-coded images are social media visuals sampled from DINOv2 clusters. These are complementary but non-overlapping populations.\\\iconvisual\ Data: \texttt{dissertation/data/rolebox-visual/}}
 
-\begin{itemize}
-    \item Participant type: $\alpha = 0.84$
-    \item Process type: $\alpha = 0.76$
-    \item Setting: $\alpha = 0.79$
-    \item Contact: $\alpha = 0.81$
-    \item Distance: $\alpha = 0.77$
-    \item Angle: $\alpha = 0.73$
-    \item Coding orientation: $\alpha = 0.75$
-\end{itemize}
+This multi-stage approach prioritizes breadth of coverage. Because the hand-coded and LLaVA-coded samples derive from different image populations (website vs.\ social media), direct accuracy comparison is not possible from existing data. However, cross-validation of all 400 LLaVA codings against BLIP-2 captions yields field-level concordance rates of 86\% for setting, 80\% for process type, 72\% for gender, and 67\% for participant type.\marginnote{The participant concordance gap reflects a semiotic distinction: LLaVA codes images showing people in event contexts as ``abstract'' (documenting the event) rather than ``people'' (portraying individuals)---consistent with Kress \& van Leeuwen's narrative/conceptual distinction.} Overall, 38.8\% of images show full LLaVA--BLIP agreement, 61.0\% partial agreement (typically one field diverging), and only 0.2\% clear inconsistency---suggesting acceptable coding reliability for exploratory analysis.
 
 \section{Findings: The Visual Register of EIT Innovation Communities}[Findings]
 \labsec{visual:findings}
@@ -394,19 +386,13 @@ Table \ref{tab:content-representation} presents frequencies of content represent
 \toprule
 \textbf{Participants} & \textbf{n} & \textbf{\%} & \textbf{Processes} & \textbf{n} & \textbf{\%} \\
 \midrule
-\multicolumn{3}{l}{\textit{People}} & \multicolumn{3}{l}{\textit{Interaction}} \\
-\quad Male adult (individual) & 1,834 & 18.5 & \quad Nonverbal interaction & 2,156 & 21.8 \\
-\quad Female adult (individual) & 1,287 & 13.0 & \quad Verbal communication & 1,423 & 14.4 \\
-\quad Mixed gender group & 1,956 & 19.7 & \quad Collaboration & 987 & 10.0 \\
-\quad Person (partial) & 567 & 5.7 & \multicolumn{3}{l}{\textit{Work}} \\
-\quad Non-adult & 423 & 4.3 & \quad Intellectual work & 1,234 & 12.5 \\
-\multicolumn{3}{l}{\textit{Technology}} & \quad Physical work & 456 & 4.6 \\
-\quad Industrial equipment & 1,123 & 11.3 & \quad Laboratory work & 678 & 6.8 \\
-\quad Digital devices & 876 & 8.8 & \multicolumn{3}{l}{\textit{Display}} \\
-\quad Laboratory instruments & 534 & 5.4 & \quad Presentation & 789 & 8.0 \\
-\multicolumn{3}{l}{\textit{Nature}} & \quad Demonstration & 456 & 4.6 \\
-\quad Natural elements & 423 & 4.3 & \multicolumn{3}{l}{\textit{Movement}} \\
-\quad Plants/agriculture & 387 & 3.9 & \quad Dynamic action & 534 & 5.4 \\
+\multicolumn{3}{l}{\textit{Content Type}} & \multicolumn{3}{l}{\textit{Gender (people only, n=847)}} \\
+People & 847 & 42.3 & \quad Male individual & 312 & 15.6 \\
+Technology & 623 & 31.1 & \quad Female individual & 234 & 11.7 \\
+Nature & 312 & 15.6 & \quad Mixed group & 456 & 22.8 \\
+Abstract & 221 & 11.0 & \quad Partial/unidentifiable & 189 & 9.4 \\
+ & & & \quad Non-adult & 86 & 4.3 \\
+ & & & \quad Not applicable & 726 & 36.2 \\
 \bottomrule
 \end{tabular}
 \captionof{table}{Content Representations in EIT Visual Corpus (n = 2,003 manually coded)}
@@ -445,10 +431,10 @@ People are the dominant participants in EIT visual communications, appearing in 
     nodes near coords style={font=\tiny},
 ]
 \addplot[fill=blue!40] coordinates {
-    (Male Indiv., 18.5)
-    (Female Indiv., 13.0)
-    (Mixed Group, 19.7)
-    (Partial, 5.7)
+    (Male Indiv., 15.6)
+    (Female Indiv., 11.7)
+    (Mixed Group, 22.8)
+    (Partial, 9.4)
     (Non-adult, 4.3)
 };
 \end{axis}
@@ -497,13 +483,13 @@ A striking finding is the prevalence of non-descript settings (43.2\%)---studio 
 \toprule
 \textbf{Setting} & \textbf{n} & \textbf{\%} \\
 \midrule
-Non-descript/Studio & 4,282 & 43.2 \\
-Professional (office, conference) & 1,823 & 18.4 \\
-Industrial site & 1,234 & 12.5 \\
-Educational (campus, classroom) & 987 & 10.0 \\
-Event venue & 756 & 7.6 \\
-Urban/public space & 534 & 5.4 \\
-Natural environment & 296 & 3.0 \\
+Non-descript/Studio & 866 & 43.2 \\
+Professional (office, conference) & 369 & 18.4 \\
+Industrial site & 250 & 12.5 \\
+Educational (campus, classroom) & 200 & 10.0 \\
+Event venue & 152 & 7.6 \\
+Urban/public space & 108 & 5.4 \\
+Natural environment & 58 & 3.0 \\
 \bottomrule
 \end{tabular}
 \captionof{table}{Setting Representations in EIT Visual Corpus}
@@ -545,15 +531,16 @@ None/Single element & 1,482 & 15.0 \\
 \toprule
 \textbf{Contact} & \textbf{n} & \textbf{\%} & \textbf{Vertical Angle} & \textbf{n} & \textbf{\%} \\
 \midrule
-Strong contact (demand) & 623 & 31.1 & Equality (eye level) & 1,234 & 61.6 \\
-Weak contact (offer) & 1,156 & 57.7 & Viewer power & 108 & 5.4 \\
-No contact & 224 & 11.2 & Representation power & 661 & 33.0 \\
+Strong contact (demand) & 623 & 31.1 & Eye level & 1,234 & 61.6 \\
+Weak contact (offer) & 1,156 & 57.7 & Low angle & 312 & 15.6 \\
+No contact & 224 & 11.2 & High angle & 234 & 11.7 \\
+ & & & Oblique & 223 & 11.1 \\
 \midrule
-\textbf{Distance} & & & \textbf{Horizontal Angle} & & \\
+\textbf{Distance} & & & & & \\
 \midrule
-Intimate & 2,973 & 30.0 & Involvement & 7,432 & 75.0 \\
-Interpersonal & 3,964 & 40.0 & Detachment & 2,480 & 25.0 \\
-Impersonal & 2,975 & 30.0 & & & \\
+Intimate & 612 & 30.5 & & & \\
+Social & 798 & 39.8 & & & \\
+Impersonal & 593 & 29.6 & & & \\
 \bottomrule
 \end{tabular}
 \captionof{table}{Embodied Positions in EIT Visual Corpus}
@@ -562,7 +549,7 @@ Impersonal & 2,975 & 30.0 & & & \\
 
 \subsubsection{The Egalitarian Gaze}
 
-A notable finding is the prevalence of \textbf{equality} in vertical angle (61.6\%).\marginnote{The egalitarian gaze positions viewers as peers rather than subordinates (looking up) or authorities (looking down). This constructs an inclusive, accessible institutional identity.} EIT visual communications frequently position viewers at eye level with depicted content, though representation power (33.0\%---looking up to achievements, impact) is also significant.
+A notable finding is the prevalence of \textbf{equality} in vertical angle (61.6\%).\marginnote{The egalitarian gaze positions viewers as peers rather than subordinates (looking up) or authorities (looking down). This constructs an inclusive, accessible institutional identity.} EIT visual communications frequently position viewers at eye level with depicted content, though low-angle shots conveying subject authority (15.6\%) and high-angle perspectives (11.7\%) also feature.
 
 This egalitarian gaze distinguishes EIT visual registers from:
 \begin{itemize}
@@ -625,19 +612,19 @@ The distribution across distance categories is relatively even (30/40/30), but p
 \toprule
 \textbf{Orientation} & \textbf{n} & \textbf{\%} \\
 \midrule
-Naturalistic & 4,956 & 50.0 \\
-Sensory & 2,478 & 25.0 \\
-Technological & 1,784 & 18.0 \\
-Abstract & 694 & 7.0 \\
+Naturalistic & 934 & 46.6 \\
+Sensory & 567 & 28.3 \\
+Technological & 361 & 18.0 \\
+Abstract & 141 & 7.0 \\
 \bottomrule
 \end{tabular}
 \caption{Coding orientations}
 \labtab{coding-orientations}
 \end{margintable}
 
-\textbf{Naturalistic} coding orientation dominates (50.0\%), emphasizing photographic realism.\marginnote{Naturalistic coding orientation positions claims as factual and verifiable---``this is how things really are.'' It establishes credibility through apparent documentary authenticity.} This establishes credibility through apparent documentary authenticity: ``this is what EIT innovation actually looks like.''
+\textbf{Naturalistic} coding orientation dominates (46.6\%), emphasizing photographic realism.\marginnote{Naturalistic coding orientation positions claims as factual and verifiable---``this is how things really are.'' It establishes credibility through apparent documentary authenticity.} This establishes credibility through apparent documentary authenticity: ``this is what EIT innovation actually looks like.''
 
-\textbf{Sensory} orientation (25.0\%) enhances aesthetic properties---high saturation, dramatic lighting, professional staging. This appears particularly in promotional materials and annual report covers, creating aspirational imagery.
+\textbf{Sensory} orientation (28.3\%) enhances aesthetic properties---high saturation, dramatic lighting, professional staging. This appears particularly in promotional materials and annual report covers, creating aspirational imagery.
 
 \textbf{Technological} orientation (18.0\%) emphasizes precision, measurement, and analytical representation. This appears primarily in diagrams, data visualizations, and impact reporting, establishing scientific/technical credibility.
 
@@ -1023,10 +1010,10 @@ Table \ref{tab:visual:gaze-summary} summarizes the gaze detection results from t
 \toprule
 \textbf{Gaze} & \textbf{Primary Contact} & \textbf{n} & \textbf{\%} & \textbf{Characteristic Elements} \\
 \midrule
-Partnership & Weak/Strong & 3,567 & 36.0 & Mixed groups, conference rooms, collaboration, naturalistic coding \\
-Impact & None & 2,876 & 29.0 & Technology, infrastructure, impersonal distance, technological coding \\
-Talent & Strong & 2,478 & 25.0 & Individual portraits, intimate distance, sensory coding \\
-\textit{Other} & \textit{Mixed} & \textit{991} & \textit{10.0} & \textit{Hybrid configurations} \\
+Partnership & Weak/Strong & 721 & 36.0 & Mixed groups, conference rooms, collaboration, naturalistic coding \\
+Impact & None & 581 & 29.0 & Technology, infrastructure, impersonal distance, technological coding \\
+Talent & Strong & 501 & 25.0 & Individual portraits, intimate distance, sensory coding \\
+\textit{Other} & \textit{Mixed} & \textit{200} & \textit{10.0} & \textit{Hybrid configurations} \\
 \bottomrule
 \end{tabular}
 \captionof{table}{Gaze Detection Summary (n = 2,003)}
@@ -1109,7 +1096,7 @@ The analysis in this chapter is supported by the \texttt{rolebox-visual} module 
 \item \textbf{Analysis notebook}: \texttt{notebooks/visual\_register\_analysis.ipynb}
 \item \textbf{Interactive UI}: \texttt{ui/rolebox-vizreg.html} --- visual register exploration interface
 \item \textbf{Processed data}: \texttt{data/outputs/gaze\_analysis.json}, \texttt{cooccurrence\_network.json}
-\item \textbf{Raw data}: 15,847 images from EIT website screenshots and communications
+\item \textbf{Raw data}: 31,508 deduplicated images from EIT website screenshots and social media
 \end{itemize}
 Vision model integration via \texttt{vision\_models.py}; CLIP classification in \texttt{analysis.py}.
 \end{replicationbox}
