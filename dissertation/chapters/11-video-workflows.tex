@@ -1,0 +1,276 @@
+% !TEX root = ../main.tex
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Workflows for Video: From Privacy-Preserving Masking to Behavioral Discovery}
+\labch{video}
+\margintoc
+
+\begin{quote}
+\textit{``The abundance of data and resources facilitates the move away from a deductive social science to a more sequential, interactive, and ultimately inductive approach to inference.''}\\
+--- Grimmer, Roberts \& Stewart \cite{grimmer2021machine}
+\end{quote}
+
+\section{Introduction: The Seventh Modality}[Introduction]
+\labsec{video:intro}
+
+The preceding chapters have mapped role constellations across six digital modalities: Wikipedia entries (Chapter~\ref{ch:interstitial}), organizational websites (Chapter~\ref{ch:rolefield}), investment records (Chapter~\ref{ch:venture}), visual materials (Chapter~\ref{ch:visual}), news media coverage (Chapter~\ref{ch:power}), and social media presence.\marginnote{The six modalities were selected because they represent distinct \textit{material infrastructures} through which organizational roles become observable---each with its own affordances, constraints, and constitutive effects on role performance (see Section~\ref{sec:background:materiality}).} Each chapter has showcased a computational workflow following the Maass bridging framework: Curation $\rightarrow$ Annotation $\rightarrow$ Unsupervised Analysis $\rightarrow$ Output. Each workflow transforms platform-specific digital traces into design knowledge about organizational roles.
+
+But one modality has remained conspicuously absent: \textbf{video}.
+
+Video is arguably the most information-dense modality available to social science.\sidenote{A single minute of video at 30 frames per second contains 1,800 still images, each potentially analyzable for spatial composition, participant configuration, and semiotic structure---plus the temporal dimension of movement, gesture, and interaction dynamics that static images cannot capture.} It captures temporal dynamics, embodied interaction, spatial relationships, facial expressions, gesture, and auditory information simultaneously. Where text records what actors \emph{say}, and images capture how they \emph{appear}, video reveals how they \emph{move}, \emph{interact}, and \emph{coordinate} in real time. For understanding roles as enacted performances rather than merely declared positions, video offers unparalleled empirical richness.
+
+Yet video remains systematically underexploited in computational social science.\marginnote{As \textcite{grimmer2021machine} argue, computational methods serve four core social science tasks: \textbf{discovery}, \textbf{measurement}, \textbf{causal inference}, and \textbf{prediction}. Video workflows enable the first two---discovering latent behavioral patterns and measuring phenomena (pose, coordination, fluidity) that manual coding cannot capture at sufficient temporal granularity.} Three barriers explain this gap: \textbf{privacy constraints} (video of human subjects raises acute ethical and regulatory concerns under frameworks like GDPR), \textbf{computational cost} (processing video frame-by-frame demands orders of magnitude more computation than text or image analysis), and \textbf{lack of standardized pipelines} (researchers must assemble bespoke toolchains from heterogeneous computer vision libraries, with no agreed-upon workflow connecting raw recordings to shareable analytical outputs).
+
+This chapter addresses all three barriers through a series of three computational artifacts---each a workflow in the sense developed throughout this dissertation---that collectively demonstrate how the Maass bridging methodology extends from text and images to audio-visual data. The artifacts form a \textbf{DSR design cycle}: each iteration addresses limitations discovered in the previous, producing progressively more capable and general-purpose infrastructure for video-based social science research.
+
+\begin{replicationbox}[Computational Artifacts]
+\faLaptopCode\ \textbf{Masked-Piper} (\texttt{github.com/WimPouw/TowardsMultimodalOpenScience}):
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+    \item Open-source single-person video masking tool using MediaPipe
+    \item Published: \textcite{owoyele2022maskedpiper}
+\end{itemize}
+\faLaptopCode\ \textbf{MaskAnyone Toolkit} (\texttt{github.com/MaskAnyone/MaskAnyone}):
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+    \item Scalable multi-person de-identification platform with face-swapping and voice alteration
+    \item Published: \textcite{owoyele2024maskanyone}
+\end{itemize}
+\faLaptopCode\ \textbf{AMP Pipeline} (\texttt{anonymous.4open.science/w/InterPerDynPipeline-347F}):
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+    \item End-to-end pipeline: YOLOv8 pose estimation $\rightarrow$ time series analysis $\rightarrow$ privacy-aware archiving
+    \item Under review: \textcite{owoyele2025amppipeline}
+\end{itemize}
+\end{replicationbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{The Video Modality Gap}[Video Modality Gap]
+\labsec{video:gap}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Behavioral observation has a longstanding tradition in the life and social sciences, used at least since Darwin's work on emotion \parencite{darwin1872expression}.\marginnote{\textbf{Manual coding limitations}---Observational methods often rely on ``coding schemes'' that introduce biases from the inherent limits of coding categories and from the subjectivity of human raters \parencite{owoyele2025amppipeline}. Computer vision methods have promise in this regard: pose estimation approaches are becoming increasingly precise, non-intrusive, reproducible, and low-cost.} Observational methods form the core of many studies across disciplines including ethology, medicine, cultural anthropology, and multiple areas of psychology. Yet these methods remain costly and prone to the biases inherent in manual coding---human observers must be trained, inter-rater reliability must be established, and the temporal granularity of observation is limited by human perceptual capacity.
+
+Computer vision (CV) methods offer a transformative alternative. In the context of quantifying human movement, CV approaches to pose estimation are becoming increasingly precise and have the benefit of being non-intrusive, reproducible, and low-cost.\sidenote{With such methods, human movement in videos can be processed as multivariate time-series data, offering a basis for comprehensive analysis of individual, interpersonal, and social dynamics \parencite{owoyele2025amppipeline}.} With such methods, human movement in videos can be processed as multivariate time-series data---opening up the possibility for widespread study of diverse populations in out-of-lab real-world contexts.
+
+Yet a fundamental tension constrains this promise: \textbf{the richer the video data, the greater the privacy risk}. Audio-visual data with human subjects inherently contains personally identifiable information through faces, voices, body characteristics, and contextual cues \parencite{owoyele2024maskanyone}. Regulatory frameworks like GDPR require that human subjects be informed about de-identification techniques, and masking previously collected data may require additional consent. This creates a paradox: the modality with the greatest potential for behavioral discovery is also the most ethically constrained.
+
+The three workflows presented in this chapter resolve this tension by treating privacy not as an obstacle to be overcome but as a \textbf{design requirement} to be integrated into the workflow from the outset---an approach that embodies the sociomaterial stance developed in earlier chapters. The material infrastructure of masking (algorithms, models, architectural choices) does not merely protect privacy; it \textit{co-constitutes} what behavioral phenomena remain observable and shareable.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Workflow I: Privacy-Preserving Masking}[Workflow I: Masked-Piper]
+\labsec{video:maskedpiper}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The first artifact in the design cycle, \textbf{Masked-Piper} \parencite{owoyele2022maskedpiper}, addresses the most fundamental question: \textit{can video data be de-identified while preserving the behavioral information essential for research?}
+
+\subsection{Curation}
+
+Masked-Piper was developed in the context of behavioral science research where video recordings of human interaction are central to the empirical enterprise.\marginnote{\textbf{Target domain}---Behavioral science, multimodal communication research, and kinematic studies where researchers need to share video data for reproducibility while protecting participant identity.} The tool targets recordings from laboratory settings, classrooms, public talks, and naturalistic observation contexts---any setting where researchers collect video of human subjects and need to share or archive these recordings while meeting ethical and legal requirements.
+
+\subsection{Annotation}
+
+The annotation stage leverages Google's MediaPipe Holistic model, which computes fine-grained landmarks for the complete body:\sidenote{MediaPipe's holistic model tracks 33 body pose keypoints, 42 hand keypoints per hand, and 478 face mesh keypoints---providing detailed kinematic information at each frame \parencite{owoyele2022maskedpiper}.}
+
+\begin{itemize}
+    \item \textbf{Body pose}: 33 keypoints with 3D position coordinates and visibility variables
+    \item \textbf{Hand kinematics}: 42 position keypoints tracked in 3D per hand
+    \item \textbf{Facial kinematics}: 478 keypoints corresponding to designated areas of the face mesh
+\end{itemize}
+
+For each video frame, the holistic module automatically detects a silhouette of the person and extracts it from the background. The keypoint-based tracking data and the silhouette are collected and provided as output in CSV format for further processing.
+
+\subsection{Processing}
+
+The masking process operates in three steps. First, the silhouette is drawn in black on top of the current video frame, effectively replacing the person's visual appearance with an opaque silhouette. Second, the keypoint positions are drawn onto the same silhouetted frame using MediaPipe's drawing module, reinstating key bodily information in de-identified form. Third, the silhouetted and annotated frames are saved as a new video file using OpenCV.\marginnote{The resulting pseudo-anonymized video preserves the holistic context (background, spatial relationships) while replacing the identifiable human figure with a kinematic skeleton overlay.}
+
+\subsection{Output}
+
+Masked-Piper produces two complementary outputs:
+
+\begin{enumerate}
+    \item \textbf{Pseudo-anonymized video}: The original recording with human figures replaced by silhouettes overlaid with kinematic skeleton projections
+    \item \textbf{Kinematic time series}: CSV files containing frame-by-frame keypoint coordinates (x, y positions in pixels relative to the still frame) with timestamps
+\end{enumerate}
+
+The key discovery of this first workflow is that \textbf{privacy and utility are not zero-sum}. The masking procedure preserves communicative body movements---gesture trajectories, postural shifts, head orientation---while removing facial features, clothing, and other identifying information. The kinematic time series can be shared openly and analyzed computationally without exposing participant identity.
+
+\begin{insightbox}[Workflow I Contribution]
+Masked-Piper demonstrates that the masking infrastructure \textit{itself} produces analytically valuable data: the kinematic time series extracted during the masking process become a reusable data product, transforming the privacy constraint from a cost into an additional output channel. This is a sociomaterial insight---the material infrastructure of de-identification co-produces the data it was designed to protect.
+\end{insightbox}
+
+\textbf{Limitations.} The initial Masked-Piper implementation handles only single-person videos and provides no audio masking---limitations that motivated the next iteration of the design cycle.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Workflow II: Scalable De-identification}[Workflow II: MaskAnyone]
+\labsec{video:maskanyone}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The second artifact, \textbf{MaskAnyone} \parencite{owoyele2024maskanyone}, scales up the masking workflow by adopting an explicit Design Science Research methodology \parencite{hevner2004design}. Published at the International Conference on Information Systems (ICIS 2024)---the premier IS venue---MaskAnyone demonstrates that video workflow design is IS research in the full sense: it produces design knowledge about building computational artifacts that balance competing requirements in sociotechnical contexts.
+
+\subsection{Design Requirements}
+
+The design requirements were elicited through two live demonstration workshops: one at a Dutch university ($n = 16$) with researchers and one at a German university ($n = 10$) with researchers and data stewards ($n = 5$).\marginnote{\textbf{Stakeholder-driven design}---The participatory requirement elicitation follows DSR best practices, ensuring that the artifact addresses actual practitioner needs rather than assumed technical challenges.} Eight requirements emerged:
+
+\begin{center}
+\small
+\begin{tabular}{llp{7cm}}
+\toprule
+\textbf{Req.} & \textbf{Label} & \textbf{Description} \\
+\midrule
+R1 & Multimodality & Enable masking of video, background, and voice data \\
+R2 & Usability & Intuitive enough for researchers with limited technical skills \\
+R3 & Flexibility & Handle various masking methods and privacy constraints \\
+R4 & Multi-level & Offer different levels of de-identification \\
+R5 & Efficiency & Perform well on local machines with hardware limitations \\
+R6 & Sensitivity & Optimized for server environments with data sensitivities \\
+R7 & Scalability & Support distributed processing for large datasets \\
+R8 & Modularity & Extensible to integrate new techniques as they emerge \\
+\bottomrule
+\end{tabular}
+\captionof{table}{MaskAnyone Design Requirements (adapted from \textcite{owoyele2024maskanyone})}
+\labtab{maskanyone-reqs}
+\end{center}
+
+These requirements map directly onto the Meta-Design Requirements developed in this dissertation:\sidenote{\textbf{Cross-artifact design knowledge}---The convergence between MaskAnyone's empirically elicited requirements and the dissertation's theoretically derived MDRs suggests that these requirements capture general properties of computational workflows for social science, not domain-specific idiosyncrasies.} R1 (Multimodality) corresponds to MDR-1 (systematic data transformation across modalities); R7 (Scalability) relates to MDR-3 (capacity for cross-modal comparison at scale); R8 (Modularity) embodies MDR-4 (replicable and adaptable design knowledge). The convergence is not coincidental---both artifact families address the same fundamental challenge of building computational infrastructure for multimodal social science.
+
+\subsection{Architecture and Strategies}
+
+MaskAnyone employs a Manager-Worker architecture: the backend serves as the central hub for user interactions and job management, while Docker-containerized workers handle the computational processing.\marginnote{The Manager-Worker pattern enables horizontal scaling: additional workers can be added without modifying the backend, and different masking models can be deployed in separate containers with independent dependencies.} The frontend uses React and TypeScript to create a single-page application accessible via standard web browsers.
+
+The toolkit implements two complementary de-identification strategies:
+
+\begin{description}
+    \item[Hiding] focuses on obscuring personally identifiable information through techniques including blackout, Gaussian blurring, contour extraction, pixelation, and inpainting. MaskAnyone employs both YOLOv8 and MediaPipe for person detection, with configurable confidence thresholds.
+    \item[Masking] substitutes the individual with an alternate representation through face-swapping, preserving essential attributes (expressions, head orientation) while replacing identity. This approach uses MediaPipe's face mesh for landmark detection and a feed-forward network for face replacement.
+\end{description}
+
+For audio de-identification, MaskAnyone explores spectral modification, pitch shifting, and voice conversion---addressing the gap identified in Masked-Piper's single-modality limitation.
+
+\subsection{Design Principles}
+
+Two design principles emerge from the MaskAnyone development process that parallel the dissertation's broader design knowledge:
+
+\begin{enumerate}
+    \item \textbf{Separation of detection, analysis, and masking}: Each stage operates independently, allowing researchers to select the most appropriate technique for each step without being locked into an integrated pipeline. This mirrors the Maass framework's stage-wise organization.
+    \item \textbf{Privacy as configurable parameter, not binary switch}: Offering multiple de-identification levels (from blur to full face-swap) acknowledges that different research contexts require different privacy-utility trade-offs. The ``right'' level of masking is a research design decision, not a technical default.
+\end{enumerate}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Workflow III: From Video to Behavioral Discovery}[Workflow III: AMP Pipeline]
+\labsec{video:amppipeline}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The third artifact, the \textbf{AMP Pipeline} \parencite{owoyele2025amppipeline}, represents the fullest instantiation of the Maass bridging framework for video data. Where Masked-Piper and MaskAnyone focus on the Curation and Annotation stages (acquiring and transforming video data), the AMP Pipeline extends through Unsupervised Analysis to Output---demonstrating that video workflows can enable \textbf{genuine discovery} of behavioral patterns inaccessible to traditional methods.
+
+\subsection{Curation: Video Recordings of Dyadic Interaction}
+
+The pipeline is demonstrated on two empirical case studies:\marginnote{\textbf{Cross-domain application}---The two case studies span different cultural contexts, age groups, and interaction types, demonstrating that the pipeline is not domain-specific but a general-purpose workflow for behavioral observation.}
+
+\begin{enumerate}
+    \item \textbf{Sibling cooperation}: Video recordings of Yurakar\'{e} (Bolivian Indigenous) and Polish children engaged in task-focused interactions, enabling cross-cultural comparison of movement fluidity during cooperation
+    \item \textbf{Infant-caregiver coordination}: Longitudinal recordings of free-play sessions between infants and caregivers, enabling developmental assessment of interpersonal coordination over time
+\end{enumerate}
+
+\subsection{Annotation: YOLOv8 Pose Estimation}
+
+The AMP Pipeline upgrades from MediaPipe (used in Masked-Piper and MaskAnyone) to YOLOv8 for pose estimation.\sidenote{YOLOv8 (\texttt{yolov8x-pose-p6.pt}, 69.4M parameters) has been benchmarked at 18.2mm mean-per-joint-position error when compared to OptiTrack marker-based optical motion capture systems \parencite{owoyele2025amppipeline}---sufficient accuracy for the behavioral metrics computed downstream.} For each frame, the model detects persons and extracts keypoint coordinates (nose, shoulders, elbows, wrists, hips, knees, ankles), producing multivariate time series of body position.
+
+The annotation stage also introduces a critical methodological innovation: pose estimation is performed on the \textit{original} (unmasked) video, and the resulting time series data are archived alongside the masked video. This workflow design means that researchers reusing the data work directly with the fully de-identified kinematic time series rather than re-running pose estimation on masked recordings---a distinction with important implications for data quality and reproducibility.
+
+\subsection{Unsupervised Analysis: Time Series and Dynamical Systems}
+
+The analytical stage applies both linear and non-linear methods to the extracted time series:
+
+\begin{description}
+    \item[Smoothness metrics] quantify the fluidity of individual and dyadic movement, computed from velocity profiles of tracked keypoints. Lower smoothness values indicate more fluid, coordinated movement.
+    \item[Cross-recurrence quantification analysis (CRQA)] measures the temporal coordination between two interactants, capturing how their movement patterns synchronize and desynchronize over time.
+    \item[Dynamical systems modeling] treats the dyadic interaction as a coupled dynamical system, enabling analysis of attractor states, phase transitions, and stability of interpersonal coordination.
+\end{description}
+
+\subsection{Output: Behavioral Discovery}
+
+The pipeline produces behavioral metrics that reveal patterns invisible to manual observation:\marginnote{\textbf{Discovery, not description}---In the taxonomy of \textcite{grimmer2021machine}, this is \textit{discovery}: the workflow reveals latent structure (movement coordination patterns, cultural differences in interaction dynamics) that was not pre-specified by the researcher but emerges from the computational analysis of frame-by-frame kinematic data.}
+
+\begin{itemize}
+    \item Frame-by-frame kinematic time series (keypoint coordinates, derived velocity and acceleration)
+    \item Smoothness metrics aggregated across interaction episodes
+    \item Recurrence plots and CRQA statistics capturing interpersonal coordination dynamics
+    \item Masked videos for qualitative verification and visual inspection of tracking quality
+\end{itemize}
+
+The cross-cultural case study illustrates the discovery potential: comparing movement dynamics between Yurakar\'{e} and Polish children during cooperative tasks reveals culturally specific patterns of motor coordination that would be invisible to traditional behavioral coding schemes operating at coarser temporal resolution. The longitudinal case study demonstrates how infant-caregiver coordination develops over time---a trajectory that can be quantified through recurrence metrics computed from the extracted kinematic data.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Design Evolution as DSR Knowledge}[Design Evolution]
+\labsec{video:evolution}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The three artifacts form a coherent \textbf{design cycle} that embodies DSR's build-evaluate-theorize logic:\sidenote{The progression from Masked-Piper to MaskAnyone to AMP Pipeline mirrors the ``relevance cycle'' and ``rigor cycle'' of DSR \parencite{hevner2004design}: each artifact is evaluated against practitioner needs (relevance) and each iteration incorporates lessons from the previous (rigor).}
+
+\begin{center}
+\small
+\begin{tabular}{lp{3cm}p{3cm}p{3.5cm}}
+\toprule
+\textbf{Dimension} & \textbf{Masked-Piper (2022)} & \textbf{MaskAnyone (2024)} & \textbf{AMP Pipeline (2025)} \\
+\midrule
+Scope & Single person & Multi-person & Multi-person dyadic \\
+Modality & Video only & Video + audio & Video + audio + kinematics \\
+Detection & MediaPipe & MediaPipe + YOLOv8 & YOLOv8 \\
+Analysis & None (masking only) & None (masking only) & Time series + dynamical systems \\
+Architecture & Python script & Web platform (Docker) & Quarto notebook \\
+DSR framing & Implicit & Explicit (Hevner) & Implicit (workflow-centric) \\
+Venue & SoftwareX & ICIS 2024 & American Psychologist \\
+\bottomrule
+\end{tabular}
+\captionof{table}{Design cycle evolution across three video workflow artifacts}
+\labtab{video-evolution}
+\end{center}
+
+Each iteration addresses specific limitations of the previous. Masked-Piper's single-person constraint motivated MaskAnyone's multi-person architecture. MaskAnyone's focus on masking alone (without analysis) motivated the AMP Pipeline's extension through the full Maass workflow. MediaPipe's accuracy limitations, particularly for top-view recordings, motivated the upgrade to YOLOv8.\marginnote{The design requirements also evolved through evaluation: MaskAnyone's R1--R8 were elicited from workshops ($n = 31$ across two universities), while the AMP Pipeline incorporated reviewer feedback from the American Psychologist peer review process, including demands for better self-containment, validation against gold-standard motion capture, and community accessibility.}
+
+The design knowledge produced through this cycle is \textbf{transferable}. The workflow architecture---modular separation of detection, analysis, and masking; open-source implementation; privacy as configurable parameter---applies beyond behavioral science to any domain where video data must be processed, analyzed, and shared under ethical constraints. This includes surveillance studies, clinical research, sports analytics, and educational observation.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Workflows as Discovery Infrastructure}[Discovery Infrastructure]
+\labsec{video:discovery}
+%═══════════════════════════════════════════════════════════════════════════════
+
+A persistent critique of computational social science is that it produces infrastructure without insight---``fancy UI on big data'' that describes but does not discover. \textcite{grimmer2021machine} counter this critique by identifying four core tasks that computational methods serve in social science: \textbf{discovery} (revealing latent structure through clustering, embedding, and dimension reduction), \textbf{measurement} (systematically quantifying concepts at scale through supervised learning and pre-trained models), \textbf{causal inference} (estimating effects in high-dimensional settings), and \textbf{prediction} (forecasting outcomes for policy and planning).
+
+The video workflows presented in this chapter demonstrate that \textbf{the workflow itself is the discovery infrastructure}:\marginnote{This argument applies equally to the six modality workflows presented in earlier chapters. The Knowledge Triangle positioning extracted from websites (Chapter~\ref{ch:interstitial}) is a \textit{discovery}---it reveals latent structure in how organizations distribute their activities across education, research, and business. The role field structure extracted from Twitter (Chapter~\ref{ch:rolefield}) is a \textit{discovery}---it reveals a socially curated classification system that no single actor designed.}
+
+\begin{description}
+    \item[Masked-Piper discovers] that privacy and analytical utility can coexist in video data---that the masking infrastructure itself produces analytically valuable kinematic time series as a by-product of de-identification
+    \item[MaskAnyone discovers] the design requirements for ethical video research at scale---that eight specific requirements (multimodality, usability, flexibility, multi-level de-identification, efficiency, sensitivity, scalability, modularity) emerge consistently from researcher and data steward needs
+    \item[The AMP Pipeline discovers] temporal patterns in behavioral dynamics---cross-cultural differences in movement fluidity, developmental trajectories of interpersonal coordination---that are invisible to manual observation operating at coarser temporal granularity
+\end{description}
+
+The Maass bridging framework structures this discovery: \textbf{Curation} acknowledges the material and ethical constraints under which video data is collected; \textbf{Annotation} transforms raw visual signals into analyzable features (keypoints, kinematic time series) through computational models; \textbf{Unsupervised Analysis} reveals latent patterns (smoothness distributions, recurrence structures) in the annotated data; and \textbf{Output} packages both the masked recordings and the extracted metrics for sharing and replication.
+
+This is the same logic that governs the six modality workflows presented in earlier chapters. The methodology is general: whether the input is website text, Twitter lists, Crunchbase descriptions, news articles, images, or video recordings, the Maass bridging framework provides a systematic path from raw digital traces to design knowledge about social phenomena. The video modality demonstrates that this generality is not accidental but structural---rooted in the workflow-centric DSR approach that treats each modality as requiring its own Curation $\rightarrow$ Annotation $\rightarrow$ Unsupervised $\rightarrow$ Output pipeline, with cross-modal comparison revealing what no single modality can show alone.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Video and the Sociomaterial Turn}[Sociomaterial Reflection]
+\labsec{video:sociomaterial}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Video is perhaps the most overtly sociomaterial modality.\sidenote{Recall the sociomaterial argument developed in Chapter~\ref{ch:litreview} (Section~\ref{sec:background:materiality}) and deepened in Chapter~\ref{ch:synthesis}: digital platforms are not neutral recording devices but material infrastructures that co-constitute the phenomena they make observable.} Cameras, recording devices, algorithmic models, and human bodies are constitutively entangled in the production of video data. The choice of camera angle (frontal vs. top-view) determines what kinematic information is capturable. The choice of pose estimation model (MediaPipe vs. YOLOv8) determines which keypoints are tracked and at what accuracy. The choice of masking strategy (hiding vs. face-swapping) determines what behavioral phenomena remain observable in the de-identified output.
+
+These are not merely technical decisions---they are \textbf{sociomaterial design choices} that shape what counts as data, what counts as evidence, and what patterns become discoverable. Privacy regulations like GDPR do not merely constrain video research; they \textit{constitute} the conditions under which video-based knowledge production is possible, shaping the design space within which workflow artifacts operate.
+
+This reflexive observation connects the video modality to the dissertation's broader argument. The preceding chapters demonstrated that digital platforms (websites, Twitter, Crunchbase, news databases, image repositories) co-constitute the organizational roles they make observable. The video workflows demonstrate an analogous point in a different domain: \textbf{computational infrastructure co-constitutes the behavioral knowledge it produces}. The DSR methodology---with its attention to design requirements, design cycles, and design knowledge---provides the vocabulary for making these constitutive relationships explicit and actionable.
+
+\begin{insightbox}[Transferability]
+The video workflows presented in this chapter demonstrate that the dissertation's core methodology---workflow-centric DSR following the Maass bridging framework---transfers beyond the EIT innovation ecosystem to behavioral science, and beyond text and image modalities to audio-visual data. The design knowledge is general: modular pipeline architecture, privacy as integrated design requirement, open-source implementation for reproducibility, and computational annotation enabling discovery at temporal granularities inaccessible to manual methods.
+\end{insightbox}
+
+This transferability is the strongest evidence that the dissertation produces \textit{design knowledge} in the IS sense---not merely a set of tools for one empirical setting, but reusable principles for building computational infrastructure that enables social science discovery across modalities and domains.
+
+\end{document}
