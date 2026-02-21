@@ -18,528 +18,340 @@
 \vspace{1.5cm}
 
 \begin{center}
-\textit{\large Agent-based simulation complements empirical cartography with generative testing.\\[0.3em]
-Where \RoleBox{} maps what \emph{is}, \RoleSim{} explores what \emph{could be}.}
+\textit{\large Where \RoleBox{} maps what actors \emph{say} and \emph{do},\\[0.3em]
+\RoleSim{} classifies what they \emph{are} in relational structure.}
 \end{center}
 
 \vspace{1.5cm}
 
 \begin{chapteroverview}
-This intermezzo introduces \RoleSim, an agent-based simulation framework that complements empirical cartography with generative testing and counterfactual exploration. Where \RoleBox maps \emph{observed} constellations, \RoleSim asks ``what if?''---testing whether CAS mechanisms \emph{suffice} to generate observed patterns, exploring how constellations might evolve under different conditions, and illuminating the paths not taken.
+This intermezzo introduces \RoleSim, an influence typology tool that classifies
+actors by their structural position in networks derived from \RoleBox{} data.
+Applied to the EIT Twitter mention network (497~actors, 6,075~edges) and the
+Crunchbase venture similarity network (3,000~ventures, 2,545~edges),
+\RoleSim{} reveals starkly different role distributions across modalities---offering
+an independent, network-structural lens on the role constellations mapped in
+Chapters~\ref{ch:rolefield}--\ref{ch:power}.
 \end{chapteroverview}
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Why Simulation? The Generative Test}
+\section*{From Text to Network Roles}
 %═══════════════════════════════════════════════════════════════════════════════
 
-Empirical cartography faces an inherent limitation: we observe only realized trajectories.\sidenote{\iconidea\ \textbf{Observation vs. mechanism}---Correlation patterns in \RoleBox data suggest CAS mechanisms may be operating, but observation alone cannot establish mechanism sufficiency. Did emergence \emph{cause} what we see, or merely accompany it?} The EIT ecosystem took one path among many possible; we cannot rerun history to test counterfactuals. Yet understanding role constellations requires grasping not just where they \emph{are} but why they aren't somewhere else---what constraints and dynamics channel their evolution.
+The empirical chapters extract role signals from text: website self-descriptions
+(Chapter~\ref{ch:interstitial}), tweet content and co-mention patterns
+(Chapter~\ref{ch:rolefield}), venture descriptions and embeddings
+(Chapter~\ref{ch:venture}), visual registers (Chapter~\ref{ch:visual}), and
+news narratives (Chapter~\ref{ch:power}). Each modality captures
+\emph{what actors say or do}---declared roles, claimed identities,
+attributed actions.
 
-Agent-based modeling addresses this through \textbf{generative testing} \cite{epstein2006generative}:\sidenote{\textbf{Epstein's challenge}---``If you didn't grow it, you didn't explain it.'' Generative sufficiency is a necessary (not sufficient) condition for explanation.}
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[\faFlask\ Mechanism sufficiency] Do CAS mechanisms, when instantiated computationally, \emph{produce} patterns resembling observed constellations? If yes, mechanisms are at least sufficient for the pattern. If no, something is missing.
-
-\item[\faRandom\ Counterfactual exploration] What trajectories were possible but not taken? What if a key intermediary exited? What if policy conditions shifted earlier? Simulation explores the landscape of possibilities surrounding the observed path.
-
-\item[\faSlidersH\ Parameter sensitivity] Which parameters most strongly shape outcomes? Understanding sensitivity guides both empirical attention (what matters most) and intervention design (what levers exist).
-
-\item[\faChartLine\ Future projection] Given current configurations and dynamics, what trajectories are plausible? Scenario analysis informs anticipatory governance without claiming prediction.
-\end{description}
-
-\begin{insightbox}[Complementarity, Not Competition]
-\RoleSim does not compete with \RoleBox for truth---it operates in a different epistemological register. Empirical cartography establishes \emph{what patterns exist}; simulation explores \emph{what mechanisms could generate them}. Neither alone suffices; together they provide both empirical grounding and theoretical testing.
-\end{insightbox}
+But roles are also relational positions.\sidenote{\textbf{Structural vs.\
+declared roles}---An actor may claim to be a ``hub'' on its website while
+occupying a peripheral position in the actual interaction network. Comparing
+declared and structural roles operationalizes the claim--action gap central
+to this dissertation.}
+An actor's role in a network depends not on what it says about itself but on
+where it sits in the flow of information, resources, and attention. \RoleSim{}
+addresses this complementary question: given the networks that \RoleBox{} data
+produce, what \emph{structural} roles do actors occupy?
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Theoretical Foundations: CAS Mechanisms Instantiated}
+\section*{The Influence Typology}
 %═══════════════════════════════════════════════════════════════════════════════
 
-\RoleSim translates the six CAS mechanisms from Chapter~\ref{ch:cas} into computational rules:\sidenote{\icondata\ Code: \texttt{dissertation/data/rolesim/}}
+\RoleSim{} implements an influence typology algorithm adapted from the
+\texttt{watch-complexity} library,\sidenote{Based on the
+\texttt{watch-complexity} library by Davide Miceli
+(\url{github.com/davidemiceli/watch-complexity}). The JavaScript implementation
+was ported to Python and extended with six innovation-ecosystem role types.
+Code: \texttt{rolesim/src/rolesim/influence/typology.py}}
+which classifies nodes based on directed information and resource flow patterns.
+The algorithm computes a normalized influence score (0--100) for each node and
+assigns a role type based on degree ratios, betweenness centrality, and flow
+characteristics.
 
-% CAS mechanisms to simulation mapping
+The typology defines 22~role types organized into six functional
+categories:\sidenote{\textbf{22~types}---16 from the original
+\texttt{watch-complexity} library (based on communication and network theory)
+plus 6 extensions for innovation ecosystem contexts: Core Coordinator,
+Boundary Spanner, Knowledge Broker, Resource Mobilizer, Legitimator,
+and Niche Actor.}
+
 \tableminimal
+\begin{center}
 \scriptsize
-\begin{center}
-\begin{tabular}{@{}p{2.5cm}p{5cm}p{5cm}@{}}
+\begin{tabular}{@{}p{2.8cm}p{4.5cm}p{4.5cm}@{}}
 \toprule
-\minimalhead{CAS Mechanism} & \minimalhead{Theoretical Statement} & \minimalhead{Computational Implementation} \\
+\textbf{Category} & \textbf{Role Types} & \textbf{Intermediary Interpretation} \\
 \midrule
-\textbf{Emergence} & Constellation-level patterns arise from agent interactions, not central design & Role types computed from network position (typology module); no role assignments hard-coded \\
+\textbf{Central positions} & Hub, Tophub, Bridge &
+  Core coordinators, boundary spanners between clusters \\
 \addlinespace
-\textbf{Self-organization} & Structure differentiates without external coordination & Agents choose strategies (exploit, explore, bridge, specialize) based on local fitness; no coordinator agent \\
+\textbf{Amplification} & Amplifier, Megamplifier, Vulcano &
+  Knowledge diffusers, accelerators, research producers \\
 \addlinespace
-\textbf{Co-evolution} & Agents and environment mutually adapt & Environment parameters shift based on aggregate agent behavior; agents adapt to environmental conditions \\
+\textbf{Flow control} & Reducer, Dam, Channeler &
+  Gatekeepers, policy filters, grant distributors \\
 \addlinespace
-\textbf{Non-linearity} & Small changes can produce disproportionate effects & Network effects amplify individual actions; threshold dynamics in connection formation \\
+\textbf{Exchange} & Transceiver, Connector, Chain &
+  Bilateral partners, internal coordinators \\
 \addlinespace
-\textbf{Feedback loops} & Reinforcing and balancing dynamics shape outcomes & Resource accumulation (reinforcing); reputation decay (balancing); connection costs (balancing) \\
+\textbf{Terminal} & Emitter, Receiver, Blackhole, Low Emitter,
+  Emitter Branch, Receiver Branch &
+  Sources, sinks, and peripheral actors \\
 \addlinespace
-\textbf{Fitness landscape} & Multi-dimensional viability requirements & Agent fitness = f(influence, resources, reputation, network position); landscape shape is parameterizable \\
+\textbf{Ecosystem} & Core Coordinator, Boundary Spanner,
+  Knowledge Broker, Resource Mobilizer, Legitimator, Niche Actor &
+  Extended types for innovation intermediary contexts \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Translation of CAS mechanisms into computational rules}
-\labtab{cas-computation}
-\end{center}
-\normalsize
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Influence Typology: The Role Classification Engine}
-%═══════════════════════════════════════════════════════════════════════════════
-
-Central to \RoleSim's emergent role classification is a \textbf{ranked influence typology} algorithm that assigns roles based on network position.\sidenote{Based on the \texttt{watch-complexity} library by Davide Miceli (\url{github.com/davidemiceli/watch-complexity}). We adapted the JavaScript implementation to Python for integration with the simulation framework. Role icon visualizations from the original library are included in \texttt{rolesim/docs/img/roles/}.} Rather than assigning roles exogenously, the typology \emph{computes} roles from the pattern of directed, weighted edges---operationalizing the CAS principle that roles emerge from relational structure.
-
-The algorithm analyzes each node's position in information and resource flows, classifying nodes into nineteen influence types organized by flow characteristics:\sidenote{\textbf{Communication theory roots}---The typology draws on social science and communication theory, treating networks as systems of signal transmission, amplification, and reception. Each role type has a distinctive network signature visualized in the library's SVG diagrams.}
-
-% Full 19-role influence typology table
-\tableminimal
-\begin{center}
-\begin{tabular}{@{}p{2.3cm}p{4.2cm}p{4.8cm}@{}}
-\toprule
-\textbf{Role Type} & \textbf{Network Signature} & \textbf{Intermediary Interpretation} \\
-\midrule
-\multicolumn{3}{@{}l}{\textit{\textbf{High-Influence Positions}}} \\
-\addlinespace
-\textbf{Tophub} & Highest centrality, elite position & KIC headquarters, dominant orchestrators \\
-\textbf{Hub} & High centrality, many connections in/out & Core coordinators, regional CLCs \\
-\textbf{Bridge} & High betweenness, connects clusters & Boundary spanners between domains \\
-\addlinespace
-\multicolumn{3}{@{}l}{\textit{\textbf{Amplification Roles}}} \\
-\addlinespace
-\textbf{Megamplifier} & Extreme out-degree amplification & Major media outlets, flagship events \\
-\textbf{Amplifier} & High out-degree relative to in-degree & Knowledge diffusers, accelerators \\
-\textbf{Vulcano} & Very high output, source-like & Research universities, patent generators \\
-\addlinespace
-\multicolumn{3}{@{}l}{\textit{\textbf{Flow Control Roles}}} \\
-\addlinespace
-\textbf{Reducer} & Attenuates signal propagation & Gatekeepers, selective transmitters \\
-\textbf{Dam} & Blocks flow in one direction & Policy filters, approval bodies \\
-\textbf{Channeler} & Directs flow along specific paths & Project managers, grant distributors \\
-\addlinespace
-\multicolumn{3}{@{}l}{\textit{\textbf{Exchange Roles}}} \\
-\addlinespace
-\textbf{Transceiver} & Balanced in/out flow & Hybrid actors, bilateral partners \\
-\textbf{Connector} & Links within network communities & Internal coordinators, liaison offices \\
-\textbf{Chain} & Sequential connection nodes & Pipeline intermediaries \\
-\addlinespace
-\multicolumn{3}{@{}l}{\textit{\textbf{Terminal Roles}}} \\
-\addlinespace
-\textbf{Emitter} & Source node, primarily outgoing & Research producers, idea generators \\
-\textbf{Low emitter} & Limited transmission capacity & Early-stage startups, small actors \\
-\textbf{Emitter branch} & Peripheral transmitting nodes & Specialized consultants \\
-\textbf{Receiver} & Sink node, primarily incoming & Resource absorbers, funding recipients \\
-\textbf{Receiver branch} & Peripheral receiving nodes & End beneficiaries, user organizations \\
-\textbf{Blackhole} & Maximum absorption, no output & Data collection points, archives \\
-\addlinespace
-\multicolumn{3}{@{}l}{\textit{\textbf{Inactive}}} \\
-\addlinespace
-\textbf{Idle} & Minimal network involvement & Dormant members, inactive partners \\
-\bottomrule
-\end{tabular}
-\captionof{table}{The nineteen influence types from the watch-complexity typology, mapped to intermediary role interpretations}
+\captionof{table}[Influence typology categories]{The 22~influence types
+organized by functional category. For practical analysis, related types are
+collapsed into the six categories shown.}
 \labtab{influence-typology}
 \end{center}
 \normalsize
 
-The typology computes a normalized influence score (0--100) for each node, enabling both categorical classification and continuous positioning in role-space. During simulation, roles are \emph{recomputed} periodically as the network evolves---capturing the dynamic, emergent nature of role assignment.
-
-For simulation purposes, we collapse related types into eight primary categories (Hub, Bridge, Amplifier, Emitter, Receiver, Transceiver, Connector, Niche Actor) while preserving the full nineteen-type resolution for detailed analysis.\sidenote{\textbf{Granularity trade-off}---The full typology enables fine-grained analysis; the collapsed categories enable interpretable simulation dynamics. Both views are available in RoleSim outputs.}
-
-\begin{insightbox}[From Network Metrics to Role Meaning]
-The typology bridges network science and organization theory. Network metrics (degree, betweenness, flow ratios) are well-defined computationally; role meanings (broker, diffuser, absorber) carry organizational significance. The mapping enables computational emergence with interpretable outcomes.
-\end{insightbox}
+Crucially, roles are \emph{computed} from network position, not assigned
+exogenously---operationalizing the CAS principle (Chapter~\ref{ch:cas}) that
+roles emerge from relational structure rather than being designed top-down.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Model Architecture}
+\section*{Application to RoleBox Networks}
 %═══════════════════════════════════════════════════════════════════════════════
 
-\RoleSim implements a discrete-time agent-based model \sidecite{gilbert2005simulation,miller2007complex} with three core components:
+The \RoleSim{} pipeline was applied to two networks constructed from
+\RoleBox{} data:\sidenote{Pipeline run: January 2026.
+Code: \texttt{rolesim/scripts/generate\_rolesim\_data.py}.
+A third network (visual, 30~nodes) produced no edges and was excluded.}
 
-\subsection{\faUsers\ Agents: Intermediary Organizations}
+\subsection*{Social Network: Twitter Mentions}
 
-Each agent represents an organization with:\sidenote{See \texttt{agents.py} for implementation details.}
-
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item \textbf{Role type}: Emergent classification from network position (Hub, Bridge, Amplifier, Emitter, Receiver, Transceiver, Connector, Niche Actor)
-\item \textbf{Attributes}: Organization type (university, SME, startup, etc.), domain, size, age
-\item \textbf{Resources}: Capacity for activities and relationship maintenance
-\item \textbf{Reputation}: Accumulated legitimacy and recognition
-\item \textbf{Strategy}: Current behavioral orientation (exploit, explore, bridge, specialize, diversify, imitate)
-\item \textbf{Connections}: Network ties to other agents
-\end{itemize}
-
-\subsection{\faProjectDiagram\ Network: Relational Structure}
-
-The network captures inter-organizational relationships:\sidenote{Initial networks use preferential attachment (Barab\'{a}si-Albert) to generate realistic degree distributions, but can be seeded from empirical data.}
-
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item \textbf{Directed edges}: Asymmetric influence and resource flows
-\item \textbf{Edge weights}: Relationship strength, subject to decay and reinforcement
-\item \textbf{Edge types}: Collaboration, funding, governance (extensible to multi-layer)
-\item \textbf{Dynamic topology}: Edges form, strengthen, weaken, and dissolve based on agent actions
-\end{itemize}
-
-\subsection{\faGlobe\ Environment: Fitness Landscape}
-
-The environment defines the selection pressures agents face:
-
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item \textbf{Resource flows}: Base generation, decay, and transfer dynamics
-\item \textbf{Reputation dynamics}: Gain from network position, decay over time
-\item \textbf{Connection costs}: Resource expenditure for relationship maintenance
-\item \textbf{Policy parameters}: Exogenous conditions (can shift during simulation)
-\end{itemize}
-
-% Architecture diagram
-\begin{center}
-\begin{tikzpicture}[scale=0.9]
-    % Agents box
-    \node[draw, rounded corners, fill=Azure!20, minimum width=4cm, minimum height=2.5cm] (agents) at (-4, 0) {};
-    \node[font=\small\bfseries, text=Azure] at (-4, 1) {AGENTS};
-    \node[font=\scriptsize, align=left, text=Slate] at (-4, 0) {
-        Role type\\
-        Resources\\
-        Reputation\\
-        Strategy
-    };
-
-    % Network box
-    \node[draw, rounded corners, fill=AccentPurple!20, minimum width=4cm, minimum height=2.5cm] (network) at (0, 0) {};
-    \node[font=\small\bfseries, text=AccentPurple] at (0, 1) {NETWORK};
-    \node[font=\scriptsize, align=left, text=Slate] at (0, 0) {
-        Directed edges\\
-        Edge weights\\
-        Topology dynamics\\
-        Role emergence
-    };
-
-    % Environment box
-    \node[draw, rounded corners, fill=Marigold!20, minimum width=4cm, minimum height=2.5cm] (env) at (4, 0) {};
-    \node[font=\small\bfseries, text=Marigold] at (4, 1) {ENVIRONMENT};
-    \node[font=\scriptsize, align=left, text=Slate] at (4, 0) {
-        Fitness landscape\\
-        Resource flows\\
-        Policy parameters\\
-        Selection pressure
-    };
-
-    % Arrows
-    \draw[->, thick, PandaCharcoal] (-2, 0.5) -- (-1.5, 0.5);
-    \draw[->, thick, PandaCharcoal] (-1.5, -0.5) -- (-2, -0.5);
-    \draw[->, thick, PandaCharcoal] (2, 0.5) -- (1.5, 0.5);
-    \draw[->, thick, PandaCharcoal] (1.5, -0.5) -- (2, -0.5);
-
-    % Labels
-    \node[font=\tiny, text=Slate] at (-1.75, 0.8) {actions};
-    \node[font=\tiny, text=Slate] at (-1.75, -0.8) {roles};
-    \node[font=\tiny, text=Slate] at (1.75, 0.8) {structure};
-    \node[font=\tiny, text=Slate] at (1.75, -0.8) {fitness};
-
-    % Time arrow
-    \draw[->, thick, dashed, PandaCharcoal] (-6, -2) -- (6, -2);
-    \node[font=\scriptsize, text=Slate] at (0, -2.3) {Simulation timesteps};
-
-\end{tikzpicture}
-\captionof{figure}{\RoleSim architecture: agents act within a network structure shaped by environmental fitness pressures; roles emerge from network position.}
-\labfig{rolesim-architecture}
-\end{center}
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Simulation Dynamics: One Timestep}
-%═══════════════════════════════════════════════════════════════════════════════
-
-Each simulation timestep executes a sequence reflecting CAS dynamics:\sidenote{See \texttt{environment.py} \texttt{step()} method.}
-
-\begin{enumerate}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Action selection}: Each agent chooses an action based on current strategy and local information (exploit existing ties, explore new connections, bridge to other clusters, specialize within domain, diversify across domains, or imitate successful neighbors).
-
-\item \textbf{Action execution}: Actions modify the network---creating, strengthening, or (through neglect) weakening ties. Actions consume resources.
-
-\item \textbf{Network update}: Edge weights decay; edges below threshold are pruned; maximum connection limits enforced. Network topology evolves.
-
-\item \textbf{Resource update}: Agents receive base generation plus influence-based bonus; resources decay; net accumulation or depletion.
-
-\item \textbf{Reputation update}: Reputation flows through network connections; role-based bonuses for hubs and bridges; natural decay.
-
-\item \textbf{Role reclassification}: Periodically, agent roles are recomputed from current network position using influence typology analysis. Roles \emph{emerge} from structure.
-
-\item \textbf{Strategy adaptation}: Agents evaluate recent performance; poor performers probabilistically switch strategies. Adaptation without central control.
-\end{enumerate}
-
-\begin{importantbox}
-\textbf{Emergence by construction.} No agent is assigned a ``hub'' or ``bridge'' role exogenously. Roles emerge from network position, which emerges from agent actions, which depend on strategies, which adapt to fitness. The causal chain runs bottom-up: micro-level decisions produce meso-level structure.
-\end{importantbox}
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Linking Propositions to Simulation Tests}
-%═══════════════════════════════════════════════════════════════════════════════
-
-Chapter~\ref{ch:cas} derived fifteen propositions from CAS theory. \RoleSim enables \textbf{generative testing} of these propositions---asking whether the mechanisms, when instantiated, produce the predicted patterns:\sidenote{\iconinfo\ This table maps each proposition to specific simulation tests. ``Generative test'' means: does the simulation generate the predicted pattern without being programmed to do so?}
-
-\tableminimal
-\begin{center}
-\begin{tabular}{@{}cp{4.5cm}p{6cm}@{}}
-\toprule
-\textbf{Prop} & \textbf{CAS Prediction} & \textbf{Simulation Test} \\
-\midrule
-P1 & Role multiplicity is the norm & Agents exhibit multi-dimensional role profiles; pure types are rare \\
-P2 & Constellation functions exceed individual roles & System-level metrics emerge not attributable to any single agent \\
-P3 & Emergence accelerates with density & Dense networks differentiate faster than sparse networks \\
-\addlinespace
-P4 & Differentiation without coordination & Role diversity increases without coordinator agent \\
-P5 & Hierarchy from accumulated advantage & Centrality correlates with resources and age, not initial assignment \\
-P6 & Niche formation reduces competition & Role overlap decreases over time as agents specialize \\
-\addlinespace
-P7 & Structure-policy co-evolution & Policy parameter shifts produce structural response; structure affects policy-relevant outputs \\
-P8 & Success alters landscape for others & Knockout experiments: removing successful agents reshapes equilibrium \\
-P9 & Technology trajectory coupling & Technology maturity parameter affects role distribution evolution \\
-\addlinespace
-P10 & Punctuated equilibrium & Time series show episodic restructuring without exogenous shocks \\
-P11 & Small triggers, large effects & Sensitivity analysis reveals bifurcation points \\
-P12 & Path dependence & Different initial conditions produce persistently different outcomes \\
-\addlinespace
-P13 & Reinforcing feedback $\to$ concentration & Resource and influence Gini coefficients increase over time \\
-P14 & Balancing feedback $\to$ diversity & Complete monopolization rare; role diversity floor persists \\
-P15 & Multi-dimensional fitness & Agents optimizing single dimensions less viable than balanced agents \\
-\bottomrule
-\end{tabular}
-\captionof{table}{Mapping propositions to simulation tests}
-\labtab{prop-sim-mapping}
-\end{center}
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Analytical Scenarios}
-%═══════════════════════════════════════════════════════════════════════════════
-
-\RoleSim supports several analytical modes, each designed to illuminate different aspects of constellation dynamics.\sidenote{The \texttt{ScenarioRunner} class enables systematic comparison across scenarios.}
-
-\subsection{\faVial\ Knockout Experiments}
-
-Knockout experiments remove specific agents or agent types and observe how the constellation restructures. This approach reveals system resilience and the degree to which roles are person-dependent versus structurally determined. When the dominant hub exits, does another actor fill the coordination gap, or does the constellation fragment into disconnected clusters? Removing all bridge agents tests whether information continues to flow through alternative pathways or whether communication breaks down across community boundaries. For the EIT specifically, we can ask what would happen if InnoEnergy were absent---how would investment coordination roles redistribute among the remaining KICs?
-
-\subsection{\faBalanceScale\ Policy Scenarios}
-
-Policy scenarios shift environmental parameters to trace how constellations respond to changing conditions. Increasing resource decay rates simulates financial sustainability pressure, allowing us to observe whether roles consolidate around better-resourced actors. Decreasing connection costs models collaboration incentives, revealing whether networks densify when relationship maintenance becomes cheaper. Introducing new entrant agents simulates competition, showing how established niche structures adapt to accommodate newcomers or resist their integration.
-
-\subsection{\faCogs\ Mechanism Isolation}
-
-Mechanism isolation experiments selectively enable or disable specific CAS mechanisms to assess their individual contributions to observed patterns. Running simulations without reputation dynamics reveals how role emergence changes when legitimacy cannot accumulate over time. Disabling strategy adaptation shows what patterns emerge when agents follow fixed behavioral rules rather than learning from experience. Removing preferential attachment tests whether egalitarian initial structures converge toward observed inequality or maintain more distributed influence patterns.
-
-\subsection{\faSlidersH\ Parameter Sweeps}
-
-Parameter sweeps systematically vary key parameters across their feasible ranges to identify sensitivity thresholds and bifurcation points. Sweeping connection decay rates reveals at what values network fragmentation occurs---the critical threshold below which relationships cannot be maintained. Varying resource generation rates identifies where competition-cooperation transitions happen, marking the boundary between resource scarcity (where agents compete) and abundance (where collaboration becomes viable). Adjusting role update frequency shows how reclassification timing affects the speed of emergence---whether frequent updates accelerate differentiation or introduce destabilizing oscillations.
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Parameterization from RoleBox}
-%═══════════════════════════════════════════════════════════════════════════════
-
-\RoleSim is not an arbitrary exploration of parameter space---it is \textbf{grounded in empirical observation}:\sidenote{\textbf{Empirical grounding}---Simulation explores variations on observed reality, not unconstrained possibility space. Initial conditions and parameter ranges are calibrated to EIT data.}
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Initial configurations] Agent populations can be seeded from observed EIT ecosystem composition---organization types, domains, sizes, ages drawn from Crunchbase and Wikipedia data.
-
-\item[Network structure] Initial networks can be generated from empirical collaboration patterns (from news mentions, co-investment data) rather than synthetic topology.
-
-\item[Role distributions] Default role distributions calibrated to observed proportions in EIT data:
+The EIT Twitter mention network captures \emph{who mentions whom} among
+497~actors identified in Chapter~\ref{ch:rolefield}.
+The network is directed (mentions are asymmetric) with 6,075~weighted edges.
 
 \begin{center}
 \scriptsize
-\begin{tabular}{@{}lrlr@{}}
+\begin{tabular}{@{}lrrp{5cm}@{}}
 \toprule
-Role & Proportion & Role & Proportion \\
+\textbf{Role} & \textbf{Count} & \textbf{\%} & \textbf{Interpretation} \\
 \midrule
-Hub & 2\% & Transceiver & 10\% \\
-Bridge & 5\% & Connector & 8\% \\
-Amplifier & 8\% & Niche Actor & 32\% \\
-Emitter & 15\% & Receiver & 20\% \\
+Receiver   & 231 & 46.5 & Actors primarily mentioned \emph{by} others---policy
+  figures, EU institutions, prominent individuals who attract attention
+  without reciprocating \\
+\addlinespace
+Emitter    & 215 & 43.3 & Actors who mention others but are rarely mentioned
+  back---active commentators, smaller organizations seeking visibility \\
+\addlinespace
+Transceiver & 24 &  4.8 & Balanced in/out flow---bilateral partners, KIC
+  offices with reciprocal communication patterns \\
+\addlinespace
+Amplifier  &  16 &  3.2 & High out-degree relative to in-degree---knowledge
+  diffusers, media accounts, event promoters \\
+\addlinespace
+Absorber   &  10 &  2.0 & Maximum absorption, minimal output---data
+  collection accounts, monitoring bots \\
+\addlinespace
+Hub        &   1 &  0.2 & Highest centrality---the single dominant
+  orchestrator in the mention network \\
 \bottomrule
 \end{tabular}
+\captionof{table}[Social network role distribution]{Influence typology applied
+to the EIT Twitter mention network ($n = 497$ actors, 6,075~directed edges).
+The distribution is heavily polarized: nearly 90\% of actors are either pure
+Receivers or pure Emitters.}
+\labtab{rolesim-social}
 \end{center}
 
-\item[Fitness landscape] Landscape shapes derived from observed survival and growth patterns---which role configurations prove viable over the fifteen-year EIT history.
+The striking finding is the network's \textbf{polarization}: 89.8\% of actors
+are either pure Receivers (mentioned but not mentioning) or pure Emitters
+(mentioning but not mentioned). Only 8.2\% occupy exchange or amplification
+roles. A single Hub coordinates the entire field. This mirrors the
+``broadcast'' communication pattern typical of institutional Twitter
+ecosystems---many actors talk \emph{at} prominent figures rather than
+\emph{with} each other.
 
-\item[Environmental parameters] Policy parameters calibrated to documented EIT policy timeline (2010 launch, 2016 financial sustainability mandate, 2021 Strategic Innovation Agenda).
-\end{description}
+\subsection*{Crunchbase Network: Venture Similarity}
 
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Outputs and Metrics}
-%═══════════════════════════════════════════════════════════════════════════════
-
-\RoleSim generates rich output data enabling systematic comparison between simulated dynamics and empirical observations.\sidenote{All metrics can be exported to JSON for further analysis or visualization.}
-
-At the macro level, the simulation tracks \textbf{role evolution}---time series showing how the population of hubs, bridges, amplifiers, and niche actors changes over simulation time. These trajectories reveal whether role distributions converge to stable configurations or continue evolving, and whether particular role types emerge early or late in constellation development.
-
-Standard \textbf{network metrics} including density, clustering coefficient, degree distribution, and centralization provide structural signatures comparable to empirical network snapshots. By comparing simulated network evolution with observed EIT network structure at different time points, we can assess whether the simulation reproduces realistic structural dynamics.
-
-\textbf{Inequality measures}, particularly Gini coefficients for resources and influence, test whether reinforcing feedback produces the predicted concentration patterns. Rising inequality over simulation time would support Proposition 13; persistent diversity despite competition would support Proposition 14.
-
-At the micro level, \textbf{agent trajectories} record individual organizational histories---role transitions, strategy changes, and resource accumulation over time. These traces enable analysis of whether certain starting positions or strategies reliably lead to hub or bridge emergence, or whether path dependence makes outcomes highly sensitive to early contingencies.
-
-Finally, the simulation monitors for \textbf{phase transitions}---discontinuous changes in system-level metrics that signal qualitative restructuring. Detecting such transitions without exogenous shocks would support the punctuated equilibrium prediction (Proposition 10), suggesting that constellations can reorganize spontaneously when internal dynamics cross critical thresholds.
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Demonstration: EIT Mock Network Simulation}
-%═══════════════════════════════════════════════════════════════════════════════
-
-To illustrate \RoleSim in action, we present results from a 100-step simulation using a synthetic EIT-inspired network (50 nodes, 85 edges).\sidenote{Full simulation code: \texttt{notebooks/eit\_simulation\_demo.ipynb}}
-
-\subsection{Baseline Dynamics}
-
-The simulation reveals characteristic CAS patterns:\sidenote{Simulation outputs: \texttt{data/outputs/simulation\_results.json}}
+The Crunchbase network connects 3,000~EIT-sector ventures through
+description embedding similarity (Chapter~\ref{ch:venture}).
+The network is undirected with 2,545~edges, where edges represent ventures
+whose textual descriptions are semantically close.
 
 \begin{center}
 \scriptsize
-\begin{tabular}{@{}lrrr@{}}
+\begin{tabular}{@{}lrrp{5cm}@{}}
 \toprule
-\textbf{Metric} & \textbf{Initial} & \textbf{Final} & \textbf{Change} \\
+\textbf{Role} & \textbf{Count} & \textbf{\%} & \textbf{Interpretation} \\
 \midrule
-Network edges & 85 & 122 & +43\% \\
-Hub actors & 1 & 4 & +3 \\
-Bridge actors & 3 & 6 & +3 \\
-Niche actors & 15 & 9 & -6 \\
-Gini (influence) & 0.35 & 0.54 & +0.19 \\
+Transceiver & 1,699 & 56.6 & Balanced similarity connections---ventures
+  positioned in dense, reciprocal clusters \\
+\addlinespace
+Emitter     &   530 & 17.7 & Ventures similar to many others but not
+  reciprocally matched---generic descriptions \\
+\addlinespace
+Receiver    &   517 & 17.2 & Ventures that others resemble but that
+  themselves are distinctive---niche leaders \\
+\addlinespace
+Absorber    &   117 &  3.9 & Highly generic ventures absorbing similarity
+  from many directions \\
+\addlinespace
+Amplifier   &   113 &  3.8 & Ventures whose descriptions ``radiate''
+  similarity---sector-defining language \\
+\addlinespace
+Bridge      &    18 &  0.6 & Cross-sector connectors linking distinct
+  venture clusters \\
+\addlinespace
+Hub         &     6 &  0.2 & Central ventures with highest overall
+  similarity connectivity \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Baseline simulation outcomes (100 steps)}
-\labtab{sim-baseline}
+\captionof{table}[Crunchbase network role distribution]{Influence typology
+applied to the EIT venture similarity network ($n = 3{,}000$ ventures,
+2,545~undirected edges). The distribution is dominated by Transceivers---most
+ventures occupy reciprocal positions in similarity space.}
+\labtab{rolesim-crunchbase}
 \end{center}
 
-The rising Gini coefficient confirms Proposition 13 (reinforcing feedback $\to$ concentration): as agents accumulate influence through preferential attachment, inequality increases. Yet the system maintains role diversity---no monopolization occurs, consistent with Proposition 14 (balancing feedback $\to$ diversity floor).
+The Crunchbase network shows a fundamentally different structure: 56.6\%
+Transceivers (balanced exchange) versus the social network's 4.8\%.
+This reflects the nature of similarity networks---semantic proximity is
+inherently more symmetric than mention behavior. The 18~Bridges and
+6~Hubs mark ventures that span KIC sector boundaries, connecting
+otherwise distinct clusters (e.g., climate and digital, health and food).
 
-\subsection{Knockout Experiment: What If EIT\_HQ Were Absent?}
 
-Removing the central hub (EIT\_HQ) and rerunning the simulation tests system resilience:
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Cross-Modal Role Comparison}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Comparing role distributions across the two networks reveals how
+\emph{the same ecosystem looks different depending on which relational
+dimension you examine}:\sidenote{\textbf{Modality shapes structure}---The
+social network captures attention and communication; the similarity network
+captures positioning and competitive proximity. Different relational
+dimensions produce different role structures from the same ecosystem.}
 
 \begin{center}
 \scriptsize
 \begin{tabular}{@{}lrr@{}}
 \toprule
-\textbf{Metric} & \textbf{Baseline} & \textbf{Knockout} \\
+\textbf{Role Category} & \textbf{Social (\%)} & \textbf{Crunchbase (\%)} \\
 \midrule
-Final edges & 122 & 103 \\
-Final hub actors & 4 & 3 \\
-New hubs emerged & --- & Yes (3) \\
-Network fragmentation & No & No \\
+Central (Hub/Bridge)     &  0.2 &  0.8 \\
+Amplification            &  3.2 &  3.8 \\
+Exchange (Transceiver)   &  4.8 & 56.6 \\
+Terminal (Emitter/Receiver/Absorber) & 91.8 & 38.8 \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Knockout experiment outcomes}
-\labtab{sim-knockout}
+\captionof{table}[Cross-modal role comparison]{Role category distribution
+across modalities. The social network is polarized (92\% terminal roles);
+the similarity network is balanced (57\% exchange roles).}
+\labtab{rolesim-comparison}
 \end{center}
 
-The system does not collapse---new hub actors emerge to fill the coordination gap. This demonstrates the self-organization mechanism (Proposition 4): the constellation restructures without central coordination, with Climate-KIC and InnoEnergy assuming expanded hub roles.
-
-\begin{insightbox}[Generative Sufficiency Achieved]
-The simulation generates hub emergence, role differentiation, and influence concentration \emph{without being programmed to do so}. These patterns emerge from agent-level rules and network dynamics---demonstrating that CAS mechanisms are sufficient (though not necessarily the only explanation) for the observed patterns.
-\end{insightbox}
+This divergence is itself a finding: the EIT ecosystem's \emph{communication}
+structure is hierarchical and broadcast-oriented, while its
+\emph{positioning} structure is distributed and reciprocal. Actors who are
+peripheral in the mention network may occupy central positions in the
+similarity landscape, and vice versa. The claim--action gap identified in
+Chapter~\ref{ch:interstitial} (what actors say vs.\ what they do) extends
+to a \emph{structure--structure gap}: different relational dimensions
+of the same ecosystem yield different role assignments.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Crunchbase Integration: Enacted Roles in Investment Networks}
-\label{sec:rolesim-crunchbase}
+\section*{Knowledge Graph Integration}
 %═══════════════════════════════════════════════════════════════════════════════
 
-A significant extension bridges \RoleSim with Crunchbase investment data, enabling influence typology analysis on \emph{enacted} resource flow networks.\sidenote{Implementation: \texttt{rolebox-crunchbase/src/crunchbase\_rolesim.py}}
+Beyond dyadic networks, \RoleSim{} constructs a knowledge graph that
+integrates organizational attributes with relational
+structure.\sidenote{Knowledge graph: 11,927~nodes and 33,438~edges
+linking companies to sectors, countries, and clusters.
+Code: \texttt{rolesim/scripts/generate\_kg\_embeddings.py}}
+The graph connects 11,863~companies to 8~KIC sectors, 31~countries, and
+25~embedding clusters through typed edges (sector membership, geographic
+location, cluster assignment, and semantic similarity). This multi-relational
+representation enables queries that cross modality boundaries---for example,
+identifying which country--sector combinations produce the most Bridge actors,
+or whether Hub ventures cluster geographically.
 
-\subsection{From Claimed to Enacted Roles}
 
-While the baseline \RoleSim demonstrates role emergence in synthetic networks, the Crunchbase integration grounds analysis in observed investment behavior:
+%═══════════════════════════════════════════════════════════════════════════════
+\section*{Limitations and Future Directions}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\RoleSim{} in its current form provides \textbf{static classification},
+not dynamic simulation.\sidenote{\textbf{Honest scoping}---The influence
+typology classifies actors at a single point in time. The agent-based
+simulation framework exists as a proof-of-concept on synthetic data but
+does not yet produce emergent role dynamics on real networks. Extending
+the simulation to real data is future work.}
+Several limitations should be noted:
 
 \begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Investor-Company Networks] Directed edges from investors to funded companies, weighted by investment amount. Captures who actually deployed capital to whom.
+\item[Static snapshot] The typology classifies actors at one point in time.
+  Role \emph{dynamics}---how actors move between positions over months or
+  years---require longitudinal network data that the current pipeline does
+  not produce.
 
-\item[Co-Investor Networks] One-mode projection connecting investors through shared portfolio companies. Reveals investment community structure.
+\item[Collapsed categories] The pipeline output uses six collapsed categories
+  (Hub, Bridge, Amplifier, Transceiver, Emitter, Receiver/Absorber) rather
+  than the full 22-type resolution. Finer-grained classification requires
+  denser networks than the current data provide.
 
-\item[Company Similarity Networks] Organizations connected through multi-attribute similarity (sector, geography, funding stage). Complements text-based similarity from website analysis.
+\item[Network construction choices] Role classifications depend on how
+  networks are constructed---similarity thresholds, mention counting
+  methods, edge weighting. Different construction choices would yield
+  different role distributions.
+
+\item[No ground truth] There is no external validation of whether the
+  typology assignments are ``correct.'' Face validity is encouraging
+  (the single Hub in the social network is the most central EIT account;
+  Bridges in Crunchbase span recognizable sector boundaries), but
+  systematic validation remains future work.
 \end{description}
 
-\subsection{Network Construction from Investment Data}
-
-The \texttt{CrunchbaseNetworkBuilder} class constructs networks directly from funding round data:
-
-\begin{center}
-\scriptsize
-\begin{tabular}{@{}p{3cm}p{4cm}p{4cm}@{}}
-\toprule
-\textbf{Network Type} & \textbf{Edge Definition} & \textbf{Role Insight} \\
-\midrule
-Investor $\to$ Company & Funding relationship & Resource provider vs. recipient \\
-Co-investor & Shared investments & Investment community clustering \\
-Similarity & Multi-attribute proximity & Positioning landscape structure \\
-Founder mobility & Shared personnel & Human capital flow patterns \\
-\bottomrule
-\end{tabular}
-\captionof{table}{Network types constructible from Crunchbase data}
-\end{center}
-
-\subsection{Influence Classification on Investment Networks}
-
-Applying the 22-role typology to Crunchbase-derived networks reveals \emph{enacted} rather than \emph{declared} roles:
-
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item \textbf{HUB investors}: High centrality VCs funding many companies across sectors
-\item \textbf{BRIDGE investors}: Cross-KIC connectors linking Climate-KIC and InnoEnergy portfolios
-\item \textbf{AMPLIFIER accelerators}: High out-degree programs distributing resources to many startups
-\item \textbf{RECEIVER startups}: Well-funded companies absorbing capital from multiple sources
-\item \textbf{NICHE ACTORS}: Specialized investors with concentrated, peripheral positions
-\end{itemize}
-
-\subsection{Simulation Scenarios with Real Data}
-
-The integration enables realistic simulation scenarios:
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.2em]
-\item[Hub removal simulation] What happens to EIT investment ecosystem if Sequoia or a16z stops investing in climate tech? The \texttt{EcosystemSimulator} quantifies network fragmentation and role redistribution.
-
-\item[Bridge disruption] What if EIT Climate-KIC stopped co-investing with InnoEnergy? How would cross-sector capital flow change?
-
-\item[Role evolution tracking] Compare role classifications at different time points to track how organizations' enacted positions shift with funding history.
-\end{description}
-
-\begin{insightbox}[Triangulating Enacted and Declared]
-The Crunchbase integration enables direct comparison between roles derived from investment behavior (enacted) and roles claimed on websites (declared). An organization claiming ``leading investor'' status can be validated against actual investment network position. This operationalizes the dissertation's claim-action gap analysis.
-\end{insightbox}
+An agent-based simulation framework (\texttt{rolesim/src/rolesim/simulation/})
+implements the CAS mechanisms from Chapter~\ref{ch:cas}---emergence,
+self-organization, co-evolution, feedback loops---as computational rules.
+Proof-of-concept runs on synthetic networks (50~nodes) demonstrate that
+role differentiation and hub emergence \emph{can} arise from local agent
+interactions without central coordination. Extending these dynamics to the
+real networks presented here---enabling roles to emerge, shift, and
+stabilize over simulated time---is a priority for future development.
 
 
 %═══════════════════════════════════════════════════════════════════════════════
-\section*{Limitations and Honest Boundaries}
-%═══════════════════════════════════════════════════════════════════════════════
-
-\RoleSim is a modeling tool, not a prediction engine \cite{bonabeau2002agent}:\sidenote{\textbf{All models are wrong}---but some are useful. \RoleSim's value lies in exploring mechanism sufficiency and counterfactuals, not predicting specific futures.}
-
-\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
-\item[Simplified agents] Real organizations have complex, contested internal dynamics; simulated agents follow simple behavioral rules. The simplification is deliberate---we test whether simple rules suffice for macro-pattern generation---but limits claims about organizational behavior.
-
-\item[Partial mechanisms] Not all CAS mechanisms are fully implemented. Co-evolution with environment is stylized; technology trajectory coupling is parametric rather than endogenous. Future iterations can add complexity.
-
-\item[Calibration challenges] Mapping empirical observations to simulation parameters involves judgment. Different calibrations could yield different results. We document choices transparently.
-
-\item[Not prediction] Simulation outcomes are \emph{if-then} explorations, not forecasts. ``If these mechanisms operate with these parameters, then these patterns emerge'' is different from ``these patterns will occur.''
-\end{description}
-
-
-%═══════════════════════════════════════════════════════════════════════════════
-\section*{Chapter Summary}
+\section*{Summary}
 %═══════════════════════════════════════════════════════════════════════════════
 
 \begin{summarybox}
-This chapter introduced \RoleSim, an agent-based simulation framework that complements empirical cartography with generative testing. Where \RoleBox maps what \emph{is}, \RoleSim explores what \emph{could be}---testing whether CAS mechanisms suffice to produce observed patterns and examining how constellations might evolve under different conditions.
+This intermezzo introduced \RoleSim, an influence typology tool that
+classifies actors by structural network position. Applied to two \RoleBox{}
+networks, it reveals contrasting role structures: the Twitter mention network
+is polarized (90\% terminal roles, one Hub), while the Crunchbase similarity
+network is distributed (57\% exchange roles, 18~Bridges).
 
-The simulation instantiates all six CAS mechanisms computationally: emergence arises from agent interactions rather than central design; self-organization produces role differentiation without coordination; co-evolution couples agents and environment; non-linearity enables threshold effects and tipping points; feedback loops create both concentration and diversity; and multi-dimensional fitness landscapes shape selection pressures. Importantly, roles emerge from network position rather than being assigned exogenously---structure produces classification, not vice versa.
+The cross-modal comparison demonstrates that role assignments depend on
+which relational dimension is examined---communication versus positioning
+yield different structural portraits of the same ecosystem. This
+\emph{structure--structure gap} complements the claim--action gap identified
+in the empirical chapters, reinforcing the dissertation's central argument
+that multimodal analysis is necessary because no single perspective captures
+the full constellation.
 
-The framework supports four analytical modes: knockout experiments that test system resilience; policy scenarios that explore responses to changing conditions; mechanism isolation that assesses individual contributions; and parameter sweeps that identify sensitivity thresholds. All scenarios are grounded in empirical observation through calibration to \RoleBox data, ensuring that simulation explores variations on observed EIT reality rather than arbitrary parameter space.
-
-The Crunchbase integration extends the framework to enacted roles, enabling influence typology analysis on actual investment networks. This creates a powerful triangulation capability: comparing roles derived from investment behavior (what organizations \emph{do}) with roles claimed on websites (what organizations \emph{say}). Such comparisons operationalize the claim-action gap analysis central to this dissertation's multimodal approach.
-
-\RoleSim is a modeling tool, not a prediction engine. Its value lies in exploring mechanism sufficiency and counterfactuals---demonstrating that observed patterns \emph{can} emerge from CAS dynamics, even if other explanations remain possible.
+The influence typology provides a reusable \textbf{DSR artifact}: a
+computational workflow (Curation~$\to$ network construction~$\to$
+typology classification~$\to$ role distribution) that can be applied
+to any network derived from textual data. As such, it instantiates
+Meta-Design Requirement~1 (systematic data transformation) and
+contributes to the reproducible toolkit that this dissertation develops.
 \end{summarybox}
 
 \closeintermezzo
