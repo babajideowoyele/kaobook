@@ -422,6 +422,21 @@ The triangulation of internal and external perspectives suggests that KICs' inte
 
 Future research might extend this approach temporally, tracking how field structure evolves as the EIT ecosystem matures. Comparative application to other innovation intermediary ecosystems would test whether the structural patterns identified here are specific to EIT or characteristic of innovation intermediaries more broadly.
 
+\subsection{Design Knowledge Contribution}
+\labsec{rolefield:designknowledge}
+
+Beyond its empirical scope, this chapter contributes three transferable design principles for workflows that use social trace data to map innovation field structure and validate role configurations:
+
+\begin{description}
+    \item[DP-S1: Co-classification as field boundary construction.] Using Twitter list co-membership as an implicit classification act---following the same accounts signals perceived relevance---defines field boundaries from behavioral trace data rather than organizational self-reports or analyst judgment. This operationalizes MDR-1 (multi-source integration): field membership emerges from collective behavior across thousands of external observers.
+
+    \item[DP-S2: External validation through community structure.] Louvain community detection on mention networks provides external validation for internally-derived sociotypes (Ch.5). Where communities align with sociotypes, role claims are externally confirmed as enacted; where they diverge, the gap reveals the difference between claimed and performed roles. This cross-modal validation logic is transferable to any setting where role claims and network behavior can both be measured.
+
+    \item[DP-S3: Multi-granularity community detection.] Detecting communities at multiple resolution levels (96 micro-communities, 8 major clusters, 10 thematic sub-regions) enables simultaneous analysis at ecosystem, KIC, and actor levels. Designing workflows with explicit resolution parameters allows researchers to choose the analytical grain appropriate to their research question without re-collecting data.
+\end{description}
+
+Together these principles demonstrate that relational data from social media platforms---inherently produced for non-research purposes---can be curated and analyzed to generate field-level structural maps that are methodologically triangulable with organizational self-presentation data.
+
 
 %═══════════════════════════════════════════════════════════════════════════════
 \section{Empirical Analysis: Twitter Mention Networks}[Twitter Networks]
@@ -787,25 +802,26 @@ The actor heterogeneity (42\% individuals, 26\% corporations, 12\% startups/SMEs
 \section{Chapter Summary}
 %═══════════════════════════════════════════════════════════════════════════════
 
-\begin{summarybox}
-\begin{itemize}[leftmargin=*, itemsep=0.3em]
-\item \textbf{Social curation} methods leverage external classification acts to map field structure without predetermined boundaries.
-
-\item \textbf{Ten sub-regions} characterize the European innovation intermediary field: Climate \& Sustainability, Digital \& Tech, Health, EU Policy, Higher Education, Impact, Food, Urban, Venture Capital, and Corporate Innovation.
-
-\item \textbf{Twitter mention analysis} of 268,309 tweets reveals a 65,046-actor network with strong community structure (modularity = 0.64) and 96 communities.
-
-\item \textbf{Climate-KIC dominance}: 39\% of mentions target Climate-KIC accounts, reflecting its scale, thematic breadth, and social media activity.
-
-\item \textbf{KIC subnetworks} vary in size and density---Climate-KIC largest (9,824 actors), RawMaterials most cohesive (density 0.00112).
-
-\item \textbf{Bridging actors} at categorical intersections (circular economy, climate) perform cross-community connection.
-
-\item \textbf{Temporal growth} peaked in 2018, corresponding to ecosystem maturation as newer KICs joined.
-
-\item \textbf{Triangulation} between internal sociotypes and external engagement patterns validates that Connective roles are \textit{performed} through cross-community bridging.
-\end{itemize}
-\end{summarybox}
+% Findings summary temporarily commented out; see Design Knowledge Contribution (Section~\ref{sec:rolefield:designknowledge})
+%\begin{summarybox}
+%\begin{itemize}[leftmargin=*, itemsep=0.3em]
+%\item \textbf{Social curation} methods leverage external classification acts to map field structure without predetermined boundaries.
+%
+%\item \textbf{Ten sub-regions} characterize the European innovation intermediary field: Climate \& Sustainability, Digital \& Tech, Health, EU Policy, Higher Education, Impact, Food, Urban, Venture Capital, and Corporate Innovation.
+%
+%\item \textbf{Twitter mention analysis} of 268,309 tweets reveals a 65,046-actor network with strong community structure (modularity = 0.64) and 96 communities.
+%
+%\item \textbf{Climate-KIC dominance}: 39\% of mentions target Climate-KIC accounts, reflecting its scale, thematic breadth, and social media activity.
+%
+%\item \textbf{KIC subnetworks} vary in size and density---Climate-KIC largest (9,824 actors), RawMaterials most cohesive (density 0.00112).
+%
+%\item \textbf{Bridging actors} at categorical intersections (circular economy, climate) perform cross-community connection.
+%
+%\item \textbf{Temporal growth} peaked in 2018, corresponding to ecosystem maturation as newer KICs joined.
+%
+%\item \textbf{Triangulation} between internal sociotypes and external engagement patterns validates that Connective roles are \textit{performed} through cross-community bridging.
+%\end{itemize}
+%\end{summarybox}
 
 \vspace{0.5em}
 \begin{replicationbox}[Data \& Code Availability]

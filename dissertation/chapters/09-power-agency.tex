@@ -844,19 +844,35 @@ Several limitations qualify our findings:\sidenote{Connotation frames are contex
 
 This chapter applied verb-based connotation frame analysis to examine power and agency dynamics in EIT Knowledge and Innovation Community discourse.\marginnote{By examining \textit{how} innovation actors are linguistically positioned, we reveal the implicit power structures that explicit mission statements may obscure.} From 1,273 documents we extracted 23,781 raw Agent-Verb-Theme triples; after a three-stage entity quality pipeline, 9,723 clean relations across 813 substantive entity profiles and 795 unique verbs remained for analysis.
 
-\subsection{Summary of Findings}
+% Summary of Findings temporarily commented out; see Design Knowledge Contribution below
+%\subsection{Summary of Findings}
+%
+%Our analysis revealed:
+%
+%\begin{enumerate}
+%    \item \textbf{Institutional power dominance}: Institutional actors (EIT, Commission, specific KICs) are positioned with high agency (0.67--0.86) and power (0.30--0.50); actor categories like ``Startups'' ($-0.14$) and ``Partners'' ($-0.22$) carry negative power
+%
+%    \item \textbf{Startups and Partners as subordinates}: ``Startups'' show negative power ($-0.139$) and low agency (0.222); ``Partners'' combine high agency (0.621) with negative power ($-0.224$)---active but subordinate
+%
+%    \item \textbf{Moderate cross-KIC variation}: All KICs share a common institutional discourse template (power range 0.27--0.37), with differentiation in agency and buildup framing (Health highest buildup at 0.148)
+%
+%    \item \textbf{Characteristic verb asymmetries}: High-power verbs ``publish,'' ``develop,'' ``provide'' ($n$=200--155); low-power verbs ``announce,'' ``receive,'' ``need'' ($n$=126--92)---encoding provision-dependency hierarchies
+%\end{enumerate}
 
-Our analysis revealed:
+\subsection{Design Knowledge Contribution}
+\labsec{power:designknowledge}
 
-\begin{enumerate}
-    \item \textbf{Institutional power dominance}: Institutional actors (EIT, Commission, specific KICs) are positioned with high agency (0.67--0.86) and power (0.30--0.50); actor categories like ``Startups'' ($-0.14$) and ``Partners'' ($-0.22$) carry negative power
+Beyond its empirical scope, this chapter contributes three transferable design principles for cartographic workflows that extract power and agency signals from institutional discourse at scale:
 
-    \item \textbf{Startups and Partners as subordinates}: ``Startups'' show negative power ($-0.139$) and low agency (0.222); ``Partners'' combine high agency (0.621) with negative power ($-0.224$)---active but subordinate
+\begin{description}
+    \item[DP-N1: Embedding-extended lexicon for full corpus coverage.] Augmenting the Sap et al.\ connotation frame lexicon (2,148 verbs) with domain-specific entries identified through sentence-transformer cosine similarity to seed verbs demonstrates a reproducible approach to lexicon extension without requiring full manual annotation. Achieving 100\% coverage of corpus verbs---a hard requirement for unbiased entity-level scoring---validates the embedding-based extension as an operationalization of MDR-2 (theory-guided operationalization) that scales with corpus size.
 
-    \item \textbf{Moderate cross-KIC variation}: All KICs share a common institutional discourse template (power range 0.27--0.37), with differentiation in agency and buildup framing (Health highest buildup at 0.148)
+    \item[DP-N2: Three-stage entity quality pipeline.] The sequential quality pipeline---pronoun and noise filtering, then NER whitelist validation, then LLM-assisted entity type classification (925 raw profiles reduced to 813 substantive entities)---demonstrates that entity recognition quality is as consequential as triple extraction quality for downstream power and agency scores. Investing in quality infrastructure before analysis, rather than post-hoc filtering, operationalizes MDR-3 (scalable automation) while preserving the interpretive validity of entity-level claims.
 
-    \item \textbf{Characteristic verb asymmetries}: High-power verbs ``publish,'' ``develop,'' ``provide'' ($n$=200--155); low-power verbs ``announce,'' ``receive,'' ``need'' ($n$=126--92)---encoding provision-dependency hierarchies
-\end{enumerate}
+    \item[DP-N3: LLM--human hybrid annotation.] Using Claude for entity type classification combined with human spot-checking (100 sampled triples, 193 gold-standard articles) demonstrates a cost-efficient architecture for large-scale entity typing. This hybrid approach operationalizes MDR-3: fully manual annotation at 9,723-triple scale is infeasible; fully automated annotation without validation produces systematic errors. The hybrid achieves both coverage and quality.
+\end{description}
+
+Together, these principles demonstrate that journalistic corpora---produced without research intent---can be curated into precision-scored actor portraits that reveal the power architecture of innovation ecosystems invisible to self-report and network analysis alone.
 
 \subsection{Implications}
 

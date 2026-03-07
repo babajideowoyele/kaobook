@@ -7,6 +7,9 @@
 \labch{interstitial}
 \margintoc
 
+% Part reading guide margin note commented out (overlaps with margintoc)
+%\marginnote{\footnotesize\textbf{Part~II} --- \textit{Data-Driven, Theory-Guided Workflows.}\\ Five IS bridging demonstrations \parencite{maass2018data}. Each modality is a distinct material infrastructure with its own affordances and constraints --- not a neutral window onto the same underlying reality but a different sociomaterial co-constitution of which aspects of role-taking become visible \parencite{orlikowski2008sociomateriality}. Presented sequentially; built iteratively.}
+
 \begin{chapteroverview}
 This chapter catalogues the positioning and sociotypes of EIT actor websites, developing an integrated analysis of how innovation intermediaries navigate institutional plurality. First, we map \textit{interstitial positioning}---how EIT Communities locate themselves in the cultural space between education, research, and business domains. Second, we introduce \textit{sociotypes}---fluid relational configurations through which intermediaries enact and sustain interstitial positions. Together, these analyses reveal that EIT Communities are not merely ``between'' institutional domains but actively constitute interstitial space through distinctive patterns of role enactment.
 \end{chapteroverview}
@@ -835,29 +838,44 @@ For practitioners and policymakers, this analysis offers diagnostic value. Under
 
 The broader ambition is a structural sociology of relational plurality---one that takes seriously the patterned character of plural environments while resisting the temptation to treat patterns as fixed, bounded, and inherently conflictual.\sidenote{\textbf{Constitution}---organizations do not merely \textit{respond to} plurality; they \textit{constitute} it through the relational configurations they enact.} Organizations do not merely respond to plurality; they constitute it through the relational configurations they enact. Understanding those configurations is essential to understanding contemporary organizational life.
 
+\subsection{Design Knowledge Contribution}
+\labsec{interstitial:designknowledge}
+
+Beyond its empirical results, this chapter contributes three transferable design principles for multimodal cartography workflows that map discursive positioning and relational role configurations from organizational self-presentations:
+
+\begin{description}
+    \item[DP-W1: Vocabulary-guided field mapping.] Applying a theory-derived lexicon (343 KT terms spanning education, research, and business registers) to organizational self-presentations enables scalable discursive positioning without requiring manual annotation of full corpora. The operationalization demonstrates MDR-2 (theory-guided operationalization): substantive theory directly shapes which signals are counted, ensuring that measurement remains interpretively grounded.
+
+    \item[DP-W2: Role triple extraction as relational curation.] Extracting Agent--Verb--Object triples from website text and projecting them onto shared role vocabulary objects constructs relational representations from inherently non-relational sources. This operationalizes MDR-1 (multi-source integration) at the organizational level, enabling network analysis on corpora that contain no explicit relational data.
+
+    \item[DP-W3: Network-derived typology construction.] Deriving sociotype categories through community detection on role co-occurrence networks---rather than imposing a priori role labels---enables field-specific role configurations to emerge from the data. The resulting sociotype taxonomy is more parsimonious than deductively imposed categories and captures configurations (e.g., the Accountability sociotype's peripheral position) invisible to predefined classification schemes.
+\end{description}
+
+Together, these principles demonstrate that website corpora---typically treated as qualitative case material---can serve as the foundation for scalable, replicable cartographic workflows that reveal both discursive positioning and relational role structure simultaneously.
 
 %═══════════════════════════════════════════════════════════════════════════════
 \section{Chapter Summary}
 %═══════════════════════════════════════════════════════════════════════════════
 
-\begin{summarybox}
-\textbf{Interstitial Positioning}
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item EIT Communities occupy \textbf{interstitial positions} in the knowledge triangle, drawing from education, research, and business discourses
-\item Positioning \textbf{tilts toward business} (43\% average), with research (32\%) and education (25\%) receiving less emphasis
-\item Substantial \textbf{cross-KIC variation}: from business-dominant (Digital, Manufacturing) to research-tilted (RawMaterials) to balanced (Urban Mobility)
-\end{itemize}
-
-\vspace{0.5em}
-\textbf{Interstitial Sociotypes}
-\begin{itemize}[leftmargin=*, itemsep=0.2em]
-\item \textbf{Sociotypes} are fluid relational configurations---stable enough to recognize, fluid enough to blend---defined by structural position rather than essential properties
-\item \textbf{Five sociotypes} characterize EIT: Connective (central), Acceleration, Development, Knowledge, and Accountability (peripheral)
-\item \textbf{Multivocal categories} like ``partners'' create interfaces between sociotypes, enabling strategic ambiguity
-\item The \textbf{Connective sociotype} serves as integrative tissue, bridging configurations that might otherwise remain separate
-\item The \textbf{Accountability sociotype} remains peripheral, suggesting separation between public accountability and operational activities
-\end{itemize}
-\end{summarybox}
+% Findings summary temporarily commented out; see Design Knowledge Contribution above
+%\begin{summarybox}
+%\textbf{Interstitial Positioning}
+%\begin{itemize}[leftmargin=*, itemsep=0.2em]
+%\item EIT Communities occupy \textbf{interstitial positions} in the knowledge triangle, drawing from education, research, and business discourses
+%\item Positioning \textbf{tilts toward business} (43\% average), with research (32\%) and education (25\%) receiving less emphasis
+%\item Substantial \textbf{cross-KIC variation}: from business-dominant (Digital, Manufacturing) to research-tilted (RawMaterials) to balanced (Urban Mobility)
+%\end{itemize}
+%
+%\vspace{0.5em}
+%\textbf{Interstitial Sociotypes}
+%\begin{itemize}[leftmargin=*, itemsep=0.2em]
+%\item \textbf{Sociotypes} are fluid relational configurations---stable enough to recognize, fluid enough to blend---defined by structural position rather than essential properties
+%\item \textbf{Five sociotypes} characterize EIT: Connective (central), Acceleration, Development, Knowledge, and Accountability (peripheral)
+%\item \textbf{Multivocal categories} like ``partners'' create interfaces between sociotypes, enabling strategic ambiguity
+%\item The \textbf{Connective sociotype} serves as integrative tissue, bridging configurations that might otherwise remain separate
+%\item The \textbf{Accountability sociotype} remains peripheral, suggesting separation between public accountability and operational activities
+%\end{itemize}
+%\end{summarybox}
 
 \vspace{0.5em}
 \begin{replicationbox}[Data \& Code Availability]

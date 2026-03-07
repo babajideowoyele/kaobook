@@ -40,8 +40,8 @@
 % Subfiles for modular chapters
 \usepackage{subfiles}
 
-% Font configuration (EB Garamond - classic serif font)
-\usepackage[ebgaramond]{kaofonts}
+% Font configuration (Fira Sans Light - lighter weight sans-serif)
+\usepackage[firasanslight]{kaofonts}
 
 % Custom RoleBox styling (colors, environments, icons)
 \usepackage{kaoci-rolebox}
@@ -213,11 +213,11 @@
 \setlength{\mtocshift}{-4.5\vscale}
 
 %========================================================================================
-% PART I: FOUNDATIONS
+% PART I: PROBLEM, THEORY, AND DATA REQUIREMENTS
 %========================================================================================
 \ifdefined\FOCUSMODE
     % FOCUS MODE: Only compile core chapters for faster iteration
-    \part{Foundations}
+    \part{Problem, Theory, and Data Requirements}
     \chapterdivider{ch1-introduction}
     \subfile{dissertation/chapters/01-introduction}
     \chapterdivider{intermezzo}
@@ -229,7 +229,7 @@
     \chapterdivider{ch4-methodology}
     \subfile{dissertation/chapters/04-role-constellations}
 
-    \part{Empirical Studies}
+    \part{Data-Driven, Theory-Guided Workflows}
     \chapterdivider{ch5-eit-case}
     \subfile{dissertation/chapters/05-interstitial-pluralism}
     \chapterdivider{ch6-websites}
@@ -246,7 +246,7 @@
     % Visual Abstract (unnumbered, before Part I)
     \subfile{dissertation/chapters/00-visual-abstract}
 
-    \part{Foundations}
+    \part{Problem, Theory, and Data Requirements}
 
     \chapterdivider{ch1-introduction}
     \subfile{dissertation/chapters/01-introduction}
@@ -281,9 +281,9 @@
     % \endintermezzo
 
     %========================================================================================
-    % PART II: EMPIRICAL STUDIES
+    % PART II: DATA-DRIVEN, THEORY-GUIDED WORKFLOWS
     %========================================================================================
-    \part{Empirical Studies}
+    \part{Data-Driven, Theory-Guided Workflows}
 
     \chapterdivider{ch5-eit-case}
     \subfile{dissertation/chapters/05-interstitial-pluralism}
@@ -304,9 +304,9 @@
     \subfile{dissertation/chapters/09-power-agency}
 
     %========================================================================================
-    % PART III: SYNTHESIS AND CONCLUSIONS
+    % PART III: SYNTHESIS AND DESIGN KNOWLEDGE
     %========================================================================================
-    \part{Synthesis and Conclusions}
+    \part{Synthesis and Design Knowledge}
 
     \chapterdivider{ch10-visual}
     \subfile{dissertation/chapters/10-synthesis}
