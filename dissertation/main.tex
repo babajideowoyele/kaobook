@@ -88,7 +88,7 @@
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
-\usepackage{kaobiblio}
+\usepackage[style=numeric]{kaobiblio}
 \addbibresource{dissertation/references.bib}
 
 %----------------------------------------------------------------------------------------
@@ -208,9 +208,8 @@
 %----------------------------------------------------------------------------------------
 \mainmatter
 \setchapterstyle{kao}
-% Adjust margin TOC vertical position to prevent bleeding
+% Adjust margin TOC vertical position
 % The kao chapter style sets \mtocshift to -3.5\vscale by default.
-% We use a moderate adjustment to balance between bleeding prevention and proper positioning.
 \setlength{\mtocshift}{-4.5\vscale}
 
 %========================================================================================
@@ -295,10 +294,8 @@
     \chapterdivider{ch7-twitter}
     \subfile{dissertation/chapters/07-venture-positioning}
 
-    \beginintermezzo
     \chapterdivider{ch-rolesim}
     \subfile{dissertation/intermezzos/rolesim}  % RoleSim chapter - agent-based modeling
-    \endintermezzo
 
     \chapterdivider{ch8-news}
     \subfile{dissertation/chapters/08-visual-registers}

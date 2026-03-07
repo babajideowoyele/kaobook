@@ -588,9 +588,9 @@
         {\color{AccentPurple}\rule{2cm}{2pt}}
     \end{center}
     \vspace{1.5cm}
-    % Add to TOC as a special entry (indented, italic, at chapter level but unnumbered)
+    % Add to TOC as a special entry (italic, at chapter level but unnumbered)
     \addtocontents{toc}{\protect\vspace{0.3em}}%
-    \addtocontents{toc}{\protect\contentsline{chapter}{\protect\numberline{}\protect\textit{Intermezzo: #1}}{\thepage}{}}%
+    \addtocontents{toc}{\protect\contentsline{chapter}{\protect\textit{Intermezzo: #1}}{\thepage}{}}%
     \addtocontents{toc}{\protect\vspace{0.3em}}%
 }
 
@@ -677,6 +677,71 @@
     }%
     \RedeclareSectionCommand[beforeskip=0cm,afterskip=10\vscale]{chapter}%
     \setlength{\mtocshift}{-3.5\vscale}%
+}
+
+%========================================================================================
+% FIX MARGIN TOC BLEEDING TO THE RIGHT
+%========================================================================================
+% The upstream kao.sty \margintoc uses ragged2e's \RaggedRight, which sets an
+% internal \@rightskip that can interfere with the explicit \rightskip used to
+% reserve space for page numbers.  Combined with \rlap for page numbers, this
+% can cause margin TOC entries to extend past the margin column boundary.
+%
+% Fix: redefine \margintoc using primitive \raggedright (no \@rightskip issue)
+% and wrap content in an explicit \marginparwidth minipage for safety.
+\RenewDocumentCommand{\margintoc}{O{\mtocshift}}{%
+	\begingroup%
+		\etocsetlevel{section}{6}%
+		\etocsetlevel{subsection}{6}%
+		\etocsetlevel{mtocsection}{1}%
+		\etocsetlevel{mtocsubsection}{2}%
+		%
+		\def\margintocnumwidth{-.8mm}%
+		\def\margintocpagenumwidth{8pt}%
+		\setlength{\RaggedRightParfillskip}{0pt}%
+		%
+		% Dry run to get the needed widths
+		\etocsetstyle{mtocsection}%
+			{}%
+			{\setbox0\hbox{{\usekomafont{section}\small\etocthenumber\kern.8mm}}%%
+			 \setbox1\hbox{{\usekomafont{section}\small\etocthepage}}}%
+			{\ifdim\wd0>\margintocnumwidth \edef\margintocnumwidth{\the\wd0} \fi%%
+			 \ifdim\wd1>\margintocpagenumwidth \edef\margintocpagenumwidth{\the\wd1} \fi}%
+			{}%
+		\etocsetstyle{mtocsubsection}%
+			{}%
+			{\setbox0\hbox{{\usekomafont{section}\small\mdseries\etocthenumber\kern.8mm}}%
+			 \setbox1\hbox{{\usekomafont{section}\small\mdseries\etocthepage}}}%
+			{\ifdim\wd0>\margintocnumwidth \edef\margintocnumwidth{\the\wd0} \fi%
+			 \ifdim\wd1>\margintocpagenumwidth \edef\margintocpagenumwidth{\the\wd1} \fi}%
+			{}%
+		\etocsetstyle{subsubsection}{}{}{}{}%
+		\etocsetstyle{paragraph}{}{}{}{}%
+		\etocsettocstyle{}{%
+			\global\let\margintocnumwidth\margintocnumwidth%
+			\global\let\margintocpagenumwidth\margintocpagenumwidth%
+		}%
+		\localtableofcontents%
+		%
+		% Set the style for section entries — use \raggedright instead of \RaggedRight
+		\etocsetstyle{mtocsection}%
+		{\parindent 0pt \parskip 2.5pt \parfillskip 0pt \raggedright}%
+		{\leftskip \margintocnumwidth \rightskip \margintocpagenumwidth}%
+		{\makebox[0pt][r]{\makebox[\margintocnumwidth][l]{\etocnumber}}\etocname\nobreak\leaders\hbox{\hbox to 1.5ex {\hss.\hss}}\hfill\rlap{\makebox[\margintocpagenumwidth][r]{\etocpage}}\par}%
+		{}%
+		% Set the style for subsection entries
+		\etocsetstyle{mtocsubsection}%
+		{\parindent 0pt \parskip 0pt \parfillskip 0pt \raggedright}%
+		{\leftskip \margintocnumwidth \rightskip \margintocpagenumwidth}%
+		{\makebox[0pt][r]{\makebox[\margintocnumwidth][l]{\mdseries\etocnumber}}{\mdseries\etocname\nobreak\leaders\hbox{\hbox to 1.5ex {\hss.\hss}}\hfill\rlap{\makebox[\margintocpagenumwidth][r]{\mdseries\etocpage}}}\par}%
+		{\parskip 2.5pt}%
+		% Set the global style
+		\etocsettocstyle{\usekomafont{section}\small}{}%
+		\etocsetnexttocdepth{\themargintocdepth}%
+		% Print the TOC in the margin — explicit minipage constrains width
+		\marginnote[#1]{\begin{minipage}[t]{\marginparwidth}\localtableofcontents\end{minipage}}%
+		\FloatBarrier%
+	\endgroup%
 }
 
 %========================================================================================
