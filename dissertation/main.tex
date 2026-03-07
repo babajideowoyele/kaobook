@@ -107,6 +107,8 @@
 %----------------------------------------------------------------------------------------
 % ADDITIONAL PACKAGES
 %----------------------------------------------------------------------------------------
+% Increase float queue from 18 to 36 (prevents "Float(s) lost" with many sidenotes)
+\usepackage{morefloats}
 \usepackage{listings}
 % fontawesome5 already loaded by kaoci-rolebox
 
@@ -147,6 +149,26 @@
 
 % Margin TOC depth
 \setcounter{margintocdepth}{1}
+
+%========================================================================================
+% FIX KAOBOOK FLOAT(S) LOST WITH FIRA SANS LIGHT
+%========================================================================================
+% Fira Sans Light produces slightly different page breaks than EB Garamond, causing
+% sidenote floats (marginpars) to queue up and get lost at \clearpage.
+% Fix: globally override \marginnote to always use the non-float \oldmarginnote path,
+% preventing sidenotes from being deferred to pages where they can't fit.
+% Visual effect: notes appear exactly at their anchor position (no page-float offset).
+\makeatletter
+\AtBeginDocument{%
+    \RenewDocumentCommand\marginnote{ o m }{%
+        \IfNoValueOrEmptyTF{#1}{%
+            \oldmarginnote{#2}%
+        }{%
+            \oldmarginnote{#2}[\kao@if@nblskip{#1}{\@cdr#1\@nil\baselineskip}{#1}]%
+        }%
+    }%
+}
+\makeatother
 
 %========================================================================================
 % FIX KAOBOOK CAPTION RECURSION
