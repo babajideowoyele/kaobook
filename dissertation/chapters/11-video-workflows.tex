@@ -3,7 +3,7 @@
 
 \begin{document}
 
-\chapter{Workflows for Video: From Privacy-Preserving Masking to Behavioral Discovery}
+\chapter{Video Cartography: From Privacy-Preserving Masking to Behavioral Discovery}
 \labch{video}
 \margintoc
 
@@ -29,6 +29,8 @@ Yet video remains systematically underexploited in computational social science.
 
 This chapter addresses all three barriers through a series of three computational artifacts---each a workflow in the sense developed throughout this dissertation---that collectively demonstrate how the Maass bridging methodology extends from text and images to audio-visual data. The artifacts form a \textbf{DSR design cycle}: each iteration addresses limitations discovered in the previous, producing progressively more capable and general-purpose infrastructure for video-based social science research.
 
+These three artifacts are not hypothetical or illustrative. They are \textbf{peer-reviewed, published, and open-source contributions} developed in interdisciplinary collaboration across the Hasso Plattner Institute for Digital Engineering (Potsdam), the Donders Centre for Cognition at Radboud University (Nijmegen), and the Max Planck Institute for Psycholinguistics (Nijmegen).\sidenote{The collaboration spans two distinct research traditions---Information Systems (HPI) and cognitive/behavioral science (Donders, MPI)---which is itself a demonstration that workflow-centric DSR is a domain-crossing methodology.} Their publication at a flagship software journal (\textit{SoftwareX}), the premier IS conference (ICIS), and a flagship psychology journal (\textit{American Psychologist}) attests to the legitimacy and impact of this line of work across disciplinary communities.
+
 Three research questions guide the chapter:
 
 \begin{enumerate}
@@ -37,22 +39,26 @@ Three research questions guide the chapter:
     \item \textbf{RQ3}: What \textit{transferable design knowledge} emerges from iterating across three video workflow artifacts, and what does this transferability demonstrate about the generality of workflow-centric DSR?
 \end{enumerate}
 
-\begin{replicationbox}[Computational Artifacts]
-\faLaptopCode\ \textbf{Masked-Piper} (\texttt{github.com/WimPouw/TowardsMultimodalOpenScience}):
-\begin{itemize}[leftmargin=*, itemsep=0.1em]
-    \item Open-source single-person video masking tool using MediaPipe
-    \item Published: \textcite{owoyele2022maskedpiper}
-\end{itemize}
-\faLaptopCode\ \textbf{MaskAnyone Toolkit} (\texttt{github.com/MaskAnyone/MaskAnyone}):
-\begin{itemize}[leftmargin=*, itemsep=0.1em]
-    \item Scalable multi-person de-identification platform with face-swapping and voice alteration
-    \item Published: \textcite{owoyele2024maskanyone}
-\end{itemize}
-\faLaptopCode\ \textbf{AMP Pipeline} (\texttt{anonymous.4open.science/w/InterPerDynPipeline-347F}):
-\begin{itemize}[leftmargin=*, itemsep=0.1em]
-    \item End-to-end pipeline: YOLOv8 pose estimation $\rightarrow$ time series analysis $\rightarrow$ privacy-aware archiving
-    \item Under review: \textcite{owoyele2025amppipeline}
-\end{itemize}
+\begin{replicationbox}[Publications from this Chapter]
+\textbf{Three peer-reviewed open-science contributions}, developed with colleagues at HPI Potsdam, Donders Centre (Radboud), and MPI for Psycholinguistics.
+
+\medskip
+\faLaptopCode\ \textbf{Masked-Piper} \hfill \textit{SoftwareX 20, 101236 (2022)}\\
+Masking personal identities in visual recordings while preserving multimodal information\\
+\textit{Owoyele, Trujillo, de Melo \& Pouw} \parencite{owoyele2022maskedpiper}\\
+\faGithub\ \texttt{github.com/WimPouw/TowardsMultimodalOpenScience}
+
+\medskip
+\faLaptopCode\ \textbf{MaskAnyone Toolkit} \hfill \textit{ICIS 2024, Bangkok --- Completed Research}\\
+Strategies for minimizing privacy risks and maximizing utility in audio-visual data archiving\\
+\textit{Owoyele, Schilling, Sawahn, Kaemer, Zherebenkov, Verma, Pouw \& de Melo} \parencite{owoyele2024maskanyone}\\
+\faGithub\ \texttt{github.com/MaskAnyone/MaskAnyone}
+
+\medskip
+\faLaptopCode\ \textbf{AMP Pipeline} \hfill \textit{American Psychologist --- Special Issue (under review)}\\
+An open-source standardized pipeline for equitable observations of interactive behavioral dynamics\\
+\textit{Owoyele, Pouw et al.} \parencite{owoyele2025amppipeline}\\
+\faCode\ \texttt{anonymous.4open.science/w/InterPerDynPipeline-347F}
 \end{replicationbox}
 
 

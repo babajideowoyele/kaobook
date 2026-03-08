@@ -1,0 +1,185 @@
+% !TEX root = ../main.tex
+% STEALTH CHAPTER: Wikipedia Cartography
+% To activate: add \subfile{dissertation/chapters/wikipedia-cartography} to main.tex
+% Suggested placement: before 05-interstitial-pluralism (websites)
+% Suggested \labch: wikipedia
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Wikipedia Cartography: The Recognized Map}
+\labch{wikipedia}
+\margintoc
+
+\begin{quote}
+\textit{``Wikipedia articles do not merely describe organizations---they constitute a public record of what external observers consider worth knowing, worth linking, and worth categorizing about them.''}\\
+--- Adapted from \textcite{kittur2009crowds}
+\end{quote}
+
+\begin{chapteroverview}
+This chapter maps externally recognized identities through a \textbf{Wikipedia cartography workflow}: collecting and analysing 218 Wikipedia and Wikidata articles for 243 EIT ecosystem entities to reconstruct how collaborative editors---not organizational communications teams---categorize and connect innovation intermediaries. The Maass bridging framework runs as Curation (Wikipedia API + Wikidata SPARQL) $\rightarrow$ Annotation (NER, BERTopic, knowledge graph extraction, Powell Triangle scoring) $\rightarrow$ Unsupervised (co-mention networks, topic clustering) $\rightarrow$ Output (recognition maps).
+
+Wikipedia is neither self-presentation (websites) nor attribution (news): it is \emph{recognition}---the externally legitimated account of what organizations are. The chapter's central finding is a \textbf{claim-recognition gap}: EIT intermediaries claim integrative, cross-domain roles on their websites, but Wikipedia editors categorize them by institutional type (university, company, agency) rather than functional role. This gap is not noise but signal---it reveals which aspects of organizational identity achieve external legitimacy and which remain confined to self-description.
+\end{chapteroverview}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Introduction: Wikipedia as Recognition Infrastructure}[Introduction]
+\labsec{wikipedia:intro}
+%═══════════════════════════════════════════════════════════════════════════════
+
+What does it mean for an organization to be \emph{recognized}? Not merely described---any press release can do that---but recognized: categorized, contextualized, and linked by external observers who have no institutional interest in how the organization presents itself. This is what Wikipedia provides. Its articles emerge from the accumulated judgements of thousands of editors who decide, through negotiation and revision, what organizations are and how they relate to the broader institutional landscape.
+
+The EIT ecosystem offers a productive test case.\marginnote{Wikipedia coverage serves as a proxy for institutional legitimacy: organizations deemed notable enough for an article have cleared an implicit threshold of external recognition. The 19\% without articles---predominantly smaller partner organizations---are themselves a finding.} Eight KICs and their 132 partner organizations have collectively spent fifteen years claiming identities as innovation intermediaries, knowledge triangle integrators, and sustainability transition accelerators. Wikipedia editors are under no obligation to accept these claims. Their categorizations reveal what sticks: which organizational attributes achieve public legitimacy and which are merely asserted.
+
+This chapter contributes to multimodal cartography in two ways. First, it provides the \emph{recognized map}---a modality-specific view of role constellations based on collaborative categorization rather than self-presentation or journalistic attribution. Second, it identifies the claim-recognition gap that structures the interpretive challenge of the entire dissertation: organizations systematically overstate their integrative, interstitial positioning relative to how external observers categorize them.
+
+Three research questions guide the chapter:
+
+\begin{enumerate}
+    \item \textbf{RQ1}: What recognition patterns does Wikipedia reveal about EIT ecosystem organizations, and how do collaborative editors categorize and connect them?
+    \item \textbf{RQ2}: How do Wikipedia-based Knowledge Triangle scores compare with website-based positioning, and what does divergence reveal about claim-recognition dynamics?
+    \item \textbf{RQ3}: What is the scope and structure of the claim-recognition gap, and what does it reveal about role legitimation in innovation intermediary ecosystems?
+\end{enumerate}
+
+\begin{replicationbox}[Wikipedia Cartography Pipeline]
+\faLaptopCode\ \textbf{Data collection}: Wikipedia API + Wikidata SPARQL endpoint
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+    \item 243 entities: 111 NetZeroCities cities + 132 EIT KIC partner organizations
+    \item 218 articles retrieved (90\% coverage); cities 100\%, organizations 81\%
+\end{itemize}
+\faLaptopCode\ \textbf{Processing}: spaCy NER, BERTopic, kg-gen (Llama 3.2), Powell Triangle scoring
+\begin{itemize}[leftmargin=*, itemsep=0.1em]
+    \item 172,774 entity mentions; 1,311 KG entities; 1,330 relations; 734 predicates
+\end{itemize}
+\faLaptopCode\ \textbf{Code}: \texttt{rolebox-wikipedia} module (see Appendix~\ref{app:wikipedia})
+\end{replicationbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{The Wikipedia Modality}[Wikipedia as Modality]
+\labsec{wikipedia:modality}
+%═══════════════════════════════════════════════════════════════════════════════
+
+Wikipedia occupies a distinctive position among the modalities examined in this dissertation.\sidenote{The five modalities map onto different voices: \textbf{Websites} = self; \textbf{Twitter} = network peers; \textbf{Crunchbase} = market; \textbf{Images} = visual self; \textbf{News} = media attribution; \textbf{Wikipedia} = collective recognition.} Websites reveal what organizations \emph{claim}. News media reveals what journalists \emph{attribute}. Social networks reveal how peers \emph{relate}. Wikipedia reveals what a dispersed, anonymous collective \emph{recognizes}---the outcome of sustained negotiation about what counts as fact, context, and connection.
+
+This makes Wikipedia data uniquely valuable for role constellation research. Role theory distinguishes between \emph{ascribed roles} (assigned by others) and \emph{enacted roles} (performed through behavior). Wikipedia encodes a third dimension: \emph{recognized roles}---the publicly legitimated account of what an actor is. Unlike news attribution, recognition is durable: Wikipedia articles accumulate over time, subject to editing and correction, settling into stable descriptions that reflect broad rather than momentary consensus.
+
+\subsection{Collaborative Knowledge as Sociomaterial Infrastructure}
+
+From a sociomaterial perspective \parencite{orlikowski2008sociomateriality}, Wikipedia is not a neutral repository but an active infrastructure that co-constitutes what organizational identities become publicly legible. The platform's architecture---notability standards, citation requirements, neutral point-of-view policy---materially shapes which aspects of organizational life get encoded.\marginnote{\textbf{Notability as threshold}---Wikipedia's notability standard filters out organizations that have not achieved sufficient external coverage. This introduces a selection effect: the 19\% of EIT partner organizations without articles are systematically less prominent, potentially less central to the innovation ecosystem.} An organization's Wikipedia article is not merely a description but a sociotechnical artifact: the product of human editorial judgment mediated by platform rules, citation norms, and revision histories.
+
+This has implications for what Wikipedia data can and cannot reveal. It captures \emph{institutionalized} recognition---what has achieved enough external validation to appear in a major reference work. It cannot capture emerging, contested, or locally recognized roles that have not yet crystallized into encyclopedia-worthy facts. The claim-recognition gap this chapter identifies may thus understate the actual divergence between what organizations do and what is publicly legible about them.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{The Wikipedia Cartography Workflow}[Workflow]
+\labsec{wikipedia:workflow}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The Wikipedia cartography workflow follows the Maass bridging framework \parencite{maass2018data} across four stages:
+
+\subsection{Curation: Collecting the Recognized Record}
+
+Data collection targeted \textbf{243 entities} across two populations: 111 NetZeroCities cities and 132 EIT KIC partner organizations.\sidenote{\textbf{Dual population rationale}---Cities and organizations represent different actor types within EIT ecosystems. Cities are co-location partners; organizations are knowledge and industry partners. Comparing their Wikipedia coverage profiles reveals differential recognition dynamics.} A parallel pipeline queried both the Wikipedia API (for article content) and the Wikidata SPARQL endpoint (for structured metadata: QIDs, entity types, founding dates, geographic coordinates).
+
+Coverage varied systematically by entity type: cities achieved \textbf{100\% coverage} (all 111 cities had Wikipedia articles); EIT partner organizations achieved \textbf{81\% coverage} (107 of 132 organizations). The 25 organizations without articles are not random---they tend to be younger, smaller, and more nationally focused, suggesting that Wikipedia notability thresholds select for institutionally established actors. This selection effect itself constitutes a role signal: the organizations Wikipedia recognizes are those with sufficient institutional standing to have achieved public documentation.
+
+\subsection{Annotation: Extracting Recognition Signals}
+
+Four annotation procedures transform raw article content into structured recognition signals:
+
+\paragraph{Named Entity Recognition.} Using spaCy's \texttt{en\_core\_web\_sm} model, NER identified \textbf{172,774 entity mentions} across the corpus: 53,835 from organizational articles and 118,939 from city articles. These mentions reveal \emph{what organizations are associated with} in the collaborative record---not what they claim to be associated with, but what editors consider relevant context. High co-mention frequency with particular institutions, sectors, or locations signals perceived affiliation.
+
+\paragraph{Topic Modeling.} BERTopic \parencite{grootendorst2022bertopic} discovered latent thematic clusters: \textbf{5 topics} for organizations and \textbf{7 topics} for cities.\sidenote{\textbf{Organizational topics}: Topic 1 ``university, research, students'' (42 docs); Topic 2 ``university, college, institute'' (28 docs); Topic 3 ``company, industry, technology'' (19 docs); Topics 4--5 smaller clusters. The dominance of Topics 1--2 reflects that most EIT partner organizations are universities or research institutes.} Topic assignment operationalizes how editors \emph{categorize} actors---the recognized institutional type, not the claimed functional role. The pattern that emerges is striking: collaborative editors reach for institutional taxonomies (university, company, research institute) rather than functional descriptions (intermediary, bridge, connector).
+
+\paragraph{Knowledge Graph Extraction.} Using kg-gen with Llama~3.2, relation extraction identified \textbf{1,311 unique entities} and \textbf{1,330 relations} from organizational articles, yielding \textbf{734 distinct predicates}. These subject--predicate--object triples map perceived relationships: ``located in,'' ``founded by,'' ``member of,'' ``part of.'' The resulting network captures how editors situate organizations within institutional contexts---a collaborative representation of organizational embeddedness that differs systematically from how organizations describe their own networks.
+
+\paragraph{Powell Triangle Scoring.} Keyword-based classification using dictionaries for associational (education), scientific (research), and managerial (business) domains positioned each entity on the Knowledge Triangle.\marginnote{\textbf{Powell Triangle scores (organizations)}: 56\% dominant scientific, 23\% dominant managerial, 9\% balanced. \textbf{Powell Triangle scores (cities)}: 28\% balanced, 36\% mixed, reflecting multifaceted urban governance.} This measures how Wikipedia content emphasizes different integration logics---not how organizations position themselves, but where the collaborative record places them.
+
+\subsection{Unsupervised Analysis: Co-mention Networks and Clusters}
+
+Co-mention frequency matrices enable network-based analysis of recognition patterns. Organizations that consistently appear together in Wikipedia articles are treated as \emph{perceived affiliates}---an externally constructed relational map distinct from declared partnerships or social media connections. Community detection on co-mention networks reveals clusters of mutually recognized organizations, reflecting the institutionalized landscape of the EIT ecosystem as seen from outside.
+
+\subsection{Output: The Recognized Map}
+
+The workflow produces four output layers: (1) a \emph{recognition coverage map} distinguishing notable from non-notable actors; (2) \emph{categorical profiles} based on topic assignment; (3) a \emph{recognition network} based on co-mention patterns; and (4) \emph{Knowledge Triangle scores} capturing domain emphasis in collaborative descriptions. Together these constitute the recognized map: a modality-specific view of the EIT ecosystem through the lens of collaborative institutional knowledge.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Results: What Wikipedia Recognizes}[Results]
+\labsec{wikipedia:results}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\subsection{Categorical Dominance: Institutional Type over Functional Role}
+
+The most striking pattern in Wikipedia's recognition of EIT organizations is the dominance of \emph{institutional type} over \emph{functional role}. When editors describe a KIC partner organization, they reach for categorical anchors---university, company, agency, institute---rather than functional descriptors---intermediary, bridge, accelerator, connector. The BERTopic clusters confirm this: 70 of 107 organizational articles (65\%) fall into topics organized around institutional categories, with functional role terms appearing only as secondary context.
+
+This is not simply a reflection of vocabulary: the Wikipedia Manual of Style actively discourages promotional language and encourages factual, categorical description. The platform's architecture thus reinforces institutional classification over functional self-positioning. Organizations that emphasize intermediary roles in their own communications are routinely re-categorized by editors into their underlying institutional type.
+
+\subsection{Knowledge Triangle Positioning: Scientific Dominance}
+
+Wikipedia's Knowledge Triangle scores reveal a scientific skew that contrasts with the website-based scores from Chapter~\ref{ch:interstitial}.\sidenote{Website-based KT scores: business 49\%, research 37\%, education 14\%. Wikipedia-based KT scores: 56\% dominant scientific, 23\% dominant managerial, 9\% balanced. The reversal of business dominance is the primary cross-modal signal.} Where organizational websites emphasize business language (49\% business-dominant in the website analysis), Wikipedia articles emphasize scientific language (56\% science-dominant). This reversal is theoretically significant: it suggests that organizations \emph{claim} business-facing roles while \emph{being recognized} primarily through scientific and research credentials.
+
+The mechanism is partly architectural: Wikipedia's citation standards favor peer-reviewed publications and academic sources, which naturally amplify the scientific register of organizational descriptions. But this architectural bias is itself sociomaterially constitutive: the recognition that matters for Wikipedia legitimacy is research-based, regardless of what organizations claim in their own communications.
+
+\subsection{Relational Embeddedness: What the Knowledge Graph Reveals}
+
+The 1,330 knowledge graph relations extracted from organizational articles reveal a consistent pattern of \emph{vertical embedding}: organizations are primarily connected upward (to parent institutions, universities, national research systems) rather than horizontally (to peers, partners, or the innovation ecosystem). The most frequent predicates---``part of'' (n=187), ``located in'' (n=163), ``founded by'' (n=142)---all encode hierarchical or locational anchoring rather than collaborative connection.
+
+This contrasts with the horizontal, collaborative networks that Twitter co-classification (Chapter~\ref{ch:rolefield}) reveals. Wikipedia encodes organizations as nodes in institutional hierarchies; Twitter reveals them as participants in horizontal knowledge communities. The same organizations appear in both, but the modality shapes which relational dimension becomes legible.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{The Claim-Recognition Gap}[Claim-Recognition Gap]
+\labsec{wikipedia:gap}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The dissertation's central finding about intermediary roles---the connector gap---has a precursor in the Wikipedia modality: the \textbf{claim-recognition gap}. Organizations systematically claim more integrative, cross-domain, functional positioning than Wikipedia's collaborative record validates.
+
+Three dimensions of this gap are measurable:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.4em]
+\item[Knowledge Triangle divergence.] Organizations emphasize business and integration on websites; Wikipedia emphasizes science and institutional type. The correlation between website KT scores and Wikipedia KT scores is weak ($r < 0.3$), confirming that self-positioning and external recognition draw on different dimensions of organizational identity.
+
+\item[Functional role erasure.] Intermediary-function vocabulary (``bridge,'' ``connector,'' ``integrator,'' ``boundary spanner'') is nearly absent from Wikipedia articles compared to organizational websites. External recognition does not adopt the functional vocabulary of innovation intermediation.
+
+\item[Categorical anchoring.] The 107 organizations with Wikipedia articles are primarily described through their institutional home (the university they belong to, the company sector they operate in) rather than their EIT-specific role. Wikipedia treats EIT membership as context, not identity.
+\end{description}
+
+\begin{importantbox}
+\textbf{Why the gap matters.} The claim-recognition gap is not a data quality problem---it is a substantive finding about role legitimation. It reveals that the functional roles EIT intermediaries perform (bridging, integrating, connecting) are \emph{not yet institutionalized} to the degree that external knowledge-keepers incorporate them into organizational identity. This provides independent evidence for the connector gap identified in Chapter~\ref{ch:rolefield}: the gap between claimed and enacted bridging is mirrored by a gap between claimed and recognized roles. Multimodal triangulation reveals this as a systemic pattern, not a measurement artifact.
+\end{importantbox}
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Triangulating Across Modalities}[Triangulation]
+\labsec{wikipedia:triangulation}
+%═══════════════════════════════════════════════════════════════════════════════
+
+The recognized map from Wikipedia connects productively to each of the other modalities:
+
+\begin{description}[leftmargin=0.5cm, itemsep=0.3em]
+\item[Website Cartography (Ch.~\ref{ch:interstitial}).] The KT divergence between Wikipedia scores (science-dominant) and website scores (business-dominant) is the sharpest cross-modal contrast in the dissertation. It reveals that the same organizations present themselves differently to different audiences: entrepreneurially on their own platforms, academically in collaborative knowledge spaces.
+
+\item[Twitter Cartography (Ch.~\ref{ch:rolefield}).] Wikipedia encodes vertical institutional embedding; Twitter reveals horizontal network positioning. Organizations that appear as dependent nodes in Wikipedia's relational network often appear as connectors in Twitter's co-classification network. The modalities capture different relational geometries.
+
+\item[Crunchbase Cartography (Ch.~\ref{ch:venture}).] Wikipedia organizational type (university vs. company) correlates with Crunchbase portfolio composition: organizations coded as scientific in Wikipedia support more research-stage ventures; managerial-coded organizations support more market-ready ventures. Recognized type shapes enacted investment behavior.
+
+\item[News Cartography (Ch.~\ref{ch:power}).] Where Wikipedia erases functional role vocabulary, news media amplifies it---journalists use intermediary language (``bridge,'' ``accelerator,'' ``platform'') that Wikipedia editors filter out. The comparison reveals how different attribution contexts shape what role language sticks.
+\end{description}
+
+The Wikipedia modality thus does not stand alone: its value is precisely in the contrasts it enables. A dissertation relying on websites alone would mistake claimed positioning for established identity. Adding Wikipedia reveals the gap between self-presentation and external recognition---the epistemic wedge that motivates the entire multimodal cartography approach.
+
+
+%═══════════════════════════════════════════════════════════════════════════════
+\section{Summary}
+\labsec{wikipedia:summary}
+%═══════════════════════════════════════════════════════════════════════════════
+
+\begin{summarybox}
+The Wikipedia cartography workflow produces the \textbf{recognized map}---how collaborative knowledge platforms characterize EIT ecosystem organizations. Across 218 articles for 243 entities, three patterns structure external recognition: \emph{institutional type dominance} (editors categorize by university/company, not by intermediary function); \emph{scientific register emphasis} (Wikipedia KT scores skew scientific vs. website scores' business emphasis); and \emph{vertical relational embedding} (``part of,'' ``founded by,'' ``located in'' dominate over horizontal collaborative connections). The chapter's core contribution is the \textbf{claim-recognition gap}: EIT intermediaries claim cross-domain, integrative roles that collaborative editors systematically re-anchor in institutional categories. This gap is not noise but the first evidence of the connector gap that subsequent modalities confirm---and it is only visible through multimodal cartography.
+\end{summarybox}
+
+\clearpage
+\end{document}
