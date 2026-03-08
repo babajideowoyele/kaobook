@@ -42,17 +42,21 @@ Three research questions guide the chapter:
     \item \textbf{RQ3}: What is the scope and structure of the claim-recognition gap, and what does it reveal about role legitimation in innovation intermediary ecosystems?
 \end{enumerate}
 
-\begin{replicationbox}[Wikipedia Cartography Pipeline]
-\faLaptopCode\ \textbf{Data collection}: Wikipedia API + Wikidata SPARQL endpoint
+\begin{replicationbox}[Computational Artifacts]
+\faLaptopCode\ \textbf{Cartographic workflow} (\texttt{rolebox-wikipedia/}):
 \begin{itemize}[leftmargin=*, itemsep=0.1em]
-    \item 243 entities: 111 NetZeroCities cities + 132 EIT KIC partner organizations
-    \item 218 articles retrieved (90\% coverage); cities 100\%, organizations 81\%
+    \item Curation: Wikipedia API + Wikidata SPARQL $\rightarrow$ 243 entities, 218 articles (90\% coverage)
+    \item Annotation: spaCy NER, BERTopic, kg-gen (Llama~3.2), Powell Triangle scoring
+    \item Output: 172,774 mentions; 1,311 KG entities; 734 predicates
 \end{itemize}
-\faLaptopCode\ \textbf{Processing}: spaCy NER, BERTopic, kg-gen (Llama 3.2), Powell Triangle scoring
+\faLaptopCode\ \textbf{Interactive UIs} (\texttt{rolebox-wikipedia/ui/}):
 \begin{itemize}[leftmargin=*, itemsep=0.1em]
-    \item 172,774 entity mentions; 1,311 KG entities; 1,330 relations; 734 predicates
+    \item \texttt{rolebox\_wikipedia\_eit-kg.html} --- EIT ecosystem knowledge graph explorer: entity browsing, predicate filtering, co-mention networks
+    \item \texttt{kg-viewer.html} --- General-purpose knowledge graph viewer for Wikipedia entity relations
+    \item \texttt{data/topics/} --- BERTopic visualizations: overview, hierarchy, heatmap, barchart, document browser
 \end{itemize}
-\faLaptopCode\ \textbf{Code}: \texttt{rolebox-wikipedia} module (see Appendix~\ref{app:wikipedia})
+\faGithub\ \textbf{Code \& Data:} \texttt{github.com/babajideowoyele/rolebox-wikipedia}\\
+\faBook\ \textbf{Documentation:} \texttt{README.md} + Appendix~\ref{app:wikipedia}
 \end{replicationbox}
 
 
