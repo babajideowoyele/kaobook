@@ -45,9 +45,8 @@ Three research questions guide the chapter:
 \begin{replicationbox}[Computational Artifacts]
 \faLaptopCode\ \textbf{Cartographic workflow} (\texttt{rolebox-wikipedia/}):
 \begin{itemize}[leftmargin=*, itemsep=0.1em]
-    \item Curation: Wikipedia API + Wikidata SPARQL $\rightarrow$ 243 entities, 218 articles (90\% coverage)
-    \item Annotation: spaCy NER, BERTopic, kg-gen (Llama~3.2), Powell Triangle scoring
-    \item Output: 172,774 mentions; 1,311 KG entities; 734 predicates
+    \item \texttt{wikipedia\_workflow.html} --- End-to-end recognition workflow: Wikipedia API + Wikidata SPARQL $\rightarrow$ NER + BERTopic + kg-gen (Llama~3.2) $\rightarrow$ Powell Triangle scoring $\rightarrow$ claim-recognition gap analysis
+    \item 243 entities, 218 articles (90\% coverage); 172,774 NER mentions; 1,311 KG entities; 734 predicates
 \end{itemize}
 \faLaptopCode\ \textbf{Interactive UIs} (\texttt{rolebox-wikipedia/ui/}):
 \begin{itemize}[leftmargin=*, itemsep=0.1em]
