@@ -660,6 +660,160 @@ Building on CAS theory and the three-dimensional framework, we identify six mech
 
 This approach resonates with de Haan's \cite{dehaan2025makingscience} call for ``one mechanism, multiple models, many data'' in transitions research.\sidenote{\textbf{One mechanism, multiple models, many data}---De Haan argues that scientific progress requires moving from N=1 narratives to systematic engagement where core mechanisms are tested across multiple theoretical framings and diverse data sources.} The six mechanisms below constitute our theoretical core---the ``one mechanism'' (or small set) that CAS theory offers. The fifteen propositions that follow are ``multiple models'' instantiating these mechanisms for role constellations. The multimodal cartography apparatus provides ``many data'' for exploration. This structure addresses the methodological critique that transitions research relies too heavily on single-case narratives without accumulating knowledge across contexts.
 
+% Figure: Six CAS mechanisms overview (2×3 grid)
+\begin{center}
+\begin{tikzpicture}[
+    panel/.style={draw=Slate!40, rounded corners=4pt, line width=0.8pt, fill=Slate!5,
+                  minimum width=5.3cm, minimum height=3.8cm},
+    ptitle/.style={font=\small\bfseries, text=PandaCharcoal},
+]
+
+%─────────────────────────────────────────────────────────────────────
+% Row 1
+%─────────────────────────────────────────────────────────────────────
+
+% Panel 1: Emergence  (col 1, row 1)
+\begin{scope}[xshift=0cm, yshift=0cm]
+    \node[panel] at (0,0) {};
+    \node[ptitle] at (0, 1.55) {1. Emergence};
+    % Micro agents at bottom
+    \foreach \x in {-1.6,-0.96,-0.32,0.32,0.96,1.6} {
+        \node[draw=Slate!60, circle, fill=Slate!30, inner sep=2.8pt] at (\x, -1.1) {};
+    }
+    % Upward arrow
+    \draw[->, thick, PandaCharcoal!70] (0, -0.55) -- (0, 0.3);
+    \node[font=\tiny, text=PandaCharcoal!70, anchor=west] at (0.08, -0.15) {emergent};
+    % Macro hexagon at top
+    \node[draw=Azure, fill=Azure!25, regular polygon, regular polygon sides=6,
+          minimum size=1.0cm, line width=1pt] at (0, 0.9) {};
+    \node[font=\tiny\bfseries, text=Azure] at (0, 0.9) {Const.};
+\end{scope}
+
+% Panel 2: Self-Organization  (col 2, row 1)
+\begin{scope}[xshift=5.8cm, yshift=0cm]
+    \node[panel] at (0,0) {};
+    \node[ptitle] at (0, 1.55) {2. Self-Organization};
+    % Group A (Azure)
+    \node[draw=Azure!70, circle, fill=Azure!35, inner sep=3pt] (sa1) at (-1.3, 0.6) {};
+    \node[draw=Azure!70, circle, fill=Azure!35, inner sep=3pt] (sa2) at (-0.7, 0.6) {};
+    \node[draw=Azure!70, circle, fill=Azure!35, inner sep=3pt] (sa3) at (-1.0, 0.0) {};
+    \draw[thick, Azure!60] (sa1)--(sa2)--(sa3)--(sa1);
+    % Group B (Marigold)
+    \node[draw=Marigold!70, circle, fill=Marigold!35, inner sep=3pt] (sb1) at (0.7, 0.5) {};
+    \node[draw=Marigold!70, circle, fill=Marigold!35, inner sep=3pt] (sb2) at (1.3, 0.0) {};
+    \draw[thick, Marigold!60] (sb1)--(sb2);
+    % Group C (PandaBamboo)
+    \node[draw=PandaBamboo!70, circle, fill=PandaBamboo!35, inner sep=3pt] (sc1) at (-0.5, -0.9) {};
+    \node[draw=PandaBamboo!70, circle, fill=PandaBamboo!35, inner sep=3pt] (sc2) at (0.2, -1.1) {};
+    \node[draw=PandaBamboo!70, circle, fill=PandaBamboo!35, inner sep=3pt] (sc3) at (0.9, -0.9) {};
+    \draw[thick, PandaBamboo!60] (sc1)--(sc2)--(sc3);
+    % Dashed inter-group lines
+    \draw[dashed, Slate!40, thin] (sa2)--(sb1);
+    \draw[dashed, Slate!40, thin] (sb2)--(sc3);
+    % "No center" label
+    \node[font=\tiny, text=Slate!70] at (0, -1.5) {no central coordinator};
+\end{scope}
+
+% Panel 3: Co-evolution  (col 3, row 1)
+\begin{scope}[xshift=11.6cm, yshift=0cm]
+    \node[panel] at (0,0) {};
+    \node[ptitle] at (0, 1.55) {3. Co-evolution};
+    % Org wavy arrow (top lane)
+    \draw[->, thick, Azure] (-1.8, 0.55)
+        .. controls (-1.0, 0.85) and (-0.2, 0.25) ..
+        (0.6, 0.55)
+        .. controls (1.0, 0.75) and (1.4, 0.45) .. (1.8, 0.55);
+    \node[font=\tiny\bfseries, text=Azure] at (-2.05, 0.55) {Org};
+    % Env wavy arrow (bottom lane)
+    \draw[->, thick, Marigold] (-1.8, -0.55)
+        .. controls (-1.0, -0.25) and (-0.2, -0.85) ..
+        (0.6, -0.55)
+        .. controls (1.0, -0.35) and (1.4, -0.65) .. (1.8, -0.55);
+    \node[font=\tiny\bfseries, text=Marigold] at (-2.05, -0.55) {Env};
+    % Bidirectional coupling arrows at 3 points
+    \foreach \x in {-0.6, 0.4, 1.4} {
+        \draw[<->, thin, PandaCharcoal!60] (\x, 0.35) -- (\x, -0.35);
+    }
+    \node[font=\tiny, text=Slate!70] at (0, -1.5) {mutual adaptation};
+\end{scope}
+
+%─────────────────────────────────────────────────────────────────────
+% Row 2
+%─────────────────────────────────────────────────────────────────────
+
+% Panel 4: Non-linearity  (col 1, row 2)
+\begin{scope}[xshift=0cm, yshift=-4.6cm]
+    \node[panel] at (0,0) {};
+    \node[ptitle] at (0, 1.55) {4. Non-linearity};
+    % Axes
+    \draw[->, Slate!60, thin] (-1.9, -1.0) -- (1.9, -1.0)
+        node[right, font=\tiny, text=Slate!70] {Input};
+    \draw[->, Slate!60, thin] (-1.9, -1.0) -- (-1.9, 1.2)
+        node[above, font=\tiny, text=Slate!70] {Output};
+    % S-curve / step: flat, jump, flat
+    \draw[thick, Azure, line cap=round]
+        (-1.8, -0.7) -- (-0.3, -0.7)
+        .. controls (0.0, -0.7) and (0.1, 0.6) ..
+        (0.3, 0.7) -- (1.8, 0.7);
+    % Tipping point dashed line
+    \draw[dashed, AccentCoral, thin] (0.0, -1.0) -- (0.0, 1.2);
+    \node[font=\tiny, text=AccentCoral, anchor=north, rotate=90] at (0.15, -0.6) {tipping pt};
+\end{scope}
+
+% Panel 5: Feedback Loops  (col 2, row 2)
+\begin{scope}[xshift=5.8cm, yshift=-4.6cm]
+    \node[panel] at (0,0) {};
+    \node[ptitle] at (0, 1.55) {5. Feedback Loops};
+    % Reinforcing loop (left)
+    \node[draw=PandaBamboo!70, rounded corners=3pt, fill=PandaBamboo!20,
+          font=\tiny, minimum width=1.1cm, inner sep=2pt] (fr1) at (-1.1, 0.5)  {Success};
+    \node[draw=PandaBamboo!70, rounded corners=3pt, fill=PandaBamboo!20,
+          font=\tiny, minimum width=1.1cm, inner sep=2pt] (fr2) at (-1.1, -0.4) {Resources};
+    \draw[->, thick, PandaBamboo] (fr1.south) -- (fr2.north);
+    \draw[->, thick, PandaBamboo] (fr2.west) to[out=180,in=180] (fr1.west);
+    \node[font=\tiny\bfseries, text=PandaBamboo] at (-1.1, -1.1) {+ (reinforcing)};
+    % Balancing loop (right)
+    \node[draw=AccentCoral!70, rounded corners=3pt, fill=AccentCoral!15,
+          font=\tiny, minimum width=1.1cm, inner sep=2pt] (fb1) at (1.1, 0.5)  {Growth};
+    \node[draw=AccentCoral!70, rounded corners=3pt, fill=AccentCoral!15,
+          font=\tiny, minimum width=1.1cm, inner sep=2pt] (fb2) at (1.1, -0.4) {Cost};
+    \draw[->, thick, AccentCoral] (fb1.south) -- (fb2.north);
+    \draw[->, thick, AccentCoral] (fb2.east) to[out=0,in=0] (fb1.east);
+    \node[font=\tiny\bfseries, text=AccentCoral] at (1.1, -1.1) {- (balancing)};
+\end{scope}
+
+% Panel 6: Fitness Landscapes  (col 3, row 2)
+\begin{scope}[xshift=11.6cm, yshift=-4.6cm]
+    \node[panel] at (0,0) {};
+    \node[ptitle] at (0, 1.55) {6. Fitness Landscapes};
+    % Landscape curve
+    \draw[thick, fill=Slate!15]
+        (-1.8, -0.9)
+        .. controls (-1.2, 0.3) and (-0.8, 0.5) .. (-0.5, 0.3)
+        .. controls (-0.2, 0.1) and (0.1, -0.5) .. (0.4, -0.3)
+        .. controls (0.7, -0.1) and (1.0, 0.9) .. (1.3, 0.95)
+        .. controls (1.5, 0.9) and (1.7, 0.2) .. (1.8, -0.3)
+        -- (1.8, -0.9) -- (-1.8, -0.9) -- cycle;
+    % Axis labels
+    \node[font=\tiny, text=Slate!70] at (0, -1.35) {Role dimensions};
+    \node[font=\tiny, text=Slate!70, rotate=90] at (-2.1, 0) {Fitness};
+    % Peak labels
+    \node[font=\tiny, text=Slate] at (-0.5, 0.7) {local};
+    \node[font=\tiny, text=Slate] at (1.3, 1.3) {global};
+    % Valley label
+    \node[font=\tiny, text=Slate!60] at (0.3, -0.6) {valley};
+    % Dots on peaks
+    \node[draw=Azure!80, circle, fill=Azure!50, inner sep=2.5pt] at (-0.5, 0.42) {};
+    \node[draw=Marigold!80, circle, fill=Marigold!60, inner sep=2.5pt] at (1.3, 1.05) {};
+\end{scope}
+
+\end{tikzpicture}
+
+\captionof{figure}{Six CAS mechanisms for role constellation dynamics. Each mechanism generates
+    distinct observable patterns in multimodal cartography data.}
+\labfig{cas:mechanisms:overview}
+\end{center}
+
 \subsection{Mechanism 1: Emergence}
 
 \textbf{Emergence} refers to macro-level patterns arising from micro-level interactions that cannot be predicted from, or reduced to, the properties of individual components \cite{holland1995hidden}.\sidenote{\textbf{Emergence}---Macro patterns arising from micro interactions. The ``whole'' exhibits properties not found in any ``part.''} Emergent properties are not designed or intended; they arise spontaneously from the density and nature of interactions.
@@ -679,45 +833,6 @@ Emergence has profound methodological implications. If roles emerge from interac
 Role constellations self-organize through several observable processes. Intermediaries cluster around complementary functions without explicit coordination---accelerators gravitate toward funding sources; knowledge brokers position near both research and industry actors. Division of labor emerges from bilateral negotiations rather than system-level planning: each partnership shapes which roles each party performs, and the aggregate of such negotiations produces a functioning division of labor. ``Niches'' form as organizations differentiate to reduce direct competition, seeking distinctive positioning that reduces overlap with neighbors. Hierarchy develops through accumulated influence rather than formal assignment---some intermediaries become more central through the accretion of successful relationships and resource access.
 
 Self-organization does not mean absence of structure; rather, it means structure arising endogenously.\sidenote{\textbf{Organizability}---Järvi et al. \cite{jarvi2018organization} note that ecosystems vary in their ``degree of organizability''---some are loosely coupled with emergent organizing, others more explicitly steered by focal actors. The EIT KICs exhibit both: designed governance structures with emergent role differentiation within them.} Even highly ordered constellations---with clear role differentiation, stable hierarchies, and predictable interaction patterns---may have self-organized rather than being designed. The EIT ecosystem offers an interesting test case: KICs were designed by policy, but the role constellations they have developed over fifteen years reflect substantial self-organization within designed parameters \cite{peltoniemi2006preliminary}.
-
-% Figure 4.3: Self-organization
-\begin{center}
-\begin{tikzpicture}[scale=1.25]
-    % Time 1: Random
-    \node[font=\small\bfseries, text=Slate] at (0, 4) {$t_1$: Initial};
-    \node[draw, circle, fill=Slate!30, minimum size=0.6cm] at (-0.8, 2.2) {};
-    \node[draw, circle, fill=Slate!30, minimum size=0.6cm] at (0.3, 2.8) {};
-    \node[draw, circle, fill=Slate!30, minimum size=0.6cm] at (0.9, 1.8) {};
-    \node[draw, circle, fill=Slate!30, minimum size=0.6cm] at (-0.2, 1.2) {};
-    \node[draw, circle, fill=Slate!30, minimum size=0.6cm] at (0.6, 0.6) {};
-    \node[draw, circle, fill=Slate!30, minimum size=0.6cm] at (-0.6, 0.4) {};
-    \node[draw, circle, fill=Slate!30, minimum size=0.6cm] at (0.1, 3.4) {};
-    \node[draw, circle, fill=Slate!30, minimum size=0.6cm] at (-0.4, 2.9) {};
-
-    % Arrow
-    \draw[->, thick, PandaCharcoal, line width=1.5pt] (2.2, 1.8) -- (4.2, 1.8);
-
-    % Time 2: Clustered
-    \node[font=\small\bfseries, text=Slate] at (7.5, 4) {$t_2$: Self-organized};
-    \node[draw, circle, fill=Azure!40, minimum size=0.6cm] (a1) at (5.8, 2.8) {};
-    \node[draw, circle, fill=Azure!40, minimum size=0.6cm] (a2) at (6.4, 2.2) {};
-    \node[draw, circle, fill=Azure!40, minimum size=0.6cm] (a3) at (7.0, 2.9) {};
-    \node[draw, circle, fill=Marigold!40, minimum size=0.6cm] (b1) at (8.5, 1.2) {};
-    \node[draw, circle, fill=Marigold!40, minimum size=0.6cm] (b2) at (9.1, 0.6) {};
-    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.6cm] (c1) at (6.0, 0.4) {};
-    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.6cm] (c2) at (6.8, -0.1) {};
-    \node[draw, circle, fill=PandaBamboo!40, minimum size=0.6cm] (c3) at (7.6, 0.5) {};
-
-    \draw[thick, Slate!40] (a1) -- (a2) -- (a3);
-    \draw[thick, Slate!40] (b1) -- (b2);
-    \draw[thick, Slate!40] (c1) -- (c2) -- (c3) -- (c1);
-    \draw[dashed, Slate!30] (a2) -- (b1);
-    \draw[dashed, Slate!30] (b2) -- (c3);
-\end{tikzpicture}
-
-\captionof{figure}{Self-organization: from initial dispersion to clustered structure through local interactions, without central coordination.}
-\labfig{self-organization}
-\end{center}
 
 \subsection{Mechanism 3: Co-evolution}
 
@@ -755,37 +870,6 @@ Role constellations exhibit both feedback types:
 \item Role crowding increases competition $\rightarrow$ differentiation pressure $\rightarrow$ reduces crowding
 \end{itemize}
 
-% Figure 4.4: Feedback loops
-\begin{center}
-\begin{tikzpicture}[scale=1.1]
-    % Reinforcing loop
-    \begin{scope}[xshift=-4.5cm]
-        \node[font=\small\bfseries, text=PandaBamboo] at (0, 2.4) {Reinforcing (+)};
-        \node[draw, rounded corners, fill=PandaBamboo!15, font=\small, minimum width=1.8cm] (r1) at (0, 1.2) {Success};
-        \node[draw, rounded corners, fill=PandaBamboo!15, font=\small, minimum width=1.8cm] (r2) at (1.8, -0.6) {Resources};
-        \node[draw, rounded corners, fill=PandaBamboo!15, font=\small, minimum width=1.8cm] (r3) at (-1.8, -0.6) {Capacity};
-        \draw[->, thick, PandaBamboo] (r1) -- (r2);
-        \draw[->, thick, PandaBamboo] (r2) -- (r3);
-        \draw[->, thick, PandaBamboo] (r3) -- (r1);
-        \node[font=\small, text=PandaBamboo] at (0, -0.1) {+};
-    \end{scope}
-
-    % Balancing loop
-    \begin{scope}[xshift=4.5cm]
-        \node[font=\small\bfseries, text=AccentCoral] at (0, 2.4) {Balancing (-)};
-        \node[draw, rounded corners, fill=AccentCoral!15, font=\small, minimum width=1.8cm] (b1) at (0, 1.2) {Growth};
-        \node[draw, rounded corners, fill=AccentCoral!15, font=\small, minimum width=1.8cm] (b2) at (1.8, -0.6) {Coordination};
-        \node[draw, rounded corners, fill=AccentCoral!15, font=\small, minimum width=1.8cm] (b3) at (-1.8, -0.6) {Efficiency};
-        \draw[->, thick, AccentCoral] (b1) -- node[right, font=\small] {+} (b2);
-        \draw[->, thick, AccentCoral] (b2) -- node[below, font=\small] {-} (b3);
-        \draw[->, thick, AccentCoral] (b3) -- node[left, font=\small] {+} (b1);
-        \node[font=\small, text=AccentCoral] at (0, -0.1) {-};
-    \end{scope}
-\end{tikzpicture}
-\captionof{figure}{Reinforcing and balancing feedback loops in role constellations. Reinforcing loops drive growth or decline; balancing loops maintain stability.}
-\labfig{feedback-loops}
-\end{center}
-
 \subsection{Mechanism 6: Fitness Landscapes}
 
 \textbf{Fitness landscapes} provide a spatial metaphor for adaptation \cite{kauffman1993origins}.\sidenote{\textbf{Fitness landscapes}---Adaptive terrain. Organizations seek ``peaks'' but the landscape shifts as others move and environment changes.} Organizations occupy positions in a multi-dimensional space defined by role characteristics; each position has associated ``fitness'' (viability, effectiveness). The landscape is not fixed but deforms as other actors move and as environmental conditions change.
@@ -809,48 +893,6 @@ The fitness landscape metaphor illuminates several constellation phenomena:
 \begin{insightbox}[The Cartographic Connection]
 The fitness landscape metaphor directly connects CAS theory to cartographic methods. If role constellations can be understood as actors distributed across an adaptive landscape, then \emph{mapping} that landscape becomes both possible and useful. Multimodal cartography constructs empirical approximations of the theoretical landscape---revealing peaks and valleys, tracking movements, identifying viable configurations.
 \end{insightbox}
-
-% Figure: Fitness landscape visualization
-\begin{center}
-\begin{tikzpicture}[scale=1.0]
-    % Draw the landscape surface using curves
-    \draw[thick, fill=Slate!10]
-        (-6, 0) .. controls (-5, 2) and (-4, 2.5) .. (-3, 2.2)
-        .. controls (-2, 1.8) and (-1, 0.5) .. (0, 1)
-        .. controls (1, 1.5) and (2, 3) .. (3, 3.2)
-        .. controls (4, 3) and (5, 1) .. (6, 0.5)
-        -- (6, -0.5) -- (-6, -0.5) -- cycle;
-
-    % Peak labels
-    \node[font=\tiny, text=Slate] at (-3, 2.8) {Local peak};
-    \node[font=\tiny, text=Slate] at (3, 3.8) {Global peak};
-
-    % Valley label
-    \node[font=\tiny, text=Slate] at (0, 0.3) {Valley};
-
-    % Organizations as dots
-    \node[draw, circle, fill=Azure!60, minimum size=0.4cm] (a1) at (-3.2, 2.4) {};
-    \node[draw, circle, fill=Azure!60, minimum size=0.4cm] (a2) at (-2.5, 2.0) {};
-    \node[draw, circle, fill=Marigold!60, minimum size=0.4cm] (b1) at (2.8, 3.4) {};
-    \node[draw, circle, fill=Marigold!60, minimum size=0.4cm] (b2) at (3.5, 3.0) {};
-    \node[draw, circle, fill=PandaBamboo!60, minimum size=0.4cm] (c1) at (0.2, 1.2) {};
-
-    % Movement arrow showing adaptation
-    \draw[->, thick, AccentCoral, dashed] (c1) -- node[right, font=\tiny] {adapting} (1.8, 2.5);
-
-    % Axis labels
-    \node[font=\scriptsize, text=Slate] at (0, -1) {Role Dimensions};
-    \node[font=\scriptsize, text=Slate, rotate=90] at (-6.8, 1.5) {Fitness};
-
-    % Legend
-    \node[font=\tiny, text=Azure, align=left] at (-4.5, -1.5) {\textbullet\ Local optimum actors};
-    \node[font=\tiny, text=Marigold, align=left] at (-1.5, -1.5) {\textbullet\ Global optimum actors};
-    \node[font=\tiny, text=PandaBamboo, align=left] at (2, -1.5) {\textbullet\ Adapting actor};
-
-\end{tikzpicture}
-\captionof{figure}[Fitness landscape for role constellations]{The fitness landscape metaphor: organizations occupy positions in role-space with varying fitness (viability). Some cluster on local peaks (viable but suboptimal), others on global peaks (most viable). Organizations in valleys must adapt or exit. The landscape itself shifts as policy, technology, and competitor positions change.}
-\labfig{fitness-landscape}
-\end{center}
 
 \subsection{From Observation to Simulation: The \RoleSim Complement}
 
