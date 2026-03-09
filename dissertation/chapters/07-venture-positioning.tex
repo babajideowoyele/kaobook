@@ -21,11 +21,11 @@ Venture portfolios are a behavioural trace of strategic intent: what an intermed
 \section{Introduction: Mapping the EIT Venture Landscape}[Introduction]
 \labsec{venture:intro}
 
-What does an innovation intermediary's portfolio reveal about its strategic positioning?\marginnote{Portfolio composition---the ventures an intermediary funds, accelerates, or co-invests in---provides a behavioural trace of strategic priorities distinct from stated missions.} The ventures that an organization chooses to fund, accelerate, and support constitute a behavioural signature of strategic intent that complements---and sometimes contradicts---official mission statements. While intermediaries may articulate broad mandates encompassing education, research, and business creation, their portfolio choices reveal which types of ventures they actually prioritize and how they position themselves within the broader innovation landscape.
+What does an innovation intermediary's portfolio reveal about its strategic positioning?\footnote{Portfolio composition---the ventures an intermediary funds, accelerates, or co-invests in---provides a behavioural trace of strategic priorities distinct from stated missions.} The ventures that an organization chooses to fund, accelerate, and support constitute a behavioural signature of strategic intent that complements---and sometimes contradicts---official mission statements. While intermediaries may articulate broad mandates encompassing education, research, and business creation, their portfolio choices reveal which types of ventures they actually prioritize and how they position themselves within the broader innovation landscape.
 
 The European Institute of Innovation and Technology (EIT) and its eight Knowledge and Innovation Communities (KICs) have collectively supported thousands of ventures across Europe since 2010.\sidenote{EIT support includes acceleration programmes, grant funding, equity investment, and access to corporate partners. See \url{https://eit.europa.eu} for current portfolio data.} These ventures---spanning climate technology, digital innovation, healthcare, food systems, energy, raw materials, manufacturing, and urban mobility---constitute a rich empirical record of how each KIC translates its sectoral mandate into concrete investment and support decisions. By analyzing the positioning statements these ventures use to describe themselves, we can reconstruct the strategic landscapes within which EIT Communities operate.
 
-This chapter employs visual analytic methods to examine the structure of venture positioning across EIT Community portfolios.\marginnote{Our approach extends \cite{basole2019visual}, who analyzed 60,000 ventures across 35 global entrepreneurial ecosystems using text-based similarity networks.} Building on the pioneering work of \cite{basole2019visual}, we analyze venture business descriptions from Crunchbase---a comprehensive database of technology companies, investors, and funding events---to map the positioning landscapes of EIT-supported ventures. We extend the Basole et al. methodology in two ways. First, we focus on a deliberately constructed innovation ecosystem (the EIT) rather than geographically emergent ones, enabling examination of how institutional design shapes portfolio composition. Second, we complement traditional TF-IDF approaches with state-of-the-art transformer-based embeddings, comparing how different representation methods reveal distinct structural properties.
+This chapter employs visual analytic methods to examine the structure of venture positioning across EIT Community portfolios.\footnote{Our approach extends \cite{basole2019visual}, who analyzed 60,000 ventures across 35 global entrepreneurial ecosystems using text-based similarity networks.} Building on the pioneering work of \cite{basole2019visual}, we analyze venture business descriptions from Crunchbase---a comprehensive database of technology companies, investors, and funding events---to map the positioning landscapes of EIT-supported ventures. We extend the Basole et al. methodology in two ways. First, we focus on a deliberately constructed innovation ecosystem (the EIT) rather than geographically emergent ones, enabling examination of how institutional design shapes portfolio composition. Second, we complement traditional TF-IDF approaches with state-of-the-art transformer-based embeddings, comparing how different representation methods reveal distinct structural properties.
 
 Our analysis addresses three research questions:
 
@@ -74,7 +74,7 @@ EIT Culture        &   537 & \$1.2M & Creative / Media      & 25\% \\
 \textbf{Total}     & \textbf{7,341} & \textbf{\$3.0M} & --- & --- \\
 \bottomrule
 \end{tabular}
-\captionof{table}{European ventures in EIT-relevant sectors (Crunchbase, January 2025).}\marginnote{This table describes 7,341 European ventures operating in EIT-relevant sectors. Of these, 654 have confirmed direct EIT KIC affiliation via investor fields. ``Top Cluster'' and ``Share'' refer to the largest embedding-based cluster per KIC sector. Average funding is across all ventures in each sector.}
+\captionof{table}{European ventures in EIT-relevant sectors (Crunchbase, January 2025).}\footnote{This table describes 7,341 European ventures operating in EIT-relevant sectors. Of these, 654 have confirmed direct EIT KIC affiliation via investor fields. ``Top Cluster'' and ``Share'' refer to the largest embedding-based cluster per KIC sector. Average funding is across all ventures in each sector.}
 \labtab{portfolio-summary}
 \end{center}
 
@@ -85,27 +85,27 @@ The chapter proceeds as follows. Section \ref{sec:venture:background} reviews re
 
 \subsection{Entrepreneurial Ecosystems and Portfolio Composition}
 
-The concept of entrepreneurial ecosystems has gained substantial traction in both scholarly research and policy discourse \cite{isenberg2010big,stam2015entrepreneurial,adner2017ecosystem}.\marginnote{Entrepreneurial ecosystems comprise interdependent actors---entrepreneurs, investors, universities, support organizations---within bounded contexts \cite{spigel2017relational}.} An entrepreneurial ecosystem can be defined as a set of interdependent organizations engaged in productive entrepreneurship within a geographically or institutionally defined territory \cite{cohen2006sustainable} \cite{acs2017lineages}. The ecosystem metaphor emphasizes that value creation emerges from complex interactions among heterogeneous actors rather than from individual organizational efforts \cite{adner2017ecosystem}.
+The concept of entrepreneurial ecosystems has gained substantial traction in both scholarly research and policy discourse \cite{isenberg2010big,stam2015entrepreneurial,adner2017ecosystem}.\footnote{Entrepreneurial ecosystems comprise interdependent actors---entrepreneurs, investors, universities, support organizations---within bounded contexts \cite{spigel2017relational}.} An entrepreneurial ecosystem can be defined as a set of interdependent organizations engaged in productive entrepreneurship within a geographically or institutionally defined territory \cite{cohen2006sustainable} \cite{acs2017lineages}. The ecosystem metaphor emphasizes that value creation emerges from complex interactions among heterogeneous actors rather than from individual organizational efforts \cite{adner2017ecosystem}.
 
 Research on ecosystem structure has evolved from early work on industrial clusters \cite{porter1998clusters} and regional innovation systems \cite{cooke2001regional} toward more relational perspectives emphasizing network topology and actor positioning \cite{spigel2017relational}.\sidenote{See \cite{acs2017lineages} for a comprehensive review of the intellectual lineages connecting cluster, innovation system, and ecosystem research.} A key insight from this evolution is that ecosystems are characterized not only by the presence of particular actor types but by the relational configurations among them. Two ecosystems with similar compositional profiles may exhibit very different dynamics depending on how actors are connected and positioned relative to one another.
 
-Innovation intermediaries occupy distinctive positions within ecosystems.\marginnote{Innovation intermediaries include accelerators, incubators, technology transfer offices, and organizations like EIT KICs that span multiple functions \cite{howells2006intermediation,kivimaa2019innovation}.} They do not produce innovations directly but rather facilitate connections, provide resources, and orchestrate activities among other ecosystem participants \cite{howells2006intermediation,klerkx2012dealing,vanLente2003roles}. Their portfolios---the ventures they choose to support---reveal strategic priorities and positioning choices that shape the broader ecosystem structure.
+Innovation intermediaries occupy distinctive positions within ecosystems.\footnote{Innovation intermediaries include accelerators, incubators, technology transfer offices, and organizations like EIT KICs that span multiple functions \cite{howells2006intermediation,kivimaa2019innovation}.} They do not produce innovations directly but rather facilitate connections, provide resources, and orchestrate activities among other ecosystem participants \cite{howells2006intermediation,klerkx2012dealing,vanLente2003roles}. Their portfolios---the ventures they choose to support---reveal strategic priorities and positioning choices that shape the broader ecosystem structure.
 
 \subsection{Strategic Positioning Through Portfolio Composition}
 
-The literature on strategic positioning has predominantly focused on how individual organizations differentiate themselves from competitors while maintaining legitimacy with stakeholders \cite{porter1980competitive,deephouse1999same,porac1989competitive}.\marginnote{The conformity-differentiation tradeoff is central to strategic positioning: organizations must be different enough to capture value but similar enough to be recognized as legitimate \cite{zhao2017optimal}.} Organizations face a fundamental tension between differentiation (standing out) and conformity (fitting in). Those that deviate too far from established templates risk incomprehensibility; those that conform too closely risk competitive indistinction.
+The literature on strategic positioning has predominantly focused on how individual organizations differentiate themselves from competitors while maintaining legitimacy with stakeholders \cite{porter1980competitive,deephouse1999same,porac1989competitive}.\footnote{The conformity-differentiation tradeoff is central to strategic positioning: organizations must be different enough to capture value but similar enough to be recognized as legitimate \cite{zhao2017optimal}.} Organizations face a fundamental tension between differentiation (standing out) and conformity (fitting in). Those that deviate too far from established templates risk incomprehensibility; those that conform too closely risk competitive indistinction.
 
 For innovation intermediaries, portfolio composition represents a key dimension of strategic positioning.\sidenote{Portfolio analysis has been applied extensively in venture capital research \cite{gompers2009specialization} but less systematically to public innovation intermediaries.} The ventures an intermediary chooses to support signal its strategic priorities to multiple audiences: potential applicants learn what types of ventures are likely to receive support; co-investors learn about sectoral focus and risk appetite; policymakers learn about alignment with public objectives. Portfolio choices thus function as positioning statements enacted through behaviour rather than articulated through language.
 
-Crucially, portfolio positioning may diverge from stated mission.\marginnote{Decoupling between formal mission and actual practice is a well-documented phenomenon in institutional theory \cite{meyer1977institutionalized}.} An intermediary may articulate a broad mandate while concentrating support on a narrow subset of ventures; conversely, an intermediary with a focused mandate may support ventures that stretch or transcend official boundaries. Analyzing the positioning statements of portfolio ventures reveals the \textit{de facto} strategic landscape within which an intermediary operates---a landscape that may differ substantially from \textit{de jure} mission statements.
+Crucially, portfolio positioning may diverge from stated mission.\footnote{Decoupling between formal mission and actual practice is a well-documented phenomenon in institutional theory \cite{meyer1977institutionalized}.} An intermediary may articulate a broad mandate while concentrating support on a narrow subset of ventures; conversely, an intermediary with a focused mandate may support ventures that stretch or transcend official boundaries. Analyzing the positioning statements of portfolio ventures reveals the \textit{de facto} strategic landscape within which an intermediary operates---a landscape that may differ substantially from \textit{de jure} mission statements.
 
 \subsection{Text-Based Analysis of Venture Positioning}
 
-Basole et al. \cite{basole2019visual} pioneered the application of text-based similarity analysis to entrepreneurial ecosystems.\marginnote{Basole et al. \cite{basole2019visual} analyzed 58,880 ventures across 35 global ecosystems, revealing that positioning clusters do not map cleanly onto industry classifications.} Analyzing nearly 60,000 venture descriptions from Crunchbase, they demonstrated that ventures from different industries often cluster together when they employ similar positioning language. This finding suggests that strategic positioning operates according to logics distinct from---though intersecting with---industrial categorization.
+Basole et al. \cite{basole2019visual} pioneered the application of text-based similarity analysis to entrepreneurial ecosystems.\footnote{Basole et al. \cite{basole2019visual} analyzed 58,880 ventures across 35 global ecosystems, revealing that positioning clusters do not map cleanly onto industry classifications.} Analyzing nearly 60,000 venture descriptions from Crunchbase, they demonstrated that ventures from different industries often cluster together when they employ similar positioning language. This finding suggests that strategic positioning operates according to logics distinct from---though intersecting with---industrial categorization.
 
 The Basole et al. methodology employs TF-IDF (term frequency-inverse document frequency) weighting to convert textual descriptions into numerical vectors, cosine similarity to compute pairwise venture similarity, and network visualization to reveal cluster structure.\sidenote{TF-IDF weighting captures the intuition that terms appearing frequently in a document but rarely across the corpus are most informative for characterizing that document.} Community detection algorithms identify groups of ventures with similar positioning, and topic modeling provides interpretable labels for emergent clusters.
 
-Recent advances in natural language processing offer complementary approaches.\marginnote{Transformer models like BERT \cite{devlin2019bert} and sentence transformers \cite{reimers2019sentence} learn contextual word representations that capture semantic nuance beyond keyword matching.} Transformer-based language models learn contextual representations that capture semantic relationships invisible to keyword-based methods. Two ventures might use different words to describe similar value propositions; transformer embeddings can detect this semantic similarity even when surface vocabulary differs. We employ both approaches, comparing their relative strengths for revealing positioning structure.
+Recent advances in natural language processing offer complementary approaches.\footnote{Transformer models like BERT \cite{devlin2019bert} and sentence transformers \cite{reimers2019sentence} learn contextual word representations that capture semantic nuance beyond keyword matching.} Transformer-based language models learn contextual representations that capture semantic relationships invisible to keyword-based methods. Two ventures might use different words to describe similar value propositions; transformer embeddings can detect this semantic similarity even when surface vocabulary differs. We employ both approaches, comparing their relative strengths for revealing positioning structure.
 
 % Figure 7.1: TF-IDF vs Transformer comparison
 \begin{center}
@@ -141,7 +141,7 @@ Recent advances in natural language processing offer complementary approaches.\m
 
 \subsection{Data Source and Extraction}
 
-We use Crunchbase as our primary data source for EIT-supported ventures.\marginnote{Crunchbase (\url{crunchbase.com}) is a wiki-style database of technology companies, people, and investors, widely used in entrepreneurship research \cite{basole2019visual, dalle2017using}.} Crunchbase provides comprehensive coverage of technology ventures including company descriptions, founding dates, funding rounds, investor information, industry categories, and employee counts. The database is community-curated with contributions from executives, entrepreneurs, and investors, supplemented by machine learning validation and manual expert review \cite{basole2019visual}.
+We use Crunchbase as our primary data source for EIT-supported ventures.\footnote{Crunchbase (\url{crunchbase.com}) is a wiki-style database of technology companies, people, and investors, widely used in entrepreneurship research \cite{basole2019visual, dalle2017using}.} Crunchbase provides comprehensive coverage of technology ventures including company descriptions, founding dates, funding rounds, investor information, industry categories, and employee counts. The database is community-curated with contributions from executives, entrepreneurs, and investors, supplemented by machine learning validation and manual expert review \cite{basole2019visual}.
 
 We identified EIT-supported ventures through multiple channels:\sidenote{Triangulating across multiple identification methods reduces the risk of systematic omissions.}
 \begin{enumerate}
@@ -175,7 +175,7 @@ After deduplication & 7,341 \\
 \labtab{corpus-funnel}
 \end{margintable}
 
-Table \ref{tab:corpus-funnel} summarizes the corpus construction process. From an initial identification of 8,234 ventures in EIT-relevant sectors across Europe, we retained 7,341 ventures with substantive descriptions (minimum 20 words) after removing inactive ventures, those lacking descriptions, and duplicates.\marginnote{The 7,341-venture corpus includes both direct EIT portfolio companies (654) and the broader ecosystem of European ventures operating in KIC-relevant sectors, enabling positioning analysis within each sectoral landscape.}
+Table \ref{tab:corpus-funnel} summarizes the corpus construction process. From an initial identification of 8,234 ventures in EIT-relevant sectors across Europe, we retained 7,341 ventures with substantive descriptions (minimum 20 words) after removing inactive ventures, those lacking descriptions, and duplicates.\footnote{The 7,341-venture corpus includes both direct EIT portfolio companies (654) and the broader ecosystem of European ventures operating in KIC-relevant sectors, enabling positioning analysis within each sectoral landscape.}
 
 The final corpus exhibits substantial variation in description length, industry composition, and funding characteristics across the nine KIC sectors (see Table \ref{tab:portfolio-summary}). Climate-KIC has the largest sector pool (1,247 ventures), reflecting its broad sectoral scope spanning energy, circularity, and building efficiency. EIT Health ventures have the highest average funding (\$5.2M), consistent with the capital-intensive nature of healthcare innovation. EIT Culture \& Creativity, the newest KIC, has the smallest sector pool (537 ventures) reflecting its more recent establishment.
 
@@ -271,7 +271,7 @@ Table \ref{tab:top-categories} presents the most frequent Crunchbase categories 
 
 \subsection{Validation}
 
-To assess the quality of Crunchbase descriptions, we followed \cite{basole2019visual} in comparing Crunchbase entries against corporate website descriptions for a random sample of 100 ventures.\marginnote{Validation against corporate websites addresses concerns about Crunchbase data quality and currency.\\\iconinvest\ Data: \texttt{dissertation/data/rolebox-crunchbase/}} Using TF-IDF cosine similarity with a threshold of 0.15, we found that 87\% of sampled ventures had descriptions substantially similar to their corporate websites (mean similarity: 0.62). The 13\% with lower similarity primarily reflected outdated Crunchbase entries for ventures that had pivoted or rebranded; we flagged these cases for manual review.
+To assess the quality of Crunchbase descriptions, we followed \cite{basole2019visual} in comparing Crunchbase entries against corporate website descriptions for a random sample of 100 ventures.\footnote{Validation against corporate websites addresses concerns about Crunchbase data quality and currency.\\\iconinvest\ Data: \texttt{dissertation/data/rolebox-crunchbase/}} Using TF-IDF cosine similarity with a threshold of 0.15, we found that 87\% of sampled ventures had descriptions substantially similar to their corporate websites (mean similarity: 0.62). The 13\% with lower similarity primarily reflected outdated Crunchbase entries for ventures that had pivoted or rebranded; we flagged these cases for manual review.
 
 We additionally validated KIC assignments for a stratified sample of
 117 ventures (10 per KIC plus all unclassified cases).
@@ -287,7 +287,7 @@ reducing unclassified cases from 6.0\% to 0.5\% of the corpus.
 
 \subsection{Overview}
 
-We employ a dual methodology combining traditional TF-IDF analysis (following \cite{basole2019visual}) with transformer-based embeddings.\marginnote{Comparing TF-IDF and transformer approaches reveals how different representation methods surface different aspects of positioning structure.} This dual approach enables us to assess whether modern embedding methods reveal positioning structure invisible to keyword-based approaches, and whether the two methods converge on similar structural conclusions.
+We employ a dual methodology combining traditional TF-IDF analysis (following \cite{basole2019visual}) with transformer-based embeddings.\footnote{Comparing TF-IDF and transformer approaches reveals how different representation methods surface different aspects of positioning structure.} This dual approach enables us to assess whether modern embedding methods reveal positioning structure invisible to keyword-based approaches, and whether the two methods converge on similar structural conclusions.
 
 Figure \ref{fig:dual-pipeline} illustrates the complete analytical pipeline.
 
@@ -373,7 +373,7 @@ For a corpus of $n = 7,341$ ventures, this requires computing $\frac{n(n-1)}{2} 
 
 \subsubsection{Network Construction}
 
-Following \cite{basole2019visual}, we construct a similarity network $G = (V, E)$ where:\marginnote{The 15\% similarity threshold follows \cite{basole2019visual} and balances network density against noise. We conduct sensitivity analysis across thresholds (10\%, 15\%, 20\%).}
+Following \cite{basole2019visual}, we construct a similarity network $G = (V, E)$ where:\footnote{The 15\% similarity threshold follows \cite{basole2019visual} and balances network density against noise. We conduct sensitivity analysis across thresholds (10\%, 15\%, 20\%).}
 
 \begin{itemize}
     \item $V$ is the set of ventures
@@ -407,7 +407,7 @@ where $c$ indexes clusters and $n_t^c$ is the number of clusters containing term
 
 \subsubsection{Sentence-BERT Embeddings}
 
-We employ Sentence-BERT (SBERT) \cite{reimers2019sentence} to generate dense vector representations of venture descriptions.\marginnote{SBERT fine-tunes BERT for sentence-level tasks, producing embeddings where semantically similar sentences have high cosine similarity.} SBERT modifies the BERT architecture \cite{devlin2019bert} for efficient sentence-level similarity computation, producing 384-dimensional embeddings that capture semantic content.
+We employ Sentence-BERT (SBERT) \cite{reimers2019sentence} to generate dense vector representations of venture descriptions.\footnote{SBERT fine-tunes BERT for sentence-level tasks, producing embeddings where semantically similar sentences have high cosine similarity.} SBERT modifies the BERT architecture \cite{devlin2019bert} for efficient sentence-level similarity computation, producing 384-dimensional embeddings that capture semantic content.
 
 We use the \texttt{all-MiniLM-L6-v2} model, which provides an effective balance between computational efficiency and semantic quality.\sidenote{The \texttt{all-MiniLM-L6-v2} model is trained on over 1 billion sentence pairs and achieves state-of-the-art performance on semantic similarity benchmarks.} For each venture description $d$, we obtain:
 
@@ -417,7 +417,7 @@ We use the \texttt{all-MiniLM-L6-v2} model, which provides an effective balance 
 
 \subsubsection{Dimensionality Reduction}
 
-For visualization and clustering, we apply UMAP (Uniform Manifold Approximation and Projection) \cite{mcinnes2018umap} to reduce embedding dimensionality while preserving local and global structure:\marginnote{UMAP preserves both local neighborhood structure and global topology better than alternatives like t-SNE, making it preferable for clustering applications.}
+For visualization and clustering, we apply UMAP (Uniform Manifold Approximation and Projection) \cite{mcinnes2018umap} to reduce embedding dimensionality while preserving local and global structure:\footnote{UMAP preserves both local neighborhood structure and global topology better than alternatives like t-SNE, making it preferable for clustering applications.}
 
 \begin{equation}
     \mathbf{z}_d = \text{UMAP}(\mathbf{e}_d) \in \mathbb{R}^{2}
@@ -446,7 +446,7 @@ For cluster interpretation, we employ two complementary approaches:
 
 \subsection{Structural Comparison}
 
-To assess convergence between TF-IDF and embedding approaches, we compute:\marginnote{High correlation between methods would suggest robust structural findings; divergence would indicate that methods capture different aspects of positioning.}
+To assess convergence between TF-IDF and embedding approaches, we compute:\footnote{High correlation between methods would suggest robust structural findings; divergence would indicate that methods capture different aspects of positioning.}
 
 \begin{itemize}
     \item \textbf{Adjusted Rand Index (ARI)}: Measures agreement between cluster assignments, adjusted for chance
@@ -459,7 +459,7 @@ To assess convergence between TF-IDF and embedding approaches, we compute:\margi
 
 \subsection{Aggregate Network Structure}
 
-Figure \ref{fig:aggregate-network} presents the aggregate similarity network across all EIT-supported ventures using the TF-IDF approach.\marginnote{Network visualization uses the OpenOrd layout algorithm \cite{martin2011openord}, which emphasizes cluster separation. Node colors indicate Louvain communities; node size reflects closeness centrality.} The network exhibits clear modular structure with 23 distinct communities at the 15\% similarity threshold. The largest connected component contains 4,847 ventures (75.6\% of corpus); remaining ventures form smaller components or isolates.
+Figure \ref{fig:aggregate-network} presents the aggregate similarity network across all EIT-supported ventures using the TF-IDF approach.\footnote{Network visualization uses the OpenOrd layout algorithm \cite{martin2011openord}, which emphasizes cluster separation. Node colors indicate Louvain communities; node size reflects closeness centrality.} The network exhibits clear modular structure with 23 distinct communities at the 15\% similarity threshold. The largest connected component contains 4,847 ventures (75.6\% of corpus); remaining ventures form smaller components or isolates.
 
 % Figure 7.4: Aggregate similarity network
 \begin{center}
@@ -495,7 +495,7 @@ Urban Mobility & 401 & 28,934 & 0.361 & 6 & 89.7\% & 4 & 0.312 \\
 \labtab{network-stats}
 \end{center}
 
-Several patterns emerge from network statistics:\marginnote{Higher density in smaller KICs may reflect more focused sectoral scope or methodological artifact (smaller samples yield higher connection probability at fixed thresholds).}
+Several patterns emerge from network statistics:\footnote{Higher density in smaller KICs may reflect more focused sectoral scope or methodological artifact (smaller samples yield higher connection probability at fixed thresholds).}
 
 \begin{itemize}
     \item \textbf{Density increases with portfolio focus}: Smaller, more focused KICs (Manufacturing, Urban Mobility) exhibit higher network density, suggesting more homogeneous positioning within specialized domains.
@@ -579,7 +579,7 @@ Figure \ref{fig:kic-networks} presents similarity networks for selected KICs, en
 
 \subsubsection{Climate-KIC: Dispersed Multi-Sector Structure}
 
-Climate-KIC exhibits the most dispersed network structure among major KICs.\marginnote{Climate-KIC's broad mandate---addressing climate change across sectors---manifests in portfolio heterogeneity that exceeds other KICs.} Eight clusters span energy, buildings, land use, materials, and mobility applications. No single cluster dominates; the largest (CleanTech-Energy) contains only 23\% of portfolio ventures. This dispersal reflects Climate-KIC's broad mandate: climate change intersects every economic sector, and the portfolio accordingly spans diverse technological and business model approaches.
+Climate-KIC exhibits the most dispersed network structure among major KICs.\footnote{Climate-KIC's broad mandate---addressing climate change across sectors---manifests in portfolio heterogeneity that exceeds other KICs.} Eight clusters span energy, buildings, land use, materials, and mobility applications. No single cluster dominates; the largest (CleanTech-Energy) contains only 23\% of portfolio ventures. This dispersal reflects Climate-KIC's broad mandate: climate change intersects every economic sector, and the portfolio accordingly spans diverse technological and business model approaches.
 
 Representative cluster profiles for Climate-KIC:
 
@@ -612,7 +612,7 @@ This structure suggests that platform business models function as a ``meta-posit
 
 \subsubsection{EIT Health: Bipolar Digital-Device Structure}
 
-EIT Health exhibits a distinctive bipolar structure with two dominant clusters---HealthTech-Digital and MedTech-Devices---that show limited interconnection.\marginnote{The digital-device divide in healthcare reflects fundamentally different regulatory pathways, development timelines, and capital requirements.} This bifurcation reflects a fundamental divide in healthcare innovation: digital health ventures (software, apps, telehealth) operate under different regulatory, technical, and commercial logics than medical device ventures (diagnostics, implants, therapeutics).
+EIT Health exhibits a distinctive bipolar structure with two dominant clusters---HealthTech-Digital and MedTech-Devices---that show limited interconnection.\footnote{The digital-device divide in healthcare reflects fundamentally different regulatory pathways, development timelines, and capital requirements.} This bifurcation reflects a fundamental divide in healthcare innovation: digital health ventures (software, apps, telehealth) operate under different regulatory, technical, and commercial logics than medical device ventures (diagnostics, implants, therapeutics).
 
 Bridging ventures that connect these clusters are rare but strategically significant. Examples include digital companion apps for physical medical devices and AI-enabled diagnostic devices that blend software and hardware.
 
@@ -644,7 +644,7 @@ Figure \ref{fig:umap-embedding} presents the UMAP projection of Sentence-BERT em
 \labfig{umap-embedding}
 \end{center}
 
-The embedding approach identifies 25 clusters, with 39.6\% of ventures classified as noise (not belonging to any cluster).\marginnote{The higher noise ratio compared to Louvain reflects HDBSCAN's conservative density-based approach---only assigning ventures to clusters when local density warrants it.} Key differences from TF-IDF results:
+The embedding approach identifies 25 clusters, with 39.6\% of ventures classified as noise (not belonging to any cluster).\footnote{The higher noise ratio compared to Louvain reflects HDBSCAN's conservative density-based approach---only assigning ventures to clusters when local density warrants it.} Key differences from TF-IDF results:
 
 \begin{itemize}
     \item \textbf{Finer granularity}: The embedding approach distinguishes sub-clusters within TF-IDF clusters. For example, the TF-IDF ``HealthTech-Digital'' cluster splits into separate clusters for (a) patient-facing apps, (b) clinical decision support, and (c) health data platforms.
@@ -674,7 +674,7 @@ Cluster Count Ratio (Embed/TFIDF) & 1.09 & 1.14 \\
 \labtab{method-comparison}
 \end{center}
 
-The low cluster-level agreement (ARI = 0.042, NMI = 0.210) indicates that TF-IDF and embedding methods partition ventures into substantially different groupings.\marginnote{Low cluster agreement with moderate similarity correlation suggests the methods identify related venture-level relationships but draw cluster boundaries differently.} The similarity matrix correlation (0.254) is higher than cluster agreement, confirming that venture-level similarity assessments converge more than cluster boundaries---the methods agree on which ventures resemble each other but disagree on how to group them.
+The low cluster-level agreement (ARI = 0.042, NMI = 0.210) indicates that TF-IDF and embedding methods partition ventures into substantially different groupings.\footnote{Low cluster agreement with moderate similarity correlation suggests the methods identify related venture-level relationships but draw cluster boundaries differently.} The similarity matrix correlation (0.254) is higher than cluster agreement, confirming that venture-level similarity assessments converge more than cluster boundaries---the methods agree on which ventures resemble each other but disagree on how to group them.
 
 Figure \ref{fig:method-sankey} visualizes the mapping between TF-IDF and embedding clusters for EIT Health.
 
@@ -839,7 +839,7 @@ Following \cite{basole2019visual}, we examine how mean pairwise similarity withi
 \labfig{similarity-convergence}
 \end{center}
 
-Consistent with \cite{basole2019visual} findings for geographical ecosystems, we observe convergence toward global mean similarity as portfolio size increases.\marginnote{Convergence toward mean similarity in larger portfolios reflects the balance between legitimacy (similar positioning) and differentiation (unique positioning) that intensifies as ecosystems mature.} Smaller portfolios (Manufacturing, RawMaterials) exhibit higher mean similarity---suggesting either more focused selection criteria or less competitive pressure for differentiation. Larger portfolios (Climate-KIC, EIT Digital) converge toward the global mean (22.7\%), suggesting that ventures in larger ecosystems balance legitimacy and differentiation similarly regardless of sectoral context.
+Consistent with \cite{basole2019visual} findings for geographical ecosystems, we observe convergence toward global mean similarity as portfolio size increases.\footnote{Convergence toward mean similarity in larger portfolios reflects the balance between legitimacy (similar positioning) and differentiation (unique positioning) that intensifies as ecosystems mature.} Smaller portfolios (Manufacturing, RawMaterials) exhibit higher mean similarity---suggesting either more focused selection criteria or less competitive pressure for differentiation. Larger portfolios (Climate-KIC, EIT Digital) converge toward the global mean (22.7\%), suggesting that ventures in larger ecosystems balance legitimacy and differentiation similarly regardless of sectoral context.
 
 \subsection{Sensitivity Analysis}
 
@@ -861,14 +861,14 @@ Table \ref{tab:sensitivity} presents results across similarity thresholds.
 \labtab{sensitivity}
 \end{center}
 
-The Spearman correlation column shows rank correlation of cluster size ordering against the 15\% baseline.\marginnote{Cluster structure is robust across thresholds, with main findings stable from 10\%--20\%. Higher thresholds fragment the network excessively.} Results are robust across the 10--20\% range; the 25\% threshold produces excessive fragmentation. We retain 15\% for consistency with \cite{basole2019visual}.
+The Spearman correlation column shows rank correlation of cluster size ordering against the 15\% baseline.\footnote{Cluster structure is robust across thresholds, with main findings stable from 10\%--20\%. Higher thresholds fragment the network excessively.} Results are robust across the 10--20\% range; the 25\% threshold produces excessive fragmentation. We retain 15\% for consistency with \cite{basole2019visual}.
 
 \section{Discussion: Positioning in Constructed Innovation Ecosystems}[Discussion]
 \labsec{venture:discussion}
 
 \subsection{Beyond Sectoral Categories}
 
-Our findings challenge the assumption that innovation intermediary portfolios cluster neatly around sectoral mandates.\marginnote{The gap between mandate-derived categories and empirically observed positioning clusters suggests that strategic positioning follows logics distinct from formal organizational boundaries.} While KIC portfolios show expected sectoral concentration (HealthTech in EIT Health, CleanTech in Climate-KIC), the emergent cluster structure reveals positioning dimensions that transcend official categorization:
+Our findings challenge the assumption that innovation intermediary portfolios cluster neatly around sectoral mandates.\footnote{The gap between mandate-derived categories and empirically observed positioning clusters suggests that strategic positioning follows logics distinct from formal organizational boundaries.} While KIC portfolios show expected sectoral concentration (HealthTech in EIT Health, CleanTech in Climate-KIC), the emergent cluster structure reveals positioning dimensions that transcend official categorization:
 
 \begin{itemize}
     \item \textbf{Business model positioning}: The Platform-SaaS cluster spans multiple KICs, indicating that platform business models constitute a cross-sectoral positioning orientation. Ventures position themselves as ``platforms'' regardless of whether they address health, climate, or food challenges.
@@ -895,7 +895,7 @@ For practitioners, this suggests that keyword-based analysis (accessible via sta
 
 \subsection{Implications for Innovation Intermediaries}
 
-Our findings have implications for how innovation intermediaries understand and manage their portfolios:\marginnote{Portfolio positioning analysis can inform strategic decisions about venture selection, programme design, and ecosystem positioning.}
+Our findings have implications for how innovation intermediaries understand and manage their portfolios:\footnote{Portfolio positioning analysis can inform strategic decisions about venture selection, programme design, and ecosystem positioning.}
 
 \begin{enumerate}
     \item \textbf{Portfolio positioning awareness}: Intermediaries should understand not only what sectors their portfolios address but how portfolio ventures position themselves strategically. A portfolio nominally focused on ``HealthTech'' may contain distinct sub-populations with different positioning strategies and competitive dynamics.
@@ -908,7 +908,7 @@ Our findings have implications for how innovation intermediaries understand and 
 \subsection{Design Knowledge Contribution}
 \labsec{venture:designknowledge}
 
-Beyond its empirical scope, this chapter contributes three transferable design principles for cartographic workflows that operationalize enacted roles through investment and portfolio data:\marginnote{This chapter contributes the \textbf{enacted role} perspective---what organizations actually do with resources---complementing claimed roles (websites) and attributed roles (news media).}
+Beyond its empirical scope, this chapter contributes three transferable design principles for cartographic workflows that operationalize enacted roles through investment and portfolio data:\footnote{This chapter contributes the \textbf{enacted role} perspective---what organizations actually do with resources---complementing claimed roles (websites) and attributed roles (news media).}
 
 \begin{description}
     \item[DP-C1: Dual representation pipeline for methodological triangulation.] Running TF-IDF (keyword-based) and transformer embedding (semantic) pipelines in parallel on the same corpus demonstrates that different analytical approaches surface different structural dimensions of the positioning landscape. TF-IDF captures explicit terminology clusters; transformer embeddings detect latent semantic similarity between ventures using different vocabulary for similar value propositions. For any text-heavy corpus, dual pipelines operationalize MDR-2 (theory-guided operationalization) by ensuring that both surface-level and deep semantic signals are systematically analyzed.
@@ -938,7 +938,7 @@ Several limitations qualify our findings:\sidenote{Limitations primarily concern
 \subsection{Computational Infrastructure}
 \labsec{venture:infrastructure}
 
-The analysis pipeline developed for this chapter is implemented in the \texttt{rolebox-crunchbase} Python package, providing reproducible tools for venture positioning analysis.\marginnote{The package combines traditional TF-IDF approaches with state-of-the-art transformer models, enabling both methodological comparison and practical application.} The package architecture reflects the analytical workflow presented in this chapter:
+The analysis pipeline developed for this chapter is implemented in the \texttt{rolebox-crunchbase} Python package, providing reproducible tools for venture positioning analysis.\footnote{The package combines traditional TF-IDF approaches with state-of-the-art transformer models, enabling both methodological comparison and practical application.} The package architecture reflects the analytical workflow presented in this chapter:
 
 \begin{description}
     \item[EIT Sector Classification] The \texttt{eit\_sector\_analysis.py} module implements EIT KIC sector mapping, classifying Crunchbase organizations into nine KIC domains based on category matching and keyword analysis. From the full Crunchbase Academic Research dataset (2,811,656 organizations), the pipeline identified 1,350,854 organizations (48.0\%) as EIT-relevant across at least one KIC sector.
@@ -982,7 +982,7 @@ Multi-KIC & 234,567 \\
 \subsection{Cross-Modal Similarity Comparison}
 \labsec{venture:similarity-comparison}
 
-A methodologically significant extension addresses the question: \emph{How does Crunchbase-derived similarity compare to similarity derived from other data modalities?}\marginnote{This question operationalizes the dissertation's multimodal cartography framework: if different data sources reveal the same similarity structure, there may be a stable underlying ``role space''; if they diverge, each modality captures different facets of organizational roles.}
+A methodologically significant extension addresses the question: \emph{How does Crunchbase-derived similarity compare to similarity derived from other data modalities?}\footnote{This question operationalizes the dissertation's multimodal cartography framework: if different data sources reveal the same similarity structure, there may be a stable underlying ``role space''; if they diverge, each modality captures different facets of organizational roles.}
 
 The \texttt{cross\_modal\_triangulation.py} module implements systematic comparison across three similarity structures:
 
@@ -1012,7 +1012,7 @@ If Company A and Company B appear highly similar in Crunchbase data (same invest
 \section{Conclusion}
 \labsec{venture:conclusion}
 
-This chapter applied visual analytic methods to examine the structure of venture positioning across EIT Knowledge and Innovation Community portfolios.\marginnote{Our dual-method approach combining TF-IDF and transformer embeddings provides a template for future research on organizational positioning.} Analyzing 7,341 EIT-supported ventures from Crunchbase, we employed both traditional TF-IDF approaches (following \cite{basole2019visual}) and state-of-the-art transformer embeddings to reveal positioning structure within and across KIC portfolios.
+This chapter applied visual analytic methods to examine the structure of venture positioning across EIT Knowledge and Innovation Community portfolios.\footnote{Our dual-method approach combining TF-IDF and transformer embeddings provides a template for future research on organizational positioning.} Analyzing 7,341 EIT-supported ventures from Crunchbase, we employed both traditional TF-IDF approaches (following \cite{basole2019visual}) and state-of-the-art transformer embeddings to reveal positioning structure within and across KIC portfolios.
 
 Our findings reveal that venture positioning does not cluster neatly around KIC sectoral mandates. Instead, emergent clusters blend sectoral focus with cross-cutting themes---platform business models, sustainability narratives, customer segment orientations---that transcend official categorization. Transformer embeddings reveal finer-grained semantic structure than TF-IDF, particularly for distinguishing ventures with similar keywords but different underlying value propositions.
 
